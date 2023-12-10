@@ -1,6 +1,7 @@
-﻿using MediatR;
-using OrgBloom.Application.Interfaces;
+﻿using AutoMapper;
+using MediatR;
 using OrgBloom.Domain.Entities;
+using OrgBloom.Application.Interfaces;
 
 namespace OrgBloom.Application.Commands.Investors.UpdateInvestors;
 
@@ -21,9 +22,11 @@ public record UpdateInvestorsCommands : IRequest<int>
 public class UpdateInvestorsCommandHandler : IRequestHandler<UpdateInvestorsCommands, int>
 {
     private readonly IRepository<Investor> repository;
+    private readonly IMapper mapper;
 
-    public Task<int> Handle(UpdateInvestorsCommands request, CancellationToken cancellationToken)
+    public async Task<int> Handle(UpdateInvestorsCommands request, CancellationToken cancellationToken)
     {
-        return repository.Update(
+        repository.Update(mapper.Map<Investor>(request));
+        return await repository.SaveAsync();
     }
 }

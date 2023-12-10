@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using OrgBloom.Domain.Entities;
+using OrgBloom.Application.Interfaces;
 
 namespace OrgBloom.Application.Commands.Investors.DeleteInvestors;
 
@@ -9,8 +11,10 @@ public record DeleteInvestorCommand : IRequest<bool>
 
 public class DeleteInvestorHandler : IRequestHandler<DeleteInvestorCommand, bool>
 {
-    public Task<bool> Handle(DeleteInvestorCommand request, CancellationToken cancellationToken)
+    private readonly IRepository<Investor> repository;
+    public async Task<bool> Handle(DeleteInvestorCommand request, CancellationToken cancellationToken)
     {
-        return Task.FromResult(true);
+        repository.Delete(x => x.TelegramId == request.TelegramId);
+        return await repository.SaveAsync() > 0;
     }
 }

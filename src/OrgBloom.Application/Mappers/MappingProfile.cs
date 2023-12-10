@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using OrgBloom.Application.Queries.GetInvestors;
+using OrgBloom.Domain.Entities;
 
-namespace OrgBloom.Application.Mappers
+namespace OrgBloom.Application.Mappers;
+
+public class MappingProfile : Profile
 {
-    internal class MappingProfile : Profile
+    public MappingProfile()
     {
+        CreateMap<InvestorGetAllCommand, Investor>();
     }
 }

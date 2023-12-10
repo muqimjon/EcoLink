@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
 
-namespace OrgBloom.Application.Interfaces;
+namespace OrgBloom.Application.Interfaces.Commons;
 
-public interface IRepository<TEntity> where TEntity : class
+public interface IGoogleSheetsRepository<TEntity> where TEntity : class
 {
     Task InsertAsync(TEntity entity);
     void Update(TEntity entity);

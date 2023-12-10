@@ -1,37 +1,49 @@
 ﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using OrgBloom.Application.Interfaces;
+using OrgBloom.Infrastructure.Contexts;
 
 namespace OrgBloom.Infrastructure.Repositories;
 
-public class Repository<T> : IRepository<T> where T : class
+public class Repository<T>(AppDbContext dbContext) : IRepository<T> where T : class
 {
-    public Task InsertAsync(T entity)
+    public DbSet<T> table
     {
-        throw new NotImplementedException();
+        get
+        {
+            return dbContext.Set<T>();
+        }
+    }
+
+    public async Task InsertAsync(T entity)
+    {
+        await table.AddAsync(entity);
     }
 
     public void Update(T entity)
     {
-        throw new NotImplementedException();
+        table.Entry(entity).State = EntityState.Modified;
     }
 
     public void Delete(T entity)
     {
-        throw new NotImplementedException();
+        table.Remove(entity);
     }
 
-    public Task<T> SelectAsync(Expression<Func<T, bool>> expression)
+    public void Delete(Expression<Func<T, bool>> expression)
     {
-        throw new NotImplementedException();
+        foreach (var entity in table.Where(expression))
+            table.Remove(entity);
     }
 
-    public IQueryable<T> SelectAll(Expression<Func<T, bool>> expression = null)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<T> SelectAsync(Expression<Func<T, bool>> expression)
+        => (await table.FirstOrDefaultAsync(expression))!;
+
+    public IQueryable<T> SelectAll(Expression<Func<T, bool>> expression = null!)
+        => expression != null ? table.Where(expression) : table;
 
     public Task<int> SaveAsync()
     {
-        throw new NotImplementedException();
+        return dbContext.SaveChangesAsync();
     }
 }

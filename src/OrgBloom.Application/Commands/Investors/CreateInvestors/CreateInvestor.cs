@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
+using OrgBloom.Application.Interfaces;
+using OrgBloom.Domain.Entities;
 
 namespace OrgBloom.Application.Commands.Investors.CreateInvestors;
 
@@ -18,8 +21,12 @@ public record CreateInvestorCommand : IRequest<int>
 
 public class CreateInvestorCommandHandler : IRequestHandler<CreateInvestorCommand, int>
 {
-    public Task<int> Handle(CreateInvestorCommand request, CancellationToken cancellationToken)
+    private readonly IRepository<Investor> repository;
+    private readonly IMapper mappers;
+
+    public async Task<int> Handle(CreateInvestorCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await repository.InsertAsync(mappers.Map<Investor>(request));
+        return await repository.SaveAsync();
     }
 }
