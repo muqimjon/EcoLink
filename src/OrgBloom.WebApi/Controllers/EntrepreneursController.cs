@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using OrgBloom.WebApi.Controllers.Commons;
-using OrgBloom.Application.Queries.GetEntrepreneurs;
-using OrgBloom.Application.Commands.Entrepreneurs.CreateEntrepreneurs;
-using OrgBloom.Application.Commands.Entrepreneurs.DeleteEntrepreneurs;
-using OrgBloom.Application.Commands.Entrepreneurs.UpdateEntrepreneurs;
+using OrgBloom.Application.Entrepreneurs.CreateEntrepreneurs;
+using OrgBloom.Application.Entrepreneurs.DeleteEntrepreneurs;
+using OrgBloom.Application.Entrepreneurs.UpdateEntrepreneurs;
+using OrgBloom.Application.Entrepreneurs.Queries.GetEntrepreneurs;
 
 namespace OrgBloom.WebApi.Controllers;
 

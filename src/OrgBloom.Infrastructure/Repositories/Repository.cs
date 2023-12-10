@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using OrgBloom.Application.Interfaces;
+using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Infrastructure.Contexts;
 
 namespace OrgBloom.Infrastructure.Repositories;

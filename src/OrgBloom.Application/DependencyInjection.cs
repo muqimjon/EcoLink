@@ -1,32 +1,32 @@
 ﻿global using MediatR;
-using OrgBloom.Application.Mappers;
-using OrgBloom.Application.DTOs.Investors;
-using OrgBloom.Application.DTOs.Entrepreneurs;
+using OrgBloom.Application.Investors.DTOs;
+using OrgBloom.Application.Commons.Mappers;
+using OrgBloom.Application.Entrepreneurs.DTOs;
 using Microsoft.Extensions.DependencyInjection;
-using OrgBloom.Application.DTOs.ProjectManagers;
-using OrgBloom.Application.Queries.GetInvestors;
-using OrgBloom.Application.DTOs.Representatives;
-using OrgBloom.Application.Queries.GetEntrepreneurs;
-using OrgBloom.Application.Queries.GetRepresentatives;
-using OrgBloom.Application.Queries.GetProjectManagers;
-using OrgBloom.Application.Commands.Investors.CreateInvestors;
-using OrgBloom.Application.Commands.Investors.UpdateInvestors;
-using OrgBloom.Application.Commands.Investors.DeleteInvestors;
-using OrgBloom.Application.Commands.Entrepreneurs.CreateEntrepreneurs;
-using OrgBloom.Application.Commands.Entrepreneurs.UpdateEntrepreneurs;
-using OrgBloom.Application.Commands.Entrepreneurs.DeleteEntrepreneurs;
-using OrgBloom.Application.Commands.Representatives.CreateRepresentatives;
-using OrgBloom.Application.Commands.Representatives.UpdateRepresentatives;
-using OrgBloom.Application.Commands.Representatives.DeleteRepresentatives;
-using OrgBloom.Application.Commands.ProjectManagers.CreateProjectManagers;
-using OrgBloom.Application.Commands.ProjectManagers.UpdateProjectManagers;
-using OrgBloom.Application.Commands.ProjectManagers.DeleteProjectManagers;
+using OrgBloom.Application.ProjectManagers.DTOs;
+using OrgBloom.Application.Representatives.DTOs;
+using OrgBloom.Application.Investors.Queries.GetInvestors;
+using OrgBloom.Application.Investors.Commands.CreateInvestors;
+using OrgBloom.Application.Investors.Commands.DeleteInvestors;
+using OrgBloom.Application.Investors.Commands.UpdateInvestors;
+using OrgBloom.Application.Entrepreneurs.Queries.GetEntrepreneurs;
+using OrgBloom.Application.ProjectManagers.Queries.GetProjectManagers;
+using OrgBloom.Application.Representatives.Queries.GetRepresentatives;
+using OrgBloom.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
+using OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
+using OrgBloom.Application.Entrepreneurs.Commands.DeleteEntrepreneurs;
+using OrgBloom.Application.ProjectManagers.Commands.CreateProjectManagers;
+using OrgBloom.Application.ProjectManagers.Commands.DeleteProjectManagers;
+using OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
+using OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
+using OrgBloom.Application.Representatives.Commands.DeleteRepresentatives;
+using OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
 
 namespace OrgBloom.Application;
 
 public static class DependencyInjection
 {
-    public static void AddApplicationServices(this IServiceCollection services)
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         services.AddAutoMapper(typeof(MappingProfile));
         services.AddScoped<IRequestHandler<CreateInvestorCommand, int>, CreateInvestorCommandHandler>();
@@ -52,5 +52,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<DeleteEntrepreneurCommand, bool>, DeleteEntrepreneurCommandHandler>();
         services.AddScoped<IRequestHandler<GetEntrepreneurQuery, EntrepreneurResultDto>, GetEntrepreneurQueryHendler>();
         services.AddScoped<IRequestHandler<GetAllEntrepreneursQuery, IEnumerable<EntrepreneurResultDto>>, GetAllEntrepreneursQueryHandler>();
+
+        return services;
     }
 }

@@ -1,6 +1,4 @@
-﻿using OrgBloom.Domain.Commons;
-
-namespace OrgBloom.Domain.Entities;
+﻿namespace OrgBloom.Domain.Entities;
 
 public class Entrepreneur : Human
 {

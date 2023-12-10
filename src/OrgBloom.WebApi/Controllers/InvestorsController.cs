@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using OrgBloom.WebApi.Controllers.Commons;
-using OrgBloom.Application.Queries.GetInvestors;
-using OrgBloom.Application.Commands.Investors.CreateInvestors;
-using OrgBloom.Application.Commands.Investors.DeleteInvestors;
-using OrgBloom.Application.Commands.Investors.UpdateInvestors;
+using OrgBloom.Application.Investors.Commands.CreateInvestors;
+using OrgBloom.Application.Investors.Commands.DeleteInvestors;
+using OrgBloom.Application.Investors.Commands.UpdateInvestors;
+using OrgBloom.Application.Investors.Queries.GetInvestors;
 
 namespace OrgBloom.WebApi.Controllers;
 

@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OrgBloom.Application.Interfaces;
 using OrgBloom.Infrastructure.Contexts;
 using Microsoft.Extensions.Configuration;
 using OrgBloom.Infrastructure.Repositories;
+using OrgBloom.Application.Commons.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace OrgBloom.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static void AddInfrastructureServices(
+    public static IServiceCollection AddInfrastructureServices(
            this IServiceCollection services,
            IConfiguration configuration)
     {
@@ -17,5 +17,7 @@ public static class DependencyInjection
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+        return services;
     }
 }
