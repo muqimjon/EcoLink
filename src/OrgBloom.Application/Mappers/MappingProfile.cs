@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using OrgBloom.Application.Queries.GetInvestors;
 using OrgBloom.Domain.Entities;
+using OrgBloom.Application.Commands.Investors.CreateInvestors;
 
 namespace OrgBloom.Application.Mappers;
 
@@ -8,6 +8,6 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<InvestorGetAllCommand, Investor>();
+        CreateMap<CreateInvestorCommand, Investor>();
     }
 }

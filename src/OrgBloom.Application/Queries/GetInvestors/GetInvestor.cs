@@ -1,21 +1,21 @@
 ﻿using MediatR;
-using OrgBloom.Application.Interfaces;
 using OrgBloom.Domain.Entities;
+using OrgBloom.Application.Interfaces;
 
 namespace OrgBloom.Application.Queries.GetInvestors;
 
-public record GetInvestorCommand : IRequest<Investor>
+public record GetInvestorQuery : IRequest<Investor>
 {
-    public int TelegramId { get; set; }
+    public GetInvestorQuery(GetInvestorQuery command)
+    {
+        Id = command.Id;
+    }
+
+    public int Id { get; set; }
 }
 
-public class GetInvestorCommandHendler : IRequestHandler<GetInvestorCommand, Investor>
+public class GetInvestorQueryHendler(IRepository<Investor> repository) : IRequestHandler<GetInvestorQuery, Investor>
 {
-    private readonly IRepository<Investor> repository;
-
-    public async Task<Investor> Handle(GetInvestorCommand request, CancellationToken cancellationToken)
-    {
-        var id = request.TelegramId;
-        return await repository.SelectAsync(i => i.TelegramId.Equals(request.TelegramId));
-    }
+    public async Task<Investor> Handle(GetInvestorQuery request, CancellationToken cancellationToken)
+        => await repository.SelectAsync(i => i.Id.Equals(request.Id));
 }

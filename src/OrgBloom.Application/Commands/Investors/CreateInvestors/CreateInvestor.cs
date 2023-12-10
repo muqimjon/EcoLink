@@ -7,6 +7,20 @@ namespace OrgBloom.Application.Commands.Investors.CreateInvestors;
 
 public record CreateInvestorCommand : IRequest<int>
 {
+    public CreateInvestorCommand(CreateInvestorCommand command)
+    {
+        TelegramId = command.TelegramId;
+        FirstName = command.FirstName;
+        LastName = command.LastName;
+        Patronomyc = command.Patronomyc;
+        DateOfBirth = command.DateOfBirth;
+        Degree = command.Degree;
+        Sector = command.Sector;
+        InvestmentAmount = command.InvestmentAmount;
+        Phone = command.Phone;
+        Email = command.Email;
+    }
+
     public int TelegramId { get; set; }
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
@@ -19,14 +33,11 @@ public record CreateInvestorCommand : IRequest<int>
     public string Email { get; set; } = string.Empty;
 }
 
-public class CreateInvestorCommandHandler : IRequestHandler<CreateInvestorCommand, int>
+public class CreateInvestorCommandHandler(IRepository<Investor> repository, IMapper mapper) : IRequestHandler<CreateInvestorCommand, int>
 {
-    private readonly IRepository<Investor> repository;
-    private readonly IMapper mappers;
-
     public async Task<int> Handle(CreateInvestorCommand request, CancellationToken cancellationToken)
     {
-        await repository.InsertAsync(mappers.Map<Investor>(request));
+        await repository.InsertAsync(mapper.Map<Investor>(request));
         return await repository.SaveAsync();
     }
 }

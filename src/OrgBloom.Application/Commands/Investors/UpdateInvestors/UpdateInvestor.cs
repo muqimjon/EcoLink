@@ -5,8 +5,22 @@ using OrgBloom.Application.Interfaces;
 
 namespace OrgBloom.Application.Commands.Investors.UpdateInvestors;
 
-public record UpdateInvestorsCommands : IRequest<int>
+public record UpdateInvestorCommand : IRequest<int>
 {
+    public UpdateInvestorCommand(UpdateInvestorCommand command)
+    {
+        TelegramId = command.TelegramId;
+        FirstName = command.FirstName;
+        LastName = command.LastName;
+        Patronomyc = command.Patronomyc;
+        DateOfBirth = command.DateOfBirth;
+        Degree = command.Degree;
+        Sector = command.Sector;
+        InvestmentAmount = command.InvestmentAmount;
+        Phone = command.Phone;
+        Email = command.Email;
+    }
+
     public int TelegramId { get; set; }
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
@@ -19,12 +33,9 @@ public record UpdateInvestorsCommands : IRequest<int>
     public string Email { get; set; } = string.Empty;
 }
 
-public class UpdateInvestorsCommandHandler : IRequestHandler<UpdateInvestorsCommands, int>
+public class UpdateInvestorCommandHandler(IRepository<Investor> repository, IMapper mapper) : IRequestHandler<UpdateInvestorCommand, int>
 {
-    private readonly IRepository<Investor> repository;
-    private readonly IMapper mapper;
-
-    public async Task<int> Handle(UpdateInvestorsCommands request, CancellationToken cancellationToken)
+    public async Task<int> Handle(UpdateInvestorCommand request, CancellationToken cancellationToken)
     {
         repository.Update(mapper.Map<Investor>(request));
         return await repository.SaveAsync();
