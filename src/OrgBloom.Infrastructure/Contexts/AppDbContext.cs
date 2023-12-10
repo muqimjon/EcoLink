@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using OrgBloom.Domain.Entities;
+﻿using OrgBloom.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace OrgBloom.Infrastructure.Contexts;
 
-
-public class AppDbContext : DbContext
+public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-
     public DbSet<Investor> Investors { get; set; }
+    public DbSet<Entrepreneur> Entrepreneurs { get; set; }
+    public DbSet<ProjectManager> ProjectManagers { get; set; }
+    public DbSet<Representative> Representatives { get; set; }
 }

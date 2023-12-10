@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using OrgBloom.WebApi.Controllers.Commons;
 using OrgBloom.Application.Queries.GetInvestors;
 using OrgBloom.Application.Commands.Investors.CreateInvestors;
 using OrgBloom.Application.Commands.Investors.DeleteInvestors;
@@ -7,9 +8,7 @@ using OrgBloom.Application.Commands.Investors.UpdateInvestors;
 
 namespace OrgBloom.WebApi.Controllers;
 
-[Route("api/[controller]")]
-[ApiController]
-public class InvestorsController(IMediator mediator) : ControllerBase
+public class InvestorsController(IMediator mediator) : BaseController
 {
     [HttpPost("create")]
     public async Task<IActionResult> Create(CreateInvestorCommand command)

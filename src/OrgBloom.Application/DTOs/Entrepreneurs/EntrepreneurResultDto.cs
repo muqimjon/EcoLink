@@ -1,6 +1,6 @@
-﻿namespace OrgBloom.Application.DTOs.Entreprenuers;
+﻿namespace OrgBloom.Application.DTOs.Entrepreneurs;
 
-public class EntreprenuerResultDto
+public class EntrepreneurResultDto
 {
     public long Id { get; set; }
     public DateTime CreatedAt { get; set; }

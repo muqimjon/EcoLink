@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OrgBloom.Application.Interfaces;
 using OrgBloom.Infrastructure.Contexts;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using OrgBloom.Application.Interfaces;
 using OrgBloom.Infrastructure.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace OrgBloom.Infrastructure;
 

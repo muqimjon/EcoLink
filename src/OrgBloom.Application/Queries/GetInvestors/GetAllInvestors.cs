@@ -1,5 +1,4 @@
-﻿using MediatR;
-using AutoMapper;
+﻿using AutoMapper;
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Interfaces;
 using OrgBloom.Application.DTOs.Investors;
