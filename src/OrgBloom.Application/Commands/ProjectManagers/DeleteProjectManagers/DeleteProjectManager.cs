@@ -13,8 +13,9 @@ public record DeleteProjectManagerCommand : IRequest<bool>
 
 public class DeleteProjectManagerCommandHandler(IRepository<ProjectManager> repository, IMapper mapper) : IRequestHandler<DeleteProjectManagerCommand, bool>
 {
-    public Task<bool> Handle(DeleteProjectManagerCommand request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(DeleteProjectManagerCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        repository.Delete(x => x.Id == request.Id);
+        return await repository.SaveAsync() > 0;
     }
 }

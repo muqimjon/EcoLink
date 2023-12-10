@@ -9,6 +9,7 @@ public record UpdateProjectManagerCommand : IRequest<int>
 {
     public UpdateProjectManagerCommand(UpdateProjectManagerCommand command)
     {
+        Id = command.Id;
         Phone = command.Phone;
         Email = command.Email;
         Degree = command.Degree;
@@ -25,6 +26,7 @@ public record UpdateProjectManagerCommand : IRequest<int>
         InvestmentAmount = command.InvestmentAmount;
     }
 
+    public long Id { get; set; }
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string Degree { get; set; } = string.Empty;
@@ -43,8 +45,13 @@ public record UpdateProjectManagerCommand : IRequest<int>
 
 public class UpdateProjectManagerCommandHandler(IRepository<ProjectManager> repository, IMapper mapper) : IRequestHandler<UpdateProjectManagerCommand, int>
 {
-    public Task<int> Handle(UpdateProjectManagerCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(UpdateProjectManagerCommand request, CancellationToken cancellationToken)
     {
-        return Task.FromResult(0);
+        var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
+            ?? throw new();
+
+        mapper.Map(request, entity);
+        repository.Update(entity);
+        return await repository.SaveAsync();
     }
 }
