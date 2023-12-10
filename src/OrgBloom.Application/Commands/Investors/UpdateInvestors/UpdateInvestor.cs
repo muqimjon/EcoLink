@@ -9,6 +9,7 @@ public record UpdateInvestorCommand : IRequest<int>
 {
     public UpdateInvestorCommand(UpdateInvestorCommand command)
     {
+        Id = command.Id;
         TelegramId = command.TelegramId;
         FirstName = command.FirstName;
         LastName = command.LastName;
@@ -21,6 +22,7 @@ public record UpdateInvestorCommand : IRequest<int>
         Email = command.Email;
     }
 
+    public long Id { get; set; }
     public int TelegramId { get; set; }
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
@@ -37,7 +39,11 @@ public class UpdateInvestorCommandHandler(IRepository<Investor> repository, IMap
 {
     public async Task<int> Handle(UpdateInvestorCommand request, CancellationToken cancellationToken)
     {
-        repository.Update(mapper.Map<Investor>(request));
+        var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
+            ?? throw new();
+        
+        mapper.Map(request, entity);
+        repository.Update(entity);
         return await repository.SaveAsync();
     }
 }
