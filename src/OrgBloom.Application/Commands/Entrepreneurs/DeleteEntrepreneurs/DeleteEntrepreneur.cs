@@ -15,7 +15,10 @@ public class DeleteEntrepreneurCommandHandler(IRepository<Entrepreneur> reposito
 {
     public async Task<bool> Handle(DeleteEntrepreneurCommand request, CancellationToken cancellationToken)
     {
-        repository.Delete(x => x.Id == request.Id);
+        var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
+            ?? throw new();
+
+        repository.Delete(entity);
         return await repository.SaveAsync() > 0;
     }
 }

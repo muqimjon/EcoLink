@@ -11,11 +11,14 @@ public record DeleteProjectManagerCommand : IRequest<bool>
     public long Id { get; set; }
 }
 
-public class DeleteProjectManagerCommandHandler(IRepository<ProjectManager> repository, IMapper mapper) : IRequestHandler<DeleteProjectManagerCommand, bool>
+public class DeleteProjectManagerCommandHandler(IRepository<ProjectManager> repository) : IRequestHandler<DeleteProjectManagerCommand, bool>
 {
     public async Task<bool> Handle(DeleteProjectManagerCommand request, CancellationToken cancellationToken)
     {
-        repository.Delete(x => x.Id == request.Id);
+        var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
+            ?? throw new();
+
+        repository.Delete(entity);
         return await repository.SaveAsync() > 0;
     }
 }

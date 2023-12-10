@@ -2,7 +2,7 @@
 
 namespace OrgBloom.Domain.Entities;
 
-public class Representatives : Human
+public class Representative : Human
 {
     public string Languages { get; set; } = string.Empty;
     public string Experience { get; set; } = string.Empty;

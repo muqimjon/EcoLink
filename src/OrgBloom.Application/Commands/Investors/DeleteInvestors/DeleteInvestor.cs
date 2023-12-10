@@ -14,7 +14,10 @@ public class DeleteInvestorCommandHandler(IRepository<Investor> repository) : IR
 {
     public async Task<bool> Handle(DeleteInvestorCommand request, CancellationToken cancellationToken)
     {
-        repository.Delete(x => x.Id == request.Id);
+        var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
+            ?? throw new();
+
+        repository.Delete(entity);
         return await repository.SaveAsync() > 0;
     }
 }

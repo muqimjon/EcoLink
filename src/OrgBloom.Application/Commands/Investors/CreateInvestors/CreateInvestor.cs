@@ -1,7 +1,7 @@
-﻿using AutoMapper;
-using MediatR;
-using OrgBloom.Application.Interfaces;
+﻿using MediatR;
+using AutoMapper;
 using OrgBloom.Domain.Entities;
+using OrgBloom.Application.Interfaces;
 
 namespace OrgBloom.Application.Commands.Investors.CreateInvestors;
 
@@ -37,6 +37,10 @@ public class CreateInvestorCommandHandler(IRepository<Investor> repository, IMap
 {
     public async Task<int> Handle(CreateInvestorCommand request, CancellationToken cancellationToken)
     {
+        var entity = await repository.SelectAsync(entity => entity.TelegramId == request.TelegramId);
+        if (entity is not null)
+            throw new();
+
         await repository.InsertAsync(mapper.Map<Investor>(request));
         return await repository.SaveAsync();
     }

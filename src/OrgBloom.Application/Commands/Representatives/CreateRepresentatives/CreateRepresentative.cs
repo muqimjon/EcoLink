@@ -3,11 +3,11 @@ using AutoMapper;
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Interfaces;
 
-namespace OrgBloom.Application.Commands.Entrepreneurs.CreateEntrepreneurs;
+namespace OrgBloom.Application.Commands.Representatives.CreateRepresentatives;
 
-public record class CreateEntrepreneurCommand : IRequest<int>
+public record CreateRepresentativeCommand : IRequest<int>
 {
-    public CreateEntrepreneurCommand(CreateEntrepreneurCommand command)
+    public CreateRepresentativeCommand(CreateRepresentativeCommand command)
     {
         Phone = command.Phone;
         Email = command.Email;
@@ -41,15 +41,15 @@ public record class CreateEntrepreneurCommand : IRequest<int>
     public decimal InvestmentAmount { get; set; }
 }
 
-public class CreateEntrepreneurCommandHandler(IRepository<Entrepreneur> repository, IMapper mapper) : IRequestHandler<CreateEntrepreneurCommand, int>
+public class CreateRepresentativeCommandHandler(IRepository<Representative> repository, IMapper mapper) : IRequestHandler<CreateRepresentativeCommand, int>
 {
-    public async Task<int> Handle(CreateEntrepreneurCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateRepresentativeCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.TelegramId == request.TelegramId);
         if (entity is not null)
             throw new();
 
-        await repository.InsertAsync(mapper.Map<Entrepreneur>(request));
+        await repository.InsertAsync(mapper.Map<Representative>(request));
         return await repository.SaveAsync();
     }
 }

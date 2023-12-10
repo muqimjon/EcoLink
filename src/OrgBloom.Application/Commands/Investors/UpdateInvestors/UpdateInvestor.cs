@@ -10,29 +10,29 @@ public record UpdateInvestorCommand : IRequest<int>
     public UpdateInvestorCommand(UpdateInvestorCommand command)
     {
         Id = command.Id;
-        TelegramId = command.TelegramId;
-        FirstName = command.FirstName;
-        LastName = command.LastName;
-        Patronomyc = command.Patronomyc;
-        DateOfBirth = command.DateOfBirth;
-        Degree = command.Degree;
-        Sector = command.Sector;
-        InvestmentAmount = command.InvestmentAmount;
-        Phone = command.Phone;
         Email = command.Email;
+        Phone = command.Phone;
+        Sector = command.Sector;
+        Degree = command.Degree;
+        LastName = command.LastName;
+        FirstName = command.FirstName;
+        Patronomyc = command.Patronomyc;
+        TelegramId = command.TelegramId;
+        DateOfBirth = command.DateOfBirth;
+        InvestmentAmount = command.InvestmentAmount;
     }
 
     public long Id { get; set; }
-    public int TelegramId { get; set; }
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } = string.Empty;
-    public string Patronomyc { get; set; } = string.Empty;
-    public DateTime DateOfBirth { get; set; }
-    public string Degree { get; set; } = string.Empty;
-    public string Sector { get; set; } = string.Empty;
-    public decimal InvestmentAmount { get; set; }
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+    public string Sector { get; set; } = string.Empty;
+    public string Degree { get; set; } = string.Empty;
+    public int TelegramId { get; set; }
+    public string LastName { get; set; } = string.Empty;
+    public string FirstName { get; set; } = string.Empty;
+    public string Patronomyc { get; set; } = string.Empty;
+    public DateTime DateOfBirth { get; set; }
+    public decimal InvestmentAmount { get; set; }
 }
 
 public class UpdateInvestorCommandHandler(IRepository<Investor> repository, IMapper mapper) : IRequestHandler<UpdateInvestorCommand, int>

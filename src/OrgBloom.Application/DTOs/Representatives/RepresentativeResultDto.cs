@@ -1,7 +1,8 @@
 ﻿namespace OrgBloom.Application.DTOs.Representatives;
 
-public class Representative
+public class RepresentativeResultDto
 {
+    public long Id { get; set; }
     public DateTime CreatedAt { get; set; }
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;

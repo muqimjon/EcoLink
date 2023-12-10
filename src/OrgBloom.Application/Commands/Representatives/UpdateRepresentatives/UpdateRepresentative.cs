@@ -3,20 +3,21 @@ using AutoMapper;
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Interfaces;
 
-namespace OrgBloom.Application.Commands.Entrepreneurs.CreateEntrepreneurs;
+namespace OrgBloom.Application.Commands.Representatives.UpdateRepresentatives;
 
-public record class CreateEntrepreneurCommand : IRequest<int>
+public record UpdateRepresentativeCommand : IRequest<int>
 {
-    public CreateEntrepreneurCommand(CreateEntrepreneurCommand command)
+    public UpdateRepresentativeCommand(UpdateRepresentativeCommand command)
     {
+        Id = command.Id;
         Phone = command.Phone;
         Email = command.Email;
         Degree = command.Degree;
         Project = command.Project;
         LastName = command.LastName;
         HelpType = command.HelpType;
-        FirstName = command.FirstName;
         CreatedAt = command.CreatedAt;
+        FirstName = command.FirstName;
         TelegramId = command.TelegramId;
         Patronomyc = command.Patronomyc;
         Experience = command.Experience;
@@ -25,6 +26,7 @@ public record class CreateEntrepreneurCommand : IRequest<int>
         InvestmentAmount = command.InvestmentAmount;
     }
 
+    public long Id { get; set; }
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string Degree { get; set; } = string.Empty;
@@ -41,15 +43,15 @@ public record class CreateEntrepreneurCommand : IRequest<int>
     public decimal InvestmentAmount { get; set; }
 }
 
-public class CreateEntrepreneurCommandHandler(IRepository<Entrepreneur> repository, IMapper mapper) : IRequestHandler<CreateEntrepreneurCommand, int>
+public class UpdateRepresentativeCommandHandler(IRepository<Representative> repository, IMapper mapper) : IRequestHandler<UpdateRepresentativeCommand, int>
 {
-    public async Task<int> Handle(CreateEntrepreneurCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(UpdateRepresentativeCommand request, CancellationToken cancellationToken)
     {
-        var entity = await repository.SelectAsync(entity => entity.TelegramId == request.TelegramId);
-        if (entity is not null)
-            throw new();
+        var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
+            ?? throw new();
 
-        await repository.InsertAsync(mapper.Map<Entrepreneur>(request));
+        mapper.Map(request, entity);
+        repository.Update(entity);
         return await repository.SaveAsync();
     }
 }

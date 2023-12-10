@@ -5,7 +5,7 @@ using OrgBloom.Application.Interfaces;
 
 namespace OrgBloom.Application.Commands.ProjectManagers.CreateProjectManagers;
 
-public record class CreateProjectManagerCommand : IRequest<int>
+public record CreateProjectManagerCommand : IRequest<int>
 {
     public CreateProjectManagerCommand(CreateProjectManagerCommand command)
     {
@@ -45,6 +45,10 @@ public class CreateProjectManagerCommandHandler(IRepository<ProjectManager> repo
 {
     public async Task<int> Handle(CreateProjectManagerCommand request, CancellationToken cancellationToken)
     {
+        var entity = await repository.SelectAsync(entity => entity.TelegramId == request.TelegramId);
+        if (entity is not null)
+            throw new();
+
         await repository.InsertAsync(mapper.Map<ProjectManager>(request));
         return await repository.SaveAsync();
     }
