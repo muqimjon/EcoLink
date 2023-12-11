@@ -1,0 +1,6 @@
+@OrgBloom.Bot_HostAddress = http://localhost:5050
+
+GET {{OrgBloom.Bot_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

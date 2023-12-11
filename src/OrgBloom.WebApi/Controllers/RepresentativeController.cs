@@ -1,7 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using OrgBloom.WebApi.Controllers.Commons;
-using OrgBloom.Application.Representatives.Queries.GetRepresentatives;
+﻿using OrgBloom.Application.Representatives.Queries.GetRepresentatives;
 using OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
 using OrgBloom.Application.Representatives.Commands.DeleteRepresentatives;
 using OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
