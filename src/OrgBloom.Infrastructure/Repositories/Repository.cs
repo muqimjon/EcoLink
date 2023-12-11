@@ -1,13 +1,13 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Infrastructure.Contexts;
+using OrgBloom.Application.Commons.Interfaces;
 
 namespace OrgBloom.Infrastructure.Repositories;
 
 public class Repository<T>(AppDbContext dbContext) : IRepository<T> where T : class
 {
-    public DbSet<T> table
+    public DbSet<T> Table
     {
         get
         {
@@ -17,30 +17,30 @@ public class Repository<T>(AppDbContext dbContext) : IRepository<T> where T : cl
 
     public async Task InsertAsync(T entity)
     {
-        await table.AddAsync(entity);
+        await Table.AddAsync(entity);
     }
 
     public void Update(T entity)
     {
-        table.Entry(entity).State = EntityState.Modified;
+        Table.Entry(entity).State = EntityState.Modified;
     }
 
     public void Delete(T entity)
     {
-        table.Remove(entity);
+        Table.Remove(entity);
     }
 
     public void Delete(Expression<Func<T, bool>> expression)
     {
-        foreach (var entity in table.Where(expression))
-            table.Remove(entity);
+        foreach (var entity in Table.Where(expression))
+            Table.Remove(entity);
     }
 
     public async Task<T> SelectAsync(Expression<Func<T, bool>> expression)
-        => (await table.FirstOrDefaultAsync(expression))!;
+        => (await Table.FirstOrDefaultAsync(expression))!;
 
     public IQueryable<T> SelectAll(Expression<Func<T, bool>> expression = null!)
-        => expression != null ? table.Where(expression) : table;
+        => expression != null ? Table.Where(expression) : Table;
 
     public Task<int> SaveAsync()
     {

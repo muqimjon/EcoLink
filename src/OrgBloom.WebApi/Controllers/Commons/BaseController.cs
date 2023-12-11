@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿global using MediatR;
+global using Microsoft.AspNetCore.Mvc;
+global using OrgBloom.WebApi.Controllers.Commons;
 
 namespace OrgBloom.WebApi.Controllers.Commons;
 
