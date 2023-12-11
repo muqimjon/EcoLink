@@ -10,5 +10,5 @@ public record GetAllEntrepreneursQuery : IRequest<IEnumerable<EntrepreneurResult
 public class GetAllEntrepreneursQueryHandler(IRepository<Entrepreneur> repository, IMapper mapper) : IRequestHandler<GetAllEntrepreneursQuery, IEnumerable<EntrepreneurResultDto>>
 {
     public async Task<IEnumerable<EntrepreneurResultDto>> Handle(GetAllEntrepreneursQuery request, CancellationToken cancellationToken)
-    => await Task.Run(() => mapper.Map<IEnumerable<EntrepreneurResultDto>>(repository.SelectAll().ToList()));
+        => await Task.Run(() => mapper.Map<IEnumerable<EntrepreneurResultDto>>(repository.SelectAll().ToList()));
 }

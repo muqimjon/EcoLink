@@ -1,4 +1,6 @@
-﻿namespace OrgBloom.Application.Users.DTOs;
+﻿using OrgBloom.Domain.Enums;
+
+namespace OrgBloom.Application.Users.DTOs;
 
 public class UserResultDto
 {
@@ -10,10 +12,7 @@ public class UserResultDto
     public string Degree { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
-    public string Experience { get; set; } = string.Empty;
-    public string Project { get; set; } = string.Empty;
-    public string HelpType { get; set; } = string.Empty;
-    public decimal InvestmentAmount { get; set; }
-    public string AssetsInvested { get; set; } = string.Empty;
-    public DateTime CreatedAt { get; set; }
+    public UserProfession Profession { get; set; }
+    public int TelegramId { get; set; }
+    public string LanguageCode { get; set; } = string.Empty;
 }

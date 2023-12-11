@@ -9,42 +9,28 @@ public record CreateProjectManagerCommand : IRequest<int>
     public CreateProjectManagerCommand(CreateProjectManagerCommand command)
     {
         Area = command.Area;
-        Phone = command.Phone;
-        Email = command.Email;
-        Degree = command.Degree;
+        UserId = command.UserId;
         Purpose = command.Purpose;
         Address = command.Address;
-        LastName = command.LastName;
         Languages = command.Languages;
-        FirstName = command.FirstName;
-        TelegramId = command.TelegramId;
-        Patronomyc = command.Patronomyc;
         Experience = command.Experience;
         Expectation = command.Expectation;
-        DateOfBirth = command.DateOfBirth;
     }
 
-    public int TelegramId { get; set; }
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } = string.Empty;
-    public string Patronomyc { get; set; } = string.Empty;
-    public DateTime DateOfBirth { get; set; }
-    public string Degree { get; set; } = string.Empty;
-    public string Phone { get; set; } = string.Empty;
-    public string Email { get; set; } = string.Empty;
     public string Languages { get; set; } = string.Empty;
     public string Experience { get; set; } = string.Empty;
     public string Address { get; set; } = string.Empty;
     public string Area { get; set; } = string.Empty;
     public string Expectation { get; set; } = string.Empty;
     public string Purpose { get; set; } = string.Empty;
+    public long UserId { get; set; }
 }
 
 public class CreateProjectManagerCommandHandler(IRepository<ProjectManager> repository, IMapper mapper) : IRequestHandler<CreateProjectManagerCommand, int>
 {
     public async Task<int> Handle(CreateProjectManagerCommand request, CancellationToken cancellationToken)
     {
-        var entity = await repository.SelectAsync(entity => entity.TelegramId == request.TelegramId);
+        var entity = await repository.SelectAsync(entity => entity.UserId == request.UserId);
         if (entity is not null)
             throw new();
 

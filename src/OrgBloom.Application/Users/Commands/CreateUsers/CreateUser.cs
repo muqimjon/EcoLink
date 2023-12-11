@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Domain.Enums;
 
 namespace OrgBloom.Application.Users.Commands.CreateUsers;
 
@@ -11,19 +12,15 @@ public record class CreateUserCommand : IRequest<int>
         Phone = command.Phone;
         Email = command.Email;
         Degree = command.Degree;
-        Project = command.Project;
         LastName = command.LastName;
-        HelpType = command.HelpType;
         FirstName = command.FirstName;
         TelegramId = command.TelegramId;
         Patronomyc = command.Patronomyc;
-        Experience = command.Experience;
+        Profession = command.Profession;
         DateOfBirth = command.DateOfBirth;
-        AssetsInvested = command.AssetsInvested;
-        InvestmentAmount = command.InvestmentAmount;
+        LanguageCode = command.LanguageCode;
     }
 
-    public int TelegramId { get; set; }
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string Patronomyc { get; set; } = string.Empty;
@@ -31,11 +28,9 @@ public record class CreateUserCommand : IRequest<int>
     public string Degree { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
-    public string Experience { get; set; } = string.Empty;
-    public string Project { get; set; } = string.Empty;
-    public string HelpType { get; set; } = string.Empty;
-    public decimal InvestmentAmount { get; set; }
-    public string AssetsInvested { get; set; } = string.Empty;
+    public UserProfession Profession { get; set; }
+    public int TelegramId { get; set; }
+    public string LanguageCode { get; set; } = string.Empty;
 }
 
 public class CreateUserCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<CreateUserCommand, int>

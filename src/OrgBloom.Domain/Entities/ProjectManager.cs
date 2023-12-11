@@ -2,13 +2,13 @@
 
 public class ProjectManager : Auditable
 {
-    public string? Languages { get; set; } = string.Empty;
-    public string? Experience { get; set; } = string.Empty;
-    public string? Address { get; set; } = string.Empty;
-    public string? Area { get; set; } = string.Empty;
-    public string? Expectation { get; set; } = string.Empty;
-    public string? Purpose { get; set; } = string.Empty;
+    public string? Languages { get; set; }
+    public string? Experience { get; set; }
+    public string? Address { get; set; }
+    public string? Area { get; set; }
+    public string? Expectation { get; set; }
+    public string? Purpose { get; set; }
 
-    public long? UserId { get; set; }
+    public long UserId { get; set; }
     public User User { get; set; } = default!;
 }
