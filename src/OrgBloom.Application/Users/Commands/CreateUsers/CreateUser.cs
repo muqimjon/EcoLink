@@ -2,11 +2,11 @@
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
 
-namespace OrgBloom.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
+namespace OrgBloom.Application.Users.Commands.CreateUsers;
 
-public record class CreateEntrepreneurCommand : IRequest<int>
+public record class CreateUserCommand : IRequest<int>
 {
-    public CreateEntrepreneurCommand(CreateEntrepreneurCommand command)
+    public CreateUserCommand(CreateUserCommand command)
     {
         Phone = command.Phone;
         Email = command.Email;
@@ -38,15 +38,15 @@ public record class CreateEntrepreneurCommand : IRequest<int>
     public string AssetsInvested { get; set; } = string.Empty;
 }
 
-public class CreateEntrepreneurCommandHandler(IRepository<Entrepreneur> repository, IMapper mapper) : IRequestHandler<CreateEntrepreneurCommand, int>
+public class CreateUserCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<CreateUserCommand, int>
 {
-    public async Task<int> Handle(CreateEntrepreneurCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        var entity = await repository.SelectAsync(entity => entity.UserId == request);
+        var entity = await repository.SelectAsync(entity => entity.TelegramId == request.TelegramId);
         if (entity is not null)
             throw new();
 
-        await repository.InsertAsync(mapper.Map<Entrepreneur>(request));
+        await repository.InsertAsync(mapper.Map<User>(request));
         return await repository.SaveAsync();
     }
 }

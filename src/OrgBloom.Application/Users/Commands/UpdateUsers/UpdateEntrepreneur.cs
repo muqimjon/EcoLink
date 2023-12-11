@@ -2,12 +2,13 @@
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
 
-namespace OrgBloom.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
+namespace OrgBloom.Application.Users.Commands.UpdateUsers;
 
-public record class CreateEntrepreneurCommand : IRequest<int>
+public record UpdateUserCommand : IRequest<int>
 {
-    public CreateEntrepreneurCommand(CreateEntrepreneurCommand command)
+    public UpdateUserCommand(UpdateUserCommand command)
     {
+        Id = command.Id;
         Phone = command.Phone;
         Email = command.Email;
         Degree = command.Degree;
@@ -23,6 +24,7 @@ public record class CreateEntrepreneurCommand : IRequest<int>
         InvestmentAmount = command.InvestmentAmount;
     }
 
+    public long Id { get; set; }
     public int TelegramId { get; set; }
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
@@ -38,15 +40,15 @@ public record class CreateEntrepreneurCommand : IRequest<int>
     public string AssetsInvested { get; set; } = string.Empty;
 }
 
-public class CreateEntrepreneurCommandHandler(IRepository<Entrepreneur> repository, IMapper mapper) : IRequestHandler<CreateEntrepreneurCommand, int>
+public class UpdateUserCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<UpdateUserCommand, int>
 {
-    public async Task<int> Handle(CreateEntrepreneurCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
-        var entity = await repository.SelectAsync(entity => entity.UserId == request);
-        if (entity is not null)
-            throw new();
+        var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
+            ?? throw new();
 
-        await repository.InsertAsync(mapper.Map<Entrepreneur>(request));
+        mapper.Map(request, entity);
+        repository.Update(entity);
         return await repository.SaveAsync();
     }
 }
