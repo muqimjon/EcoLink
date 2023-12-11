@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using OrgBloom.Domain.Entities;
+using OrgBloom.Application.Users.DTOs;
 using OrgBloom.Application.Investors.DTOs;
 using OrgBloom.Application.Entrepreneurs.DTOs;
 using OrgBloom.Application.ProjectManagers.DTOs;
 using OrgBloom.Application.Representatives.DTOs;
+using OrgBloom.Application.Users.Commands.CreateUsers;
+using OrgBloom.Application.Users.Commands.UpdateUsers;
 using OrgBloom.Application.Investors.Commands.CreateInvestors;
 using OrgBloom.Application.Investors.Commands.UpdateInvestors;
 using OrgBloom.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
@@ -38,5 +41,10 @@ public class MappingProfile : Profile
         CreateMap<Representative, RepresentativeResultDto>();
         CreateMap<CreateRepresentativeCommand, Representative>();
         CreateMap<UpdateRepresentativeCommand, Representative>();
+
+        // User
+        CreateMap<User, UserResultDto>();
+        CreateMap<CreateUserCommand, User>();
+        CreateMap<UpdateUserCommand, User>();
     }
 }
