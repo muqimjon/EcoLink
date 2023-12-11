@@ -1,7 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using OrgBloom.WebApi.Controllers.Commons;
-using OrgBloom.Application.ProjectManagers.Commands.CreateProjectManagers;
+﻿using OrgBloom.Application.ProjectManagers.Commands.CreateProjectManagers;
 using OrgBloom.Application.ProjectManagers.Commands.DeleteProjectManagers;
 using OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 using OrgBloom.Application.ProjectManagers.Queries.GetProjectManagers;
