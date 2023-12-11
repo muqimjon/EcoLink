@@ -1,10 +1,8 @@
 using Telegram.Bot;
-using System.Globalization;
 using Telegram.Bot.Polling;
 using OrgBloom.Application;
 using OrgBloom.Infrastructure;
 using OrgBloom.Bot.BotServices;
-using Microsoft.AspNetCore.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,14 +23,12 @@ builder.Services.AddLocalization();
 
 // Build
 var app = builder.Build();
-
-// Add localization
-var supportedCultures = new[] { "uz-Uz", "en-Us", "ru-Ru" };
-app.UseRequestLocalization(new RequestLocalizationOptions
-{
-    DefaultRequestCulture = new RequestCulture(supportedCultures[0]),
-    SupportedCultures = supportedCultures.Select(c => new CultureInfo(c)).ToList(),
-    SupportedUICultures = supportedCultures.Select(c => new CultureInfo(c)).ToList()
-});
+    
+var supportedCultures = new[] { "uz-Uz", "ru-Ru", "en-Us" };
+var localizationOptions = new RequestLocalizationOptions()
+  .SetDefaultCulture(supportedCultures[0])
+  .AddSupportedCultures(supportedCultures)
+  .AddSupportedUICultures(supportedCultures);
+app.UseRequestLocalization(localizationOptions);
 
 app.Run();

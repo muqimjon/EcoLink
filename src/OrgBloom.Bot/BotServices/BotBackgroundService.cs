@@ -15,10 +15,6 @@ public class BotBackgroundService(TelegramBotClient client,
 
         client.StartReceiving(
             handler.HandleUpdateAsync,
-            handler.HandlePollingErrorAsync,
-            new ReceiverOptions()
-        {
-            ThrowPendingUpdates = true,
-        }, stoppingToken);
+            handler.HandlePollingErrorAsync,null, stoppingToken);
     }
 }
