@@ -1,4 +1,6 @@
-﻿namespace OrgBloom.Application.Users.DTOs;
+﻿using OrgBloom.Domain.Enums;
+
+namespace OrgBloom.Application.Users.DTOs;
 
 public class UserTelegramResultDto
 {
@@ -10,4 +12,5 @@ public class UserTelegramResultDto
     public string LastName { get; set; } = string.Empty;
     public string Username { get; set; } = string.Empty;
     public string LanguageCode { get; set; } = string.Empty;
+    public UserState State { get; set; }
 }

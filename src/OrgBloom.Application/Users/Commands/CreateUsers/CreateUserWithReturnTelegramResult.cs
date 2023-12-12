@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using OrgBloom.Domain.Enums;
 using OrgBloom.Domain.Entities;
+using OrgBloom.Application.Users.DTOs;
 using OrgBloom.Application.Commons.Interfaces;
 
 namespace OrgBloom.Application.Users.Commands.CreateUsers;
 
-public record class CreateUserCommand : IRequest<int>
+public record class CreateUserWithReturnTgResultCommand : IRequest<UserTelegramResultDto>
 {
-    public CreateUserCommand(CreateUserCommand command)
+    public CreateUserWithReturnTgResultCommand(CreateUserWithReturnTgResultCommand command)
     {
         Phone = command.Phone;
         Email = command.Email;
@@ -39,15 +40,16 @@ public record class CreateUserCommand : IRequest<int>
     public bool IsBot { get; set; }
 }
 
-public class CreateUserCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<CreateUserCommand, int>
+public class CreateUserWithReturnTgResultCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<CreateUserWithReturnTgResultCommand, UserTelegramResultDto>
 {
-    public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<UserTelegramResultDto> Handle(CreateUserWithReturnTgResultCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.TelegramId == request.TelegramId);
         if (entity is not null)
             throw new("User Already exist user command create");
 
         await repository.InsertAsync(mapper.Map<User>(request));
-        return await repository.SaveAsync();
+        await repository.SaveAsync();
+        return mapper.Map<UserTelegramResultDto>(request);
     }
 }

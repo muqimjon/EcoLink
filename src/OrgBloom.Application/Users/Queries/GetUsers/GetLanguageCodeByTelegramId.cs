@@ -11,7 +11,7 @@ public record GetLanguageCodeByTelegramIdQuery : IRequest<string>
     public long TelegramId { get; set; }
 }
 
-public class GetLanguageCodeByTelegramIdQueryHendler(IRepository<User> repository, IMapper mapper) : IRequestHandler<GetLanguageCodeByTelegramIdQuery, string>
+public class GetLanguageCodeByTelegramIdQueryHendler(IRepository<User> repository) : IRequestHandler<GetLanguageCodeByTelegramIdQuery, string>
 {
     public async Task<string> Handle(GetLanguageCodeByTelegramIdQuery request, CancellationToken cancellationToken)
         => (await repository.SelectAsync(i => i.TelegramId.Equals(request.TelegramId))).LanguageCode

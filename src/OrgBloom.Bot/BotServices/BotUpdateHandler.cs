@@ -5,6 +5,7 @@ using System.Globalization;
 using Telegram.Bot.Polling;
 using OrgBloom.Bot.Resources;
 using Telegram.Bot.Types.Enums;
+using OrgBloom.Application.Users.DTOs;
 using Microsoft.Extensions.Localization;
 using OrgBloom.Application.Users.Queries.GetUsers;
 using OrgBloom.Application.Users.Commands.CreateUsers;
@@ -17,6 +18,8 @@ public partial class BotUpdateHandler(
 {
     private IStringLocalizer localizer;
     private IMediator mediator;
+    private UserTelegramResultDto user;
+
     public Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
     {
         logger.LogInformation("HandlePollingError: {ErrorText}", exception.Message);
@@ -38,8 +41,8 @@ public partial class BotUpdateHandler(
         {
             UpdateType.Message => HandleMessageAsync(botClient, update.Message, cancellationToken),
             UpdateType.EditedMessage => HandleEditedMessageAsync(botClient, update.EditedMessage, cancellationToken),
-            UpdateType.CallbackQuery => HandleCallbackQuery(botClient, update.EditedMessage, cancellationToken),
-            UpdateType.InlineQuery => HandleInlineQuery(botClient, update.EditedMessage, cancellationToken),
+            UpdateType.CallbackQuery => HandleCallbackQuery(botClient, update.CallbackQuery, cancellationToken),
+            UpdateType.InlineQuery => HandleInlineQuery(botClient, update.InlineQuery, cancellationToken),
             _ => HandleUnknownUpdateAsync(botClient, update, cancellationToken)
         };
 
@@ -49,6 +52,7 @@ public partial class BotUpdateHandler(
         }
         catch(Exception ex)
         {
+            logger.LogInformation("HandlePollingError: {ErrorText}", ex.Message);
             await HandlePollingErrorAsync(botClient, ex, cancellationToken);
         }
     }
@@ -57,21 +61,19 @@ public partial class BotUpdateHandler(
     {
         var updateContent = BotUpdateHandler.GetUpdateType(update);
         var from = updateContent.From;
+        user = await mediator.Send(new GetUserByTelegramIdQuery(from.Id))
+            ?? await mediator.Send(new CreateUserWithReturnTgResultCommand()
+                {
+                    IsBot = from.IsBot,
+                    TelegramId = from.Id,
+                    LastName = from.LastName,
+                    Username = from.Username,
+                    FirstName = from.FirstName,
+                    ChatId = update.Message!.Chat.Id,
+                    LanguageCode = from.LanguageCode,
+                });
 
-        if (!await mediator.Send(new IsUserExistByTelegramIdQuery(from.Id)))
-            await mediator.Send(new CreateUserCommand()
-            {
-                TelegramId = from.Id,
-                FirstName = from.FirstName,
-                LastName = from.LastName,
-                Username = from.Username,
-                LanguageCode = from.LanguageCode!,
-                IsBot = from.IsBot,
-                ChatId = update.Message!.Chat.Id
-            });
-
-        var languageCode = await mediator.Send(new GetLanguageCodeByTelegramIdQuery(from.Id));
-        return new CultureInfo(languageCode ?? "uz-Uz");
+        return new CultureInfo(user.LanguageCode);
     }
 
     private static dynamic GetUpdateType(Update update)
