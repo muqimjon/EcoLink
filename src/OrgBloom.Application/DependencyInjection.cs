@@ -21,6 +21,11 @@ using OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 using OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
 using OrgBloom.Application.Representatives.Commands.DeleteRepresentatives;
 using OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
+using OrgBloom.Application.Users.Commands.CreateUsers;
+using OrgBloom.Application.Users.Commands.UpdateUsers;
+using OrgBloom.Application.Users.Commands.DeleteUsers;
+using OrgBloom.Application.Users.Queries.GetUsers;
+using OrgBloom.Application.Users.DTOs;
 
 namespace OrgBloom.Application;
 
@@ -52,6 +57,16 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<DeleteEntrepreneurCommand, bool>, DeleteEntrepreneurCommandHandler>();
         services.AddScoped<IRequestHandler<GetEntrepreneurQuery, EntrepreneurResultDto>, GetEntrepreneurQueryHendler>();
         services.AddScoped<IRequestHandler<GetAllEntrepreneursQuery, IEnumerable<EntrepreneurResultDto>>, GetAllEntrepreneursQueryHandler>();
+
+        services.AddScoped<IRequestHandler<CreateUserCommand, int>, CreateUserCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateUserCommand, int>, UpdateUserCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateLanguageCodeCommand, int>, UpdateUserLanguageCodeCommandHandler>();
+        services.AddScoped<IRequestHandler<DeleteUserCommand, bool>, DeleteUserCommandHandler>();
+        services.AddScoped<IRequestHandler<GetUserByIdQuery, UserResultDto>, GetUserQueryHendler>();
+        services.AddScoped<IRequestHandler<IsUserExistByTelegramIdQuery, bool>, IsUserExistByTelegramIdQueryHendler>();
+        services.AddScoped<IRequestHandler<GetAllUsersQuery, IEnumerable<UserResultDto>>, GetAllUsersQueryHandler>();
+        services.AddScoped<IRequestHandler<GetUserByTelegramIdQuery, UserTelegramResultDto>, GetUserByTelegramIdQueryHendler>();
+        services.AddScoped<IRequestHandler<GetLanguageCodeByTelegramIdQuery, string>, GetLanguageCodeByTelegramIdQueryHendler>();
 
         return services;
     }

@@ -24,7 +24,7 @@ builder.Services.AddLocalization();
 // Build
 var app = builder.Build();
     
-var supportedCultures = new[] { "uz-Uz", "ru-Ru", "en-Us" };
+var supportedCultures = new[] { "uz", "ru", "en" };
 var localizationOptions = new RequestLocalizationOptions()
   .SetDefaultCulture(supportedCultures[0])
   .AddSupportedCultures(supportedCultures)

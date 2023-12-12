@@ -4,14 +4,17 @@ namespace OrgBloom.Domain.Entities;
 
 public class User : Auditable
 {
-    public string? FirstName { get; set; } = string.Empty;
-    public string? LastName { get; set; } = string.Empty;
-    public string? Patronomyc { get; set; } = string.Empty;
+    public long? TelegramId { get; set; }
+    public string? Username { get; set; }
+    public string? LanguageCode { get; set; }
+    public long? ChatId { get; set; }
+    public bool IsBot { get; set; }
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public string? Patronomyc { get; set; }
     public DateTime? DateOfBirth { get; set; }
-    public string? Degree { get; set; } = string.Empty;
-    public string? Phone { get; set; } = string.Empty;
-    public string? Email { get; set; } = string.Empty;
-    public UserProfession Profession { get; set; } = UserProfession.None;
-    public int? TelegramId { get; set; }
-    public string? LanguageCode { get; set; } = string.Empty;
+    public string? Degree { get; set; }
+    public string? Phone { get; set; }
+    public string? Email { get; set; }
+    public UserProfession Profession { get; set; }
 }

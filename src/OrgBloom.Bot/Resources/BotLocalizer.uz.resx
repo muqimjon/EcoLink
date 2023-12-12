@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="choose-language" xml:space="preserve">
-    <value>Tilni tanlang !</value>
+  <data name="/start" xml:space="preserve">
+    <value>"Assalomu alaykum {0}! O'zingiz uchun qulay tilni tanlang:\nwebsite\nvar text = \"Salom,\\nDunyo!\""</value>
   </data>
   <data name="greeting" xml:space="preserve">
-    <value>Salom bu juda ham &lt;strong&gt;super&lt;/strong&gt; bot!</value>
+    <value>Salom bu juda ham ||super|| bot!</value>
   </data>
 </root>

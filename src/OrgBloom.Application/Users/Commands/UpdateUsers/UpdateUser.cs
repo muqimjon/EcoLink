@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using OrgBloom.Domain.Enums;
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
 
@@ -11,21 +12,20 @@ public record UpdateUserCommand : IRequest<int>
         Id = command.Id;
         Phone = command.Phone;
         Email = command.Email;
+        IsBot = command.IsBot;
         Degree = command.Degree;
-        Project = command.Project;
+        ChatId = command.ChatId;
+        UserName = command.UserName;
         LastName = command.LastName;
-        HelpType = command.HelpType;
         FirstName = command.FirstName;
         TelegramId = command.TelegramId;
         Patronomyc = command.Patronomyc;
-        Experience = command.Experience;
+        Profession = command.Profession;
         DateOfBirth = command.DateOfBirth;
-        AssetsInvested = command.AssetsInvested;
-        InvestmentAmount = command.InvestmentAmount;
+        LanguageCode = command.LanguageCode;
     }
 
     public long Id { get; set; }
-    public int TelegramId { get; set; }
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string Patronomyc { get; set; } = string.Empty;
@@ -33,11 +33,12 @@ public record UpdateUserCommand : IRequest<int>
     public string Degree { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
-    public string Experience { get; set; } = string.Empty;
-    public string Project { get; set; } = string.Empty;
-    public string HelpType { get; set; } = string.Empty;
-    public decimal InvestmentAmount { get; set; }
-    public string AssetsInvested { get; set; } = string.Empty;
+    public UserProfession Profession { get; set; }
+    public long TelegramId { get; set; }
+    public string UserName { get; set; } = string.Empty;
+    public string LanguageCode { get; set; } = string.Empty;
+    public long? ChatId { get; set; }
+    public bool IsBot { get; set; }
 }
 
 public class UpdateUserCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<UpdateUserCommand, int>
