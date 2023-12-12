@@ -1,10 +1,13 @@
-﻿using Telegram.Bot;
+﻿using MediatR;
+using Telegram.Bot;
 using Telegram.Bot.Types;
+using System.Globalization;
 using Telegram.Bot.Polling;
+using OrgBloom.Bot.Resources;
 using Telegram.Bot.Types.Enums;
 using Microsoft.Extensions.Localization;
-using OrgBloom.Bot.Resources;
-using System.Globalization;
+using OrgBloom.Application.Users.Queries.GetUsers;
+using OrgBloom.Application.Users.Commands.CreateUsers;
 
 namespace OrgBloom.Bot.BotServices;
 
@@ -13,6 +16,7 @@ public partial class BotUpdateHandler(
     IServiceScopeFactory serviceScopeFactory) : IUpdateHandler
 {
     private IStringLocalizer localizer;
+    private IMediator mediator;
     public Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
     {
         logger.LogInformation("HandlePollingError: {ErrorText}", exception.Message);
@@ -22,17 +26,20 @@ public partial class BotUpdateHandler(
 
     public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
-        var culture = GetCulture(update);
+        using var scope = serviceScopeFactory.CreateScope();
+        mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+        localizer = scope.ServiceProvider.GetRequiredService<IStringLocalizer<BotLocalizer>>();
+
+        var culture = await GetCultureAsync(update);
         CultureInfo.CurrentCulture = culture;
         CultureInfo.CurrentUICulture = culture;
-
-        using var scope = serviceScopeFactory.CreateScope();
-        localizer = scope.ServiceProvider.GetRequiredService<IStringLocalizer<BotLocalizer>>();
 
         var handler = update.Type switch
         {
             UpdateType.Message => HandleMessageAsync(botClient, update.Message, cancellationToken),
             UpdateType.EditedMessage => HandleEditedMessageAsync(botClient, update.EditedMessage, cancellationToken),
+            UpdateType.CallbackQuery => HandleCallbackQuery(botClient, update.EditedMessage, cancellationToken),
+            UpdateType.InlineQuery => HandleInlineQuery(botClient, update.EditedMessage, cancellationToken),
             _ => HandleUnknownUpdateAsync(botClient, update, cancellationToken)
         };
 
@@ -46,27 +53,44 @@ public partial class BotUpdateHandler(
         }
     }
 
-    private static CultureInfo GetCulture(Update update)
+    private async Task<CultureInfo> GetCultureAsync(Update update)
     {
-        User? from = update.Type switch
-        {
-            UpdateType.Message => update.Message?.From,
-            UpdateType.ChatMember => update.ChatMember?.From,
-            UpdateType.PollAnswer => update.PollAnswer?.User,
-            UpdateType.ChannelPost => update.ChannelPost?.From,
-            UpdateType.InlineQuery => update.InlineQuery?.From,
-            UpdateType.MyChatMember => update.MyChatMember?.From,
-            UpdateType.CallbackQuery => update.CallbackQuery?.From,
-            UpdateType.EditedMessage => update.EditedMessage?.From,
-            UpdateType.ShippingQuery => update.ShippingQuery?.From,
-            UpdateType.PreCheckoutQuery => update.PreCheckoutQuery?.From,
-            UpdateType.EditedChannelPost => update.EditedChannelPost?.From,
-            UpdateType.ChosenInlineResult => update.ChosenInlineResult?.From,
-            _ => update.Message?.From,
-        };
+        var updateContent = BotUpdateHandler.GetUpdateType(update);
+        var from = updateContent.From;
 
-        return new CultureInfo(from?.LanguageCode ?? "uz-Uz");
+        if (!await mediator.Send(new IsUserExistByTelegramIdQuery(from.Id)))
+            await mediator.Send(new CreateUserCommand()
+            {
+                TelegramId = from.Id,
+                FirstName = from.FirstName,
+                LastName = from.LastName,
+                Username = from.Username,
+                LanguageCode = from.LanguageCode!,
+                IsBot = from.IsBot,
+                ChatId = update.Message!.Chat.Id
+            });
+
+        var languageCode = await mediator.Send(new GetLanguageCodeByTelegramIdQuery(from.Id));
+        return new CultureInfo(languageCode ?? "uz-Uz");
     }
+
+    private static dynamic GetUpdateType(Update update)
+        => (update.Type switch
+        {
+            UpdateType.Message => update.Message,
+            UpdateType.ChatMember => update.ChatMember,
+            UpdateType.PollAnswer => update.PollAnswer,
+            UpdateType.ChannelPost => update.ChannelPost,
+            UpdateType.InlineQuery => update.InlineQuery,
+            UpdateType.MyChatMember => update.MyChatMember,
+            UpdateType.CallbackQuery => update.CallbackQuery,
+            UpdateType.EditedMessage => update.EditedMessage,
+            UpdateType.ShippingQuery => update.ShippingQuery,
+            UpdateType.PreCheckoutQuery => update.PreCheckoutQuery,
+            UpdateType.EditedChannelPost => update.EditedChannelPost,
+            UpdateType.ChosenInlineResult => update.ChosenInlineResult,
+            _ => update.Message,
+        })!;
 
     private Task HandleUnknownUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {

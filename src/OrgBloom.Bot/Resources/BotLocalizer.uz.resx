@@ -121,6 +121,6 @@
     <value>Tilni tanlang !</value>
   </data>
   <data name="greeting" xml:space="preserve">
-    <value>Salom bu juda ham &lt;strong&gt;super&lt;/strong&gt; bot!</value>
+    <value>Salom bu juda ham ||super|| bot!</value>
   </data>
 </root>

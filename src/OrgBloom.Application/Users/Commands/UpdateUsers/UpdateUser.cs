@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using OrgBloom.Domain.Enums;
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Domain.Enums;
 
 namespace OrgBloom.Application.Users.Commands.UpdateUsers;
 
@@ -12,7 +12,10 @@ public record UpdateUserCommand : IRequest<int>
         Id = command.Id;
         Phone = command.Phone;
         Email = command.Email;
+        IsBot = command.IsBot;
         Degree = command.Degree;
+        ChatId = command.ChatId;
+        UserName = command.UserName;
         LastName = command.LastName;
         FirstName = command.FirstName;
         TelegramId = command.TelegramId;
@@ -31,8 +34,11 @@ public record UpdateUserCommand : IRequest<int>
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public UserProfession Profession { get; set; }
-    public int TelegramId { get; set; }
+    public long TelegramId { get; set; }
+    public string UserName { get; set; } = string.Empty;
     public string LanguageCode { get; set; } = string.Empty;
+    public long? ChatId { get; set; }
+    public bool IsBot { get; set; }
 }
 
 public class UpdateUserCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<UpdateUserCommand, int>

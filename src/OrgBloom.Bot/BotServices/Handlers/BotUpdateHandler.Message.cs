@@ -1,6 +1,7 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using OrgBloom.Application.Users.Commands.UpdateUsers;
 
 namespace OrgBloom.Bot.BotServices;
 
@@ -29,11 +30,18 @@ public partial class BotUpdateHandler
         var from = message.From;
         logger.LogInformation("From: {from.FirstName}", from?.FirstName);
 
-        await botClient.SendTextMessageAsync(
-            chatId: message.Chat,
-            text: localizer["greeting"],
-            replyToMessageId: message.MessageId,
-            cancellationToken: cancellationToken );
+        if(message.Text!.Contains("uz", StringComparison.CurrentCultureIgnoreCase))
+            await mediator.Send(new UpdateLanguageCodeCommand { TelegramId = from!.Id, LanguageCode = "uz" }, cancellationToken);
+        else if (message.Text!.Contains("en", StringComparison.CurrentCultureIgnoreCase))
+            await mediator.Send(new UpdateLanguageCodeCommand { TelegramId = from!.Id, LanguageCode = "en" }, cancellationToken);
+        else if (message.Text!.Contains("ru", StringComparison.CurrentCultureIgnoreCase))
+            await mediator.Send(new UpdateLanguageCodeCommand { TelegramId = from!.Id, LanguageCode = "ru" }, cancellationToken);
+        else
+            await botClient.SendTextMessageAsync(
+                chatId: message.Chat,
+                text: localizer["greeting"],
+                replyToMessageId: message.MessageId,
+                cancellationToken: cancellationToken );
     }
 
     private Task HandleUnknownMessageAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)

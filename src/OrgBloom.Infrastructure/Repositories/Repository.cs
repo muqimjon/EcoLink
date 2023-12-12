@@ -1,11 +1,12 @@
-﻿using System.Linq.Expressions;
+﻿using OrgBloom.Domain.Commons;
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using OrgBloom.Infrastructure.Contexts;
 using OrgBloom.Application.Commons.Interfaces;
 
 namespace OrgBloom.Infrastructure.Repositories;
 
-public class Repository<T>(AppDbContext dbContext) : IRepository<T> where T : class
+public class Repository<T>(AppDbContext dbContext) : IRepository<T> where T : Auditable
 {
     public DbSet<T> Table
     {
@@ -23,6 +24,7 @@ public class Repository<T>(AppDbContext dbContext) : IRepository<T> where T : cl
     public void Update(T entity)
     {
         Table.Entry(entity).State = EntityState.Modified;
+        entity.UpdatedAt = DateTime.UtcNow;
     }
 
     public void Delete(T entity)

@@ -11,7 +11,10 @@ public record class CreateUserCommand : IRequest<int>
     {
         Phone = command.Phone;
         Email = command.Email;
+        IsBot = command.IsBot;
         Degree = command.Degree;
+        ChatId = command.ChatId;
+        Username = command.Username;
         LastName = command.LastName;
         FirstName = command.FirstName;
         TelegramId = command.TelegramId;
@@ -29,8 +32,11 @@ public record class CreateUserCommand : IRequest<int>
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public UserProfession Profession { get; set; }
-    public int TelegramId { get; set; }
+    public long TelegramId { get; set; }
+    public string Username { get; set; } = string.Empty;
     public string LanguageCode { get; set; } = string.Empty;
+    public long ChatId { get; set; }
+    public bool IsBot { get; set; }
 }
 
 public class CreateUserCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<CreateUserCommand, int>

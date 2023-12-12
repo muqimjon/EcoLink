@@ -30,7 +30,7 @@ public class CreateRepresentativeCommandHandler(IRepository<Representative> repo
 {
     public async Task<int> Handle(CreateRepresentativeCommand request, CancellationToken cancellationToken)
     {
-        var entity = await repository.SelectAsync(entity => entity.TelegramId == request.TelegramId);
+        var entity = await repository.SelectAsync(entity => entity.UserId == request.UserId);
         if (entity is not null)
             throw new();
 
