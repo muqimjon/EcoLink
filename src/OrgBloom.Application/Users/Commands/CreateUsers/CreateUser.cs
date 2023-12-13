@@ -38,7 +38,7 @@ public record class CreateUserCommand : IRequest<int>
     public string LanguageCode { get; set; } = string.Empty;
     public long ChatId { get; set; }
     public bool IsBot { get; set; }
-    public UserState State { get; set; }
+    public State State { get; set; }
 }
 
 public class CreateUserCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<CreateUserCommand, int>

@@ -40,7 +40,7 @@ public record UpdateUserCommand : IRequest<int>
     public string LanguageCode { get; set; } = string.Empty;
     public long? ChatId { get; set; }
     public bool IsBot { get; set; }
-    public UserState State { get; set; }
+    public State State { get; set; }
 }
 
 public class UpdateUserCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<UpdateUserCommand, int>

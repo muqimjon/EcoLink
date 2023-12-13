@@ -48,11 +48,11 @@ public static class DependencyInjection
 
         services.AddScoped<IRequestHandler<DeleteUserCommand, bool>, DeleteUserCommandHandler>();
 
-        services.AddScoped<IRequestHandler<GetUserByIdQuery, UserResultDto>, GetUserQueryHendler>();
-        services.AddScoped<IRequestHandler<GetAllUsersQuery, IEnumerable<UserResultDto>>, GetAllUsersQueryHandler>();
+        services.AddScoped<IRequestHandler<GetUserByIdQuery, UserApplyResultDto>, GetUserQueryHendler>();
+        services.AddScoped<IRequestHandler<GetAllUsersQuery, IEnumerable<UserApplyResultDto>>, GetAllUsersQueryHandler>();
         services.AddScoped<IRequestHandler<GetUserByTelegramIdQuery, UserTelegramResultDto>, GetUserByTelegramIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetLanguageCodeByIdQuery, string>, GetLanguageCodeByIdQueryHendler>();
-        services.AddScoped<IRequestHandler<GetUserStateQuery, UserState>, GetUserStateQueryHendler>();
+        services.AddScoped<IRequestHandler<GetStateQuery, State>, GetStateQueryHendler>();
 
         services.AddScoped<IRequestHandler<IsUserNewQuery, bool>, IsUserNewQueryHendler>();
 

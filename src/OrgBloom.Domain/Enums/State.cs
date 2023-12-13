@@ -1,6 +1,6 @@
 ﻿namespace OrgBloom.Domain.Enums;
 
-public enum UserState
+public enum State
 {
     None,
     WaitingForSelectLanguage,

@@ -12,5 +12,5 @@ public class UserTelegramResultDto
     public string LastName { get; set; } = string.Empty;
     public string Username { get; set; } = string.Empty;
     public string LanguageCode { get; set; } = string.Empty;
-    public UserState State { get; set; }
+    public State State { get; set; }
 }

@@ -52,6 +52,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     HelpType = table.Column<string>(type: "text", nullable: true),
                     InvestmentAmount = table.Column<decimal>(type: "numeric", nullable: true),
                     AssetsInvested = table.Column<string>(type: "text", nullable: true),
+                    IsSubmitted = table.Column<bool>(type: "boolean", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -64,7 +65,7 @@ namespace OrgBloom.Infrastructure.Migrations
                         name: "FK_Entrepreneurs_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -76,6 +77,7 @@ namespace OrgBloom.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Sector = table.Column<string>(type: "text", nullable: true),
                     InvestmentAmount = table.Column<decimal>(type: "numeric", nullable: true),
+                    IsSubmitted = table.Column<bool>(type: "boolean", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -88,7 +90,7 @@ namespace OrgBloom.Infrastructure.Migrations
                         name: "FK_Investors_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -104,6 +106,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     Area = table.Column<string>(type: "text", nullable: true),
                     Expectation = table.Column<string>(type: "text", nullable: true),
                     Purpose = table.Column<string>(type: "text", nullable: true),
+                    IsSubmitted = table.Column<bool>(type: "boolean", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -116,7 +119,7 @@ namespace OrgBloom.Infrastructure.Migrations
                         name: "FK_ProjectManagers_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -132,6 +135,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     Area = table.Column<string>(type: "text", nullable: true),
                     Expectation = table.Column<string>(type: "text", nullable: true),
                     Purpose = table.Column<string>(type: "text", nullable: true),
+                    IsSubmitted = table.Column<bool>(type: "boolean", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -144,7 +148,7 @@ namespace OrgBloom.Infrastructure.Migrations
                         name: "FK_Representatives_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 

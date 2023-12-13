@@ -1,4 +1,5 @@
-﻿using OrgBloom.Domain.Entities;
+﻿using OrgBloom.Application.Users.DTOs;
+using OrgBloom.Domain.Entities;
 
 namespace OrgBloom.Application.Entrepreneurs.DTOs;
 
@@ -10,7 +11,5 @@ public class EntrepreneurResultDto
     public string HelpType { get; set; } = string.Empty;
     public decimal? InvestmentAmount { get; set; }
     public string AssetsInvested { get; set; } = string.Empty;
-
-    public long UserId { get; set; }
-    public User User { get; set; } = default!;
+    public UserApplyResultDto User { get; set; } = default!;
 }

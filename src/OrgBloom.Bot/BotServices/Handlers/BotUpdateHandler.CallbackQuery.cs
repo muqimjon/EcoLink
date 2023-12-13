@@ -12,12 +12,12 @@ public partial class BotUpdateHandler
     {
         ArgumentNullException.ThrowIfNull(callbackQuery);
 
-        var state = await mediator.Send(new GetUserStateQuery(user.Id), cancellationToken);
+        var state = await mediator.Send(new GetStateQuery(user.Id), cancellationToken);
 
         var handler = state switch
         {
-            UserState.WaitingForSelectLanguage => HandleSelectedLanguageAsync(botClient, callbackQuery, cancellationToken),
-            UserState.WaitingForSelectFieldApplication => HandleSelectedFieldApplicationAsync(botClient, callbackQuery, cancellationToken),
+            State.WaitingForSelectLanguage => HandleSelectedLanguageAsync(botClient, callbackQuery, cancellationToken),
+            State.WaitingForSelectFieldApplication => HandleSelectedFieldApplicationAsync(botClient, callbackQuery, cancellationToken),
             _ => HandleUnknownCallbackQueryAsync(botClient, callbackQuery, cancellationToken)
         };
 

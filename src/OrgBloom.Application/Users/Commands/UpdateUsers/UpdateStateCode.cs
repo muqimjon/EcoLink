@@ -7,14 +7,14 @@ namespace OrgBloom.Application.Users.Commands.UpdateUsers;
 
 public record UpdateStateCommand : IRequest<int>
 {
-    public UpdateStateCommand(long id, UserState state)
+    public UpdateStateCommand(long id, State state)
     {
         Id = id;    
         State = state;
     }
 
     public long Id { get; set; }
-    public UserState State { get; set; }
+    public State State { get; set; }
 }
 
 public class UpdateUserStateCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<UpdateStateCommand, int>

@@ -1,4 +1,4 @@
-﻿using OrgBloom.Domain.Entities;
+﻿using OrgBloom.Application.Users.DTOs;
 
 namespace OrgBloom.Application.Investors.DTOs;
 
@@ -8,7 +8,5 @@ public class InvestorResultDto
     public string Sector { get; set; } = string.Empty;
     public string InvestmentAmount { get; set; } = string.Empty;
     public bool IsSubmitted { get; set; }
-
-    public long UserId { get; set; }
-    public User User { get; set; } = default!;
+    public UserApplyResultDto User { get; set; } = default!;
 }

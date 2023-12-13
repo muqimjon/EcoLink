@@ -38,8 +38,17 @@ public class Repository<T>(AppDbContext dbContext) : IRepository<T> where T : Au
             Table.Remove(entity);
     }
 
-    public async Task<T> SelectAsync(Expression<Func<T, bool>> expression)
-        => (await Table.FirstOrDefaultAsync(expression))!;
+    public async Task<T> SelectAsync(Expression<Func<T, bool>> expression, string[] includes = null!)
+    {
+        if (includes is null)
+            return (await Table.FirstOrDefaultAsync(expression))!;
+
+        var query = Table.AsQueryable();
+        foreach (string item in includes)
+            query = query.Include(item);
+
+        return (await query.FirstOrDefaultAsync(expression))!;
+    }
 
     public IQueryable<T> SelectAll(Expression<Func<T, bool>> expression = null!)
         => expression != null ? Table.Where(expression) : Table;

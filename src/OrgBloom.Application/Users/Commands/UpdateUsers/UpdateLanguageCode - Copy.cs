@@ -15,7 +15,7 @@ public record UpdateProfessionCommand : IRequest<int>
 
     public long Id { get; set; }
     public UserProfession Profession { get; set; }
-    public UserState State { get; set; } = UserState.WaitingForSelectProfession;
+    public State State { get; set; } = State.WaitingForSelectProfession;
 }
 
 public class UpdateProfessionCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<UpdateProfessionCommand, int>
