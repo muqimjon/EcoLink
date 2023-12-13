@@ -26,6 +26,9 @@ public class MappingProfile : Profile
         CreateMap<Investor, InvestorResultDto>();
 
         CreateMap<UpdateInvestorCommand, Investor>();
+        CreateMap<UpdateInvestorInvestmentAmountCommand, Investor>();
+        CreateMap<UpdateInvestorIsSubmittedCommand, Investor>();
+        CreateMap<UpdateInvestorSectorCommand, Investor>();
 
         CreateMap<CreateInvestorCommand, Investor>();
         CreateMap<CreateInvestorWithReturnCommand, Investor>();
@@ -34,15 +37,28 @@ public class MappingProfile : Profile
         // Project Manager
         CreateMap<ProjectManager, ProjectManagerResultDto>();
 
-        CreateMap<CreateProjectManagerCommand, ProjectManager>();
-
         CreateMap<UpdateProjectManagerCommand, ProjectManager>();
+        CreateMap<UpdateProjectManagerAddressCommand, ProjectManager>();
+        CreateMap<UpdateProjectManagerAreaCommand, ProjectManager>();
+        CreateMap<UpdateProjectManagerExpectationCommand, ProjectManager>();
+        CreateMap<UpdateProjectManagerExperienceCommand, ProjectManager>();
+        CreateMap<UpdateProjectManagerIsSubmittedCommand, ProjectManager>();
+        CreateMap<UpdateProjectManagerLanguagesCommand, ProjectManager>();
+        CreateMap<UpdateProjectManagerPurposeCommand, ProjectManager>();
+
+        CreateMap<CreateProjectManagerCommand, ProjectManager>();
 
 
         // Entrepreneur
         CreateMap<Entrepreneur, EntrepreneurResultDto>();
 
         CreateMap<UpdateEntrepreneurCommand, Entrepreneur>();
+        CreateMap<UpdateEntrepreneurExperienceCommand, Entrepreneur>();
+        CreateMap<UpdateEntrepreneurHelpTypeCommand, Entrepreneur>();
+        CreateMap<UpdateEntrepreneurAssetsInvestedCommand, Entrepreneur>();
+        CreateMap<UpdateEntrepreneurInvestmentAmountCommand, Entrepreneur>();
+        CreateMap<UpdateEntrepreneurIsSubmittedCommand, Entrepreneur>();
+        CreateMap<UpdateEntrepreneurProjectCommand, Entrepreneur>();
 
         CreateMap<CreateEntrepreneurCommand, Entrepreneur>();
 
@@ -51,6 +67,13 @@ public class MappingProfile : Profile
         CreateMap<Representative, RepresentativeResultDto>();
 
         CreateMap<UpdateRepresentativeCommand, Representative>();
+        CreateMap<UpdateRepresentativeAddressCommand, Representative>();
+        CreateMap<UpdateRepresentativeAreaCommand, Representative>();
+        CreateMap<UpdateRepresentativeExpectationCommand, Representative>();
+        CreateMap<UpdateRepresentativeExperienceCommand, Representative>();
+        CreateMap<UpdateRepresentativeIsSubmittedCommand, Representative>();
+        CreateMap<UpdateRepresentativeLanguagesCommand, Representative>();
+        CreateMap<UpdateRepresentativePurposeCommand, Representative>();
 
         CreateMap<CreateRepresentativeCommand, Representative>();
 
@@ -61,6 +84,13 @@ public class MappingProfile : Profile
         CreateMap<User, UserApplyResultDto>();
 
         CreateMap<UpdateUserCommand, User>();
+        CreateMap<UpdateDateOfBirthCommand, User>();
+        CreateMap<UpdateDegreeCommand, User>();
+        CreateMap<UpdateEmailCommand, User>();
+        CreateMap<UpdateFirstNameCommand, User>();
+        CreateMap<UpdateLastNameCommand, User>();
+        CreateMap<UpdatePatronomycCommand, User>();
+        CreateMap<UpdatePhoneCommand, User>();
         CreateMap<UpdateStateCommand, User>();
         CreateMap<UpdateLanguageCodeCommand, User>();
         CreateMap<UpdateProfessionCommand, User>();
