@@ -1,4 +1,5 @@
 ﻿using OrgBloom.Domain.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OrgBloom.Domain.Entities;
 
@@ -13,7 +14,7 @@ public class User : Auditable
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public string? Patronomyc { get; set; }
-    public DateTime? DateOfBirth { get; set; }
+    public DateTimeOffset? DateOfBirth { get; set; }
     public string? Degree { get; set; }
     public string? Phone { get; set; }
     public string? Email { get; set; }

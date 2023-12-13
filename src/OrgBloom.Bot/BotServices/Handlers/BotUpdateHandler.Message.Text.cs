@@ -12,14 +12,6 @@ public partial class BotUpdateHandler
 {
     private async Task HandleTextMessageAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        //var handler = message.Text switch
-        //{
-        //    "/start" => SendGreetingAsync(botClient, message, cancellationToken),
-        //    "Ariza topshirish" => SendApplyQuery(botClient, message, cancellationToken),
-        //    "Investorlik qilish" => InvestorQuery(botClient, message, cancellationToken),
-        //    _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
-        //};
-
         if (message.Text == "/start" || user.State == State.None)
         {
             await SendGreetingAsync(botClient, message, cancellationToken); return;

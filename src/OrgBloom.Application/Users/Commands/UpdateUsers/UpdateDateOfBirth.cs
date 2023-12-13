@@ -14,7 +14,7 @@ public record UpdateDateOfBirthCommand : IRequest<int>
     }
 
     public long Id { get; set; }
-    public DateTime DateOfBirth { get; set; }
+    public DateTimeOffset DateOfBirth { get; set; }
 }
 
 public class UpdateDateOfBirthCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<UpdateDateOfBirthCommand, int>

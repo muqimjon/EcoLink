@@ -44,7 +44,7 @@ public partial class BotUpdateHandler
             $"Ism: {dto.User.FirstName}\n" +
             $"Familiya: {dto.User.LastName}\n" +
             $"Otasining ismi: {dto.User.Patronomyc}\n" +
-            $"Yoshi: {(DateTime.UtcNow - dto.User.DateOfBirth).TotalDays/365}";
+            $"Yoshi: {(DateTime.UtcNow - dto.User.DateOfBirth).ToString()!.Split().First()}";
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
@@ -83,6 +83,8 @@ public partial class BotUpdateHandler
 
     public async Task SendMainMenuAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectMainMenu), cancellationToken);
+
         var keyboard = new ReplyKeyboardMarkup(new[]
         {
             new[] { new KeyboardButton("Ariza topshirish") },
@@ -97,8 +99,6 @@ public partial class BotUpdateHandler
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
-
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectMainMenu), cancellationToken);
     }
 
     private async Task SendRequestForFirstNameAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -139,24 +139,38 @@ public partial class BotUpdateHandler
 
     private async Task SendRequestForPatronomycAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
+        var exist = await mediator.Send(new GetUserByIdQuery() { Id = user.Id }, cancellationToken);
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
             text: "Otangizning ismi: ",
-            replyMarkup: new ReplyKeyboardRemove(),
-            cancellationToken: cancellationToken
-        );
+            cancellationToken: cancellationToken,
+            replyMarkup: exist.Patronomyc is null ? 
+                new ReplyKeyboardRemove() :
+                new ReplyKeyboardMarkup(new[]
+                {
+                    new[] { new KeyboardButton(exist.Patronomyc) }
+                })
+                { ResizeKeyboard = true });
 
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterPatronomyc), cancellationToken);
     }
 
     private async Task SendRequestForDateOfBirthAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
+        var exist = await mediator.Send(new GetUserByIdQuery() { Id = user.Id }, cancellationToken);
+        var date = exist.DateOfBirth is null ? null : exist.DateOfBirth.ToString()!.Split().First();
+
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Tug'ilgan sana: (yyyy.oo.kk formatda)",
-            replyMarkup: new ReplyKeyboardRemove(),
-            cancellationToken: cancellationToken
-        );
+            text: "Otangizning ismi: ",
+            cancellationToken: cancellationToken,
+            replyMarkup: date is null ?
+                new ReplyKeyboardRemove() :
+                new ReplyKeyboardMarkup(new[]
+                {
+                    new[] { new KeyboardButton(date) }
+                })
+                { ResizeKeyboard = true });
 
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterDateOfBirth), cancellationToken);
     }
