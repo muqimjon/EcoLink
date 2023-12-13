@@ -3,7 +3,7 @@ using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Application.Commons.Exceptions;
 
-namespace OrgBloom.Application.Languagess.Commands.CreateLanguagess;
+namespace OrgBloom.Application.Languagess.Commands.CreateRepresentatives;
 
 public record CreateLanguagesCommand : IRequest<int>
 {

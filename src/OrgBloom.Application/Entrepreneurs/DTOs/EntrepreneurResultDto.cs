@@ -11,5 +11,6 @@ public class EntrepreneurResultDto
     public string HelpType { get; set; } = string.Empty;
     public decimal? InvestmentAmount { get; set; }
     public string AssetsInvested { get; set; } = string.Empty;
+    public bool IsSubmitted { get; set; }
     public UserApplyResultDto User { get; set; } = default!;
 }

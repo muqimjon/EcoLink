@@ -1,5 +1,6 @@
 ﻿using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.Entrepreneurs.Commands.DeleteEntrepreneurs;
 
@@ -14,7 +15,7 @@ public class DeleteEntrepreneurCommandHandler(IRepository<Entrepreneur> reposito
     public async Task<bool> Handle(DeleteEntrepreneurCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new();
+            ?? throw new NotFoundException($"Entrepreneur is not found with id: {request.Id} | delete Entrepreneur");
 
         repository.Delete(entity);
         return await repository.SaveAsync() > 0;

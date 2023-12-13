@@ -15,7 +15,7 @@ public class DeleteInvestorCommandHandler(IRepository<Investor> repository) : IR
     public async Task<bool> Handle(DeleteInvestorCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new NotFoundException($"Investor is not found with UserId: {request.Id} by User UserId: {request.Id} | Update Investor");
+            ?? throw new NotFoundException($"Investor is not found with UserId: {request.Id} | Update Investor delete");
 
         repository.Delete(entity);
         return await repository.SaveAsync() > 0;
