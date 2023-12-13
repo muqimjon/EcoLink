@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 
@@ -35,7 +36,7 @@ public class UpdateProjectManagerCommandHandler(IRepository<ProjectManager> repo
     public async Task<int> Handle(UpdateProjectManagerCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new();
+            ?? throw new NotFoundException($"PM is not found with id: {request.Id} | update PM");
 
         mapper.Map(request, entity);
         repository.Update(entity);
