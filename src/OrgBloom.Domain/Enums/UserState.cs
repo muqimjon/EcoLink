@@ -3,5 +3,6 @@
 public enum UserState
 {
     None,
-    WaitingForSelectLanguage
+    WaitingForSelectLanguage,
+    WaitingForSelectMainMenu
 }

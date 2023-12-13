@@ -237,7 +237,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<int>("Profession")
                         .HasColumnType("integer");
 
-                    b.Property<long?>("TelegramId")
+                    b.Property<long?>("Id")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("UpdatedAt")

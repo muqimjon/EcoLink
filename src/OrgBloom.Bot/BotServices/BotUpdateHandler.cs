@@ -9,23 +9,17 @@ using OrgBloom.Application.Users.DTOs;
 using Microsoft.Extensions.Localization;
 using OrgBloom.Application.Users.Queries.GetUsers;
 using OrgBloom.Application.Users.Commands.CreateUsers;
+using OrgBloom.Domain.Enums;
 
 namespace OrgBloom.Bot.BotServices;
 
 public partial class BotUpdateHandler(
     ILogger<BotUpdateHandler> logger,
-    IServiceScopeFactory serviceScopeFactory) : IUpdateHandler
+    IServiceScopeFactory serviceScopeFactory,
+    IMediator mediator) : IUpdateHandler
 {
-    private IStringLocalizer localizer;
-    private IMediator mediator;
-    private UserTelegramResultDto user;
-
-    public Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
-    {
-        logger.LogInformation("HandlePollingError: {ErrorText}", exception.Message);
-
-        return Task.CompletedTask;
-    }
+    private IStringLocalizer localizer  = default!;
+    private UserTelegramResultDto user = default!;
 
     public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
@@ -33,7 +27,15 @@ public partial class BotUpdateHandler(
         mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
         localizer = scope.ServiceProvider.GetRequiredService<IStringLocalizer<BotLocalizer>>();
 
-        var culture = await GetCultureAsync(update);
+        user = await GetUserAsync(update);
+
+        var culture = user.LanguageCode switch
+        {
+            "en" => new CultureInfo("en-US"),
+            "ru" => new CultureInfo("ru-RU"),
+            _ => CultureInfo.CurrentCulture
+        };
+
         CultureInfo.CurrentCulture = culture;
         CultureInfo.CurrentUICulture = culture;
 
@@ -41,7 +43,7 @@ public partial class BotUpdateHandler(
         {
             UpdateType.Message => HandleMessageAsync(botClient, update.Message, cancellationToken),
             UpdateType.EditedMessage => HandleEditedMessageAsync(botClient, update.EditedMessage, cancellationToken),
-            UpdateType.CallbackQuery => HandleCallbackQuery(botClient, update.CallbackQuery, cancellationToken),
+            UpdateType.CallbackQuery =>     HandleCallbackQuery(botClient, update.CallbackQuery, cancellationToken),
             UpdateType.InlineQuery => HandleInlineQuery(botClient, update.InlineQuery, cancellationToken),
             _ => HandleUnknownUpdateAsync(botClient, update, cancellationToken)
         };
@@ -57,10 +59,13 @@ public partial class BotUpdateHandler(
         }
     }
 
-    private async Task<CultureInfo> GetCultureAsync(Update update)
+    private async Task<UserTelegramResultDto> GetUserAsync(Update update)
     {
         var updateContent = BotUpdateHandler.GetUpdateType(update);
         var from = updateContent.From;
+
+        var state = (user ?? new() { State = UserState.None }).State;
+
         user = await mediator.Send(new GetUserByTelegramIdQuery(from.Id))
             ?? await mediator.Send(new CreateUserWithReturnTgResultCommand()
                 {
@@ -73,7 +78,9 @@ public partial class BotUpdateHandler(
                     LanguageCode = from.LanguageCode,
                 });
 
-        return new CultureInfo(user.LanguageCode);
+        user.State = state;
+
+        return user;
     }
 
     private static dynamic GetUpdateType(Update update)
@@ -97,6 +104,13 @@ public partial class BotUpdateHandler(
     private Task HandleUnknownUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
         logger.LogInformation("Unknown update type: {UpdateType}", update.Type);
+        return Task.CompletedTask;
+    }
+
+    public Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
+    {
+        logger.LogInformation("HandlePollingError: {ErrorText}", exception.Message);
+
         return Task.CompletedTask;
     }
 }
