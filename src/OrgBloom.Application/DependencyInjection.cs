@@ -42,6 +42,13 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<CreateUserWithReturnTgResultCommand, UserTelegramResultDto>, CreateUserWithReturnTgResultCommandHandler>();
 
         services.AddScoped<IRequestHandler<UpdateUserCommand, int>, UpdateUserCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdatePhoneCommand, int>, UpdatePhoneCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdatePatronomycCommand, int>, UpdatePatronomycCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateLastNameCommand, int>, UpdateLastNameCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateFirstNameCommand, int>, UpdateFirstNameCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateEmailCommand, int>, UpdateEmailCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateDegreeCommand, int>, UpdateDegreeCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateDateOfBirthCommand, int>, UpdateDateOfBirthCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateLanguageCodeCommand, int>, UpdateLanguageCodeCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateStateCommand, int>, UpdateUserStateCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateProfessionCommand, int>, UpdateProfessionCommandHandler>();
@@ -62,6 +69,9 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<CreateInvestorWithReturnCommand, InvestorResultDto>, CreateInvestorWithReturnCommandHandler>();
 
         services.AddScoped<IRequestHandler<UpdateInvestorCommand, int>, UpdateInvestorCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateInvestorSectorCommand, int>, UpdateInvestorSectorCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateInvestorInvestmentAmountCommand, int>, UpdateInvestorInvestmentAmountCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateInvestorIsSubmittedCommand, int>, UpdateInvestorIsSubmittedCommandHandler>();
 
         services.AddScoped<IRequestHandler<DeleteInvestorCommand, bool>, DeleteInvestorCommandHandler>();
 
@@ -74,6 +84,13 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<CreateRepresentativeCommand, int>, CreateRepresentativeCommandHandler>();
 
         services.AddScoped<IRequestHandler<UpdateRepresentativeCommand, int>, UpdateRepresentativeCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateRepresentativeLanguagesCommand, int>, UpdateRepresentativeLanguagesCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateRepresentativeExperienceCommand, int>, UpdateRepresentativeExperienceCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateRepresentativeAddressCommand, int>, UpdateRepresentativeAddressCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateRepresentativeAreaCommand, int>, UpdateRepresentativeAreaCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateRepresentativeExpectationCommand, int>, UpdateRepresentativeExpectationCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateRepresentativePurposeCommand, int>, UpdateRepresentativePurposeCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateRepresentativeIsSubmittedCommand, int>, UpdateRepresentativeIsSubmittedCommandHandler>();
 
         services.AddScoped<IRequestHandler<DeleteRepresentativeCommand, bool>, DeleteRepresentativeCommandHandler>();
 
@@ -85,6 +102,13 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<CreateProjectManagerCommand, int>, CreateProjectManagerCommandHandler>();
 
         services.AddScoped<IRequestHandler<UpdateProjectManagerCommand, int>, UpdateProjectManagerCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateProjectManagerLanguagesCommand, int>, UpdateProjectManagerLanguagesCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateProjectManagerExperienceCommand, int>, UpdateProjectManagerExperienceCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateProjectManagerAddressCommand, int>, UpdateProjectManagerAddressCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateProjectManagerAreaCommand, int>, UpdateProjectManagerAreaCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateProjectManagerExpectationCommand, int>, UpdateProjectManagerExpectationCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateProjectManagerPurposeCommand, int>, UpdateProjectManagerPurposeCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateProjectManagerIsSubmittedCommand, int>, UpdateProjectManagerIsSubmittedCommandHandler>();
 
         services.AddScoped<IRequestHandler<DeleteProjectManagerCommand, bool>, DeleteProjectManagerCommandHandler>();
 
@@ -96,6 +120,13 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<CreateEntrepreneurCommand, int>, CreateEntrepreneurCommandHandler>();
 
         services.AddScoped<IRequestHandler<UpdateEntrepreneurCommand, int>, UpdateEntrepreneurCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateEntrepreneurIsSubmittedCommand, int>, UpdateEntrepreneurIsSubmittedCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateEntrepreneurAssetsInvestedCommand, int>, UpdateEntrepreneurAssetsInvestedCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateEntrepreneurInvestmentAmountCommand, int>, UpdateEntrepreneurInvestmentAmountCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateEntrepreneurHelpTypeCommand, int>, UpdateEntrepreneurHelpTypeCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateEntrepreneurProjectCommand, int>, UpdateEntrepreneurProjectCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateEntrepreneurExperienceCommand, int>, UpdateEntrepreneurExperienceCommandHandler>();
+
 
         services.AddScoped<IRequestHandler<DeleteEntrepreneurCommand, bool>, DeleteEntrepreneurCommandHandler>();
 

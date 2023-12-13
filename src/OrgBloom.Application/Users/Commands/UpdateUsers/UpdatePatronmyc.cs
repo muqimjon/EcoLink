@@ -5,9 +5,9 @@ using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.Users.Commands.UpdateUsers;
 
-public record UpdatePatronmycCommand : IRequest<int>
+public record UpdatePatronomycCommand : IRequest<int>
 {
-    public UpdatePatronmycCommand(UpdatePatronmycCommand command)
+    public UpdatePatronomycCommand(UpdatePatronomycCommand command)
     {
         Id = command.Id;
         Patronmyc = command.Patronmyc;
@@ -17,9 +17,9 @@ public record UpdatePatronmycCommand : IRequest<int>
     public string Patronmyc { get; set; } = string.Empty;
 }
 
-public class UpdatePatronmycCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<UpdatePatronmycCommand, int>
+public class UpdatePatronomycCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<UpdatePatronomycCommand, int>
 {
-    public async Task<int> Handle(UpdatePatronmycCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(UpdatePatronomycCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
             ?? throw new NotFoundException($"This User is not found by id: {request.Id} | update ptronmyc");

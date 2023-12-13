@@ -3,11 +3,11 @@ using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Application.Commons.Exceptions;
 
-namespace OrgBloom.Application.Languagess.Commands.CreateRepresentatives;
+namespace OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
 
-public record CreateLanguagesCommand : IRequest<int>
+public record CreateRepresentativeCommand : IRequest<int>
 {
-    public CreateLanguagesCommand(CreateLanguagesCommand command)
+    public CreateRepresentativeCommand(CreateRepresentativeCommand command)
     {
         Area = command.Area;
         Purpose = command.Purpose;
@@ -29,9 +29,9 @@ public record CreateLanguagesCommand : IRequest<int>
     public bool IsSubmitted { get; set; }
 }
 
-public class CreateLanguagesCommandHandler(IRepository<Representative> repository, IMapper mapper) : IRequestHandler<CreateLanguagesCommand, int>
+public class CreateRepresentativeCommandHandler(IRepository<Representative> repository, IMapper mapper) : IRequestHandler<CreateRepresentativeCommand, int>
 {
-    public async Task<int> Handle(CreateLanguagesCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateRepresentativeCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.UserId == request.UserId);
         if (entity is not null)
