@@ -1,19 +1,18 @@
-﻿using AutoMapper;
-using OrgBloom.Domain.Entities;
+﻿using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.Users.Queries.GetUsers;
 
-public record GetLanguageCodeByTelegramIdQuery : IRequest<string>
+public record GetLanguageCodeByIdQuery : IRequest<string>
 {
-    public GetLanguageCodeByTelegramIdQuery(long telegramId) { TelegramId = telegramId; }
-    public long TelegramId { get; set; }
+    public GetLanguageCodeByIdQuery(long id) { Id = id; }
+    public long Id { get; set; }
 }
 
-public class GetLanguageCodeByTelegramIdQueryHendler(IRepository<User> repository) : IRequestHandler<GetLanguageCodeByTelegramIdQuery, string>
+public class GetLanguageCodeByIdQueryHendler(IRepository<User> repository) : IRequestHandler<GetLanguageCodeByIdQuery, string>
 {
-    public async Task<string> Handle(GetLanguageCodeByTelegramIdQuery request, CancellationToken cancellationToken)
-        => (await repository.SelectAsync(i => i.TelegramId.Equals(request.TelegramId))).LanguageCode
-        ?? throw new NotFoundException($"User is not found with Telegram id = {request.TelegramId}");
+    public async Task<string> Handle(GetLanguageCodeByIdQuery request, CancellationToken cancellationToken)
+        => (await repository.SelectAsync(i => i.Id.Equals(request.Id))).LanguageCode
+        ?? throw new NotFoundException($"User is not found with Telegram id = {request.Id}");
 }

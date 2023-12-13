@@ -1,4 +1,5 @@
 ﻿using OrgBloom.Domain.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OrgBloom.Domain.Entities;
 
@@ -9,10 +10,11 @@ public class User : Auditable
     public string? LanguageCode { get; set; }
     public long? ChatId { get; set; }
     public bool IsBot { get; set; }
+    public State State { get; set; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public string? Patronomyc { get; set; }
-    public DateTime? DateOfBirth { get; set; }
+    public DateTimeOffset? DateOfBirth { get; set; }
     public string? Degree { get; set; }
     public string? Phone { get; set; }
     public string? Email { get; set; }

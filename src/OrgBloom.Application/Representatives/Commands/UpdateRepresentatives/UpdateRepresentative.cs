@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
 
@@ -16,6 +17,7 @@ public record UpdateRepresentativeCommand : IRequest<int>
         Languages = command.Languages;
         Experience = command.Experience;
         Expectation = command.Expectation;
+        IsSubmitted = command.IsSubmitted;
     }
 
     public long Id { get; set; }
@@ -26,6 +28,7 @@ public record UpdateRepresentativeCommand : IRequest<int>
     public string Expectation { get; set; } = string.Empty;
     public string Purpose { get; set; } = string.Empty;
     public long UserId { get; set; }
+    public bool IsSubmitted { get; set; }
 }
 
 public class UpdateRepresentativeCommandHandler(IRepository<Representative> repository, IMapper mapper) : IRequestHandler<UpdateRepresentativeCommand, int>
@@ -33,7 +36,7 @@ public class UpdateRepresentativeCommandHandler(IRepository<Representative> repo
     public async Task<int> Handle(UpdateRepresentativeCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new();
+            ?? throw new NotFoundException($"Representative is not found with id: {request.Id} | update representative");
 
         mapper.Map(request, entity);
         repository.Update(entity);

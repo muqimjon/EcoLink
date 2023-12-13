@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.Users.Commands.UpdateUsers;
 
@@ -8,20 +9,20 @@ public record UpdateLanguageCodeCommand : IRequest<int>
 {
     public UpdateLanguageCodeCommand(UpdateLanguageCodeCommand command)
     {
-        TelegramId = command.TelegramId;
+        Id = command.Id;
         LanguageCode = command.LanguageCode;
     }
 
-    public long TelegramId { get; set; }
+    public long Id { get; set; }
     public string LanguageCode { get; set; } = string.Empty;
 }
 
-public class UpdateUserLanguageCodeCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<UpdateLanguageCodeCommand, int>
+public class UpdateLanguageCodeCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<UpdateLanguageCodeCommand, int>
 {
     public async Task<int> Handle(UpdateLanguageCodeCommand request, CancellationToken cancellationToken)
     {
-        var entity = await repository.SelectAsync(entity => entity.TelegramId == request.TelegramId)
-            ?? throw new();
+        var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
+            ?? throw new NotFoundException($"This User is not found by id: {request.Id} | update language code");
 
         mapper.Map(request, entity);
         repository.Update(entity);

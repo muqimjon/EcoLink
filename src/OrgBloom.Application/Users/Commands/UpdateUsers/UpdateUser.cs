@@ -2,6 +2,7 @@
 using OrgBloom.Domain.Enums;
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.Users.Commands.UpdateUsers;
 
@@ -46,7 +47,7 @@ public class UpdateUserCommandHandler(IRepository<User> repository, IMapper mapp
     public async Task<int> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new();
+            ?? throw new NotFoundException($"This User is not found by id: {request.Id} | User update");
 
         mapper.Map(request, entity);
         repository.Update(entity);

@@ -1,4 +1,6 @@
-﻿namespace OrgBloom.Application.Representatives.DTOs;
+﻿using OrgBloom.Application.Users.DTOs;
+
+namespace OrgBloom.Application.Representatives.DTOs;
 
 public class RepresentativeResultDto
 {
@@ -9,5 +11,6 @@ public class RepresentativeResultDto
     public string Area { get; set; } = string.Empty;
     public string Expectation { get; set; } = string.Empty;
     public string Purpose { get; set; } = string.Empty;
-    public long UserId { get; set; }
+    public UserApplyResultDto User { get; set; } = default!;
+    public bool IsSubmitted { get; set; }
 }

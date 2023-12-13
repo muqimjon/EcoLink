@@ -22,12 +22,13 @@ public record class CreateUserCommand : IRequest<int>
         Profession = command.Profession;
         DateOfBirth = command.DateOfBirth;
         LanguageCode = command.LanguageCode;
+        State = command.State;
     }
 
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string Patronomyc { get; set; } = string.Empty;
-    public DateTime DateOfBirth { get; set; }
+    public DateTimeOffset DateOfBirth { get; set; }
     public string Degree { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
@@ -37,6 +38,7 @@ public record class CreateUserCommand : IRequest<int>
     public string LanguageCode { get; set; } = string.Empty;
     public long ChatId { get; set; }
     public bool IsBot { get; set; }
+    public State State { get; set; }
 }
 
 public class CreateUserCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<CreateUserCommand, int>
@@ -45,7 +47,7 @@ public class CreateUserCommandHandler(IRepository<User> repository, IMapper mapp
     {
         var entity = await repository.SelectAsync(entity => entity.TelegramId == request.TelegramId);
         if (entity is not null)
-            throw new("User Already exist user command create");
+            throw new($"User Already exist user command create with telegram id: {request.TelegramId} | create user");
 
         await repository.InsertAsync(mapper.Map<User>(request));
         return await repository.SaveAsync();

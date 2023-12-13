@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
 
@@ -15,6 +16,7 @@ public record CreateRepresentativeCommand : IRequest<int>
         Experience = command.Experience;
         Expectation = command.Expectation;
         UserId = command.UserId;
+        IsSubmitted = command.IsSubmitted;
     }
 
     public string Languages { get; set; } = string.Empty;
@@ -24,6 +26,7 @@ public record CreateRepresentativeCommand : IRequest<int>
     public string Expectation { get; set; } = string.Empty;
     public string Purpose { get; set; } = string.Empty;
     public long UserId { get; set; }
+    public bool IsSubmitted { get; set; }
 }
 
 public class CreateRepresentativeCommandHandler(IRepository<Representative> repository, IMapper mapper) : IRequestHandler<CreateRepresentativeCommand, int>
@@ -32,7 +35,7 @@ public class CreateRepresentativeCommandHandler(IRepository<Representative> repo
     {
         var entity = await repository.SelectAsync(entity => entity.UserId == request.UserId);
         if (entity is not null)
-            throw new();
+            throw new AlreadyExistException($"Languages is already exist with user id: {request.UserId} | update representative");
 
         await repository.InsertAsync(mapper.Map<Representative>(request));
         return await repository.SaveAsync();

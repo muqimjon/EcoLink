@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
 
@@ -13,6 +14,7 @@ public record UpdateEntrepreneurCommand : IRequest<int>
         Project = command.Project;
         HelpType = command.HelpType;
         Experience = command.Experience;
+        IsSubmitted = command.IsSubmitted;
         AssetsInvested = command.AssetsInvested;
         InvestmentAmount = command.InvestmentAmount;
     }
@@ -24,6 +26,7 @@ public record UpdateEntrepreneurCommand : IRequest<int>
     public decimal? InvestmentAmount { get; set; }
     public string AssetsInvested { get; set; } = string.Empty;
     public long UserId { get; set; }
+    public bool IsSubmitted { get; set; }
 }
 
 public class UpdateEntrepreneurCommandHandler(IRepository<Entrepreneur> repository, IMapper mapper) : IRequestHandler<UpdateEntrepreneurCommand, int>
@@ -31,7 +34,7 @@ public class UpdateEntrepreneurCommandHandler(IRepository<Entrepreneur> reposito
     public async Task<int> Handle(UpdateEntrepreneurCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new();
+            ?? throw new NotFoundException($"Entrepreneur is not found with id: {request.Id} | Update Entrepreneur");
 
         mapper.Map(request, entity);
         repository.Update(entity);

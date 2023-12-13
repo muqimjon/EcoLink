@@ -2,6 +2,7 @@
 using Telegram.Bot.Types;
 using OrgBloom.Domain.Enums;
 using OrgBloom.Application.Users.Commands.UpdateUsers;
+using OrgBloom.Application.Users.Queries.GetUsers;
 
 namespace OrgBloom.Bot.BotServices;
 
@@ -9,10 +10,15 @@ public partial class BotUpdateHandler
 {
     private async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery? callbackQuery, CancellationToken cancellationToken)
     {
-        var handler = user.State switch
+        ArgumentNullException.ThrowIfNull(callbackQuery);
+
+        var state = await mediator.Send(new GetStateQuery(user.Id), cancellationToken);
+
+        var handler = state switch
         {
-            UserState.WaitingForSelectLanguage => HandleSelectedLanguageAsync(botClient, callbackQuery, cancellationToken)
-            
+            State.WaitingForSelectLanguage => HandleSelectedLanguageAsync(botClient, callbackQuery, cancellationToken),
+            State.WaitingForEnterFirstName => HandleSelectedFieldApplicationAsync(botClient, callbackQuery, cancellationToken),
+            _ => HandleUnknownCallbackQueryAsync(botClient, callbackQuery, cancellationToken)
         };
 
         try
@@ -25,7 +31,7 @@ public partial class BotUpdateHandler
         }
     }
 
-    private async Task HandleSelectedLanguageAsync(ITelegramBotClient botClient, CallbackQuery? callbackQuery, CancellationToken cancellationToken)
+    private async Task HandleSelectedFieldApplicationAsync(ITelegramBotClient botClient, CallbackQuery? callbackQuery, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(callbackQuery);
         ArgumentNullException.ThrowIfNull(callbackQuery.Data);
@@ -36,21 +42,21 @@ public partial class BotUpdateHandler
         switch (languageCode)
         {
             case "buttonLanguageUz":
-                await mediator.Send(new UpdateLanguageCodeCommand { TelegramId = user.Id, LanguageCode = "uz" }, cancellationToken);
+                await mediator.Send(new UpdateLanguageCodeCommand { Id = user.Id, LanguageCode = "uz" }, cancellationToken);
                 await botClient.SendTextMessageAsync(
                     chatId: callbackQuery.Message.Chat.Id,
                     text: "O'zbek tili tanlandi!",
                     cancellationToken: cancellationToken);
                 break;
             case "buttonLanguageEn":
-                await mediator.Send(new UpdateLanguageCodeCommand { TelegramId = user.Id, LanguageCode = "en" }, cancellationToken);
+                await mediator.Send(new UpdateLanguageCodeCommand { Id = user.Id, LanguageCode = "en" }, cancellationToken);
                 await botClient.SendTextMessageAsync(
                     chatId: callbackQuery.Message.Chat.Id,
                     text: "English language selected!",
                     cancellationToken: cancellationToken);
                 break;
             case "buttonLanguageRu":
-                await mediator.Send(new UpdateLanguageCodeCommand { TelegramId = user.Id, LanguageCode = "ru" }, cancellationToken);
+                await mediator.Send(new UpdateLanguageCodeCommand { Id = user.Id, LanguageCode = "ru" }, cancellationToken);
                 await botClient.SendTextMessageAsync(
                     chatId: callbackQuery.Message.Chat.Id,
                     text: "Русский язык выбран!",
@@ -63,6 +69,14 @@ public partial class BotUpdateHandler
                     cancellationToken: cancellationToken);
                 break;
         }
+
+        await SendMainMenuAsync(botClient, callbackQuery.Message, cancellationToken);
+    }
+
+    private Task HandleUnknownCallbackQueryAsync(ITelegramBotClient botClient, CallbackQuery? callbackQuery, CancellationToken cancellationToken)
+    {
+        logger.LogInformation("Received unknown callback query: {callbackQuery.Data}", callbackQuery?.Data);
+        return Task.CompletedTask;
     }
 }
 

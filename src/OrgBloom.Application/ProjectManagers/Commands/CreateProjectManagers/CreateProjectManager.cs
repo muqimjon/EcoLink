@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.ProjectManagers.Commands.CreateProjectManagers;
 
@@ -15,6 +16,7 @@ public record CreateProjectManagerCommand : IRequest<int>
         Languages = command.Languages;
         Experience = command.Experience;
         Expectation = command.Expectation;
+        IsSubmitted = command.IsSubmitted;
     }
 
     public string Languages { get; set; } = string.Empty;
@@ -24,6 +26,7 @@ public record CreateProjectManagerCommand : IRequest<int>
     public string Expectation { get; set; } = string.Empty;
     public string Purpose { get; set; } = string.Empty;
     public long UserId { get; set; }
+    public bool IsSubmitted { get; set; }
 }
 
 public class CreateProjectManagerCommandHandler(IRepository<ProjectManager> repository, IMapper mapper) : IRequestHandler<CreateProjectManagerCommand, int>
@@ -32,7 +35,7 @@ public class CreateProjectManagerCommandHandler(IRepository<ProjectManager> repo
     {
         var entity = await repository.SelectAsync(entity => entity.UserId == request.UserId);
         if (entity is not null)
-            throw new();
+            throw new AlreadyExistException($"PM is already exist with user id: {request.UserId} | create project manager");
 
         await repository.InsertAsync(mapper.Map<ProjectManager>(request));
         return await repository.SaveAsync();

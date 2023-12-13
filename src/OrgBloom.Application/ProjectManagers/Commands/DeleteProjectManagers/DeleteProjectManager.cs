@@ -1,5 +1,6 @@
 ﻿using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.ProjectManagers.Commands.DeleteProjectManagers;
 
@@ -14,7 +15,7 @@ public class DeleteProjectManagerCommandHandler(IRepository<ProjectManager> repo
     public async Task<bool> Handle(DeleteProjectManagerCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new();
+            ?? throw new AlreadyExistException($"PM is already exist with user id: {request.Id} | delete project manager");
 
         repository.Delete(entity);
         return await repository.SaveAsync() > 0;
