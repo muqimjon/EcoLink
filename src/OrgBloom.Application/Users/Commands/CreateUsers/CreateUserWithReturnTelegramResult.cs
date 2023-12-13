@@ -13,7 +13,6 @@ public record class CreateUserWithReturnTgResultCommand : IRequest<UserTelegramR
         Phone = command.Phone;
         Email = command.Email;
         IsBot = command.IsBot;
-        State = command.State;
         Degree = command.Degree;
         ChatId = command.ChatId;
         Username = command.Username;
@@ -39,7 +38,6 @@ public record class CreateUserWithReturnTgResultCommand : IRequest<UserTelegramR
     public string LanguageCode { get; set; } = string.Empty;
     public long ChatId { get; set; }
     public bool IsBot { get; set; }
-    public State State { get; set; }
 }
 
 public class CreateUserWithReturnTgResultCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<CreateUserWithReturnTgResultCommand, UserTelegramResultDto>

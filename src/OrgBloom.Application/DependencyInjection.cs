@@ -42,7 +42,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<CreateUserWithReturnTgResultCommand, UserTelegramResultDto>, CreateUserWithReturnTgResultCommandHandler>();
 
         services.AddScoped<IRequestHandler<UpdateUserCommand, int>, UpdateUserCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateLanguageCodeCommand, int>, UpdateUserLanguageCodeCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateLanguageCodeCommand, int>, UpdateLanguageCodeCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateStateCommand, int>, UpdateUserStateCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateProfessionCommand, int>, UpdateProfessionCommandHandler>();
 

@@ -8,4 +8,7 @@ public enum State
     WaitingForEnterFirstName,
     WaitingForEnterLastName,
     WaitingForSelectProfession,
+    WaitingForEnterPatronomyc,
+    WaitingForEnterDateOfBirth,
+    WaitingForEnterDegree,
 }
