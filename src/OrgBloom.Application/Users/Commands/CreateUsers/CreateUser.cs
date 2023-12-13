@@ -47,7 +47,7 @@ public class CreateUserCommandHandler(IRepository<User> repository, IMapper mapp
     {
         var entity = await repository.SelectAsync(entity => entity.TelegramId == request.TelegramId);
         if (entity is not null)
-            throw new("User Already exist user command create");
+            throw new($"User Already exist user command create with telegram id: {request.TelegramId} | create user");
 
         await repository.InsertAsync(mapper.Map<User>(request));
         return await repository.SaveAsync();

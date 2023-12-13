@@ -1,5 +1,6 @@
 ﻿using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.Representatives.Commands.DeleteRepresentatives;
 
@@ -14,7 +15,7 @@ public class DeleteRepresentativeCommandHandler(IRepository<Representative> repo
     public async Task<bool> Handle(DeleteRepresentativeCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new();
+            ?? throw new NotFoundException($"Representative is not found with id: {request.Id} | delete representative");
 
         repository.Delete(entity);
         return await repository.SaveAsync() > 0;

@@ -46,7 +46,7 @@ public class CreateUserWithReturnTgResultCommandHandler(IRepository<User> reposi
     {
         var entity = await repository.SelectAsync(entity => entity.TelegramId == request.TelegramId);
         if (entity is not null)
-            return default!;
+            throw new($"User Already exist user command create with telegram id: {request.TelegramId} | create user with return tg result");
 
         var user = mapper.Map<User>(request);
         await repository.InsertAsync(user);

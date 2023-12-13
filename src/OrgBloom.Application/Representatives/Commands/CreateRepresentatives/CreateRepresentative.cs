@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Application.Commons.Exceptions;
 
-namespace OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
+namespace OrgBloom.Application.Languagess.Commands.CreateLanguagess;
 
-public record CreateRepresentativeCommand : IRequest<int>
+public record CreateLanguagesCommand : IRequest<int>
 {
-    public CreateRepresentativeCommand(CreateRepresentativeCommand command)
+    public CreateLanguagesCommand(CreateLanguagesCommand command)
     {
         Area = command.Area;
         Purpose = command.Purpose;
@@ -28,13 +29,13 @@ public record CreateRepresentativeCommand : IRequest<int>
     public bool IsSubmitted { get; set; }
 }
 
-public class CreateRepresentativeCommandHandler(IRepository<Representative> repository, IMapper mapper) : IRequestHandler<CreateRepresentativeCommand, int>
+public class CreateLanguagesCommandHandler(IRepository<Representative> repository, IMapper mapper) : IRequestHandler<CreateLanguagesCommand, int>
 {
-    public async Task<int> Handle(CreateRepresentativeCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateLanguagesCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.UserId == request.UserId);
         if (entity is not null)
-            throw new();
+            throw new AlreadyExistException($"Languages is already exist with user id: {request.UserId} | update representative");
 
         await repository.InsertAsync(mapper.Map<Representative>(request));
         return await repository.SaveAsync();

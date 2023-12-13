@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
 
@@ -35,7 +36,7 @@ public class UpdateRepresentativeCommandHandler(IRepository<Representative> repo
     public async Task<int> Handle(UpdateRepresentativeCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new();
+            ?? throw new NotFoundException($"Representative is not found with id: {request.Id} | update representative");
 
         mapper.Map(request, entity);
         repository.Update(entity);
