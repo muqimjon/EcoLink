@@ -10,11 +10,11 @@ public record UpdatePatronomycCommand : IRequest<int>
     public UpdatePatronomycCommand(UpdatePatronomycCommand command)
     {
         Id = command.Id;
-        Patronmyc = command.Patronmyc;
+        Patronomyc = command.Patronomyc;
     }
 
     public long Id { get; set; }
-    public string Patronmyc { get; set; } = string.Empty;
+    public string Patronomyc { get; set; } = string.Empty;
 }
 
 public class UpdatePatronomycCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<UpdatePatronomycCommand, int>

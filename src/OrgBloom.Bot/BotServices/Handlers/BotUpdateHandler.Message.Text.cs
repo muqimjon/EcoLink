@@ -86,7 +86,7 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        await mediator.Send(new UpdateUserCommand() { Id = user.Id, FirstName = message.Text }, cancellationToken); // TODO: need validation
+        await mediator.Send(new UpdateFirstNameCommand() { Id = user.Id, FirstName = message.Text }, cancellationToken); // TODO: need validation
 
         await SendRequestForLastNameAsync(botClient, message, cancellationToken);
     }
@@ -96,7 +96,7 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        await mediator.Send(new UpdateUserCommand() { Id = user.Id, LastName = message.Text }, cancellationToken); // TODO: need validation
+        await mediator.Send(new UpdateLastNameCommand() { Id = user.Id, LastName = message.Text }, cancellationToken); // TODO: need validation
 
         await SendRequestForPatronomycAsync(botClient, message, cancellationToken);
     }
@@ -106,7 +106,7 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        await mediator.Send(new UpdateUserCommand() { Id = user.Id, Patronomyc = message.Text }, cancellationToken); // TODO: need validation
+        await mediator.Send(new UpdatePatronomycCommand() { Id = user.Id, Patronomyc = message.Text }, cancellationToken); // TODO: need validation
 
         await SendRequestForDateOfBirthAsync(botClient, message, cancellationToken);
     }
@@ -118,7 +118,7 @@ public partial class BotUpdateHandler
 
         if (DateTime.TryParse(message.Text, out DateTime dateOfBirth))
         {
-            await mediator.Send(new UpdateUserCommand() { Id = user.Id, DateOfBirth = dateOfBirth }, cancellationToken); // TODO: need validation
+            await mediator.Send(new UpdateDateOfBirthCommand() { Id = user.Id, DateOfBirth = dateOfBirth }, cancellationToken); // TODO: need validation
             await SendRequestForDegreeAsync(botClient, message, cancellationToken);
         }
         else await SendRequestForDateOfBirthAsync(botClient, message, cancellationToken);
