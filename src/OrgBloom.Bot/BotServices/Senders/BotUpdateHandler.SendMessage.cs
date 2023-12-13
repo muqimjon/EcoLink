@@ -2,16 +2,14 @@
 using Telegram.Bot.Types;
 using OrgBloom.Domain.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
+using OrgBloom.Application.Investors.DTOs;
 using OrgBloom.Application.Users.Queries.GetUsers;
 using OrgBloom.Application.Users.Commands.UpdateUsers;
-using OrgBloom.Application.Investors.DTOs;
 
 namespace OrgBloom.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
-
-
     private async Task SendApplyQuery(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var keyboard = new ReplyKeyboardMarkup(new[]
@@ -30,7 +28,25 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken
         );
 
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectFieldApplication), cancellationToken);
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectProfession), cancellationToken);
+    }
+
+    private async Task SendRequestForLastNameAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        var keyboard = new ReplyKeyboardMarkup(new[]
+        {
+            new[] { new KeyboardButton(user.LastName) }
+        })
+        { ResizeKeyboard = true };
+
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: "Familiyangizni kiriting: ",
+            replyMarkup: keyboard,
+            cancellationToken: cancellationToken
+        );
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterLastName), cancellationToken);
     }
 
     private async Task SendRequestForFirstNameAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -48,7 +64,7 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken
         );
 
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectFieldApplication), cancellationToken);
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterFirstName), cancellationToken);
     }
 
     private async Task SendAlreadyExistApplicationAsync(InvestorResultDto dto, ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -64,7 +80,7 @@ public partial class BotUpdateHandler
             $"Ism: {dto.User.FirstName}\n" +
             $"Familiya: {dto.User.LastName}\n" +
             $"Otasining ismi: {dto.User.Patronomyc}\n" +
-            $"";
+            $"Yoshi: {(DateTime.UtcNow - dto.User.DateOfBirth).TotalDays/365}";
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
@@ -73,10 +89,10 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken
         );
 
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectFieldApplication), cancellationToken);
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterFirstName), cancellationToken);
     }
 
-    private async Task SendGreeting(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendGreetingAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(message);
 

@@ -5,6 +5,7 @@ public enum State
     None,
     WaitingForSelectLanguage,
     WaitingForSelectMainMenu,
-    WaitingForSelectFieldApplication,
-    WaitingForSelectProfession
+    WaitingForEnterFirstName,
+    WaitingForEnterLastName,
+    WaitingForSelectProfession,
 }

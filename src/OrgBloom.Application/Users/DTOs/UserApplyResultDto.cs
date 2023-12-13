@@ -4,7 +4,6 @@ namespace OrgBloom.Application.Users.DTOs;
 
 public class UserApplyResultDto
 {
-    public long Id { get; set; }
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string Patronomyc { get; set; } = string.Empty;
@@ -13,9 +12,4 @@ public class UserApplyResultDto
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public UserProfession Profession { get; set; }
-    public int TelegramId { get; set; }
-    public string Username { get; set; } = string.Empty;
-    public string LanguageCode { get; set; } = string.Empty;
-    public long? ChatId { get; set; }
-    public bool IsBot { get; set; }
 }

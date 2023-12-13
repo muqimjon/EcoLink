@@ -58,6 +58,7 @@ public class MappingProfile : Profile
         // User
         CreateMap<User, UserApplyResultDto>();
         CreateMap<User, UserTelegramResultDto>();
+        CreateMap<User, UserApplyResultDto>();
 
         CreateMap<UpdateUserCommand, User>();
         CreateMap<UpdateStateCommand, User>();

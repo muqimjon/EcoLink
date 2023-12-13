@@ -14,22 +14,24 @@ public partial class BotUpdateHandler
     {
         //var handler = message.Text switch
         //{
-        //    "/start" => SendGreeting(botClient, message, cancellationToken),
+        //    "/start" => SendGreetingAsync(botClient, message, cancellationToken),
         //    "Ariza topshirish" => SendApplyQuery(botClient, message, cancellationToken),
         //    "Investorlik qilish" => InvestorQuery(botClient, message, cancellationToken),
         //    _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         //};
 
-        if (message.Text == "/start")
+        if (message.Text == "/start" || user.State == State.None)
         {
-            await SendGreeting(botClient, message, cancellationToken); return;
+            await SendGreetingAsync(botClient, message, cancellationToken); return;
         }
 
         var userState = await mediator.Send(new GetStateQuery(user.Id), cancellationToken);
         var handler = userState switch
         {
-            State.None => SendGreeting(botClient, message, cancellationToken),
             State.WaitingForSelectMainMenu => HandleMainMenuAsync(botClient, message, cancellationToken),
+            State.WaitingForSelectProfession => HandleProfessionAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterFirstName => HandleFirstNameAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterLastName => HandleLastNameAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 
@@ -38,12 +40,44 @@ public partial class BotUpdateHandler
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {from.FirstName}", user.FirstName); }
     }
 
+    private async Task HandleLastNameAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(message);
+        ArgumentNullException.ThrowIfNull(message.Text);
+
+        await mediator.Send(new UpdateUserCommand() { Id = user.Id, LastName = message.Text }, cancellationToken); // TODO: need validation
+
+        await SendRequestForLastNameAsync(botClient, message, cancellationToken);
+    }
+
+    private async Task HandleFirstNameAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(message);
+        ArgumentNullException.ThrowIfNull(message.Text);
+
+        await mediator.Send(new UpdateUserCommand() { Id = user.Id, FirstName = message.Text }, cancellationToken); // TODO: need validation
+
+        await SendRequestForLastNameAsync(botClient, message, cancellationToken);
+    }
+
+    private async Task HandleProfessionAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        var handle = message.Text switch
+        {
+            "Investorlik qilish" => InvestorQuery(botClient, message, cancellationToken),
+            _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
+        };
+
+
+        try { await handle; }
+        catch (Exception ex) { logger.LogError(ex, "Error handling message from {from.FirstName}", user.FirstName); }
+    }
+
     private async Task HandleMainMenuAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var handle = message.Text switch
         {
             "Ariza topshirish" => SendApplyQuery(botClient, message, cancellationToken),
-            "Investorlik qilish" => InvestorQuery(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 
@@ -64,5 +98,4 @@ public partial class BotUpdateHandler
             await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
         }
     }
-
 }
