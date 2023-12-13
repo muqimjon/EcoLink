@@ -13,12 +13,14 @@ public record UpdateInvestorCommand : IRequest<int>
         UserId = command.UserId;
         Sector = command.Sector;
         InvestmentAmount = command.InvestmentAmount;
+        IsSubmitted = command.IsSubmitted;
     }
 
     public long Id { get; set; }
     public string Sector { get; set; } = string.Empty;
     public string InvestmentAmount { get; set; } = string.Empty;
     public long UserId { get; set; }
+    public bool IsSubmitted { get; set; }
 }
 
 public class UpdateInvestorCommandHandler(IRepository<Investor> repository, IMapper mapper) : IRequestHandler<UpdateInvestorCommand, int>

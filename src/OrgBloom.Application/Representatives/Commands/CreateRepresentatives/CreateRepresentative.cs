@@ -15,6 +15,7 @@ public record CreateRepresentativeCommand : IRequest<int>
         Experience = command.Experience;
         Expectation = command.Expectation;
         UserId = command.UserId;
+        IsSubmitted = command.IsSubmitted;
     }
 
     public string Languages { get; set; } = string.Empty;
@@ -24,6 +25,7 @@ public record CreateRepresentativeCommand : IRequest<int>
     public string Expectation { get; set; } = string.Empty;
     public string Purpose { get; set; } = string.Empty;
     public long UserId { get; set; }
+    public bool IsSubmitted { get; set; }
 }
 
 public class CreateRepresentativeCommandHandler(IRepository<Representative> repository, IMapper mapper) : IRequestHandler<CreateRepresentativeCommand, int>

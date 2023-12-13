@@ -15,6 +15,7 @@ public record CreateProjectManagerCommand : IRequest<int>
         Languages = command.Languages;
         Experience = command.Experience;
         Expectation = command.Expectation;
+        IsSubmitted = command.IsSubmitted;
     }
 
     public string Languages { get; set; } = string.Empty;
@@ -24,6 +25,7 @@ public record CreateProjectManagerCommand : IRequest<int>
     public string Expectation { get; set; } = string.Empty;
     public string Purpose { get; set; } = string.Empty;
     public long UserId { get; set; }
+    public bool IsSubmitted { get; set; }
 }
 
 public class CreateProjectManagerCommandHandler(IRepository<ProjectManager> repository, IMapper mapper) : IRequestHandler<CreateProjectManagerCommand, int>

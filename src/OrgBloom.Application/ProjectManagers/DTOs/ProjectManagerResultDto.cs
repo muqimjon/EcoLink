@@ -11,6 +11,7 @@ public class ProjectManagerResultDto
     public string Area { get; set; } = string.Empty;
     public string Expectation { get; set; } = string.Empty;
     public string Purpose { get; set; } = string.Empty;
+    public bool IsSubmitted { get; set; }
 
     public long UserId { get; set; }
     public User User { get; set; } = default!;

@@ -12,11 +12,13 @@ public record CreateInvestorCommand : IRequest<int>
         UserId = command.UserId;
         Sector = command.Sector;
         InvestmentAmount = command.InvestmentAmount;
+        IsSubmitted = command.IsSubmitted;
     }
 
     public string Sector { get; set; } = string.Empty;
     public decimal InvestmentAmount { get; set; }
     public long UserId { get; set; }
+    public bool IsSubmitted { get; set; }
 }
 
 public class CreateInvestorCommandHandler(IRepository<Investor> repository, IMapper mapper) : IRequestHandler<CreateInvestorCommand, int>
