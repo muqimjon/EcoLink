@@ -9,7 +9,6 @@ using OrgBloom.Application.Users.DTOs;
 using Microsoft.Extensions.Localization;
 using OrgBloom.Application.Users.Queries.GetUsers;
 using OrgBloom.Application.Users.Commands.CreateUsers;
-using OrgBloom.Domain.Enums;
 
 namespace OrgBloom.Bot.BotServices;
 
@@ -31,6 +30,7 @@ public partial class BotUpdateHandler(
 
         var culture = user.LanguageCode switch
         {
+            "uz" => new CultureInfo("uz-Uz"),
             "en" => new CultureInfo("en-US"),
             "ru" => new CultureInfo("ru-RU"),
             _ => CultureInfo.CurrentCulture
@@ -43,7 +43,7 @@ public partial class BotUpdateHandler(
         {
             UpdateType.Message => HandleMessageAsync(botClient, update.Message, cancellationToken),
             UpdateType.EditedMessage => HandleEditedMessageAsync(botClient, update.EditedMessage, cancellationToken),
-            UpdateType.CallbackQuery =>     HandleCallbackQuery(botClient, update.CallbackQuery, cancellationToken),
+            UpdateType.CallbackQuery => HandleCallbackQuery(botClient, update.CallbackQuery, cancellationToken),
             UpdateType.InlineQuery => HandleInlineQuery(botClient, update.InlineQuery, cancellationToken),
             _ => HandleUnknownUpdateAsync(botClient, update, cancellationToken)
         };
@@ -54,7 +54,7 @@ public partial class BotUpdateHandler(
         }
         catch(Exception ex)
         {
-            logger.LogInformation("HandlePollingError: {ErrorText}", ex.Message);
+            logger.LogError("HandlePollingError: {ErrorText}", ex.Message);
             await HandlePollingErrorAsync(botClient, ex, cancellationToken);
         }
     }
@@ -64,9 +64,7 @@ public partial class BotUpdateHandler(
         var updateContent = BotUpdateHandler.GetUpdateType(update);
         var from = updateContent.From;
 
-        var state = (user ?? new() { State = UserState.None }).State;
-
-        user = await mediator.Send(new GetUserByTelegramIdQuery(from.Id))
+        return await mediator.Send(new GetUserByTelegramIdQuery(from.Id))
             ?? await mediator.Send(new CreateUserWithReturnTgResultCommand()
                 {
                     IsBot = from.IsBot,
@@ -75,12 +73,8 @@ public partial class BotUpdateHandler(
                     Username = from.Username,
                     FirstName = from.FirstName,
                     ChatId = update.Message!.Chat.Id,
-                    LanguageCode = from.LanguageCode,
+                    LanguageCode = from.LanguageCode
                 });
-
-        user.State = state;
-
-        return user;
     }
 
     private static dynamic GetUpdateType(Update update)
@@ -88,7 +82,6 @@ public partial class BotUpdateHandler(
         {
             UpdateType.Message => update.Message,
             UpdateType.ChatMember => update.ChatMember,
-            UpdateType.PollAnswer => update.PollAnswer,
             UpdateType.ChannelPost => update.ChannelPost,
             UpdateType.InlineQuery => update.InlineQuery,
             UpdateType.MyChatMember => update.MyChatMember,
@@ -109,7 +102,7 @@ public partial class BotUpdateHandler(
 
     public Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
     {
-        logger.LogInformation("HandlePollingError: {ErrorText}", exception.Message);
+        logger.LogError("HandlePollingError: {ErrorText}", exception.Message);
 
         return Task.CompletedTask;
     }

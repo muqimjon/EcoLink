@@ -23,6 +23,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     LanguageCode = table.Column<string>(type: "text", nullable: true),
                     ChatId = table.Column<long>(type: "bigint", nullable: true),
                     IsBot = table.Column<bool>(type: "boolean", nullable: false),
+                    State = table.Column<int>(type: "integer", nullable: false),
                     FirstName = table.Column<string>(type: "text", nullable: true),
                     LastName = table.Column<string>(type: "text", nullable: true),
                     Patronomyc = table.Column<string>(type: "text", nullable: true),
@@ -63,7 +64,7 @@ namespace OrgBloom.Infrastructure.Migrations
                         name: "FK_Entrepreneurs_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "Id",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -87,7 +88,7 @@ namespace OrgBloom.Infrastructure.Migrations
                         name: "FK_Investors_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "Id",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -115,7 +116,7 @@ namespace OrgBloom.Infrastructure.Migrations
                         name: "FK_ProjectManagers_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "Id",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -143,7 +144,7 @@ namespace OrgBloom.Infrastructure.Migrations
                         name: "FK_Representatives_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "Id",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 

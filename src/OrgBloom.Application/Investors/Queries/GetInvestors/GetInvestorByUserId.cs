@@ -1,0 +1,18 @@
+﻿using AutoMapper;
+using OrgBloom.Domain.Entities;
+using OrgBloom.Application.Investors.DTOs;
+using OrgBloom.Application.Commons.Interfaces;
+
+namespace OrgBloom.Application.Investors.Queries.GetInvestors;
+
+public record GetInvestorByUserIdQuery : IRequest<InvestorResultDto>
+{
+    public GetInvestorByUserIdQuery(GetInvestorByUserIdQuery command) { UserId = command.UserId; }
+    public long UserId { get; set; }
+}
+
+public class GetInvestorByUserIdQueryHendler(IRepository<Investor> repository, IMapper mapper) : IRequestHandler<GetInvestorByUserIdQuery, InvestorResultDto>
+{
+    public async Task<InvestorResultDto> Handle(GetInvestorByUserIdQuery request, CancellationToken cancellationToken)
+        => mapper.Map<InvestorResultDto>(await repository.SelectAsync(i => i.UserId.Equals(request.UserId)));
+}

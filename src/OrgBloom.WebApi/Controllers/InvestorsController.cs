@@ -20,8 +20,8 @@ public class InvestorsController(IMediator mediator) : BaseController
         => Ok(await mediator.Send(new DeleteInvestorCommand(command)));
 
     [HttpGet("get")]
-    public async Task<IActionResult> Get([FromQuery] GetInvestorQuery command)
-        => Ok(await mediator.Send(new GetInvestorQuery(command)));
+    public async Task<IActionResult> Get([FromQuery] GetInvestorByIdQuery command)
+        => Ok(await mediator.Send(new GetInvestorByIdQuery(command)));
 
     [HttpGet("get-all")]
     public async Task<IActionResult> GetAll()

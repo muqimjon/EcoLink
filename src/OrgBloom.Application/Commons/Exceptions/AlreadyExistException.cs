@@ -1,5 +1,3 @@
 ﻿namespace OrgBloom.Application.Commons.Exceptions;
 
-public class AlreadyExistException : Exception
-{
-}
+public class AlreadyExistException(string message) : Exception(message) { }

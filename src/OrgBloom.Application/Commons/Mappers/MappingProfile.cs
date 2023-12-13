@@ -23,30 +23,48 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         // Investor
-        CreateMap<CreateInvestorCommand, Investor>();
-        CreateMap<UpdateInvestorCommand, Investor>();
         CreateMap<Investor, InvestorResultDto>();
+
+        CreateMap<UpdateInvestorCommand, Investor>();
+
+        CreateMap<CreateInvestorCommand, Investor>();
+        CreateMap<CreateInvestorWithReturnCommand, Investor>();
+
 
         // Project Manager
         CreateMap<ProjectManager, ProjectManagerResultDto>();
+
         CreateMap<CreateProjectManagerCommand, ProjectManager>();
+
         CreateMap<UpdateProjectManagerCommand, ProjectManager>();
+
 
         // Entrepreneur
         CreateMap<Entrepreneur, EntrepreneurResultDto>();
-        CreateMap<CreateEntrepreneurCommand, Entrepreneur>();
+
         CreateMap<UpdateEntrepreneurCommand, Entrepreneur>();
+
+        CreateMap<CreateEntrepreneurCommand, Entrepreneur>();
+
 
         // Representative
         CreateMap<Representative, RepresentativeResultDto>();
-        CreateMap<CreateRepresentativeCommand, Representative>();
+
         CreateMap<UpdateRepresentativeCommand, Representative>();
+
+        CreateMap<CreateRepresentativeCommand, Representative>();
+
 
         // User
         CreateMap<User, UserResultDto>();
         CreateMap<User, UserTelegramResultDto>();
-        CreateMap<CreateUserCommand, User>();
+
         CreateMap<UpdateUserCommand, User>();
+        CreateMap<UpdateStateCommand, User>();
         CreateMap<UpdateLanguageCodeCommand, User>();
+        CreateMap<UpdateProfessionCommand, User>();
+
+        CreateMap<CreateUserCommand, User>();
+        CreateMap<CreateUserWithReturnTgResultCommand, User>();
     }
 }

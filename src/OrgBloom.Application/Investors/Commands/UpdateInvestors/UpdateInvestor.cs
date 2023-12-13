@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.Investors.Commands.UpdateInvestors;
 
@@ -25,7 +26,7 @@ public class UpdateInvestorCommandHandler(IRepository<Investor> repository, IMap
     public async Task<int> Handle(UpdateInvestorCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new();
+            ?? throw new NotFoundException($"Investor is not found with UserId: {request.Id} by User UserId: {request.UserId} | Update Investor");
 
         mapper.Map(request, entity);
         repository.Update(entity);

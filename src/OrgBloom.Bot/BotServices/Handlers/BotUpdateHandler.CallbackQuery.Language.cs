@@ -1,37 +1,12 @@
-﻿using Telegram.Bot;
+﻿using OrgBloom.Application.Users.Commands.UpdateUsers;
 using Telegram.Bot.Types;
-using OrgBloom.Domain.Enums;
-using OrgBloom.Application.Users.Commands.UpdateUsers;
-using OrgBloom.Application.Users.Queries.GetUsers;
+using Telegram.Bot;
 
 namespace OrgBloom.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
-    private async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery? callbackQuery, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(callbackQuery);
-
-        var state = await mediator.Send(new GetUserStateQuery(user.Id), cancellationToken);
-
-        var handler = state switch
-        {
-            UserState.WaitingForSelectLanguage => HandleSelectedLanguageAsync(botClient, callbackQuery, cancellationToken),
-            UserState.WaitingForSelectFieldApplication => HandleSelectedFieldApplicationAsync(botClient, callbackQuery, cancellationToken),
-            _ => HandleUnknownCallbackQueryAsync(botClient, callbackQuery, cancellationToken)
-        };
-
-        try
-        {
-            await handler;
-        }
-        catch(Exception ex)
-        {
-            logger.LogError(ex, "Error handling callback query: {callbackQuery.Data}", callbackQuery.Data);
-        }
-    }
-
-    private async Task HandleSelectedFieldApplicationAsync(ITelegramBotClient botClient, CallbackQuery? callbackQuery, CancellationToken cancellationToken)
+    private async Task HandleSelectedLanguageAsync(ITelegramBotClient botClient, CallbackQuery? callbackQuery, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(callbackQuery);
         ArgumentNullException.ThrowIfNull(callbackQuery.Data);
@@ -72,11 +47,4 @@ public partial class BotUpdateHandler
 
         await SendMainMenuAsync(botClient, callbackQuery.Message, cancellationToken);
     }
-
-    private Task HandleUnknownCallbackQueryAsync(ITelegramBotClient botClient, CallbackQuery? callbackQuery, CancellationToken cancellationToken)
-    {
-        logger.LogInformation("Received unknown callback query: {callbackQuery.Data}", callbackQuery?.Data);
-        return Task.CompletedTask;
-    }
 }
-

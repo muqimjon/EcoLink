@@ -13,6 +13,7 @@ public record class CreateUserWithReturnTgResultCommand : IRequest<UserTelegramR
         Phone = command.Phone;
         Email = command.Email;
         IsBot = command.IsBot;
+        State = command.State;
         Degree = command.Degree;
         ChatId = command.ChatId;
         Username = command.Username;
@@ -23,7 +24,6 @@ public record class CreateUserWithReturnTgResultCommand : IRequest<UserTelegramR
         Profession = command.Profession;
         DateOfBirth = command.DateOfBirth;
         LanguageCode = command.LanguageCode;
-        State = command.State;
     }
 
     public string FirstName { get; set; } = string.Empty;
@@ -48,10 +48,12 @@ public class CreateUserWithReturnTgResultCommandHandler(IRepository<User> reposi
     {
         var entity = await repository.SelectAsync(entity => entity.TelegramId == request.TelegramId);
         if (entity is not null)
-            throw new("User Already exist user command create");
+            return default!;
 
-        await repository.InsertAsync(mapper.Map<User>(request));
+        var user = mapper.Map<User>(request);
+        await repository.InsertAsync(user);
         await repository.SaveAsync();
-        return mapper.Map<UserTelegramResultDto>(request);
+
+        return mapper.Map<UserTelegramResultDto>(user);
     }
 }

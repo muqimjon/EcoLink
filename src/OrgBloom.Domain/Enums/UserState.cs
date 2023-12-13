@@ -4,5 +4,7 @@ public enum UserState
 {
     None,
     WaitingForSelectLanguage,
-    WaitingForSelectMainMenu
+    WaitingForSelectMainMenu,
+    WaitingForSelectFieldApplication,
+    WaitingForSelectProfession
 }

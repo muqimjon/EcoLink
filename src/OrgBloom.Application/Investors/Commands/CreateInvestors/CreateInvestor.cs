@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.Investors.Commands.CreateInvestors;
 
@@ -14,7 +15,7 @@ public record CreateInvestorCommand : IRequest<int>
     }
 
     public string Sector { get; set; } = string.Empty;
-    public string InvestmentAmount { get; set; } = string.Empty;
+    public decimal InvestmentAmount { get; set; }
     public long UserId { get; set; }
 }
 
@@ -24,7 +25,7 @@ public class CreateInvestorCommandHandler(IRepository<Investor> repository, IMap
     {
         var entity = await repository.SelectAsync(entity => entity.UserId == request.UserId);
         if (entity is not null)
-            throw new();
+            return 0; //throw new AlreadyExistException($"Investor is already exist create investor by user id {request.UserId}");
 
         await repository.InsertAsync(mapper.Map<Investor>(request));
         return await repository.SaveAsync();
