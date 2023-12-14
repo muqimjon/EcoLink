@@ -5,6 +5,7 @@ using OrgBloom.Domain.Enums;
 using Telegram.Bot.Types;
 using Telegram.Bot;
 using OrgBloom.Application.Users.Queries.GetUsers;
+using OrgBloom.Application.Investors.Commands.UpdateInvestors;
 
 namespace OrgBloom.Bot.BotServices;
 
@@ -12,23 +13,25 @@ public partial class BotUpdateHandler
 {
     private async Task HandleTextMessageAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        if (message.Text == "/start" || user.State == State.None)
-        {
-            await SendGreetingAsync(botClient, message, cancellationToken); return;
-        }
+        var userState = State.WaitingForSubmitApplication;
 
-        var userState = await mediator.Send(new GetStateQuery(user.Id), cancellationToken);
+        if (message.Text is not "/start")
+            userState = await mediator.Send(new GetStateQuery(user.Id), cancellationToken);
+
         var handler = userState switch
         {
+            State.WaitingForSubmitApplication => SendGreetingAsync(botClient, message, cancellationToken),
             State.WaitingForSelectMainMenu => HandleMainMenuAsync(botClient, message, cancellationToken),
             State.WaitingForSelectProfession => HandleProfessionAsync(botClient, message, cancellationToken),
             State.WaitingForEnterFirstName => HandleFirstNameAsync(botClient, message, cancellationToken),
             State.WaitingForEnterLastName => HandleLastNameAsync(botClient, message, cancellationToken),
             State.WaitingForEnterPatronomyc => HandlePatronomycAsync(botClient, message, cancellationToken),
             State.WaitingForEnterDateOfBirth => HandleDateOfBirthAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterDegree => HandleDegreeAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterSector => HandleSectorAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterInvestmentAmount => HandleInvestmentAmountAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
-
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {from.FirstName}", user.FirstName); }
@@ -110,9 +113,39 @@ public partial class BotUpdateHandler
 
         if (DateTime.TryParse(message.Text, out DateTime dateOfBirth))
         {
-            await mediator.Send(new UpdateDateOfBirthCommand() { Id = user.Id, DateOfBirth = dateOfBirth }, cancellationToken); // TODO: need validation
+            await mediator.Send(new UpdateDateOfBirthCommand() { Id = user.Id, DateOfBirth = dateOfBirth.ToUniversalTime() }, cancellationToken);
             await SendRequestForDegreeAsync(botClient, message, cancellationToken);
         }
         else await SendRequestForDateOfBirthAsync(botClient, message, cancellationToken);
+    }
+
+    private async Task HandleDegreeAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(message);
+        ArgumentNullException.ThrowIfNull(message.Text);
+
+        await mediator.Send(new UpdateDegreeCommand() { Id = user.Id, Degree = message.Text }, cancellationToken); // TODO: need validation
+
+        await SendRequestForSectorAsync(botClient, message, cancellationToken);
+    }
+
+    private async Task HandleSectorAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(message);
+        ArgumentNullException.ThrowIfNull(message.Text);
+
+        await mediator.Send(new UpdateInvestorSectorCommand() { Id = user.Id, Sector = message.Text }, cancellationToken); // TODO: need validation
+
+        await SendRequestForInvestmentAmountAsync(botClient, message, cancellationToken);
+    }
+
+    private async Task HandleInvestmentAmountAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(message);
+        ArgumentNullException.ThrowIfNull(message.Text);
+
+        await mediator.Send(new UpdateInvestorInvestmentAmountCommand() { Id = user.Id, InvestmentAmount = message.Text }, cancellationToken); // TODO: need validation
+
+        await SendForSubmitInvestmentApplicationAsync(botClient, message, cancellationToken);
     }
 }

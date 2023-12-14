@@ -36,8 +36,8 @@ public partial class BotUpdateHandler(
             _ => CultureInfo.CurrentCulture
         };
 
-        CultureInfo.CurrentCulture = culture;
-        CultureInfo.CurrentUICulture = culture;
+        CultureInfo.CurrentCulture = new CultureInfo("uz-Uz");
+        CultureInfo.CurrentUICulture = new CultureInfo("uz-Uz");
 
         var handler = update.Type switch
         {
@@ -48,12 +48,9 @@ public partial class BotUpdateHandler(
             _ => HandleUnknownUpdateAsync(botClient, update, cancellationToken)
         };
 
-        try
-        {
-            await handler;
-        }
-        catch(Exception ex)
-        {
+        try { await handler; }
+        catch(Exception ex) 
+        { 
             logger.LogError("HandlePollingError: {ErrorText}", ex.Message);
             await HandlePollingErrorAsync(botClient, ex, cancellationToken);
         }
@@ -94,16 +91,14 @@ public partial class BotUpdateHandler(
             _ => update.Message,
         })!;
 
+    public Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
     private Task HandleUnknownUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
         logger.LogInformation("Unknown update type: {UpdateType}", update.Type);
-        return Task.CompletedTask;
-    }
-
-    public Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
-    {
-        logger.LogError("HandlePollingError: {ErrorText}", exception.Message);
-
         return Task.CompletedTask;
     }
 }

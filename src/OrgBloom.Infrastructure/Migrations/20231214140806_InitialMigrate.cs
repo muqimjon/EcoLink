@@ -76,7 +76,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Sector = table.Column<string>(type: "text", nullable: true),
-                    InvestmentAmount = table.Column<decimal>(type: "numeric", nullable: true),
+                    InvestmentAmount = table.Column<string>(type: "text", nullable: true),
                     IsSubmitted = table.Column<bool>(type: "boolean", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),

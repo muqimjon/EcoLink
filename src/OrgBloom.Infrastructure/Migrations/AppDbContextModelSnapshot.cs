@@ -78,8 +78,8 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<decimal?>("InvestmentAmount")
-                        .HasColumnType("numeric");
+                    b.Property<string>("InvestmentAmount")
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
