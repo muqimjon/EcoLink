@@ -3,8 +3,8 @@
 public enum UserProfession
 {
     None,
-    Investor,
-    ProjectManager,
     Entrepreneur,
-    Representative
+    Investor,
+    Representative,
+    ProjectManager,
 }

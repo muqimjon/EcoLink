@@ -60,6 +60,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<GetUserByTelegramIdQuery, UserTelegramResultDto>, GetUserByTelegramIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetLanguageCodeByIdQuery, string>, GetLanguageCodeByIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetStateQuery, State>, GetStateQueryHendler>();
+        services.AddScoped<IRequestHandler<GetProfessionQuery, UserProfession>, GetProfessionQueryHendler>();
 
         services.AddScoped<IRequestHandler<IsUserNewQuery, bool>, IsUserNewQueryHendler>();
 
