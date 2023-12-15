@@ -84,6 +84,7 @@ public static class DependencyInjection
 
         // Representative
         services.AddScoped<IRequestHandler<CreateRepresentativeCommand, int>, CreateRepresentativeCommandHandler>();
+        services.AddScoped<IRequestHandler<CreateRepresentativeWithReturnCommand, RepresentativeResultDto>, CreateRepresentativeWithReturnCommandHandler>();
 
         services.AddScoped<IRequestHandler<UpdateRepresentativeCommand, int>, UpdateRepresentativeCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateRepresentativeLanguagesCommand, int>, UpdateRepresentativeLanguagesCommandHandler>();
@@ -122,6 +123,7 @@ public static class DependencyInjection
 
         // Entrepreneur
         services.AddScoped<IRequestHandler<CreateEntrepreneurCommand, int>, CreateEntrepreneurCommandHandler>();
+        services.AddScoped<IRequestHandler<CreateEntrepreneurWithReturnCommand, EntrepreneurResultDto>, CreateEntrepreneurWithReturnCommandHandler>();
 
         services.AddScoped<IRequestHandler<UpdateEntrepreneurCommand, int>, UpdateEntrepreneurCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateEntrepreneurIsSubmittedCommand, int>, UpdateEntrepreneurIsSubmittedCommandHandler>();
