@@ -2,6 +2,10 @@
 using Telegram.Bot.Types;
 using OrgBloom.Domain.Enums;
 using OrgBloom.Application.Users.Queries.GetUsers;
+using OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
+using OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
+using OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
+using OrgBloom.Application.Investors.Commands.UpdateInvestors;
 
 namespace OrgBloom.Bot.BotServices;
 
@@ -37,6 +41,7 @@ public partial class BotUpdateHandler
             text: "Tabriklaymiz!\nVakillik qilish uchun murojaatingiz qabul qilindi va tez orada siz bilan bog'lanamiz!",
             cancellationToken: cancellationToken);
 
+        await mediator.Send(new UpdateRepresentativeIsSubmittedCommand() { UserId = user.Id, IsSubmitted = true }, cancellationToken);
         Thread.Sleep(1000);
     }
 
@@ -50,6 +55,7 @@ public partial class BotUpdateHandler
             text: "Tabriklaymiz!\nLoyiha boshqarish uchun murojaatingiz qabul qilindi va tez orada siz bilan bog'lanamiz!",
             cancellationToken: cancellationToken);
 
+        await mediator.Send(new UpdateProjectManagerIsSubmittedCommand() { UserId = user.Id, IsSubmitted = true }, cancellationToken);
         Thread.Sleep(1000);
     }
 
@@ -63,6 +69,7 @@ public partial class BotUpdateHandler
             text: "Tabriklaymiz!\nInvestitsiya jalb qilish bo'yicha murojaatingiz qabul qilindi va tez orada siz bilan bog'lanamiz!",
             cancellationToken: cancellationToken);
 
+        await mediator.Send(new UpdateEntrepreneurIsSubmittedCommand() { UserId = user.Id, IsSubmitted = true }, cancellationToken);
         Thread.Sleep(1000);
     }
 
@@ -76,6 +83,7 @@ public partial class BotUpdateHandler
             text: "Tabriklaymiz!\nInvestorlik uchun murojaatingiz qabul qilindi va tez orada siz bilan bog'lanamiz!",
             cancellationToken: cancellationToken);
 
+        await mediator.Send(new UpdateInvestorIsSubmittedCommand() { UserId = user.Id, IsSubmitted = true }, cancellationToken);
         Thread.Sleep(1000);
     }
 }
