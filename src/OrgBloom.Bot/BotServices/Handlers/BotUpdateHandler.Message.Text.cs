@@ -94,7 +94,18 @@ public partial class BotUpdateHandler
 
         await mediator.Send(new UpdateDegreeCommand() { Id = user.Id, Degree = message.Text }, cancellationToken); // TODO: need validation
 
-        await SendRequestForLanguagesAsync(botClient, message, cancellationToken);
+        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
+        var handle = profession switch
+        {
+            UserProfession.Investor => SendRequestForSectorAsync(botClient, message, cancellationToken),
+            UserProfession.Representative => SendRequestForLanguagesAsync(botClient, message, cancellationToken),
+            UserProfession.ProjectManager => SendRequestForLanguagesAsync(botClient, message, cancellationToken),
+            UserProfession.Entrepreneur => SendRequestForExperienceAsync(botClient, message, cancellationToken),
+            _ => throw new InvalidOperationException()
+        };
+
+        try { await handle; }
+        catch(Exception ex) { logger.LogError(ex, "Error handling message in handle degree from {from.FirstName}", user.FirstName); }
     }
 
     private async Task HandleInvestmentAmountAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -124,7 +135,7 @@ public partial class BotUpdateHandler
 
         await mediator.Send(new UpdateEmailCommand() { Id = user.Id, Email = message.Text }, cancellationToken); // TODO: need validation
 
-        await SendForSubmitInvestmentApplicationAsync(botClient, message, cancellationToken);
+        await SendForSubmitApplicationAsync(botClient, message, cancellationToken);
     }
 
     private async Task HandleLanguagesAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -184,6 +195,6 @@ public partial class BotUpdateHandler
 
         await mediator.Send(new UpdateRepresentativePurposeCommand() { Id = user.Id, Purpose = message.Text }, cancellationToken); // TODO: need validation
 
-        await SendForSubmitInvestmentApplicationAsync(botClient, message, cancellationToken);
+        await SendForSubmitApplicationAsync(botClient, message, cancellationToken);
     }
 }

@@ -3,8 +3,6 @@ using Telegram.Bot.Types;
 using OrgBloom.Domain.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 using OrgBloom.Application.Users.Commands.UpdateUsers;
-using OrgBloom.Application.Investors.Queries.GetInvestors;
-using OrgBloom.Bot.BotServices.Helpers;
 
 namespace OrgBloom.Bot.BotServices;
 

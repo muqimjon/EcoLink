@@ -14,7 +14,6 @@ namespace OrgBloom.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
-
     private async Task SendApplyQuery(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var keyboard = new ReplyKeyboardMarkup(new[]
@@ -217,7 +216,7 @@ public partial class BotUpdateHandler
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterAddress), cancellationToken);
     }
 
-    private async Task SendForSubmitInvestmentApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendForSubmitApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         var applicationText = profession switch
@@ -229,6 +228,14 @@ public partial class BotUpdateHandler
             _ => string.Empty,
         };
 
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: "Murojaatnoma tayyor tasdiqlash qoldi xolos!",
+            replyMarkup: new ReplyKeyboardRemove(),
+            cancellationToken: cancellationToken
+        );
+
+        await Task.Delay(1000, cancellationToken);
         var keyboard = new InlineKeyboardMarkup(new[] {
             new[] { InlineKeyboardButton.WithCallbackData("Tasdiqlash", "submit") },
             new[] { InlineKeyboardButton.WithCallbackData("E'tiborsiz qoldrish", "cancel") }

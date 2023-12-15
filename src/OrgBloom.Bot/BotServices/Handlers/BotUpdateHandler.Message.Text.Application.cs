@@ -6,12 +6,16 @@ using OrgBloom.Application.Users.Queries.GetUsers;
 using OrgBloom.Application.Users.Commands.UpdateUsers;
 using OrgBloom.Application.Investors.Queries.GetInvestors;
 using OrgBloom.Application.Investors.Commands.CreateInvestors;
+using OrgBloom.Application.Investors.Commands.UpdateInvestors;
 using OrgBloom.Application.Entrepreneurs.Queries.GetEntrepreneurs;
 using OrgBloom.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
 using OrgBloom.Application.ProjectManagers.Queries.GetProjectManagers;
 using OrgBloom.Application.Representatives.Queries.GetRepresentatives;
+using OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
 using OrgBloom.Application.ProjectManagers.Commands.CreateProjectManagers;
 using OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
+using OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
+using OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
 
 namespace OrgBloom.Bot.BotServices;
 
@@ -49,17 +53,28 @@ public partial class BotUpdateHandler
     private async Task ClarifyProfessionQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
-        var handle = profession switch
+        switch(profession)
         {
-            UserProfession.Investor => InvestmentQueryAsync(botClient, message, cancellationToken),
-            UserProfession.Entrepreneur => EntrepreneurshipQueryAsync(botClient, message, cancellationToken),
-            UserProfession.ProjectManager => ProjectManagementQueryAsync(botClient, message, cancellationToken),
-            UserProfession.Representative => RepresentationQueryAsync(botClient, message, cancellationToken),
-            _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
+            case UserProfession.Investor:
+                await mediator.Send(new UpdateInvestorIsSubmittedCommand() { UserId = user.Id, IsSubmitted = false });
+                await InvestmentQueryAsync(botClient, message, cancellationToken);
+                break;
+            case UserProfession.Entrepreneur:
+                await mediator.Send(new UpdateEntrepreneurIsSubmittedCommand() { UserId = user.Id, IsSubmitted = false });
+                await EntrepreneurshipQueryAsync(botClient, message, cancellationToken);
+                break;
+            case UserProfession.ProjectManager:
+                await mediator.Send(new UpdateProjectManagerIsSubmittedCommand() { UserId = user.Id, IsSubmitted = false });
+                await ProjectManagementQueryAsync(botClient, message, cancellationToken);
+                break;
+            case UserProfession.Representative:
+                await mediator.Send(new UpdateRepresentativeIsSubmittedCommand() { UserId = user.Id, IsSubmitted = false });
+                await RepresentationQueryAsync(botClient, message, cancellationToken);
+                break;
+            default: 
+                await HandleUnknownMessageAsync(botClient, message, cancellationToken);
+                break;
         };
-
-        try { await handle; }
-        catch (Exception ex) { logger.LogError(ex, "Error handling message from {from.FirstName}", user.FirstName); }
     }
 
 
