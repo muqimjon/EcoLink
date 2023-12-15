@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.Investors.Commands.CreateInvestors;
 
@@ -11,8 +10,8 @@ public record CreateInvestorCommand : IRequest<int>
     {
         UserId = command.UserId;
         Sector = command.Sector;
-        InvestmentAmount = command.InvestmentAmount;
         IsSubmitted = command.IsSubmitted;
+        InvestmentAmount = command.InvestmentAmount;
     }
 
     public string Sector { get; set; } = string.Empty;

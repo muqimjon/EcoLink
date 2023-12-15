@@ -22,7 +22,7 @@ public class UpdateInvestorInvestmentAmountCommandHandler(IRepository<Investor> 
     public async Task<int> Handle(UpdateInvestorInvestmentAmountCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new NotFoundException($"Investor is not found with UserId: {request.Id} | Update Investor InvestmentAmount");
+            ?? throw new NotFoundException($"Investor is not found with UserId: {request.Id} | Update Investor OutvestmentAmount");
 
         mapper.Map(request, entity);
         repository.Update(entity);

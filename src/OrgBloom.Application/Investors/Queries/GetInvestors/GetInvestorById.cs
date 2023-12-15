@@ -5,14 +5,14 @@ using OrgBloom.Application.Commons.Interfaces;
 
 namespace OrgBloom.Application.Investors.Queries.GetInvestors;
 
-public record GetInvestorByIdQuery : IRequest<InvestorResultDto>
+public record GetInvestorQuery : IRequest<InvestorResultDto>
 {
-    public GetInvestorByIdQuery(GetInvestorByIdQuery command) { Id = command.Id; }
+    public GetInvestorQuery(GetInvestorQuery command) { Id = command.Id; }
     public int Id { get; set; }
 }
 
-public class GetInvestorQueryHendler(IRepository<Investor> repository, IMapper mapper) : IRequestHandler<GetInvestorByIdQuery, InvestorResultDto>
+public class GetInvestorQueryHendler(IRepository<Investor> repository, IMapper mapper) : IRequestHandler<GetInvestorQuery, InvestorResultDto>
 {
-    public async Task<InvestorResultDto> Handle(GetInvestorByIdQuery request, CancellationToken cancellationToken)
+    public async Task<InvestorResultDto> Handle(GetInvestorQuery request, CancellationToken cancellationToken)
         => mapper.Map<InvestorResultDto>(await repository.SelectAsync(i => i.Id.Equals(request.Id)));
 }

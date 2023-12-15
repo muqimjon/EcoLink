@@ -10,12 +10,12 @@ public record CreateRepresentativeCommand : IRequest<int>
     public CreateRepresentativeCommand(CreateRepresentativeCommand command)
     {
         Area = command.Area;
+        UserId = command.UserId;
         Purpose = command.Purpose;
         Address = command.Address;
         Languages = command.Languages;
         Experience = command.Experience;
         Expectation = command.Expectation;
-        UserId = command.UserId;
         IsSubmitted = command.IsSubmitted;
     }
 

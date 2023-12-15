@@ -1,10 +1,10 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Polling;
 
-namespace OrgBloom.Bot.BotServices;
+namespace OrgBloom.Bot.BotServices.Commons;
 
-public class BotBackgroundService(TelegramBotClient client, 
-    ILogger<BotBackgroundService> logger, 
+public class BotBackgroundService(TelegramBotClient client,
+    ILogger<BotBackgroundService> logger,
     IUpdateHandler handler) : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -15,6 +15,6 @@ public class BotBackgroundService(TelegramBotClient client,
 
         client.StartReceiving(
             handler.HandleUpdateAsync,
-            handler.HandlePollingErrorAsync,null, stoppingToken);
+            handler.HandlePollingErrorAsync, null, stoppingToken);
     }
 }

@@ -32,6 +32,9 @@ namespace OrgBloom.Infrastructure.Migrations
                     Phone = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
                     Profession = table.Column<int>(type: "integer", nullable: false),
+                    Address = table.Column<string>(type: "text", nullable: true),
+                    Languages = table.Column<string>(type: "text", nullable: true),
+                    Experience = table.Column<string>(type: "text", nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
@@ -47,10 +50,9 @@ namespace OrgBloom.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Experience = table.Column<string>(type: "text", nullable: true),
                     Project = table.Column<string>(type: "text", nullable: true),
                     HelpType = table.Column<string>(type: "text", nullable: true),
-                    InvestmentAmount = table.Column<decimal>(type: "numeric", nullable: true),
+                    OutvestmentAmount = table.Column<string>(type: "text", nullable: true),
                     AssetsInvested = table.Column<string>(type: "text", nullable: true),
                     IsSubmitted = table.Column<bool>(type: "boolean", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
@@ -76,7 +78,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Sector = table.Column<string>(type: "text", nullable: true),
-                    InvestmentAmount = table.Column<decimal>(type: "numeric", nullable: true),
+                    InvestmentAmount = table.Column<string>(type: "text", nullable: true),
                     IsSubmitted = table.Column<bool>(type: "boolean", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
@@ -100,9 +102,6 @@ namespace OrgBloom.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Languages = table.Column<string>(type: "text", nullable: true),
-                    Experience = table.Column<string>(type: "text", nullable: true),
-                    Address = table.Column<string>(type: "text", nullable: true),
                     Area = table.Column<string>(type: "text", nullable: true),
                     Expectation = table.Column<string>(type: "text", nullable: true),
                     Purpose = table.Column<string>(type: "text", nullable: true),
@@ -129,11 +128,8 @@ namespace OrgBloom.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Languages = table.Column<string>(type: "text", nullable: true),
                     Experience = table.Column<string>(type: "text", nullable: true),
-                    Address = table.Column<string>(type: "text", nullable: true),
                     Area = table.Column<string>(type: "text", nullable: true),
-                    Expectation = table.Column<string>(type: "text", nullable: true),
                     Purpose = table.Column<string>(type: "text", nullable: true),
                     IsSubmitted = table.Column<bool>(type: "boolean", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false),

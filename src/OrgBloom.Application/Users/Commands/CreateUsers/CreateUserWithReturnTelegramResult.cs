@@ -3,6 +3,7 @@ using OrgBloom.Domain.Enums;
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Users.DTOs;
 using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.Users.Commands.CreateUsers;
 
@@ -15,11 +16,14 @@ public record class CreateUserWithReturnTgResultCommand : IRequest<UserTelegramR
         IsBot = command.IsBot;
         Degree = command.Degree;
         ChatId = command.ChatId;
+        Address = command.Address;
         Username = command.Username;
         LastName = command.LastName;
+        Languages = command.Languages;
         FirstName = command.FirstName;
         TelegramId = command.TelegramId;
         Patronomyc = command.Patronomyc;
+        Experience = command.Experience;
         Profession = command.Profession;
         DateOfBirth = command.DateOfBirth;
         LanguageCode = command.LanguageCode;
@@ -33,6 +37,9 @@ public record class CreateUserWithReturnTgResultCommand : IRequest<UserTelegramR
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public UserProfession Profession { get; set; }
+    public string Address { get; set; } = string.Empty;
+    public string Languages { get; set; } = string.Empty;
+    public string Experience { get; set; } = string.Empty;
     public long TelegramId { get; set; }
     public string Username { get; set; } = string.Empty;
     public string LanguageCode { get; set; } = string.Empty;
@@ -46,7 +53,7 @@ public class CreateUserWithReturnTgResultCommandHandler(IRepository<User> reposi
     {
         var entity = await repository.SelectAsync(entity => entity.TelegramId == request.TelegramId);
         if (entity is not null)
-            throw new($"User Already exist user command create with telegram id: {request.TelegramId} | create user with return tg result");
+            throw new AlreadyExistException($"User Already exist user command create with telegram id: {request.TelegramId} | create user with return tg result");
 
         var user = mapper.Map<User>(request);
         await repository.InsertAsync(user);

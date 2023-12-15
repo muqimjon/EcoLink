@@ -3,6 +3,7 @@
 public enum State
 {
     None,
+    WaitingForSubmitApplication,
     WaitingForSelectLanguage,
     WaitingForSelectMainMenu,
     WaitingForEnterFirstName,
@@ -11,4 +12,13 @@ public enum State
     WaitingForEnterPatronomyc,
     WaitingForEnterDateOfBirth,
     WaitingForEnterDegree,
+    WaitingForEnterSector,
+    WaitingForEnterInvestmentAmount,
+    WaitingForEnterPhoneNumber,
+    WaitingForEnterEmail,
+    WaitingForResendApplication,
+    WaitingForEnterLanguages,
+    WaitingForEnterExperience,
+    WaitingForEnterAddress,
+    WaitingForEnterArea,
 }

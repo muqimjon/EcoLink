@@ -27,7 +27,6 @@ public partial class BotUpdateHandler(
         localizer = scope.ServiceProvider.GetRequiredService<IStringLocalizer<BotLocalizer>>();
 
         user = await GetUserAsync(update);
-
         var culture = user.LanguageCode switch
         {
             "uz" => new CultureInfo("uz-Uz"),
@@ -36,24 +35,19 @@ public partial class BotUpdateHandler(
             _ => CultureInfo.CurrentCulture
         };
 
-        CultureInfo.CurrentCulture = culture;
-        CultureInfo.CurrentUICulture = culture;
+        CultureInfo.CurrentCulture = new CultureInfo("uz-Uz");
+        CultureInfo.CurrentUICulture = new CultureInfo("uz-Uz");
 
         var handler = update.Type switch
         {
             UpdateType.Message => HandleMessageAsync(botClient, update.Message, cancellationToken),
-            UpdateType.EditedMessage => HandleEditedMessageAsync(botClient, update.EditedMessage, cancellationToken),
             UpdateType.CallbackQuery => HandleCallbackQuery(botClient, update.CallbackQuery, cancellationToken),
-            UpdateType.InlineQuery => HandleInlineQuery(botClient, update.InlineQuery, cancellationToken),
             _ => HandleUnknownUpdateAsync(botClient, update, cancellationToken)
         };
 
-        try
-        {
-            await handler;
-        }
-        catch(Exception ex)
-        {
+        try { await handler; }
+        catch(Exception ex) 
+        { 
             logger.LogError("HandlePollingError: {ErrorText}", ex.Message);
             await HandlePollingErrorAsync(botClient, ex, cancellationToken);
         }
@@ -94,16 +88,14 @@ public partial class BotUpdateHandler(
             _ => update.Message,
         })!;
 
+    public Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
     private Task HandleUnknownUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
         logger.LogInformation("Unknown update type: {UpdateType}", update.Type);
-        return Task.CompletedTask;
-    }
-
-    public Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
-    {
-        logger.LogError("HandlePollingError: {ErrorText}", exception.Message);
-
         return Task.CompletedTask;
     }
 }

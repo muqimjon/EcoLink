@@ -23,6 +23,9 @@ public record class CreateUserCommand : IRequest<int>
         DateOfBirth = command.DateOfBirth;
         LanguageCode = command.LanguageCode;
         State = command.State;
+        Address = command.Address;
+        Languages = command.Languages;
+        Experience = command.Experience;
     }
 
     public string FirstName { get; set; } = string.Empty;
@@ -33,6 +36,9 @@ public record class CreateUserCommand : IRequest<int>
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public UserProfession Profession { get; set; }
+    public string Address { get; set; } = string.Empty;
+    public string Languages { get; set; } = string.Empty;
+    public string Experience { get; set; } = string.Empty;
     public long TelegramId { get; set; }
     public string Username { get; set; } = string.Empty;
     public string LanguageCode { get; set; } = string.Empty;

@@ -38,12 +38,9 @@ public class MappingProfile : Profile
         CreateMap<ProjectManager, ProjectManagerResultDto>();
 
         CreateMap<UpdateProjectManagerCommand, ProjectManager>();
-        CreateMap<UpdateProjectManagerAddressCommand, ProjectManager>();
         CreateMap<UpdateProjectManagerAreaCommand, ProjectManager>();
         CreateMap<UpdateProjectManagerExpectationCommand, ProjectManager>();
-        CreateMap<UpdateProjectManagerExperienceCommand, ProjectManager>();
         CreateMap<UpdateProjectManagerIsSubmittedCommand, ProjectManager>();
-        CreateMap<UpdateProjectManagerLanguagesCommand, ProjectManager>();
         CreateMap<UpdateProjectManagerPurposeCommand, ProjectManager>();
 
         CreateMap<CreateProjectManagerCommand, ProjectManager>();
@@ -53,7 +50,6 @@ public class MappingProfile : Profile
         CreateMap<Entrepreneur, EntrepreneurResultDto>();
 
         CreateMap<UpdateEntrepreneurCommand, Entrepreneur>();
-        CreateMap<UpdateEntrepreneurExperienceCommand, Entrepreneur>();
         CreateMap<UpdateEntrepreneurHelpTypeCommand, Entrepreneur>();
         CreateMap<UpdateEntrepreneurAssetsInvestedCommand, Entrepreneur>();
         CreateMap<UpdateEntrepreneurInvestmentAmountCommand, Entrepreneur>();
@@ -61,21 +57,20 @@ public class MappingProfile : Profile
         CreateMap<UpdateEntrepreneurProjectCommand, Entrepreneur>();
 
         CreateMap<CreateEntrepreneurCommand, Entrepreneur>();
+        CreateMap<CreateEntrepreneurWithReturnCommand, Entrepreneur>();
 
 
         // Representative
         CreateMap<Representative, RepresentativeResultDto>();
 
         CreateMap<UpdateRepresentativeCommand, Representative>();
-        CreateMap<UpdateRepresentativeAddressCommand, Representative>();
         CreateMap<UpdateRepresentativeAreaCommand, Representative>();
         CreateMap<UpdateRepresentativeExpectationCommand, Representative>();
-        CreateMap<UpdateRepresentativeExperienceCommand, Representative>();
         CreateMap<UpdateRepresentativeIsSubmittedCommand, Representative>();
-        CreateMap<UpdateRepresentativeLanguagesCommand, Representative>();
         CreateMap<UpdateRepresentativePurposeCommand, Representative>();
 
         CreateMap<CreateRepresentativeCommand, Representative>();
+        CreateMap<CreateRepresentativeWithReturnCommand, Representative>();
 
 
         // User
@@ -94,6 +89,9 @@ public class MappingProfile : Profile
         CreateMap<UpdateStateCommand, User>();
         CreateMap<UpdateLanguageCodeCommand, User>();
         CreateMap<UpdateProfessionCommand, User>();
+        CreateMap<UpdateAddressCommand, User>();
+        CreateMap<UpdateLanguagesCommand, User>();
+        CreateMap<UpdateExperienceCommand, User>();
 
         CreateMap<CreateUserCommand, User>();
         CreateMap<CreateUserWithReturnTgResultCommand, User>();
