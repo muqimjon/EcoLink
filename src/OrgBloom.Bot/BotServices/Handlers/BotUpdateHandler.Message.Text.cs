@@ -3,8 +3,6 @@ using Telegram.Bot.Types;
 using OrgBloom.Domain.Enums;
 using OrgBloom.Application.Users.Queries.GetUsers;
 using OrgBloom.Application.Users.Commands.UpdateUsers;
-using OrgBloom.Application.Investors.Queries.GetInvestors;
-using OrgBloom.Application.Investors.Commands.CreateInvestors;
 using OrgBloom.Application.Investors.Commands.UpdateInvestors;
 
 namespace OrgBloom.Bot.BotServices;
@@ -31,6 +29,7 @@ public partial class BotUpdateHandler
             State.WaitingForEnterInvestmentAmount => HandleInvestmentAmountAsync(botClient, message, cancellationToken),
             State.WaitingForEnterEmail=> HandleEmailAsync(botClient, message, cancellationToken),
             State.WaitingForResendApplication => HandleResendApplicationAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterPhoneNumber => HandlePhoneNumbeFromTextAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 
@@ -88,7 +87,7 @@ public partial class BotUpdateHandler
 
         await mediator.Send(new UpdateDegreeCommand() { Id = user.Id, Degree = message.Text }, cancellationToken); // TODO: need validation
 
-        await SendRequestForSectorAsync(botClient, message, cancellationToken);
+        await SendRequestForLanguagesAsync(botClient, message, cancellationToken);
     }
 
     private async Task HandleInvestmentAmountAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -101,6 +100,16 @@ public partial class BotUpdateHandler
         await SendRequestForPhoneNumberAsync(botClient, message, cancellationToken);
     }
 
+    private async Task HandlePhoneNumbeFromTextAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(message);
+        ArgumentNullException.ThrowIfNull(message.Text);
+
+        await mediator.Send(new UpdatePhoneCommand() { Id = user.Id, Phone = message.Text }, cancellationToken); // TODO: need validation
+
+        await SendRequestForEmailAsync(botClient, message, cancellationToken);
+    }
+
     private async Task HandleEmailAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(message);
@@ -110,5 +119,4 @@ public partial class BotUpdateHandler
 
         await SendForSubmitInvestmentApplicationAsync(botClient, message, cancellationToken);
     }
-
 }

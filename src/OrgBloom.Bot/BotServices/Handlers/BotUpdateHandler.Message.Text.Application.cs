@@ -10,6 +10,8 @@ using OrgBloom.Application.Entrepreneurs.Queries.GetEntrepreneurs;
 using OrgBloom.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
 using OrgBloom.Application.ProjectManagers.Queries.GetProjectManagers;
 using OrgBloom.Application.ProjectManagers.Commands.CreateProjectManagers;
+using OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
+using OrgBloom.Application.Representatives.Queries.GetRepresentatives;
 
 namespace OrgBloom.Bot.BotServices;
 
@@ -43,6 +45,7 @@ public partial class BotUpdateHandler
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {from.FirstName}", user.FirstName); }
     }
 
+
     private async Task ClarifyProfessionQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
@@ -59,12 +62,13 @@ public partial class BotUpdateHandler
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {from.FirstName}", user.FirstName); }
     }
 
+
     private async Task RepresentationQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var application = await mediator.Send(new GetProjectManagerByUserIdQuery() { UserId = user.Id }, cancellationToken)
-            ?? await mediator.Send(new CreateProjectManagerWithReturnCommand() { UserId = user.Id }, cancellationToken);
+        var application = await mediator.Send(new GetRepresentativeByUserIdQuery() { UserId = user.Id }, cancellationToken)
+            ?? await mediator.Send(new CreateRepresentativeWithReturnCommand() { UserId = user.Id }, cancellationToken);
         if (application.IsSubmitted)
-            await SendAlreadyExistApplicationAsync(StringHelper.GetProjectManagementApplicationInfoForm(application), botClient, message, cancellationToken);
+            await SendAlreadyExistApplicationAsync(StringHelper.GetRepresentationApplicationInfoForm(application), botClient, message, cancellationToken);
         else
         {
             await mediator.Send(new UpdateProfessionCommand() { Id = user.Id, Profession = UserProfession.ProjectManager }, cancellationToken);

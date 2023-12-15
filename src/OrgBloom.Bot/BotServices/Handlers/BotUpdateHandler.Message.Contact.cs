@@ -17,7 +17,7 @@ public partial class BotUpdateHandler
         var state = await mediator.Send(new GetStateQuery(user.Id), cancellationToken);
         var handler = state switch
         {
-            State.WaitingForEnterPhoneNumber => HandlePhoneNumberAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterPhoneNumber => HandlePhoneNumbeFromContactAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
 
         };
@@ -26,7 +26,7 @@ public partial class BotUpdateHandler
         catch (Exception ex) { logger.LogError(ex, "Error handling contact message: {callbackQuery.Data}", message.Text); }
     }
 
-    private async Task HandlePhoneNumberAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task HandlePhoneNumbeFromContactAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Contact);
