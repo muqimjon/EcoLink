@@ -7,7 +7,7 @@ namespace OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 
 public record UpdateProjectManagerExpectationCommand : IRequest<int>
 {
-    public UpdateProjectManagerExpectationCommand(UpdateProjectManagerCommand command)
+    public UpdateProjectManagerExpectationCommand(UpdateProjectManagerExpectationCommand command)
     {
         Id = command.Id;
         Expectation = command.Expectation;

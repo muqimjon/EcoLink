@@ -7,7 +7,7 @@ namespace OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 
 public record UpdateProjectManagerProjectDirectionCommand : IRequest<int>
 {
-    public UpdateProjectManagerProjectDirectionCommand(UpdateProjectManagerCommand command)
+    public UpdateProjectManagerProjectDirectionCommand(UpdateProjectManagerProjectDirectionCommand command)
     {
         Id = command.Id;
         ProjectDirection = command.Area;

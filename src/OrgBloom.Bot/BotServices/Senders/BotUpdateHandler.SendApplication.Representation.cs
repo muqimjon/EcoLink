@@ -2,8 +2,10 @@
 using Telegram.Bot.Types;
 using OrgBloom.Domain.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
+using OrgBloom.Application.Users.Queries.GetUsers;
 using OrgBloom.Application.Users.Commands.UpdateUsers;
 using OrgBloom.Application.Representatives.Queries.GetRepresentatives;
+using OrgBloom.Application.ProjectManagers.Queries.GetProjectManagers;
 
 namespace OrgBloom.Bot.BotServices;
 
@@ -12,11 +14,7 @@ public partial class BotUpdateHandler
     private async Task SendRequestForAreaAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var area = await mediator.Send(new GetRepresentativeAreaByUserIdQuery(user.Id), cancellationToken);
-        var keyboard = new ReplyKeyboardMarkup(new[]
-        {
-            new[] { new KeyboardButton(area) }
-        })
-        { ResizeKeyboard = true };
+        var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(area) }) { ResizeKeyboard = true };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
@@ -28,9 +26,19 @@ public partial class BotUpdateHandler
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterArea), cancellationToken);
     }
 
-    private async Task SendRequestForExpectationForRepresentationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendRequestForExpectationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var expectatiopn = await mediator.Send(new GetRepresentativeExpectationByUserIdQuery(user.Id), cancellationToken);
+        var expectatiopn = string.Empty;
+        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
+        var handle = profession switch
+        {
+            UserProfession.Representative => mediator.Send(new GetRepresentativeExpectationByUserIdQuery(user.Id), cancellationToken),
+            UserProfession.ProjectManager => mediator.Send(new GetProjectManagerExpectationByUserIdQuery(user.Id), cancellationToken),
+        };
+        
+        try { expectatiopn = await handle; }
+        catch(Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+        
         var keyboard = new ReplyKeyboardMarkup(new[]
         {
             new[] { new KeyboardButton(expectatiopn) }

@@ -13,16 +13,6 @@ public partial class BotUpdateHandler
 
         await mediator.Send(new UpdateRepresentativeAreaCommand() { Id = user.Id, Area = message.Text }, cancellationToken); // TODO: need validation
 
-        await SendRequestForExpectationForRepresentationAsync(botClient, message, cancellationToken);
-    }
-
-    private async Task HandleExpectationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(message);
-        ArgumentNullException.ThrowIfNull(message.Text);
-
-        await mediator.Send(new UpdateRepresentativeExpectationCommand() { Id = user.Id, Expectation = message.Text }, cancellationToken); // TODO: need validation
-
-        await SendRequestForPurposeAsync(botClient, message, cancellationToken);
+        await SendRequestForExpectationAsync(botClient, message, cancellationToken);
     }
 }
