@@ -1,4 +1,8 @@
-﻿using Telegram.Bot;
+﻿using OrgBloom.Application.Investors.Commands.UpdateInvestors;
+using OrgBloom.Application.Users.Commands.UpdateUsers;
+using OrgBloom.Application.Users.Queries.GetUsers;
+using OrgBloom.Domain.Enums;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 
 namespace OrgBloom.Bot.BotServices;
@@ -6,8 +10,29 @@ namespace OrgBloom.Bot.BotServices;
 public partial class BotUpdateHandler
 {
 
-    private Task HandleContactMessageAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task HandleContactMessageAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        ArgumentNullException.ThrowIfNull(message);
+
+        var state = await mediator.Send(new GetStateQuery(user.Id), cancellationToken);
+        var handler = state switch
+        {
+            State.WaitingForEnterPhoneNumber => HandlePhoneNumberAsync(botClient, message, cancellationToken),
+            _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
+
+        };
+
+        try { await handler; }
+        catch (Exception ex) { logger.LogError(ex, "Error handling contact message: {callbackQuery.Data}", message.Text); }
+    }
+
+    private async Task HandlePhoneNumberAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(message);
+        ArgumentNullException.ThrowIfNull(message.Contact);
+
+        await mediator.Send(new UpdatePhoneCommand() { Id = user.Id, Phone = message.Contact.PhoneNumber }, cancellationToken); // TODO: need validation
+
+        await SendRequestForEmailAsync(botClient, message, cancellationToken);
     }
 }

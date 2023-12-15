@@ -14,4 +14,7 @@ public enum State
     WaitingForEnterDegree,
     WaitingForEnterSector,
     WaitingForEnterInvestmentAmount,
+    WaitingForEnterPhoneNumber,
+    WaitingForEnterEmail,
+    WaitingForResendApplication,
 }

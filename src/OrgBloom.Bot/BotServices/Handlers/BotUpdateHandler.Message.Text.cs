@@ -28,52 +28,14 @@ public partial class BotUpdateHandler
             State.WaitingForEnterPatronomyc => HandlePatronomycAsync(botClient, message, cancellationToken),
             State.WaitingForEnterDateOfBirth => HandleDateOfBirthAsync(botClient, message, cancellationToken),
             State.WaitingForEnterDegree => HandleDegreeAsync(botClient, message, cancellationToken),
-            State.WaitingForEnterSector => HandleSectorAsync(botClient, message, cancellationToken),
             State.WaitingForEnterInvestmentAmount => HandleInvestmentAmountAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterEmail=> HandleEmailAsync(botClient, message, cancellationToken),
+            State.WaitingForResendApplication => HandleResendApplicationAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {from.FirstName}", user.FirstName); }
-    }
-
-    private async Task HandleMainMenuAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        var handle = message.Text switch
-        {
-            "Ariza topshirish" => SendApplyQuery(botClient, message, cancellationToken),
-            _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
-        };
-
-
-        try { await handle; }
-        catch(Exception ex) { logger.LogError(ex, "Error handling message from {from.FirstName}", user.FirstName); }
-    }
-
-    private async Task HandleProfessionAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        var handle = message.Text switch
-        {
-            "Investorlik qilish" => InvestorQuery(botClient, message, cancellationToken),
-            _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
-        };
-
-
-        try { await handle; }
-        catch (Exception ex) { logger.LogError(ex, "Error handling message from {from.FirstName}", user.FirstName); }
-    }
-
-    private async Task InvestorQuery(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        var application = await mediator.Send(new GetInvestorByUserIdQuery() { UserId = user.Id }, cancellationToken)
-            ?? await mediator.Send(new CreateInvestorWithReturnCommand() { UserId = user.Id }, cancellationToken);
-        if (application.IsSubmitted)
-            await SendAlreadyExistApplicationAsync(application, botClient, message, cancellationToken);
-        else
-        {
-            await mediator.Send(new UpdateProfessionCommand() { Id = user.Id, Profession = UserProfession.Investor }, cancellationToken);
-            await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
-        }
     }
 
     private async Task HandleFirstNameAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -129,16 +91,6 @@ public partial class BotUpdateHandler
         await SendRequestForSectorAsync(botClient, message, cancellationToken);
     }
 
-    private async Task HandleSectorAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(message);
-        ArgumentNullException.ThrowIfNull(message.Text);
-
-        await mediator.Send(new UpdateInvestorSectorCommand() { Id = user.Id, Sector = message.Text }, cancellationToken); // TODO: need validation
-
-        await SendRequestForInvestmentAmountAsync(botClient, message, cancellationToken);
-    }
-
     private async Task HandleInvestmentAmountAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(message);
@@ -146,6 +98,17 @@ public partial class BotUpdateHandler
 
         await mediator.Send(new UpdateInvestorInvestmentAmountCommand() { Id = user.Id, InvestmentAmount = message.Text }, cancellationToken); // TODO: need validation
 
+        await SendRequestForPhoneNumberAsync(botClient, message, cancellationToken);
+    }
+
+    private async Task HandleEmailAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(message);
+        ArgumentNullException.ThrowIfNull(message.Text);
+
+        await mediator.Send(new UpdateEmailCommand() { Id = user.Id, Email = message.Text }, cancellationToken); // TODO: need validation
+
         await SendForSubmitInvestmentApplicationAsync(botClient, message, cancellationToken);
     }
+
 }

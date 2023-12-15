@@ -24,11 +24,11 @@ namespace OrgBloom.Infrastructure.Migrations
 
             modelBuilder.Entity("OrgBloom.Domain.Entities.Entrepreneur", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<long>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("UserId"));
 
                     b.Property<string>("AssetsInvested")
                         .HasColumnType("text");
@@ -60,7 +60,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.HasIndex("UserId");
 
@@ -69,11 +69,11 @@ namespace OrgBloom.Infrastructure.Migrations
 
             modelBuilder.Entity("OrgBloom.Domain.Entities.Investor", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<long>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("UserId"));
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -96,7 +96,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.HasIndex("UserId");
 
@@ -105,11 +105,11 @@ namespace OrgBloom.Infrastructure.Migrations
 
             modelBuilder.Entity("OrgBloom.Domain.Entities.ProjectManager", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<long>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("UserId"));
 
                     b.Property<string>("Address")
                         .HasColumnType("text");
@@ -144,7 +144,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.HasIndex("UserId");
 
@@ -153,11 +153,11 @@ namespace OrgBloom.Infrastructure.Migrations
 
             modelBuilder.Entity("OrgBloom.Domain.Entities.Representative", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<long>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("UserId"));
 
                     b.Property<string>("Address")
                         .HasColumnType("text");
@@ -192,7 +192,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.HasIndex("UserId");
 
@@ -201,11 +201,11 @@ namespace OrgBloom.Infrastructure.Migrations
 
             modelBuilder.Entity("OrgBloom.Domain.Entities.User", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<long>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("UserId"));
 
                     b.Property<long?>("ChatId")
                         .HasColumnType("bigint");
@@ -258,7 +258,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<string>("Username")
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.ToTable("User");
                 });

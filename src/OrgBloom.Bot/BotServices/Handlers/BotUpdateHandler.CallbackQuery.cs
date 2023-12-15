@@ -16,6 +16,7 @@ public partial class BotUpdateHandler
         var handler = state switch
         {
             State.WaitingForSelectLanguage => HandleSelectedLanguageAsync(botClient, callbackQuery, cancellationToken),
+            State.WaitingForEnterSector => HandleSectorAsync(botClient, callbackQuery, cancellationToken),
             State.WaitingForSubmitApplication => HandleSubmittionApplicationAsync(botClient, callbackQuery, cancellationToken),
             _ => HandleUnknownCallbackQueryAsync(botClient, callbackQuery, cancellationToken)
         };

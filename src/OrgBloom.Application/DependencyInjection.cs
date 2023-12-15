@@ -61,6 +61,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<GetLanguageCodeByIdQuery, string>, GetLanguageCodeByIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetStateQuery, State>, GetStateQueryHendler>();
         services.AddScoped<IRequestHandler<GetProfessionQuery, UserProfession>, GetProfessionQueryHendler>();
+        services.AddScoped<IRequestHandler<GetEmailQuery, string>, GetEmailQueryHendler>();
 
         services.AddScoped<IRequestHandler<IsUserNewQuery, bool>, IsUserNewQueryHendler>();
 

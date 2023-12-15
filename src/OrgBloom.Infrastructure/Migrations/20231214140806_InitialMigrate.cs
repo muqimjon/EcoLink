@@ -65,7 +65,7 @@ namespace OrgBloom.Infrastructure.Migrations
                         name: "FK_Entrepreneurs_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "Id",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -90,7 +90,7 @@ namespace OrgBloom.Infrastructure.Migrations
                         name: "FK_Investors_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "Id",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -119,7 +119,7 @@ namespace OrgBloom.Infrastructure.Migrations
                         name: "FK_ProjectManagers_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "Id",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -148,7 +148,7 @@ namespace OrgBloom.Infrastructure.Migrations
                         name: "FK_Representatives_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "Id",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 

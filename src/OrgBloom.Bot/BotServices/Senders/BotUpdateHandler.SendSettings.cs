@@ -36,8 +36,6 @@ public partial class BotUpdateHandler
 
     public async Task SendMainMenuAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectMainMenu), cancellationToken);
-
         var keyboard = new ReplyKeyboardMarkup(new[]
         {
             new[] { new KeyboardButton("Ariza topshirish") },
@@ -52,5 +50,7 @@ public partial class BotUpdateHandler
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectMainMenu), cancellationToken);
     }
 }

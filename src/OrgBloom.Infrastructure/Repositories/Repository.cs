@@ -34,8 +34,7 @@ public class Repository<T>(AppDbContext dbContext) : IRepository<T> where T : Au
 
     public void Delete(Expression<Func<T, bool>> expression)
     {
-        foreach (var entity in Table.Where(expression))
-            Table.Remove(entity);
+        Table.RemoveRange(Table.Where(expression));
     }
 
     public async Task<T> SelectAsync(Expression<Func<T, bool>> expression, string[] includes = null!)
@@ -51,10 +50,8 @@ public class Repository<T>(AppDbContext dbContext) : IRepository<T> where T : Au
     }
 
     public IQueryable<T> SelectAll(Expression<Func<T, bool>> expression = null!)
-        => expression != null ? Table.Where(expression) : Table;
+        => expression is null ? Table : Table.Where(expression);
 
     public Task<int> SaveAsync()
-    {
-        return dbContext.SaveChangesAsync();
-    }
+        => dbContext.SaveChangesAsync();
 }
