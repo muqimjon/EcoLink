@@ -2,12 +2,13 @@
 using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Application.Commons.Exceptions;
+using OrgBloom.Application.Representatives.DTOs;
 
 namespace OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
 
-public record CreateRepresentativeCommand : IRequest<int>
+public record CreateRepresentativeWithReturnCommand : IRequest<RepresentativeResultDto>
 {
-    public CreateRepresentativeCommand(CreateRepresentativeCommand command)
+    public CreateRepresentativeWithReturnCommand(CreateRepresentativeWithReturnCommand command)
     {
         Area = command.Area;
         UserId = command.UserId;
@@ -29,15 +30,18 @@ public record CreateRepresentativeCommand : IRequest<int>
     public bool IsSubmitted { get; set; }
 }
 
-public class CreateRepresentativeCommandHandler(IRepository<Representative> repository, IMapper mapper) : IRequestHandler<CreateRepresentativeCommand, int>
+public class CreateRepresentativeWithReturnCommandHandler(IRepository<Representative> repository, IMapper mapper) : IRequestHandler<CreateRepresentativeWithReturnCommand, RepresentativeResultDto>
 {
-    public async Task<int> Handle(CreateRepresentativeCommand request, CancellationToken cancellationToken)
+    public async Task<RepresentativeResultDto> Handle(CreateRepresentativeWithReturnCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.UserId == request.UserId);
         if (entity is not null)
-            throw new AlreadyExistException($"Languages is already exist with user id: {request.UserId} | update representative");
+            throw new AlreadyExistException($"Representative is already exist create Representative by user id {request.UserId}");
 
-        await repository.InsertAsync(mapper.Map<Representative>(request));
-        return await repository.SaveAsync();
+        entity = mapper.Map<Representative>(request);
+        await repository.InsertAsync(entity);
+        await repository.SaveAsync();
+
+        return mapper.Map<RepresentativeResultDto>(entity);
     }
 }
