@@ -12,12 +12,12 @@ public record CreateEntrepreneurWithReturnCommand : IRequest<EntrepreneurResultD
     {
         UserId = command.UserId;
         Sector = command.Sector;
-        InvestmentAmount = command.InvestmentAmount;
+        OutvestmentAmount = command.OutvestmentAmount;
         IsSubmitted = command.IsSubmitted;
     }
 
     public string Sector { get; set; } = string.Empty;
-    public decimal InvestmentAmount { get; set; }
+    public string OutvestmentAmount { get; set; } = string.Empty;
     public long UserId { get; set; }
     public bool IsSubmitted { get; set; }
 }

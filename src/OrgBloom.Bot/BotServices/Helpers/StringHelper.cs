@@ -7,7 +7,6 @@ namespace OrgBloom.Bot.BotServices.Helpers;
 
 public static class StringHelper
 {
-
     public static string GetEntrepreneurshipApplicationInfoForm(EntrepreneurResultDto dto)
         => $"Ism: {dto.User.FirstName}\n" +
         $"Familiya: {dto.User.LastName}\n" +

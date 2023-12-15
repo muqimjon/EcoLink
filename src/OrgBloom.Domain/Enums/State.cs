@@ -17,4 +17,8 @@ public enum State
     WaitingForEnterPhoneNumber,
     WaitingForEnterEmail,
     WaitingForResendApplication,
+    WaitingForEnterLanguages,
+    WaitingForEnterExperience,
+    WaitingForEnterAddress,
+    WaitingForEnterArea,
 }

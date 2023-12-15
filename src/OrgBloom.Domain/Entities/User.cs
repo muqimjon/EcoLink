@@ -19,4 +19,7 @@ public class User : Auditable
     public string? Phone { get; set; }
     public string? Email { get; set; }
     public UserProfession Profession { get; set; }
+    public string? Address { get; set; }
+    public string? Languages { get; set; }
+    public string? Experience { get; set; }
 }

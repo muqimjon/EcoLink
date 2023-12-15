@@ -50,8 +50,11 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<UpdateDegreeCommand, int>, UpdateDegreeCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateDateOfBirthCommand, int>, UpdateDateOfBirthCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateLanguageCodeCommand, int>, UpdateLanguageCodeCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateStateCommand, int>, UpdateUserStateCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateStateCommand, int>, UpdateStateCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateProfessionCommand, int>, UpdateProfessionCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateAddressCommand, int>, UpdateAddressCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateLanguagesCommand, int>, UpdateLanguagesCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateExperienceCommand, int>, UpdateExperienceCommandHandler>();
 
         services.AddScoped<IRequestHandler<DeleteUserCommand, bool>, DeleteUserCommandHandler>();
 
@@ -62,6 +65,8 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<GetStateQuery, State>, GetStateQueryHendler>();
         services.AddScoped<IRequestHandler<GetProfessionQuery, UserProfession>, GetProfessionQueryHendler>();
         services.AddScoped<IRequestHandler<GetEmailQuery, string>, GetEmailQueryHendler>();
+        services.AddScoped<IRequestHandler<GetAddressQuery, string>, GetAddressQueryHendler>();
+        services.AddScoped<IRequestHandler<GetLanguagesQuery, string>, GetLanguagesQueryHendler>();
 
         services.AddScoped<IRequestHandler<IsUserNewQuery, bool>, IsUserNewQueryHendler>();
 
@@ -87,9 +92,6 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<CreateRepresentativeWithReturnCommand, RepresentativeResultDto>, CreateRepresentativeWithReturnCommandHandler>();
 
         services.AddScoped<IRequestHandler<UpdateRepresentativeCommand, int>, UpdateRepresentativeCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateRepresentativeLanguagesCommand, int>, UpdateRepresentativeLanguagesCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateRepresentativeExperienceCommand, int>, UpdateRepresentativeExperienceCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateRepresentativeAddressCommand, int>, UpdateRepresentativeAddressCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateRepresentativeAreaCommand, int>, UpdateRepresentativeAreaCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateRepresentativeExpectationCommand, int>, UpdateRepresentativeExpectationCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateRepresentativePurposeCommand, int>, UpdateRepresentativePurposeCommandHandler>();
@@ -98,6 +100,8 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<DeleteRepresentativeCommand, bool>, DeleteRepresentativeCommandHandler>();
 
         services.AddScoped<IRequestHandler<GetRepresentativeQuery, RepresentativeResultDto>, GetRepresentativeQueryHendler>();
+        services.AddScoped<IRequestHandler<GetRepresentativeAreaByUserIdQuery, string>, GetRepresentativeAreaByUserIdQueryHendler>();
+        services.AddScoped<IRequestHandler<GetRepresentativeExpectationByUserIdQuery, string>, GetRepresentativeExpectationByUserIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetRepresentativeByUserIdQuery, RepresentativeResultDto>, GetRepresentativeByUserIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetAllRepresentativesQuery, IEnumerable<RepresentativeResultDto>>, GetAllRepresentativesQueryHandler>();
 
@@ -107,9 +111,6 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<CreateProjectManagerWithReturnCommand, ProjectManagerResultDto>, CreateProjectManagerWithReturnCommandHandler>();
 
         services.AddScoped<IRequestHandler<UpdateProjectManagerCommand, int>, UpdateProjectManagerCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateProjectManagerLanguagesCommand, int>, UpdateProjectManagerLanguagesCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateProjectManagerExperienceCommand, int>, UpdateProjectManagerExperienceCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateProjectManagerAddressCommand, int>, UpdateProjectManagerAddressCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateProjectManagerAreaCommand, int>, UpdateProjectManagerAreaCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateProjectManagerExpectationCommand, int>, UpdateProjectManagerExpectationCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateProjectManagerPurposeCommand, int>, UpdateProjectManagerPurposeCommandHandler>();
@@ -132,7 +133,6 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<UpdateEntrepreneurInvestmentAmountCommand, int>, UpdateEntrepreneurInvestmentAmountCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateEntrepreneurHelpTypeCommand, int>, UpdateEntrepreneurHelpTypeCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateEntrepreneurProjectCommand, int>, UpdateEntrepreneurProjectCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateEntrepreneurExperienceCommand, int>, UpdateEntrepreneurExperienceCommandHandler>();
 
 
         services.AddScoped<IRequestHandler<DeleteEntrepreneurCommand, bool>, DeleteEntrepreneurCommandHandler>();

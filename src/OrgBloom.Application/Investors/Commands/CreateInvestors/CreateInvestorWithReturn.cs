@@ -12,8 +12,8 @@ public record CreateInvestorWithReturnCommand : IRequest<InvestorResultDto>
     {
         UserId = command.UserId;
         Sector = command.Sector;
-        InvestmentAmount = command.InvestmentAmount;
         IsSubmitted = command.IsSubmitted;
+        InvestmentAmount = command.InvestmentAmount;
     }
 
     public string Sector { get; set; } = string.Empty;

@@ -27,7 +27,6 @@ public partial class BotUpdateHandler(
         localizer = scope.ServiceProvider.GetRequiredService<IStringLocalizer<BotLocalizer>>();
 
         user = await GetUserAsync(update);
-
         var culture = user.LanguageCode switch
         {
             "uz" => new CultureInfo("uz-Uz"),
@@ -42,9 +41,7 @@ public partial class BotUpdateHandler(
         var handler = update.Type switch
         {
             UpdateType.Message => HandleMessageAsync(botClient, update.Message, cancellationToken),
-            UpdateType.EditedMessage => HandleEditedMessageAsync(botClient, update.EditedMessage, cancellationToken),
             UpdateType.CallbackQuery => HandleCallbackQuery(botClient, update.CallbackQuery, cancellationToken),
-            UpdateType.InlineQuery => HandleInlineQuery(botClient, update.InlineQuery, cancellationToken),
             _ => HandleUnknownUpdateAsync(botClient, update, cancellationToken)
         };
 

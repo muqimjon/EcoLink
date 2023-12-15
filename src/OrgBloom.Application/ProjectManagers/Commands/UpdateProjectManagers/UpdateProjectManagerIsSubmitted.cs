@@ -9,7 +9,7 @@ public record UpdateProjectManagerIsSubmittedCommand : IRequest<int>
 {
     public UpdateProjectManagerIsSubmittedCommand(UpdateProjectManagerIsSubmittedCommand command)
     {
-        UserId = command.Id;
+        UserId = command.UserId;
         IsSubmitted = command.IsSubmitted;
     }
 

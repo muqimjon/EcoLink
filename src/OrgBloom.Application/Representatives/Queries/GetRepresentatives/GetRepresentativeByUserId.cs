@@ -7,7 +7,7 @@ namespace OrgBloom.Application.Representatives.Queries.GetRepresentatives;
 
 public record GetRepresentativeByUserIdQuery : IRequest<RepresentativeResultDto>
 {
-    public GetRepresentativeByUserIdQuery(GetRepresentativeByUserIdQuery command) { UserId = command.UserId; }
+    public GetRepresentativeByUserIdQuery(long userId) { UserId = userId; }
     public long UserId { get; set; }
 }
 

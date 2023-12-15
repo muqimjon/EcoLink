@@ -18,7 +18,7 @@ public record UpdateStateCommand : IRequest<int>
     public State State { get; set; }
 }
 
-public class UpdateUserStateCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<UpdateStateCommand, int>
+public class UpdateStateCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<UpdateStateCommand, int>
 {
     public async Task<int> Handle(UpdateStateCommand request, CancellationToken cancellationToken)
     {

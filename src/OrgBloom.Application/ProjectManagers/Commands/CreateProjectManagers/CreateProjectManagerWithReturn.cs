@@ -13,16 +13,10 @@ public record CreateProjectManagerWithReturnCommand : IRequest<ProjectManagerRes
         Area = command.Area;
         UserId = command.UserId;
         Purpose = command.Purpose;
-        Address = command.Address;
-        Languages = command.Languages;
-        Experience = command.Experience;
         Expectation = command.Expectation;
         IsSubmitted = command.IsSubmitted;
     }
 
-    public string Languages { get; set; } = string.Empty;
-    public string Experience { get; set; } = string.Empty;
-    public string Address { get; set; } = string.Empty;
     public string Area { get; set; } = string.Empty;
     public string Expectation { get; set; } = string.Empty;
     public string Purpose { get; set; } = string.Empty;

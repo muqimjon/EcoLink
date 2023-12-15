@@ -12,7 +12,7 @@ using OrgBloom.Infrastructure.Contexts;
 namespace OrgBloom.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231214140806_InitialMigrate")]
+    [Migration("20231215131639_InitialMigrate")]
     partial class InitialMigrate
     {
         /// <inheritdoc />
@@ -27,11 +27,11 @@ namespace OrgBloom.Infrastructure.Migrations
 
             modelBuilder.Entity("OrgBloom.Domain.Entities.Entrepreneur", b =>
                 {
-                    b.Property<long>("UserId")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("UserId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("AssetsInvested")
                         .HasColumnType("text");
@@ -39,20 +39,17 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Experience")
-                        .HasColumnType("text");
-
                     b.Property<string>("HelpType")
                         .HasColumnType("text");
-
-                    b.Property<decimal?>("InvestmentAmount")
-                        .HasColumnType("numeric");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
                     b.Property<bool>("IsSubmitted")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("OutvestmentAmount")
+                        .HasColumnType("text");
 
                     b.Property<string>("Project")
                         .HasColumnType("text");
@@ -63,7 +60,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -72,11 +69,11 @@ namespace OrgBloom.Infrastructure.Migrations
 
             modelBuilder.Entity("OrgBloom.Domain.Entities.Investor", b =>
                 {
-                    b.Property<long>("UserId")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("UserId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -99,7 +96,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -108,14 +105,11 @@ namespace OrgBloom.Infrastructure.Migrations
 
             modelBuilder.Entity("OrgBloom.Domain.Entities.ProjectManager", b =>
                 {
-                    b.Property<long>("UserId")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("UserId"));
-
-                    b.Property<string>("Address")
-                        .HasColumnType("text");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Area")
                         .HasColumnType("text");
@@ -126,17 +120,11 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<string>("Expectation")
                         .HasColumnType("text");
 
-                    b.Property<string>("Experience")
-                        .HasColumnType("text");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
                     b.Property<bool>("IsSubmitted")
                         .HasColumnType("boolean");
-
-                    b.Property<string>("Languages")
-                        .HasColumnType("text");
 
                     b.Property<string>("Purpose")
                         .HasColumnType("text");
@@ -147,7 +135,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -156,23 +144,17 @@ namespace OrgBloom.Infrastructure.Migrations
 
             modelBuilder.Entity("OrgBloom.Domain.Entities.Representative", b =>
                 {
-                    b.Property<long>("UserId")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("UserId"));
-
-                    b.Property<string>("Address")
-                        .HasColumnType("text");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Area")
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Expectation")
-                        .HasColumnType("text");
 
                     b.Property<string>("Experience")
                         .HasColumnType("text");
@@ -183,9 +165,6 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<bool>("IsSubmitted")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Languages")
-                        .HasColumnType("text");
-
                     b.Property<string>("Purpose")
                         .HasColumnType("text");
 
@@ -195,7 +174,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -204,11 +183,14 @@ namespace OrgBloom.Infrastructure.Migrations
 
             modelBuilder.Entity("OrgBloom.Domain.Entities.User", b =>
                 {
-                    b.Property<long>("UserId")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("UserId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
 
                     b.Property<long?>("ChatId")
                         .HasColumnType("bigint");
@@ -225,6 +207,9 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
+                    b.Property<string>("Experience")
+                        .HasColumnType("text");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
@@ -235,6 +220,9 @@ namespace OrgBloom.Infrastructure.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("LanguageCode")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Languages")
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
@@ -261,7 +249,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<string>("Username")
                         .HasColumnType("text");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.ToTable("User");
                 });

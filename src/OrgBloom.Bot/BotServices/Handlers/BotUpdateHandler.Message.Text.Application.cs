@@ -9,9 +9,9 @@ using OrgBloom.Application.Investors.Commands.CreateInvestors;
 using OrgBloom.Application.Entrepreneurs.Queries.GetEntrepreneurs;
 using OrgBloom.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
 using OrgBloom.Application.ProjectManagers.Queries.GetProjectManagers;
+using OrgBloom.Application.Representatives.Queries.GetRepresentatives;
 using OrgBloom.Application.ProjectManagers.Commands.CreateProjectManagers;
 using OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
-using OrgBloom.Application.Representatives.Queries.GetRepresentatives;
 
 namespace OrgBloom.Bot.BotServices;
 

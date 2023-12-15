@@ -12,8 +12,8 @@ public record UpdateInvestorCommand : IRequest<int>
         Id = command.Id;
         UserId = command.UserId;
         Sector = command.Sector;
-        InvestmentAmount = command.InvestmentAmount;
         IsSubmitted = command.IsSubmitted;
+        InvestmentAmount = command.InvestmentAmount;
     }
 
     public long Id { get; set; }

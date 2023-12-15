@@ -10,11 +10,11 @@ public record UpdateEntrepreneurInvestmentAmountCommand : IRequest<int>
     public UpdateEntrepreneurInvestmentAmountCommand(UpdateEntrepreneurInvestmentAmountCommand command)
     {
         Id = command.Id;
-        InvestmentAmount = command.InvestmentAmount;
+        OutvestmentAmount = command.OutvestmentAmount;
     }
 
     public long Id { get; set; }
-    public decimal? InvestmentAmount { get; set; }
+    public string OutvestmentAmount { get; set; } = string.Empty;
 }
 
 public class UpdateEntrepreneurInvestmentAmountCommandHandler(IRepository<Entrepreneur> repository, IMapper mapper) : IRequestHandler<UpdateEntrepreneurInvestmentAmountCommand, int>
@@ -22,7 +22,7 @@ public class UpdateEntrepreneurInvestmentAmountCommandHandler(IRepository<Entrep
     public async Task<int> Handle(UpdateEntrepreneurInvestmentAmountCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new NotFoundException($"Entrepreneur is not found with id: {request.Id} | Update Entrepreneur InvestmentAmount");
+            ?? throw new NotFoundException($"Entrepreneur is not found with id: {request.Id} | Update Entrepreneur OutvestmentAmount");
 
         mapper.Map(request, entity);
         repository.Update(entity);

@@ -6,7 +6,7 @@ namespace OrgBloom.Application.Users.Queries.GetUsers;
 
 public record GetStateQuery : IRequest<State>
 {
-    public GetStateQuery(long telegramId) { Id = telegramId; }
+    public GetStateQuery(long Id) { this.Id = Id; }
     public long Id { get; set; }
 }
 

@@ -16,11 +16,14 @@ public record class CreateUserWithReturnTgResultCommand : IRequest<UserTelegramR
         IsBot = command.IsBot;
         Degree = command.Degree;
         ChatId = command.ChatId;
+        Address = command.Address;
         Username = command.Username;
         LastName = command.LastName;
+        Languages = command.Languages;
         FirstName = command.FirstName;
         TelegramId = command.TelegramId;
         Patronomyc = command.Patronomyc;
+        Experience = command.Experience;
         Profession = command.Profession;
         DateOfBirth = command.DateOfBirth;
         LanguageCode = command.LanguageCode;
@@ -34,6 +37,9 @@ public record class CreateUserWithReturnTgResultCommand : IRequest<UserTelegramR
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public UserProfession Profession { get; set; }
+    public string Address { get; set; } = string.Empty;
+    public string Languages { get; set; } = string.Empty;
+    public string Experience { get; set; } = string.Empty;
     public long TelegramId { get; set; }
     public string Username { get; set; } = string.Empty;
     public string LanguageCode { get; set; } = string.Empty;
