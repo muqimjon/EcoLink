@@ -7,7 +7,7 @@ namespace OrgBloom.Application.Investors.Queries.GetInvestors;
 
 public record GetInvestorByUserIdQuery : IRequest<InvestorResultDto>
 {
-    public GetInvestorByUserIdQuery(GetInvestorByUserIdQuery command) { UserId = command.UserId; }
+    public GetInvestorByUserIdQuery(long id) { UserId = id; }
     public long UserId { get; set; }
 }
 

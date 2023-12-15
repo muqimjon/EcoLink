@@ -65,20 +65,20 @@ public partial class BotUpdateHandler
 
     private async Task RepresentationQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var application = await mediator.Send(new GetRepresentativeByUserIdQuery() { UserId = user.Id }, cancellationToken)
+        var application = await mediator.Send(new GetRepresentativeByUserIdQuery(user.Id), cancellationToken)
             ?? await mediator.Send(new CreateRepresentativeWithReturnCommand() { UserId = user.Id }, cancellationToken);
         if (application.IsSubmitted)
             await SendAlreadyExistApplicationAsync(StringHelper.GetRepresentationApplicationInfoForm(application), botClient, message, cancellationToken);
         else
         {
-            await mediator.Send(new UpdateProfessionCommand() { Id = user.Id, Profession = UserProfession.ProjectManager }, cancellationToken);
+            await mediator.Send(new UpdateProfessionCommand() { Id = user.Id, Profession = UserProfession.Representative }, cancellationToken);
             await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
         }
     }
 
     private async Task ProjectManagementQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var application = await mediator.Send(new GetProjectManagerByUserIdQuery() { UserId = user.Id }, cancellationToken)
+        var application = await mediator.Send(new GetProjectManagerByUserIdQuery(user.Id), cancellationToken)
             ?? await mediator.Send(new CreateProjectManagerWithReturnCommand() { UserId = user.Id }, cancellationToken);
         if (application.IsSubmitted)
             await SendAlreadyExistApplicationAsync(StringHelper.GetProjectManagementApplicationInfoForm(application), botClient, message, cancellationToken);
@@ -91,7 +91,7 @@ public partial class BotUpdateHandler
 
     private async Task EntrepreneurshipQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var application = await mediator.Send(new GetEntrepreneurByUserIdQuery() { UserId = user.Id }, cancellationToken)
+        var application = await mediator.Send(new GetEntrepreneurByUserIdQuery(user.Id), cancellationToken)
             ?? await mediator.Send(new CreateEntrepreneurWithReturnCommand() { UserId = user.Id }, cancellationToken);
         if (application.IsSubmitted)
             await SendAlreadyExistApplicationAsync(StringHelper.GetEntrepreneurshipApplicationInfoForm(application), botClient, message, cancellationToken);
@@ -104,7 +104,7 @@ public partial class BotUpdateHandler
 
     private async Task InvestmentQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var application = await mediator.Send(new GetInvestorByUserIdQuery() { UserId = user.Id }, cancellationToken)
+        var application = await mediator.Send(new GetInvestorByUserIdQuery(user.Id), cancellationToken)
             ?? await mediator.Send(new CreateInvestorWithReturnCommand() { UserId = user.Id }, cancellationToken);
         if (application.IsSubmitted)
             await SendAlreadyExistApplicationAsync(StringHelper.GetInvestmentApplicationInfoForm(application), botClient, message, cancellationToken);

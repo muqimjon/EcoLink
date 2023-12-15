@@ -34,7 +34,9 @@ public partial class BotUpdateHandler
             State.WaitingForEnterLanguages => HandleLanguagesAsync(botClient, message, cancellationToken),
             State.WaitingForEnterExperience => HandleExperienceAsync(botClient, message, cancellationToken),
             State.WaitingForEnterAddress => HandleAddressAsync(botClient, message, cancellationToken),
-            State.WaitingForEnterArea => HandleAreaAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterAreaToRepresentation => HandleAreaAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterExpectationForRepresentation => HandleExpectationForRepresentationAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterPurposeForRepresentation => HandlePurposeForRepresentationAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         }; ;
 
@@ -163,5 +165,25 @@ public partial class BotUpdateHandler
         await mediator.Send(new UpdateRepresentativeAreaCommand() { Id = user.Id, Area = message.Text }, cancellationToken); // TODO: need validation
 
         await SendRequestForExpectationAsync(botClient, message, cancellationToken);
+    }
+
+    private async Task HandleExpectationForRepresentationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(message);
+        ArgumentNullException.ThrowIfNull(message.Text);
+
+        await mediator.Send(new UpdateRepresentativeExpectationCommand() { Id = user.Id, Expectation = message.Text }, cancellationToken); // TODO: need validation
+
+        await SendRequestForPurposeAsync(botClient, message, cancellationToken);
+    }
+
+    private async Task HandlePurposeForRepresentationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(message);
+        ArgumentNullException.ThrowIfNull(message.Text);
+
+        await mediator.Send(new UpdateRepresentativePurposeCommand() { Id = user.Id, Purpose = message.Text }, cancellationToken); // TODO: need validation
+
+        await SendForSubmitInvestmentApplicationAsync(botClient, message, cancellationToken);
     }
 }

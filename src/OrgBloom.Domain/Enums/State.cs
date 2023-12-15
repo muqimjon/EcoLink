@@ -20,5 +20,7 @@ public enum State
     WaitingForEnterLanguages,
     WaitingForEnterExperience,
     WaitingForEnterAddress,
-    WaitingForEnterArea,
+    WaitingForEnterAreaToRepresentation,
+    WaitingForEnterExpectationForRepresentation,
+    WaitingForEnterPurposeForRepresentation,
 }

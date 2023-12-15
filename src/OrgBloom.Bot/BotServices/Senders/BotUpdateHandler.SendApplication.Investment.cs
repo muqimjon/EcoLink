@@ -44,22 +44,4 @@ public partial class BotUpdateHandler
 
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterInvestmentAmount), cancellationToken);
     }
-
-    private async Task SendForSubmitInvestmentApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        var application = await mediator.Send(new GetInvestorByUserIdQuery() { UserId = user.Id }, cancellationToken);
-        var keyboard = new InlineKeyboardMarkup(new[] {
-            new[] { InlineKeyboardButton.WithCallbackData("Tasdiqlash", "submit") },
-            new[] { InlineKeyboardButton.WithCallbackData("E'tiborsiz qoldrish", "cancel") }
-        });
-
-        await botClient.SendTextMessageAsync(
-        chatId: message.Chat.Id,
-            text: StringHelper.GetInvestmentApplicationInfoForm(application),
-            replyMarkup: keyboard,
-            cancellationToken: cancellationToken
-        );
-
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSubmitApplication), cancellationToken);
-    }
 }

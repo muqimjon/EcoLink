@@ -67,6 +67,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<GetEmailQuery, string>, GetEmailQueryHendler>();
         services.AddScoped<IRequestHandler<GetAddressQuery, string>, GetAddressQueryHendler>();
         services.AddScoped<IRequestHandler<GetLanguagesQuery, string>, GetLanguagesQueryHendler>();
+        services.AddScoped<IRequestHandler<GetExperienceQuery, string>, GetExperienceQueryHendler>();
 
         services.AddScoped<IRequestHandler<IsUserNewQuery, bool>, IsUserNewQueryHendler>();
 
@@ -100,6 +101,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<DeleteRepresentativeCommand, bool>, DeleteRepresentativeCommandHandler>();
 
         services.AddScoped<IRequestHandler<GetRepresentativeQuery, RepresentativeResultDto>, GetRepresentativeQueryHendler>();
+        services.AddScoped<IRequestHandler<GetRepresentativePurposeByUserIdQuery, string>, GetRepresentativePurposeByUserIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetRepresentativeAreaByUserIdQuery, string>, GetRepresentativeAreaByUserIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetRepresentativeExpectationByUserIdQuery, string>, GetRepresentativeExpectationByUserIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetRepresentativeByUserIdQuery, RepresentativeResultDto>, GetRepresentativeByUserIdQueryHendler>();
