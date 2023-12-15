@@ -162,7 +162,7 @@ public partial class BotUpdateHandler
 
         await mediator.Send(new UpdateAddressCommand() { Id = user.Id, Address = message.Text }, cancellationToken); // TODO: need validation
 
-        await SendRequestForAreaForRepresentationAsync(botClient, message, cancellationToken);
+        await SendRequestForAreaAsync(botClient, message, cancellationToken);
     }
 
     private async Task HandlePurposeForRepresentationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)

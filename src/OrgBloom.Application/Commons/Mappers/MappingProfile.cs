@@ -38,7 +38,7 @@ public class MappingProfile : Profile
         CreateMap<ProjectManager, ProjectManagerResultDto>();
 
         CreateMap<UpdateProjectManagerCommand, ProjectManager>();
-        CreateMap<UpdateProjectManagerAreaCommand, ProjectManager>();
+        CreateMap<UpdateProjectManagerProjectDirectionCommand, ProjectManager>();
         CreateMap<UpdateProjectManagerExpectationCommand, ProjectManager>();
         CreateMap<UpdateProjectManagerIsSubmittedCommand, ProjectManager>();
         CreateMap<UpdateProjectManagerPurposeCommand, ProjectManager>();

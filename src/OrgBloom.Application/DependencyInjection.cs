@@ -113,7 +113,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<CreateProjectManagerWithReturnCommand, ProjectManagerResultDto>, CreateProjectManagerWithReturnCommandHandler>();
 
         services.AddScoped<IRequestHandler<UpdateProjectManagerCommand, int>, UpdateProjectManagerCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateProjectManagerAreaCommand, int>, UpdateProjectManagerAreaCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateProjectManagerProjectDirectionCommand, int>, UpdateProjectManagerAreaCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateProjectManagerExpectationCommand, int>, UpdateProjectManagerExpectationCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateProjectManagerPurposeCommand, int>, UpdateProjectManagerPurposeCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateProjectManagerIsSubmittedCommand, int>, UpdateProjectManagerIsSubmittedCommandHandler>();

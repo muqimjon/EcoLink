@@ -9,14 +9,14 @@ public record CreateProjectManagerCommand : IRequest<int>
 {
     public CreateProjectManagerCommand(CreateProjectManagerCommand command)
     {
-        Area = command.Area;
         UserId = command.UserId;
         Purpose = command.Purpose;
         Expectation = command.Expectation;
         IsSubmitted = command.IsSubmitted;
+        ProjectDirection = command.ProjectDirection;
     }
 
-    public string Area { get; set; } = string.Empty;
+    public string ProjectDirection { get; set; } = string.Empty;
     public string Expectation { get; set; } = string.Empty;
     public string Purpose { get; set; } = string.Empty;
     public long UserId { get; set; }
