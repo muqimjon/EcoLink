@@ -11,15 +11,17 @@ public record CreateEntrepreneurWithReturnCommand : IRequest<EntrepreneurResultD
     public CreateEntrepreneurWithReturnCommand(CreateEntrepreneurWithReturnCommand command)
     {
         UserId = command.UserId;
-        Sector = command.Sector;
-        OutvestmentAmount = command.OutvestmentAmount;
-        IsSubmitted = command.IsSubmitted;
+        Project = command.Project;
+        HelpType = command.HelpType;
+        AssetsInvested = command.AssetsInvested;
+        RequiredFunding = command.RequiredFunding;
     }
 
-    public string Sector { get; set; } = string.Empty;
-    public string OutvestmentAmount { get; set; } = string.Empty;
+    public string Project { get; set; } = string.Empty;
+    public string HelpType { get; set; } = string.Empty;
+    public string RequiredFunding { get; set; } = string.Empty;
+    public string AssetsInvested { get; set; } = string.Empty;
     public long UserId { get; set; }
-    public bool IsSubmitted { get; set; }
 }
 
 public class CreateEntrepreneurWithReturnCommandHandler(IRepository<Entrepreneur> repository, IMapper mapper) : IRequestHandler<CreateEntrepreneurWithReturnCommand, EntrepreneurResultDto>

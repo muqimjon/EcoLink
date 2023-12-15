@@ -132,7 +132,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<UpdateEntrepreneurCommand, int>, UpdateEntrepreneurCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateEntrepreneurIsSubmittedCommand, int>, UpdateEntrepreneurIsSubmittedCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateEntrepreneurAssetsInvestedCommand, int>, UpdateEntrepreneurAssetsInvestedCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateEntrepreneurInvestmentAmountCommand, int>, UpdateEntrepreneurInvestmentAmountCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateEntrepreneurRequiredFundingCommand, int>, UpdateEntrepreneurRequiredFundingCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateEntrepreneurHelpTypeCommand, int>, UpdateEntrepreneurHelpTypeCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateEntrepreneurProjectCommand, int>, UpdateEntrepreneurProjectCommandHandler>();
 
@@ -141,6 +141,9 @@ public static class DependencyInjection
 
         services.AddScoped<IRequestHandler<GetEntrepreneurQuery, EntrepreneurResultDto>, GetEntrepreneurQueryHendler>();
         services.AddScoped<IRequestHandler<GetEntrepreneurByUserIdQuery, EntrepreneurResultDto>, GetEntrepreneurByUserIdQueryHendler>();
+        services.AddScoped<IRequestHandler<GetEntrepreneurProjectByUserIdQuery, string>, GetEntrepreneurProjectByUserIdQueryHendler>();
+        services.AddScoped<IRequestHandler<GetEntrepreneurRequiredFundingByUserIdQuery, string>, GetEntrepreneurRequiredFundingByUserIdQueryHendler>();
+        services.AddScoped<IRequestHandler<GetEntrepreneurHelpTypeByUserIdQuery, string>, GetEntrepreneurHelpTypeByUserIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetAllEntrepreneursQuery, IEnumerable<EntrepreneurResultDto>>, GetAllEntrepreneursQueryHandler>();
 
         return services;

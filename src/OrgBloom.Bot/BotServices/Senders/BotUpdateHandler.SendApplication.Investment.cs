@@ -8,8 +8,7 @@ namespace OrgBloom.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
-
-    private async Task SendRequestForSectorAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendRequestForSectorForInvestmentAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var keyboard = new InlineKeyboardMarkup(new[]
         {
@@ -32,7 +31,7 @@ public partial class BotUpdateHandler
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterSector), cancellationToken);
     }
 
-    private async Task SendRequestForInvestmentAmountAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendRequestForInvestmentAmountForInvestmentAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         await botClient.SendTextMessageAsync(
         chatId: message.Chat.Id,

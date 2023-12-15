@@ -52,7 +52,7 @@ public class MappingProfile : Profile
         CreateMap<UpdateEntrepreneurCommand, Entrepreneur>();
         CreateMap<UpdateEntrepreneurHelpTypeCommand, Entrepreneur>();
         CreateMap<UpdateEntrepreneurAssetsInvestedCommand, Entrepreneur>();
-        CreateMap<UpdateEntrepreneurInvestmentAmountCommand, Entrepreneur>();
+        CreateMap<UpdateEntrepreneurRequiredFundingCommand, Entrepreneur>();
         CreateMap<UpdateEntrepreneurIsSubmittedCommand, Entrepreneur>();
         CreateMap<UpdateEntrepreneurProjectCommand, Entrepreneur>();
 
