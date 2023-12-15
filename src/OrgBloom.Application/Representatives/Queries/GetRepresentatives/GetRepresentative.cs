@@ -7,7 +7,7 @@ namespace OrgBloom.Application.Representatives.Queries.GetRepresentatives;
 
 public record GetRepresentativeQuery : IRequest<RepresentativeResultDto>
 {
-    public GetRepresentativeQuery(long id) { Id = id; }
+    public GetRepresentativeQuery(GetRepresentativeQuery command) { Id = command.Id; }
     public long Id { get; set; }
 }
 

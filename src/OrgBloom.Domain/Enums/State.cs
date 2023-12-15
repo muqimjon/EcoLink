@@ -21,4 +21,11 @@ public enum State
     WaitingForEnterExperience,
     WaitingForEnterAddress,
     WaitingForEnterArea,
+    WaitingForEnterExpectation,
+    WaitingForEnterPurpose,
+    WaitingForEnterAboutProject,
+    WaitingForEnterHelpType,
+    WaitingForEnterRequiredFunding,
+    WaitingForAssetInvested,
+    WaitingForEnterProjectDirection,
 }

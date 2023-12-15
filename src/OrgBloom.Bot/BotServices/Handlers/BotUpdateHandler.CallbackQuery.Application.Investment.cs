@@ -28,6 +28,6 @@ public partial class BotUpdateHandler
         try { await handle; }
         catch (Exception ex) { logger.LogError(ex, "Error handling callback query: {callbackQuery.Data}", callbackQuery.Data); }
 
-        await SendRequestForInvestmentAmountAsync(botClient, callbackQuery.Message, cancellationToken);
+        await SendRequestForInvestmentAmountForInvestmentAsync(botClient, callbackQuery.Message, cancellationToken);
     }
 }

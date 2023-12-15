@@ -4,7 +4,7 @@ public class Entrepreneur : Auditable
 {
     public string? Project { get; set; }
     public string? HelpType { get; set; }
-    public string? OutvestmentAmount { get; set; }
+    public string? RequiredFunding { get; set; }
     public string? AssetsInvested { get; set; }
     public bool IsSubmitted { get; set; }
 

@@ -7,7 +7,7 @@ namespace OrgBloom.Application.ProjectManagers.Queries.GetProjectManagers;
 
 public record GetProjectManagerByUserIdQuery : IRequest<ProjectManagerResultDto>
 {
-    public GetProjectManagerByUserIdQuery(GetProjectManagerByUserIdQuery command) { UserId = command.UserId; }
+    public GetProjectManagerByUserIdQuery(long id) { UserId = id; }
     public long UserId { get; set; }
 }
 

@@ -128,8 +128,8 @@ namespace OrgBloom.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Experience = table.Column<string>(type: "text", nullable: true),
                     Area = table.Column<string>(type: "text", nullable: true),
+                    Expectation = table.Column<string>(type: "text", nullable: true),
                     Purpose = table.Column<string>(type: "text", nullable: true),
                     IsSubmitted = table.Column<bool>(type: "boolean", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false),

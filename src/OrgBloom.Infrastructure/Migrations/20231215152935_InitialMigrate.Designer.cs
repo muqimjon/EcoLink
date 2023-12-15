@@ -12,7 +12,7 @@ using OrgBloom.Infrastructure.Contexts;
 namespace OrgBloom.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231215131639_InitialMigrate")]
+    [Migration("20231215152935_InitialMigrate")]
     partial class InitialMigrate
     {
         /// <inheritdoc />
@@ -156,7 +156,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Experience")
+                    b.Property<string>("Expectation")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")

@@ -7,7 +7,7 @@ namespace OrgBloom.Application.Entrepreneurs.Queries.GetEntrepreneurs;
 
 public record GetEntrepreneurByUserIdQuery : IRequest<EntrepreneurResultDto>
 {
-    public GetEntrepreneurByUserIdQuery(GetEntrepreneurByUserIdQuery command) { UserId = command.UserId; }
+    public GetEntrepreneurByUserIdQuery(long id) { UserId = id; }
     public long UserId { get; set; }
 }
 

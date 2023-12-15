@@ -13,12 +13,12 @@ public record class CreateEntrepreneurCommand : IRequest<int>
         Project = command.Project;
         HelpType = command.HelpType;
         AssetsInvested = command.AssetsInvested;
-        OutvestmentAmount = command.OutvestmentAmount;
+        RequiredFunding = command.RequiredFunding;
     }
 
     public string Project { get; set; } = string.Empty;
     public string HelpType { get; set; } = string.Empty;
-    public string OutvestmentAmount { get; set; } = string.Empty;
+    public string RequiredFunding { get; set; } = string.Empty;
     public string AssetsInvested { get; set; } = string.Empty;
     public long UserId { get; set; }
 }
