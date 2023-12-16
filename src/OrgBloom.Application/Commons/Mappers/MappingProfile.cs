@@ -44,6 +44,7 @@ public class MappingProfile : Profile
         CreateMap<UpdateProjectManagerPurposeCommand, ProjectManager>();
 
         CreateMap<CreateProjectManagerCommand, ProjectManager>();
+        CreateMap<CreateProjectManagerWithReturnCommand, ProjectManager>();
 
 
         // Entrepreneur

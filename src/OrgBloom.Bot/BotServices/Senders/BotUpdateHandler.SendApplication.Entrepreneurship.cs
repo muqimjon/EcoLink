@@ -31,7 +31,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Investordan qanday yordam kerak?\n(Pul,Tajriba v hkz)",
+            text: "Investordan qanday yordam kerak (Pul,Tajriba v hkz)",
             cancellationToken: cancellationToken,
             replyMarkup: string.IsNullOrEmpty(helpType) ? new ReplyKeyboardRemove() : keyboard
         );
@@ -46,7 +46,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Investordan qanday yordam kerak?\n(Pul,Tajriba v hkz)",
+            text: "Loyihaga keralkli investitysa summasi (aniq yoki tahminiy):",
             cancellationToken: cancellationToken,
             replyMarkup: string.IsNullOrEmpty(requiredFunding) ? new ReplyKeyboardRemove() : keyboard
         );
@@ -61,7 +61,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Loyihada tikiladigan aktivingiz:\n(pul, yer, bino, uskuna va hkz)",
+            text: "Loyihada tikiladigan aktivingiz (pul, yer, bino, uskuna va hkz)",
             cancellationToken: cancellationToken,
             replyMarkup: string.IsNullOrEmpty(assetsInvested) ? new ReplyKeyboardRemove() : keyboard
         );

@@ -10,7 +10,7 @@ public record GetEntrepreneurRequiredFundingByUserIdQuery : IRequest<string>
     public long UserId { get; set; }
 }
 
-public class GetEntrepreneurRequiredFundingByUserIdQueryHendler(IRepository<Entrepreneur> repository, IMapper mapper) : IRequestHandler<GetEntrepreneurRequiredFundingByUserIdQuery, string>
+public class GetEntrepreneurRequiredFundingByUserIdQueryHendler(IRepository<Entrepreneur> repository) : IRequestHandler<GetEntrepreneurRequiredFundingByUserIdQuery, string>
 {
     public async Task<string> Handle(GetEntrepreneurRequiredFundingByUserIdQuery request, CancellationToken cancellationToken)
         => (await repository.SelectAsync(i => i.UserId.Equals(request.UserId)) ?? new()).RequiredFunding!;

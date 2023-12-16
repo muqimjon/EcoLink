@@ -10,7 +10,7 @@ public record UpdateProjectManagerProjectDirectionCommand : IRequest<int>
     public UpdateProjectManagerProjectDirectionCommand(UpdateProjectManagerProjectDirectionCommand command)
     {
         Id = command.Id;
-        ProjectDirection = command.Area;
+        ProjectDirection = command.ProjectDirection;
     }
 
     public long Id { get; set; }

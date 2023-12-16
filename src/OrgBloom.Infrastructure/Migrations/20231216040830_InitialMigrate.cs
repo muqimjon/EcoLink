@@ -52,7 +52,7 @@ namespace OrgBloom.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Project = table.Column<string>(type: "text", nullable: true),
                     HelpType = table.Column<string>(type: "text", nullable: true),
-                    OutvestmentAmount = table.Column<string>(type: "text", nullable: true),
+                    RequiredFunding = table.Column<string>(type: "text", nullable: true),
                     AssetsInvested = table.Column<string>(type: "text", nullable: true),
                     IsSubmitted = table.Column<bool>(type: "boolean", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
@@ -102,7 +102,7 @@ namespace OrgBloom.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Area = table.Column<string>(type: "text", nullable: true),
+                    ProjectDirection = table.Column<string>(type: "text", nullable: true),
                     Expectation = table.Column<string>(type: "text", nullable: true),
                     Purpose = table.Column<string>(type: "text", nullable: true),
                     IsSubmitted = table.Column<bool>(type: "boolean", nullable: false),

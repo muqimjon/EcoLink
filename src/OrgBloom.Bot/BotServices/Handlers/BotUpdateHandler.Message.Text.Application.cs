@@ -1,19 +1,9 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Types;
 using OrgBloom.Domain.Enums;
-using OrgBloom.Bot.BotServices.Helpers;
 using OrgBloom.Application.Users.Queries.GetUsers;
-using OrgBloom.Application.Users.Commands.UpdateUsers;
-using OrgBloom.Application.Investors.Queries.GetInvestors;
-using OrgBloom.Application.Investors.Commands.CreateInvestors;
 using OrgBloom.Application.Investors.Commands.UpdateInvestors;
-using OrgBloom.Application.Entrepreneurs.Queries.GetEntrepreneurs;
-using OrgBloom.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
-using OrgBloom.Application.ProjectManagers.Queries.GetProjectManagers;
-using OrgBloom.Application.Representatives.Queries.GetRepresentatives;
 using OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
-using OrgBloom.Application.ProjectManagers.Commands.CreateProjectManagers;
-using OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
 using OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 using OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
 
@@ -49,7 +39,6 @@ public partial class BotUpdateHandler
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {from.FirstName}", user.FirstName); }
     }
 
-
     private async Task ClarifyProfessionQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
@@ -77,55 +66,6 @@ public partial class BotUpdateHandler
         };
     }
 
-
-    private async Task RepresentationQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        await mediator.Send(new UpdateProfessionCommand() { Id = user.Id, Profession = UserProfession.Representative }, cancellationToken);
-        var application = await mediator.Send(new GetRepresentativeByUserIdQuery(user.Id), cancellationToken)
-            ?? await mediator.Send(new CreateRepresentativeWithReturnCommand() { UserId = user.Id }, cancellationToken);
-
-        if (application.IsSubmitted)
-            await SendAlreadyExistApplicationAsync(StringHelper.GetRepresentationApplicationInfoForm(application), botClient, message, cancellationToken);
-        else
-            await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
-    }
-
-    private async Task ProjectManagementQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        await mediator.Send(new UpdateProfessionCommand() { Id = user.Id, Profession = UserProfession.ProjectManager }, cancellationToken);
-        var application = await mediator.Send(new GetProjectManagerByUserIdQuery(user.Id), cancellationToken)
-            ?? await mediator.Send(new CreateProjectManagerWithReturnCommand() { UserId = user.Id }, cancellationToken);
-
-        if (application.IsSubmitted)
-            await SendAlreadyExistApplicationAsync(StringHelper.GetProjectManagementApplicationInfoForm(application), botClient, message, cancellationToken);
-        else
-            await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
-    }
-
-    private async Task EntrepreneurshipQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        await mediator.Send(new UpdateProfessionCommand() { Id = user.Id, Profession = UserProfession.Entrepreneur }, cancellationToken);
-        var application = await mediator.Send(new GetEntrepreneurByUserIdQuery(user.Id), cancellationToken)
-            ?? await mediator.Send(new CreateEntrepreneurWithReturnCommand() { UserId = user.Id }, cancellationToken);
-
-        if (application.IsSubmitted)
-            await SendAlreadyExistApplicationAsync(StringHelper.GetEntrepreneurshipApplicationInfoForm(application), botClient, message, cancellationToken);
-        else
-            await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
-    }
-
-    private async Task InvestmentQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        await mediator.Send(new UpdateProfessionCommand() { Id = user.Id, Profession = UserProfession.Investor }, cancellationToken);
-        var application = await mediator.Send(new GetInvestorByUserIdQuery(user.Id), cancellationToken)
-            ?? await mediator.Send(new CreateInvestorWithReturnCommand() { UserId = user.Id }, cancellationToken);
-        
-        if (application.IsSubmitted)
-            await SendAlreadyExistApplicationAsync(StringHelper.GetInvestmentApplicationInfoForm(application), botClient, message, cancellationToken);
-        else
-            await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
-    }
-
     private async Task HandleExpectationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(message);
@@ -135,7 +75,8 @@ public partial class BotUpdateHandler
         var handler = profession switch
         {
             UserProfession.Representative => mediator.Send(new UpdateRepresentativeExpectationCommand() { Id = user.Id, Expectation = message.Text }, cancellationToken), // TODO: need validation
-            UserProfession.ProjectManager => mediator.Send(new UpdateProjectManagerExpectationCommand() { Id = user.Id, Expectation = message.Text }, cancellationToken),
+            UserProfession.ProjectManager => mediator.Send(new UpdateProjectManagerExpectationCommand() { Id = user.Id, Expectation = message.Text }, cancellationToken), // TODO: need validation
+            _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 
         try { await handler; }

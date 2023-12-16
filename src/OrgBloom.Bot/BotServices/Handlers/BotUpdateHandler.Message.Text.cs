@@ -3,9 +3,7 @@ using Telegram.Bot.Types;
 using OrgBloom.Domain.Enums;
 using OrgBloom.Application.Users.Queries.GetUsers;
 using OrgBloom.Application.Users.Commands.UpdateUsers;
-using OrgBloom.Application.Investors.Commands.UpdateInvestors;
 using OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
-using OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
 using OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 
 namespace OrgBloom.Bot.BotServices;
@@ -152,9 +150,16 @@ public partial class BotUpdateHandler
 
         await mediator.Send(new UpdateExperienceCommand() { Id = user.Id, Experience = message.Text }, cancellationToken); // TODO: need validation
 
-        await SendRequestForAddressAsync(botClient, message, cancellationToken);
 
-        await SendRequestForAboutProjectForEntrepreneurshipAsync(botClient, message, cancellationToken);
+        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
+        var handle = profession switch
+        {
+            UserProfession.Entrepreneur => SendRequestForAboutProjectForEntrepreneurshipAsync(botClient, message, cancellationToken),
+            _ => SendRequestForAddressAsync(botClient, message, cancellationToken), // Works foor PM and Representative
+        };
+
+        try { await handle; }
+        catch (Exception ex) { logger.LogError(ex, "Error handling message from {from.FirstName}", user.FirstName); }
     }
 
     private async Task HandleAddressAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)

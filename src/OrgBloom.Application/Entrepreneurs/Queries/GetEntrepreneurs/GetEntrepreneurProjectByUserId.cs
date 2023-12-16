@@ -10,7 +10,7 @@ public record GetEntrepreneurProjectByUserIdQuery : IRequest<string>
     public long UserId { get; set; }
 }
 
-public class GetEntrepreneurProjectByUserIdQueryHendler(IRepository<Entrepreneur> repository, IMapper mapper) : IRequestHandler<GetEntrepreneurProjectByUserIdQuery, string>
+public class GetEntrepreneurProjectByUserIdQueryHendler(IRepository<Entrepreneur> repository) : IRequestHandler<GetEntrepreneurProjectByUserIdQuery, string>
 {
     public async Task<string> Handle(GetEntrepreneurProjectByUserIdQuery request, CancellationToken cancellationToken)
         => (await repository.SelectAsync(i => i.UserId.Equals(request.UserId)) ?? new()).Project!;
