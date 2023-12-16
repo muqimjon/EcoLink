@@ -226,11 +226,6 @@
 O'zingiz uchun qulay tilni tanlang:</value>
     <comment>Salomlashish matni, bir vaqtda foydalanuvchiga qulay bo'lgan tilni belgilashi so'raladi bundan foydalanilayotganda foudalanuvchining ismi va familiyasi talab qilinadi.</comment>
   </data>
-  <data name="textSubmittedApplication" xml:space="preserve">
-    <value>Sizda Tastiqlangan murojaat mavjud
-</value>
-    <comment>Tasdiqlangan murojaat oynasi xabari. Ariza topshirmoqchi bo'lganda va avval bu ishni qilgan bo'lsa ushbu xabar yuboriladi.</comment>
-  </data>
   <data name="txtAskForAboutProject" xml:space="preserve">
     <value>Loyiha haqida qisqa va tushunarli yozing:</value>
     <comment>Foydalanuvchidan loyiha haqida so'raladi</comment>
@@ -331,5 +326,10 @@ Dollardayozing:</value>
   <data name="txtReadyApplication" xml:space="preserve">
     <value>Murojaatnoma tayyor tasdiqlash qoldi xolos!</value>
     <comment>Murojaatnoma tayyorligi haqida xabar berish va bir vaqtning o'zida joriy tugmalarni o'chirib yuborish uchun</comment>
+  </data>
+  <data name="txtSubmittedApplication" xml:space="preserve">
+    <value>Sizda Tastiqlangan murojaat mavjud
+</value>
+    <comment>Tasdiqlangan murojaat oynasi xabari. Ariza topshirmoqchi bo'lganda va avval bu ishni qilgan bo'lsa ushbu xabar yuboriladi.</comment>
   </data>
 </root>

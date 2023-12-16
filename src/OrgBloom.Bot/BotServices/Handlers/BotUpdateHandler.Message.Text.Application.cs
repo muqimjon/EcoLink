@@ -16,9 +16,9 @@ public partial class BotUpdateHandler
         var handle = message.Text switch
         {
             { } text when text == localizer["btnInvestment"] => InvestmentQueryAsync(botClient, message, cancellationToken),
-            _ when message.Text == localizer["btnEntrepreneurship"] => EntrepreneurshipQueryAsync(botClient, message, cancellationToken),
             { } text when text == localizer["btnRepresentation"] => RepresentationQueryAsync(botClient, message, cancellationToken),
             { } text when text == localizer["btnProjectManagement"] => ProjectManagementQueryAsync(botClient, message, cancellationToken),
+            _ when message.Text == localizer["btnEntrepreneurship"] => EntrepreneurshipQueryAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 
@@ -30,8 +30,8 @@ public partial class BotUpdateHandler
     {
         var handle = message.Text switch
         {
-            "Qayta yuborish" => ClarifyProfessionQueryAsync(botClient, message, cancellationToken),
-            "Ortga" => SendMainMenuAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["btnResend"] => ClarifyProfessionQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["btnBack"] => SendMainMenuAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 
@@ -45,19 +45,19 @@ public partial class BotUpdateHandler
         switch(profession)
         {
             case UserProfession.Investor:
-                await mediator.Send(new UpdateInvestorIsSubmittedCommand() { UserId = user.Id, IsSubmitted = false }, cancellationToken);
+                await mediator.Send(new UpdateInvestorIsSubmittedByUserIdCommand() { UserId = user.Id, IsSubmitted = false }, cancellationToken);
                 await InvestmentQueryAsync(botClient, message, cancellationToken);
                 break;
             case UserProfession.Entrepreneur:
-                await mediator.Send(new UpdateEntrepreneurIsSubmittedCommand() { UserId = user.Id, IsSubmitted = false }, cancellationToken);
+                await mediator.Send(new UpdateEntrepreneurIsSubmittedByUserIdCommand() { UserId = user.Id, IsSubmitted = false }, cancellationToken);
                 await EntrepreneurshipQueryAsync(botClient, message, cancellationToken);
                 break;
             case UserProfession.ProjectManager:
-                await mediator.Send(new UpdateProjectManagerIsSubmittedCommand() { UserId = user.Id, IsSubmitted = false }, cancellationToken);
+                await mediator.Send(new UpdateProjectManagerIsSubmittedByUserIdCommand() { UserId = user.Id, IsSubmitted = false }, cancellationToken);
                 await ProjectManagementQueryAsync(botClient, message, cancellationToken);
                 break;
             case UserProfession.Representative:
-                await mediator.Send(new UpdateRepresentativeIsSubmittedCommand() { UserId = user.Id, IsSubmitted = false }, cancellationToken);
+                await mediator.Send(new UpdateRepresentativeIsSubmittedByUserCommand() { UserId = user.Id, IsSubmitted = false }, cancellationToken);
                 await RepresentationQueryAsync(botClient, message, cancellationToken);
                 break;
             default: 
@@ -74,8 +74,8 @@ public partial class BotUpdateHandler
         var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         var handler = profession switch
         {
-            UserProfession.Representative => mediator.Send(new UpdateRepresentativeExpectationCommand() { Id = user.Id, Expectation = message.Text }, cancellationToken), // TODO: need validation
-            UserProfession.ProjectManager => mediator.Send(new UpdateProjectManagerExpectationCommand() { Id = user.Id, Expectation = message.Text }, cancellationToken), // TODO: need validation
+            UserProfession.Representative => mediator.Send(new UpdateRepresentativeExpectationByUserIdCommand() { UserId = user.Id, Expectation = message.Text }, cancellationToken), // TODO: need validation
+            UserProfession.ProjectManager => mediator.Send(new UpdateProjectManagerExpectationByUserIdCommand() { UserId = user.Id, Expectation = message.Text }, cancellationToken), // TODO: need validation
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 
@@ -93,8 +93,8 @@ public partial class BotUpdateHandler
         var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         var handler = profession switch
         {
-            UserProfession.Representative => mediator.Send(new UpdateRepresentativePurposeCommand() { Id = user.Id, Purpose = message.Text }, cancellationToken), // TODO: need validation
-            UserProfession.ProjectManager => mediator.Send(new UpdateProjectManagerPurposeCommand() { Id = user.Id, Purpose = message.Text }, cancellationToken), // TODO: need validation
+            UserProfession.Representative => mediator.Send(new UpdateRepresentativePurposeByUserIdCommand() { UserId = user.Id, Purpose = message.Text }, cancellationToken), // TODO: need validation
+            UserProfession.ProjectManager => mediator.Send(new UpdateProjectManagerPurposeVyUserIdCommand() { UserId = user.Id, Purpose = message.Text }, cancellationToken), // TODO: need validation
             _ => throw new NotImplementedException()
         };
 

@@ -5,9 +5,9 @@ using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
 
-public record UpdateRepresentativeIsSubmittedCommand : IRequest<int>
+public record UpdateRepresentativeIsSubmittedByUserCommand : IRequest<int>
 {
-    public UpdateRepresentativeIsSubmittedCommand(UpdateRepresentativeIsSubmittedCommand command)
+    public UpdateRepresentativeIsSubmittedByUserCommand(UpdateRepresentativeIsSubmittedByUserCommand command)
     {
         UserId = command.UserId;
         IsSubmitted = command.IsSubmitted;
@@ -17,9 +17,9 @@ public record UpdateRepresentativeIsSubmittedCommand : IRequest<int>
     public bool IsSubmitted { get; set; }
 }
 
-public class UpdateRepresentativeIsSubmittedCommandHandler(IRepository<Representative> repository, IMapper mapper) : IRequestHandler<UpdateRepresentativeIsSubmittedCommand, int>
+public class UpdateRepresentativeIsSubmittedCommandByUserHandler(IRepository<Representative> repository, IMapper mapper) : IRequestHandler<UpdateRepresentativeIsSubmittedByUserCommand, int>
 {
-    public async Task<int> Handle(UpdateRepresentativeIsSubmittedCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(UpdateRepresentativeIsSubmittedByUserCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.UserId == request.UserId)
             ?? throw new NotFoundException($"Representative is not found with id: {request.UserId} | update representative IsSubmitted");

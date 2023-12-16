@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Domain.Entities;
+﻿using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
 
 namespace OrgBloom.Application.Entrepreneurs.Queries.GetEntrepreneurs;

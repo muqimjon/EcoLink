@@ -1,6 +1,5 @@
 ﻿using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.Users.Queries.GetUsers;
 

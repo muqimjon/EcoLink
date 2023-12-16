@@ -44,7 +44,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: localizer["textMainMenu"],
+            text: localizer["txtMainMenu"],
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
@@ -56,8 +56,23 @@ public partial class BotUpdateHandler
     {
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: localizer["textInfo"],
+            text: localizer["txtInfo"],
             cancellationToken: cancellationToken
         );
+    }
+
+    private async Task SendSettingsQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        ReplyKeyboardMarkup keyboard = new(new[] { new[] { new KeyboardButton(localizer["btnEditLanguage"]) }, new[] { new KeyboardButton(localizer["btnEditPersonalInfo"]) } })
+        { ResizeKeyboard = true };
+
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["txtMainMenu"],
+            replyMarkup: keyboard,
+            cancellationToken: cancellationToken
+        );
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectMainMenu), cancellationToken);
     }
 }

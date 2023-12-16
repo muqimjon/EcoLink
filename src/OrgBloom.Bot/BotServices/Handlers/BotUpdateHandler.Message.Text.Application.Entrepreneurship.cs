@@ -38,7 +38,7 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        await mediator.Send(new UpdateEntrepreneurHelpTypeCommand() { Id = user.Id, HelpType = message.Text }, cancellationToken); // TODO: need validation
+        await mediator.Send(new UpdateEntrepreneurHelpTypeByUserIdCommand() { UserId = user.Id, HelpType = message.Text }, cancellationToken); // TODO: need validation
 
         await SendRequestForRequiredFundingForEntrepreneurshipAsync(botClient, message, cancellationToken);
     }
@@ -48,7 +48,7 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        await mediator.Send(new UpdateEntrepreneurRequiredFundingCommand() { Id = user.Id, RequiredFunding = message.Text }, cancellationToken); // TODO: need validation
+        await mediator.Send(new UpdateEntrepreneurRequiredFundingByUserIdCommand() { UserId = user.Id, RequiredFunding = message.Text }, cancellationToken); // TODO: need validation
 
         await SendRequestForAssetsInvestedForEntrepreneurshipAsync(botClient, message, cancellationToken);
     }
@@ -58,7 +58,7 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        await mediator.Send(new UpdateEntrepreneurAssetsInvestedCommand() { Id = user.Id, AssetsInvested = message.Text }, cancellationToken); // TODO: need validation
+        await mediator.Send(new UpdateEntrepreneurAssetsInvestedByUserIdCommand() { UserId = user.Id, AssetsInvested = message.Text }, cancellationToken); // TODO: need validation
 
         await SendRequestForPhoneNumberAsync(botClient, message, cancellationToken);
     }

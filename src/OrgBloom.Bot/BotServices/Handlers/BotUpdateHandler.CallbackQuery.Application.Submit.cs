@@ -41,7 +41,7 @@ public partial class BotUpdateHandler
             text: "Tabriklaymiz!\nVakillik qilish uchun murojaatingiz qabul qilindi va tez orada siz bilan bog'lanamiz!",
             cancellationToken: cancellationToken);
 
-        await mediator.Send(new UpdateRepresentativeIsSubmittedCommand() { UserId = user.Id, IsSubmitted = true }, cancellationToken);
+        await mediator.Send(new UpdateRepresentativeIsSubmittedByUserCommand() { UserId = user.Id, IsSubmitted = true }, cancellationToken);
         Thread.Sleep(1000);
     }
 
@@ -55,7 +55,7 @@ public partial class BotUpdateHandler
             text: "Tabriklaymiz!\nLoyiha boshqarish uchun murojaatingiz qabul qilindi va tez orada siz bilan bog'lanamiz!",
             cancellationToken: cancellationToken);
 
-        await mediator.Send(new UpdateProjectManagerIsSubmittedCommand() { UserId = user.Id, IsSubmitted = true }, cancellationToken);
+        await mediator.Send(new UpdateProjectManagerIsSubmittedByUserIdCommand() { UserId = user.Id, IsSubmitted = true }, cancellationToken);
         Thread.Sleep(1000);
     }
 
@@ -69,7 +69,7 @@ public partial class BotUpdateHandler
             text: "Tabriklaymiz!\nInvestitsiya jalb qilish bo'yicha murojaatingiz qabul qilindi va tez orada siz bilan bog'lanamiz!",
             cancellationToken: cancellationToken);
 
-        await mediator.Send(new UpdateEntrepreneurIsSubmittedCommand() { UserId = user.Id, IsSubmitted = true }, cancellationToken);
+        await mediator.Send(new UpdateEntrepreneurIsSubmittedByUserIdCommand() { UserId = user.Id, IsSubmitted = true }, cancellationToken);
         Thread.Sleep(1000);
     }
 
@@ -83,7 +83,7 @@ public partial class BotUpdateHandler
             text: "Tabriklaymiz!\nInvestorlik uchun murojaatingiz qabul qilindi va tez orada siz bilan bog'lanamiz!",
             cancellationToken: cancellationToken);
 
-        await mediator.Send(new UpdateInvestorIsSubmittedCommand() { UserId = user.Id, IsSubmitted = true }, cancellationToken);
+        await mediator.Send(new UpdateInvestorIsSubmittedByUserIdCommand() { UserId = user.Id, IsSubmitted = true }, cancellationToken);
         Thread.Sleep(1000);
     }
 }

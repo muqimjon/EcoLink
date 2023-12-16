@@ -29,16 +29,19 @@ public partial class BotUpdateHandler
         };
 
         var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
-        var handle = profession switch
+        switch(profession)
         {
-            UserProfession.Investor => mediator.Send(new UpdateInvestorSectorCommand { Id = user.Id, Sector = sector }, cancellationToken),
-            UserProfession.ProjectManager => mediator.Send(new UpdateProjectManagerProjectDirectionCommand() { Id = user.Id, ProjectDirection = sector }, cancellationToken),
-            _ => HandleUnknownCallbackQueryAsync(botClient, callbackQuery, cancellationToken)
+            case UserProfession.Investor:
+                await mediator.Send(new UpdateInvestorSectorByUserIdCommand { UserId = user.Id, Sector = sector }, cancellationToken);
+                await SendRequestForInvestmentAmountForInvestmentAsync(botClient, callbackQuery.Message, cancellationToken);
+                break;
+            case UserProfession.ProjectManager:
+                await mediator.Send(new UpdateProjectManagerProjectDirectionByUserIdCommand() { UserId = user.Id, ProjectDirection = sector }, cancellationToken);
+                await SendRequestForExpectationAsync(botClient, callbackQuery.Message, cancellationToken);
+                break;
+            default:
+                await HandleUnknownCallbackQueryAsync(botClient, callbackQuery, cancellationToken);
+                break;
         };
-
-        try { await handle; }
-        catch (Exception ex) { logger.LogError(ex, "Error handling callback query: {callbackQuery.Data}", callbackQuery.Data); }
-
-        await SendRequestForInvestmentAmountForInvestmentAsync(botClient, callbackQuery.Message, cancellationToken);
     }
 }

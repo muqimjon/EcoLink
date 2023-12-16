@@ -24,9 +24,4 @@ public partial class BotUpdateHandler
     {
         throw new NotImplementedException();
     }
-
-    private Task SendSettingsQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
 }

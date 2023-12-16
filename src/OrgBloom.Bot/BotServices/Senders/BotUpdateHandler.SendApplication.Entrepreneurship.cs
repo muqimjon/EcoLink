@@ -56,7 +56,7 @@ public partial class BotUpdateHandler
 
     private async Task SendRequestForAssetsInvestedForEntrepreneurshipAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var assetsInvested = await mediator.Send(new GetEntrepreneurRequiredFundingByUserIdQuery(user.Id), cancellationToken);
+        var assetsInvested = await mediator.Send(new GetEntrepreneurAssetsInvestedByUserIdQuery(user.Id), cancellationToken);
         var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(assetsInvested) }) { ResizeKeyboard = true };
 
         await botClient.SendTextMessageAsync(

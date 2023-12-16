@@ -5,24 +5,24 @@ using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 
-public record UpdateProjectManagerExpectationCommand : IRequest<int>
+public record UpdateProjectManagerExpectationByUserIdCommand : IRequest<int>
 {
-    public UpdateProjectManagerExpectationCommand(UpdateProjectManagerExpectationCommand command)
+    public UpdateProjectManagerExpectationByUserIdCommand(UpdateProjectManagerExpectationByUserIdCommand command)
     {
-        Id = command.Id;
+        UserId = command.UserId;
         Expectation = command.Expectation;
     }
 
-    public long Id { get; set; }
+    public long UserId { get; set; }
     public string Expectation { get; set; } = string.Empty;
 }
 
-public class UpdateProjectManagerExpectationCommandHandler(IRepository<ProjectManager> repository, IMapper mapper) : IRequestHandler<UpdateProjectManagerExpectationCommand, int>
+public class UpdateProjectManagerExpectationByUserIdCommandHandler(IRepository<ProjectManager> repository, IMapper mapper) : IRequestHandler<UpdateProjectManagerExpectationByUserIdCommand, int>
 {
-    public async Task<int> Handle(UpdateProjectManagerExpectationCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(UpdateProjectManagerExpectationByUserIdCommand request, CancellationToken cancellationToken)
     {
-        var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new NotFoundException($"PM is not found with id: {request.Id} | update PM Expectation");
+        var entity = await repository.SelectAsync(entity => entity.Id == request.UserId)
+            ?? throw new NotFoundException($"PM is not found with id: {request.UserId} | update PM Expectation");
 
         mapper.Map(request, entity);
         repository.Update(entity);

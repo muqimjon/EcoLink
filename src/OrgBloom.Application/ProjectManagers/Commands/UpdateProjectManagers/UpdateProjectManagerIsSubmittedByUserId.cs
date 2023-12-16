@@ -5,9 +5,9 @@ using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 
-public record UpdateProjectManagerIsSubmittedCommand : IRequest<int>
+public record UpdateProjectManagerIsSubmittedByUserIdCommand : IRequest<int>
 {
-    public UpdateProjectManagerIsSubmittedCommand(UpdateProjectManagerIsSubmittedCommand command)
+    public UpdateProjectManagerIsSubmittedByUserIdCommand(UpdateProjectManagerIsSubmittedByUserIdCommand command)
     {
         UserId = command.UserId;
         IsSubmitted = command.IsSubmitted;
@@ -17,9 +17,9 @@ public record UpdateProjectManagerIsSubmittedCommand : IRequest<int>
     public bool IsSubmitted { get; set; }
 }
 
-public class UpdateProjectManagerIsSubmittedCommandHandler(IRepository<ProjectManager> repository, IMapper mapper) : IRequestHandler<UpdateProjectManagerIsSubmittedCommand, int>
+public class UpdateProjectManagerIsSubmittedByUserIdCommandHandler(IRepository<ProjectManager> repository, IMapper mapper) : IRequestHandler<UpdateProjectManagerIsSubmittedByUserIdCommand, int>
 {
-    public async Task<int> Handle(UpdateProjectManagerIsSubmittedCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(UpdateProjectManagerIsSubmittedByUserIdCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.UserId == request.UserId)
             ?? throw new NotFoundException($"PM is not found with id: {request.UserId} | update PM IsSubmitted");

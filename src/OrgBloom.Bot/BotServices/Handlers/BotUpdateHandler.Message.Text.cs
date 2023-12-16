@@ -167,6 +167,15 @@ public partial class BotUpdateHandler
 
         await mediator.Send(new UpdateAddressCommand() { Id = user.Id, Address = message.Text }, cancellationToken); // TODO: need validation
 
-        await SendRequestForAreaAsync(botClient, message, cancellationToken);
+        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
+        var handle = profession switch
+        {
+            UserProfession.Representative => SendRequestForAreaAsync(botClient, message, cancellationToken),
+            UserProfession.ProjectManager => SendRequestForSectorAsync(botClient, message, cancellationToken),
+            _ => HandleUnknownMessageAsync(botClient, message, cancellationToken),
+        };
+
+        try { await handle; }
+        catch(Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
     }
 }
