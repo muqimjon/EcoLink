@@ -20,8 +20,16 @@ public partial class BotUpdateHandler
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
     }
 
-    private Task SendFeedbackQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task HandleSelectedSettingsAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var handle = message.Text switch
+        {
+            { } text when text == localizer["rbtnEditLanguage"] => SendSelectLanguageQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnEditPersonalInfo"] => SendEditPersonalInfoQueryAsync(botClient, message, cancellationToken),
+            _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
+        };
+
+        try { await handle; }
+        catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
     }
 }

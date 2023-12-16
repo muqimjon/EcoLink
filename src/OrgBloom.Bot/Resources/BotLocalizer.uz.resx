@@ -117,22 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnAgriculture" xml:space="preserve">
-    <value>🌾 Qishloq xo'jaligi</value>
-    <comment>Soha tanlash oynasi tugmasi. Qishloq xo'jaligi yo'nalishi uchun</comment>
-  </data>
-  <data name="btnApply" xml:space="preserve">
-    <value>📋 Ariza topshirish</value>
-    <comment>Asosiy menyu tugmasi bu yordamida foydalanuvchilar uchun ariza topshirish  yo'nalishlari oynasi ochiladi</comment>
-  </data>
-  <data name="btnBachelorDegree" xml:space="preserve">
-    <value>Oliy</value>
-    <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. Oliy draja uchun</comment>
-  </data>
-  <data name="btnBack" xml:space="preserve">
-    <value>Ortga ⬅️</value>
-    <comment>Ortga qaytish tugmasi</comment>
-  </data>
   <data name="btnCancel" xml:space="preserve">
     <value>E'tiborsiz qoldrish</value>
     <comment>E'tiborsiz qoldirish tugmasi uchun</comment>
@@ -225,6 +209,26 @@
     <value>Assalomu alaykum {0} {1}!
 O'zingiz uchun qulay tilni tanlang:</value>
     <comment>Salomlashish matni, bir vaqtda foydalanuvchiga qulay bo'lgan tilni belgilashi so'raladi bundan foydalanilayotganda foudalanuvchining ismi va familiyasi talab qilinadi.</comment>
+  </data>
+  <data name="ibtnAgriculture" xml:space="preserve">
+    <value>🌾 Qishloq xo'jaligi</value>
+    <comment>Soha tanlash oynasi tugmasi. Qishloq xo'jaligi yo'nalishi uchun</comment>
+  </data>
+  <data name="rbtnApply" xml:space="preserve">
+    <value>📋 Ariza topshirish</value>
+    <comment>Asosiy menyu tugmasi bu yordamida foydalanuvchilar uchun ariza topshirish  yo'nalishlari oynasi ochiladi</comment>
+  </data>
+  <data name="rbtnBachelorDegree" xml:space="preserve">
+    <value>Oliy</value>
+    <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. Oliy draja uchun</comment>
+  </data>
+  <data name="rbtnBack" xml:space="preserve">
+    <value>Ortga ⬅️</value>
+    <comment>Ortga qaytish tugmasi</comment>
+  </data>
+  <data name="rbtnEditPersonalInfo" xml:space="preserve">
+    <value>Shaxsiy ma'lumotlarni o'zgartirish</value>
+    <comment>Sozlamalar oynasidan shaxsiy ma'lumotlarni o'zgartirish</comment>
   </data>
   <data name="txtAskForAboutProject" xml:space="preserve">
     <value>Loyiha haqida qisqa va tushunarli yozing:</value>
@@ -326,6 +330,10 @@ Dollardayozing:</value>
   <data name="txtReadyApplication" xml:space="preserve">
     <value>Murojaatnoma tayyor tasdiqlash qoldi xolos!</value>
     <comment>Murojaatnoma tayyorligi haqida xabar berish va bir vaqtning o'zida joriy tugmalarni o'chirib yuborish uchun</comment>
+  </data>
+  <data name="txtSettings" xml:space="preserve">
+    <value>Sozlamalar:</value>
+    <comment>Asosiy oynadan Sozlamalar bo'limi tanlanganida yuboriladigan xabar</comment>
   </data>
   <data name="txtSubmittedApplication" xml:space="preserve">
     <value>Sizda Tastiqlangan murojaat mavjud

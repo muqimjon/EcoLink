@@ -35,11 +35,12 @@ public partial class BotUpdateHandler
             State.WaitingForEnterArea => HandleAreaAsync(botClient, message, cancellationToken),
             State.WaitingForEnterExpectation => HandleExpectationAsync(botClient, message, cancellationToken),
             State.WaitingForEnterPurpose => HandlePurposeAsync(botClient, message, cancellationToken),
-            State.WaitingForEnterAboutProject => HandleAboutProjectForEntrepreneurship(botClient, message, cancellationToken),
-            State.WaitingForEnterHelpType => HandleAboutHelpTypeForEntrepreneurship(botClient, message, cancellationToken),
-            State.WaitingForEnterRequiredFunding => HandleRequiredFundingForEntrepreneurship(botClient, message, cancellationToken),
-            State.WaitingForAssetInvested => HandleAssetsInvestedForEntrepreneurship(botClient, message, cancellationToken),
-            State.WaitingForEnterProjectDirection => HandleProjectDirectionForProjectManagement(botClient, message, cancellationToken),
+            State.WaitingForEnterAboutProject => HandleAboutProjectForEntrepreneurshipAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterHelpType => HandleAboutHelpTypeForEntrepreneurshipAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterRequiredFunding => HandleRequiredFundingForEntrepreneurshipAsync(botClient, message, cancellationToken),
+            State.WaitingForAssetInvested => HandleAssetsInvestedForEntrepreneurshipAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterProjectDirection => HandleProjectDirectionForProjectManagementAsync(botClient, message, cancellationToken),
+            State.WaitingForSelectSettings => HandleSelectedSettingsAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 

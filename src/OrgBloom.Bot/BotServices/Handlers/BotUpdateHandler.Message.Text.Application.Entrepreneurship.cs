@@ -23,7 +23,7 @@ public partial class BotUpdateHandler
             await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
     }
 
-    private async Task HandleAboutProjectForEntrepreneurship(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task HandleAboutProjectForEntrepreneurshipAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
@@ -33,7 +33,7 @@ public partial class BotUpdateHandler
         await SendRequestForHelpTypeEntrepreneurshipAsync(botClient, message, cancellationToken);
     }
 
-    private async Task HandleAboutHelpTypeForEntrepreneurship(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task HandleAboutHelpTypeForEntrepreneurshipAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
@@ -43,7 +43,7 @@ public partial class BotUpdateHandler
         await SendRequestForRequiredFundingForEntrepreneurshipAsync(botClient, message, cancellationToken);
     }
 
-    private async Task HandleRequiredFundingForEntrepreneurship(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task HandleRequiredFundingForEntrepreneurshipAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
@@ -53,7 +53,7 @@ public partial class BotUpdateHandler
         await SendRequestForAssetsInvestedForEntrepreneurshipAsync(botClient, message, cancellationToken);
     }
 
-    private async Task HandleAssetsInvestedForEntrepreneurship(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task HandleAssetsInvestedForEntrepreneurshipAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);

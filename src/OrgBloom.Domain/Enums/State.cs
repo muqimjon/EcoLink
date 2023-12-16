@@ -28,4 +28,5 @@ public enum State
     WaitingForEnterRequiredFunding,
     WaitingForAssetInvested,
     WaitingForEnterProjectDirection,
+    WaitingForSelectSettings,
 }

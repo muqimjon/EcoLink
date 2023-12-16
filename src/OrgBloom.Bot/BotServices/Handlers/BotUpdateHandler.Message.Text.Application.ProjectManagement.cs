@@ -23,7 +23,7 @@ public partial class BotUpdateHandler
             await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
     }
 
-    private async Task HandleProjectDirectionForProjectManagement(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task HandleProjectDirectionForProjectManagementAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
