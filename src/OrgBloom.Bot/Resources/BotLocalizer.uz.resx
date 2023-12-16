@@ -119,20 +119,217 @@
   </resheader>
   <data name="btnApply" xml:space="preserve">
     <value>📋 Ariza topshirish</value>
+    <comment>Asosiy menyu tugmasi bu yordamida foydalanuvchilar uchun ariza topshirish  yo'nalishlari oynasi ochiladi</comment>
+  </data>
+  <data name="btnBachelorDegree" xml:space="preserve">
+    <value>Oliy</value>
+    <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. Oliy draja uchun</comment>
+  </data>
+  <data name="btnBack" xml:space="preserve">
+    <value>Ortga ⬅️</value>
+    <comment>Ortga qaytish tugmasi</comment>
+  </data>
+  <data name="btnCancel" xml:space="preserve">
+    <value>E'tiborsiz qoldrish</value>
+    <comment>E'tiborsiz qoldirish tugmasi uchun</comment>
   </data>
   <data name="btnContact" xml:space="preserve">
     <value>☎️ A'loqa</value>
+    <comment>Asosiy menyu tugmasi. Kontakt ma'lumotlari yuboriladi</comment>
+  </data>
+  <data name="btnEntrepreneurship" xml:space="preserve">
+    <value>📈 Investitsiya jalb qilish</value>
+    <comment>Ariza topshirish tugmasi. Tadbirkorlar uchun</comment>
   </data>
   <data name="btnFeedback" xml:space="preserve">
     <value>✍️ Fikr bildirish</value>
+    <comment>Asosiy menyu tugmasi. Fikr mulohazalar yoziladi</comment>
+  </data>
+  <data name="btnIAgriculture" xml:space="preserve">
+    <value>Qishloq xo'jaligi</value>
+    <comment>Soha tanlash oynasi tugmasi. Qishloq xo'jaligi yo'nalishi uchun</comment>
+  </data>
+  <data name="btnIConstruction" xml:space="preserve">
+    <value>Qurilish</value>
+    <comment>Soha tanlash oynasi tugmasi. Qurilish yo'nalishi uchun</comment>
+  </data>
+  <data name="btnIEducation" xml:space="preserve">
+    <value>Ta'lim</value>
+    <comment>Soha tanlash oynasi tugmasi. Ta'lim yo'nalishi uchun</comment>
+  </data>
+  <data name="btnIEnergy" xml:space="preserve">
+    <value>Energetika</value>
+    <comment>Soha tanlash oynasi tugmasi. Energetika yo'nalishi uchun</comment>
+  </data>
+  <data name="btnIFranchise" xml:space="preserve">
+    <value>Franshiza</value>
+    <comment>Soha tanlash oynasi tugmasi. Franshiza yo'nalishi uchun</comment>
+  </data>
+  <data name="btnIManufacturing" xml:space="preserve">
+    <value>Ishlab chiqarish</value>
+    <comment>Soha tanlash oynasi tugmasi. Ishlab chiqarish yo'nalishi uchun</comment>
   </data>
   <data name="btnInfo" xml:space="preserve">
     <value>ℹ️ Ma'lumot</value>
+    <comment>Asosiy menyu tugmasi. Tashkilot haqida Ma'lumot yuboriladi.</comment>
+  </data>
+  <data name="btnInvestment" xml:space="preserve">
+    <value>💼 Investorlik qilish</value>
+    <comment>Ariza topshirish tugmasi. Investorlar uchun</comment>
+  </data>
+  <data name="btnIT" xml:space="preserve">
+    <value>Axborot texnologiyalari</value>
+    <comment>Soha tanlash oynasi tugmasi. Axborot texnologiyalari yo'nalishi uchun</comment>
+  </data>
+  <data name="btnITrade" xml:space="preserve">
+    <value>Savdo</value>
+    <comment>Soha tanlash oynasi tugmasi. Savdo yo'nalishi uchun</comment>
+  </data>
+  <data name="btnMagistrDegree" xml:space="preserve">
+    <value>Magistr</value>
+    <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. Magistr draja uchun</comment>
+  </data>
+  <data name="btnProjectManagement" xml:space="preserve">
+    <value>🚀 Loyiha boshqarish</value>
+    <comment>Ariza topshirish tugmasi. Loyiha boshqaruvchisi uchun</comment>
+  </data>
+  <data name="btnRepresentation" xml:space="preserve">
+    <value>👔 Vakil bo'lish</value>
+    <comment>Ariza topshirish tugmasi. Vakillik uchun</comment>
+  </data>
+  <data name="btnResend" xml:space="preserve">
+    <value>Qayta yuborish 🔄</value>
+    <comment>Tasdiqlangan murojaat oyna tugmasi. Arizani qayta yuborish uchun</comment>
+  </data>
+  <data name="btnSendContact" xml:space="preserve">
+    <value>☎️ Telefon raqamini yuborish</value>
+    <comment>Foydalanuvchidan telefon raqamini so'rash oyna tugmasi. tugma yordamida osonlik bilan telefon raqamini yuborish mumkin.</comment>
   </data>
   <data name="btnSettings" xml:space="preserve">
     <value>⚙️ Sozlamalar</value>
+    <comment>Asosiy menyu tugmasi. Sozlamalar oynasi uchun</comment>
   </data>
-  <data name="selectMenu" xml:space="preserve">
+  <data name="btnSpecialistDegree" xml:space="preserve">
+    <value>O'rta maxsus</value>
+    <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. O'rta maxsus draja uchun</comment>
+  </data>
+  <data name="btnSubmit" xml:space="preserve">
+    <value>Tasdiqlash</value>
+    <comment>Tasdiqlash tugmasi uchun</comment>
+  </data>
+  <data name="btnUndergraduateDegree" xml:space="preserve">
+    <value>O'rta</value>
+    <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. O'rta draja uchun</comment>
+  </data>
+  <data name="greeting" xml:space="preserve">
+    <value>Assalomu alaykum {0} {1}!
+O'zingiz uchun qulay tilni tanlang:</value>
+    <comment>Salomlashish matni, bir vaqtda foydalanuvchiga qulay bo'lgan tilni belgilashi so'raladi bundan foydalanilayotganda foudalanuvchining ismi va familiyasi talab qilinadi.</comment>
+  </data>
+  <data name="textSubmittedApplication" xml:space="preserve">
+    <value>Sizda Tastiqlangan murojaat mavjud
+</value>
+    <comment>Tasdiqlangan murojaat oynasi xabari. Ariza topshirmoqchi bo'lganda va avval bu ishni qilgan bo'lsa ushbu xabar yuboriladi.</comment>
+  </data>
+  <data name="txtAskForAboutProject" xml:space="preserve">
+    <value>Loyiha haqida qisqa va tushunarli yozing:</value>
+    <comment>Foydalanuvchidan loyiha haqida so'raladi</comment>
+  </data>
+  <data name="txtAskForAddress" xml:space="preserve">
+    <value>Hozir qayerda yashaysiz?</value>
+    <comment>Foydalanuvchidan manzilini so'rash</comment>
+  </data>
+  <data name="txtAskForApplication" xml:space="preserve">
+    <value>Nima maqsadda ariza topshirmoqchisiz?</value>
+    <comment>Ariza topshirish oynasi xabari</comment>
+  </data>
+  <data name="txtAskForArea" xml:space="preserve">
+    <value>Qayerda vakil bo'lmoqchisiz?</value>
+    <comment>Foydalanuvchidan qayerda vakil bo'lishni istayotgani so'raladi.</comment>
+  </data>
+  <data name="txtAskForAssetInvested" xml:space="preserve">
+    <value>Loyihada tikiladigan aktivingiz (pul, yer, bino, uskuna va hkz)</value>
+    <comment>Foydalanuvchi o'z loyihasi uchun nimani o'rtaga qo'ya olishi so'raladi</comment>
+  </data>
+  <data name="txtAskForDateOfBirth" xml:space="preserve">
+    <value>Tug'ilgan sana: (kk.oo.yyyy)</value>
+    <comment>Foydalanuvchidan tug'ilgan sanasini so'rash</comment>
+  </data>
+  <data name="txtAskForDegree" xml:space="preserve">
+    <value>Ma'lumotingiz:</value>
+    <comment>Foydalanuvchidan ilmiy darajasini so'rash</comment>
+  </data>
+  <data name="txtAskForEmail" xml:space="preserve">
+    <value>Emailingizni kiriting:</value>
+    <comment>Foydalanuvchidan emailini so'rash</comment>
+  </data>
+  <data name="txtAskForExpectation" xml:space="preserve">
+    <value>Iqtisodiyot Assambleyadan nima kutasiz?</value>
+    <comment>Foydalanuvchidan ushbu tashkilotdan nima kutayotgani so'raladi</comment>
+  </data>
+  <data name="txtAskForExperience" xml:space="preserve">
+    <value>Qaysi sohada necha yillik tajribagiz bor:</value>
+    <comment>Foydalanuvchidan ish tajribasini so'rash</comment>
+  </data>
+  <data name="txtAskForFirstName" xml:space="preserve">
+    <value>Ismingizni kiriting:</value>
+    <comment>Foydalanuvchidan ismini so'rash</comment>
+  </data>
+  <data name="txtAskForHelpType" xml:space="preserve">
+    <value>Investordan qanday yordam kerak (Pul,Tajriba v hkz)</value>
+    <comment>Foydalanuvchidan nima yordam kerakligi so'raladi</comment>
+  </data>
+  <data name="txtAskForInvestmentAmount" xml:space="preserve">
+    <value>Qancha miqdorda investitsiya kiritmoqchisiz?
+Dollardayozing:</value>
+    <comment>Foydalanuvchidan qancha miqdorda sarmoya kiritishi so'raladi.</comment>
+  </data>
+  <data name="txtAskForInvestmentSector" xml:space="preserve">
+    <value>Qaysi sohada investorlik qilmoqchisiz?</value>
+    <comment>Foydalanuvchidan qaysi sohaga sarmoya kiritishi so'raladi.</comment>
+  </data>
+  <data name="txtAskForLastName" xml:space="preserve">
+    <value>Familiyangizni kiriting:</value>
+    <comment>Foydalanuvchidan familiyasini so'rash</comment>
+  </data>
+  <data name="txtAskForPatronomyc" xml:space="preserve">
+    <value>Otangizning kiriting:</value>
+    <comment>Foydalanuvchidan otasining ismini so'rash</comment>
+  </data>
+  <data name="txtAskForPhoneNumber" xml:space="preserve">
+    <value>Telefon raqamingizni kiriting yoki tugmani bosish orqali yuboring:</value>
+    <comment>Foydalanuvchidan telefon raqamini so'rash</comment>
+  </data>
+  <data name="txtAskForProjectManagerPurpose" xml:space="preserve">
+    <value>Loyiha boshqarishdan maqsadingiz:</value>
+    <comment>Foydalanuvchidan loyiha boshqarishdan maqsadi so'raladi</comment>
+  </data>
+  <data name="txtAskForProjectManagmentSector" xml:space="preserve">
+    <value>Qaysi sohada loyiha boshqarmoqchisiz?</value>
+    <comment>Foydalanuvchidan qaysi sohada loyiha boshqarishni istayotgani so'raladi.</comment>
+  </data>
+  <data name="txtAskForRepresentativePurpose" xml:space="preserve">
+    <value>Vakil bo'lishdan maqsadingiz:</value>
+    <comment>Foydalanuvchidan vakil bo'lishdan maqsadi so'raladi</comment>
+  </data>
+  <data name="txtAskForRequiredFunding" xml:space="preserve">
+    <value>Loyihaga keralkli investitysa summasi (aniq yoki tahminiy):</value>
+    <comment>Foydalanuvchidan loyha amalga oshishi uchunkerakli summa kerakligi so'raladi</comment>
+  </data>
+  <data name="txtAskForSkillLanguages" xml:space="preserve">
+    <value>Qaysi tillarni bilasiz:</value>
+    <comment>Foydalanuvchidan qaysi xorijiy tillarni bililshini so'rash</comment>
+  </data>
+  <data name="txtInfo" xml:space="preserve">
+    <value>Kompaniya haqida ma'lumot yozilishi kerak // TO DO text about organization</value>
+    <comment>Tashkilot haqida ma'lumot xabari</comment>
+  </data>
+  <data name="txtMainMenu" xml:space="preserve">
     <value>Menyuni tanlang:</value>
+    <comment>Asosiy menyu xabari</comment>
+  </data>
+  <data name="txtReadyApplication" xml:space="preserve">
+    <value>Murojaatnoma tayyor tasdiqlash qoldi xolos!</value>
+    <comment>Murojaatnoma tayyorligi haqida xabar berish va bir vaqtning o'zida joriy tugmalarni o'chirib yuborish uchun</comment>
   </data>
 </root>

@@ -18,16 +18,16 @@ public partial class BotUpdateHandler
     {
         var keyboard = new ReplyKeyboardMarkup(new[]
         {
-            new[] { new KeyboardButton("Investitsiya jalb qilish") },
-            new[] { new KeyboardButton("Investorlik qilish") },
-            new[] { new KeyboardButton("Vakil bo'lish") },
-            new[] { new KeyboardButton("Loyiha boshqarish") }
+            new[] { new KeyboardButton(localizer["btnEntrepreneurship"]) },
+            new[] { new KeyboardButton(localizer["btnInvestment"]) },
+            new[] { new KeyboardButton(localizer["btnRepresentation"]) },
+            new[] { new KeyboardButton(localizer["btnProjectManagement"]) }
         })
         { ResizeKeyboard = true };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Nima maqsadda ariza topshirmoqchisiz?",
+            text: localizer["txtAskForApplication"],
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
@@ -39,14 +39,14 @@ public partial class BotUpdateHandler
     {
         var keyboard = new ReplyKeyboardMarkup(new[]
         {
-            new[] { new KeyboardButton("Qayta yuborish") },
-            new[] { new KeyboardButton("Ortga") }
+            new[] { new KeyboardButton(localizer["btnResend"]) },
+            new[] { new KeyboardButton(localizer["btnBack"]) }
         })
         { ResizeKeyboard = true };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Sizda Tastiqlangan murojaat mavjud\n" + text,
+            text: localizer["textSubmittedApplication"] + text,
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
@@ -60,7 +60,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Ismingizni kiriting: ",
+            text: localizer["txtAskForFirstName"],
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
@@ -74,7 +74,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Familiyangizni kiriting: ",
+            text: localizer["txtAskForLastName"],
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
@@ -87,7 +87,7 @@ public partial class BotUpdateHandler
         var exist = await mediator.Send(new GetUserByIdQuery() { Id = user.Id }, cancellationToken);
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Otangizning ismi: ",
+            text: localizer["txtAskForPatronomyc"],
             cancellationToken: cancellationToken,
             replyMarkup: string.IsNullOrEmpty(exist.Patronomyc) ?
                 new ReplyKeyboardRemove() :
@@ -108,7 +108,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Tug'ilgan sana: (kk.oo.yyyy)",
+            text: localizer["txtAskForDateOfBirth"],
             cancellationToken: cancellationToken,
             replyMarkup: isWithinRange ?
                 new ReplyKeyboardMarkup(new[]
@@ -125,14 +125,14 @@ public partial class BotUpdateHandler
 
         var keyboard = new ReplyKeyboardMarkup(new[]
         {
-            new[] { new KeyboardButton("O'rta"), new KeyboardButton("O'rta maxsusus") },
-            new[] { new KeyboardButton("Oliy"), new KeyboardButton("Magistr") }
+            new[] { new KeyboardButton(localizer["btnUndergraduateDegree"]), new KeyboardButton(localizer["btnSpecialistDegree"]) },
+            new[] { new KeyboardButton("btnBachelorDegree"), new KeyboardButton(localizer["btnMagistrDegree"]) }
         })
         { ResizeKeyboard = true };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Ma'lumotingiz: ",
+            text: localizer["txtAskForDegree"],
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
@@ -148,7 +148,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Qaysi tillarni bilasiz: ",
+            text: localizer["txtAskForSkillLanguages"],
             replyMarkup: string.IsNullOrEmpty(languages) ? new ReplyKeyboardRemove() : replyKeyboard,
             cancellationToken: cancellationToken
         );
@@ -158,11 +158,11 @@ public partial class BotUpdateHandler
 
     private async Task SendRequestForPhoneNumberAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var replyKeyboard = new ReplyKeyboardMarkup( new[] { new KeyboardButton("Telefon raqamni jo'natish") { RequestContact = true } } ) { ResizeKeyboard = true };
+        var replyKeyboard = new ReplyKeyboardMarkup( new[] { new KeyboardButton(localizer["btnSendContact"]) { RequestContact = true } } ) { ResizeKeyboard = true };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Telefon raqamingizni kiriting: ",
+            text: localizer["txtAskForPhoneNumber"],
             replyMarkup: replyKeyboard,
             cancellationToken: cancellationToken
         );
@@ -177,7 +177,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Emailingizni kiriting: ",
+            text: localizer["txtAskForEmail"],
             cancellationToken: cancellationToken,
             replyMarkup: string.IsNullOrEmpty(email) ? new ReplyKeyboardRemove() : keyboard
         );
@@ -192,7 +192,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Qaysi sohada necha yillik tajribagiz bor:",
+            text: localizer["txtAskForExperience"],
             cancellationToken: cancellationToken,
             replyMarkup: string.IsNullOrEmpty(experience) ? new ReplyKeyboardRemove() : keyboard
         );
@@ -207,7 +207,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Qayerda yashaysiz:",
+            text: localizer["txtAskForAddress"],
             cancellationToken: cancellationToken,
             replyMarkup: string.IsNullOrEmpty(address) ? new ReplyKeyboardRemove() : keyboard
         );
@@ -229,15 +229,15 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Murojaatnoma tayyor tasdiqlash qoldi xolos!",
+            text: localizer["txtReadyApplication"],
             replyMarkup: new ReplyKeyboardRemove(),
             cancellationToken: cancellationToken
         );
 
         await Task.Delay(1000, cancellationToken);
         var keyboard = new InlineKeyboardMarkup(new[] {
-            new[] { InlineKeyboardButton.WithCallbackData("Tasdiqlash", "submit") },
-            new[] { InlineKeyboardButton.WithCallbackData("E'tiborsiz qoldrish", "cancel") }
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["btnSubmit"], "submit") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["btnCancel"], "cancel") }
         });
 
         await botClient.SendTextMessageAsync(
@@ -270,7 +270,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Iqtisodiyot Assambleyadan nima kutasiz:",
+            text: localizer["txtAskForExpectation"],
             cancellationToken: cancellationToken,
             replyMarkup: string.IsNullOrEmpty(expectatiopn) ? new ReplyKeyboardRemove() : keyboard
         );
@@ -281,17 +281,17 @@ public partial class BotUpdateHandler
     private async Task SendRequestForPurposeAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var purpose = string.Empty;
-        var professionName = string.Empty;
+        var askPurpose = string.Empty;
         var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         switch(profession)
         {
             case UserProfession.Representative:
                 purpose = await mediator.Send(new GetRepresentativePurposeByUserIdQuery(user.Id), cancellationToken);
-                professionName = "Vakil bo'lish";
+                askPurpose = localizer["txtAskForRepresentativePurpose"];
                 break;
             case UserProfession.ProjectManager:
                 purpose = await mediator.Send(new GetProjectManagerPurposeByUserIdQuery(user.Id), cancellationToken);
-                professionName = "Loyiha boshqarish";
+                askPurpose = localizer["txtAskForProjectManagerPurpose"];
                 break;
             default:
                 throw new NotImplementedException();
@@ -301,11 +301,34 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: professionName + "dan maqsadingiz:",
+            text: askPurpose,
             cancellationToken: cancellationToken,
             replyMarkup: string.IsNullOrEmpty(purpose) ? new ReplyKeyboardRemove() : keyboard
         );
 
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterPurpose), cancellationToken);
+    }
+    
+    private async Task SendRequestForSectorAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        var keyboard = new InlineKeyboardMarkup(new[]
+        {
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["btnIT"], "sectorIT") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["btnManufacturing"], "sectorManufacturing") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["btnTrade"], "sectorTrade") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["Construction"], "sectorConstruction") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["btnAgriculture"], "sectorAgriculture") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["btnEnergy"], "sectorEnergy") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["btnEducation"], "sectorEducation") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["btnFranchise"], "sectorFranchise") }
+        });
+
+        await botClient.SendTextMessageAsync(
+        chatId: message.Chat.Id,
+            text: localizer["txtAskForInvestmentSector"], // TO DO localizer["txtAskForProjectManagmentSector"] for PM and Investor
+            cancellationToken: cancellationToken,
+            replyMarkup: keyboard);
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterSector), cancellationToken);
     }
 }

@@ -16,7 +16,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Qayerda vakil bo'lmoqchisiz:",
+            text: localizer["txtAskForArea"],
             cancellationToken: cancellationToken,
             replyMarkup: string.IsNullOrEmpty(area) ? new ReplyKeyboardRemove() : keyboard
         );

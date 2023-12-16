@@ -22,10 +22,9 @@ public partial class BotUpdateHandler
                 InlineKeyboardButton.WithCallbackData("🇷🇺", "buttonLanguageRu")
             });
 
-            string text = $"Assalomu alaykum {user.FirstName} {user.LastName}!\nO'zingiz uchun qulay tilni tanlang:";
             await botClient.SendTextMessageAsync(
                 chatId: message.Chat.Id,
-                text: text, // localizer[message.Text!, user.FirstName],
+                text: localizer["greeting", user.FirstName, user.LastName],
                 replyMarkup: keyboard,
                 cancellationToken: cancellationToken);
 
@@ -45,7 +44,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: localizer["selectMenu"],
+            text: localizer["textMainMenu"],
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
@@ -57,7 +56,7 @@ public partial class BotUpdateHandler
     {
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: localizer["selectMenu"],
+            text: localizer["textInfo"],
             cancellationToken: cancellationToken
         );
     }

@@ -100,7 +100,7 @@ public partial class BotUpdateHandler
         var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         var handle = profession switch
         {
-            UserProfession.Investor => SendRequestForSectorForInvestmentAsync(botClient, message, cancellationToken),
+            UserProfession.Investor => SendRequestForSectorAsync(botClient, message, cancellationToken),
             UserProfession.Representative => SendRequestForLanguagesAsync(botClient, message, cancellationToken),
             UserProfession.ProjectManager => SendRequestForLanguagesAsync(botClient, message, cancellationToken),
             UserProfession.Entrepreneur => SendRequestForExperienceAsync(botClient, message, cancellationToken),
@@ -167,15 +167,6 @@ public partial class BotUpdateHandler
 
         await mediator.Send(new UpdateAddressCommand() { Id = user.Id, Address = message.Text }, cancellationToken); // TODO: need validation
 
-        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
-        var handle = profession switch
-        {
-            UserProfession.Representative => SendRequestForAreaAsync(botClient, message, cancellationToken),
-            UserProfession.ProjectManager => SendRequestForProjectDirectionAsync(botClient, message, cancellationToken),
-            _ => throw new NotImplementedException()
-        };
-
-        try { await handle; }
-        catch(Exception ex) { logger.LogError(ex, "Error handling message from {from.FirstName}", user.FirstName); }
+        await SendRequestForAreaAsync(botClient, message, cancellationToken);
     }
 }
