@@ -9,10 +9,10 @@ public partial class BotUpdateHandler
     {
         var handle = message.Text switch
         {
-            { } text when text == localizer["btnApply"] => SendApplyQueryAsync(botClient, message, cancellationToken),
-            { } text when text == localizer["btnSettings"] => SendSettingsQueryAsync(botClient, message, cancellationToken),
-            _ when message.Text == localizer["btnInfo"] => SendInfoAsync(botClient, message, cancellationToken),
-            { } text when text == localizer["btnFeedback"] => SendFeedbackQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnApply"] => SendApplyQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnSettings"] => SendSettingsQueryAsync(botClient, message, cancellationToken),
+            _ when message.Text == localizer["rbtnInfo"] => SendInfoAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnFeedback"] => SendFeedbackQueryAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 

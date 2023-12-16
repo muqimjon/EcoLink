@@ -15,10 +15,10 @@ public partial class BotUpdateHandler
     {
         var handle = message.Text switch
         {
-            { } text when text == localizer["btnInvestment"] => InvestmentQueryAsync(botClient, message, cancellationToken),
-            { } text when text == localizer["btnRepresentation"] => RepresentationQueryAsync(botClient, message, cancellationToken),
-            { } text when text == localizer["btnProjectManagement"] => ProjectManagementQueryAsync(botClient, message, cancellationToken),
-            _ when message.Text == localizer["btnEntrepreneurship"] => EntrepreneurshipQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnInvestment"] => InvestmentQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnRepresentation"] => RepresentationQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnProjectManagement"] => ProjectManagementQueryAsync(botClient, message, cancellationToken),
+            _ when message.Text == localizer["rbtnEntrepreneurship"] => EntrepreneurshipQueryAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 
@@ -30,8 +30,8 @@ public partial class BotUpdateHandler
     {
         var handle = message.Text switch
         {
-            { } text when text == localizer["btnResend"] => ClarifyProfessionQueryAsync(botClient, message, cancellationToken),
-            { } text when text == localizer["btnBack"] => SendMainMenuAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["ibtnResend"] => ClarifyProfessionQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["ibtnBack"] => SendMainMenuAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 

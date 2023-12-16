@@ -18,10 +18,10 @@ public partial class BotUpdateHandler
     {
         var keyboard = new ReplyKeyboardMarkup(new[]
         {
-            new[] { new KeyboardButton(localizer["btnEntrepreneurship"]) },
-            new[] { new KeyboardButton(localizer["btnInvestment"]) },
-            new[] { new KeyboardButton(localizer["btnRepresentation"]) },
-            new[] { new KeyboardButton(localizer["btnProjectManagement"]) }
+            new[] { new KeyboardButton(localizer["rbtnEntrepreneurship"]) },
+            new[] { new KeyboardButton(localizer["rbtnInvestment"]) },
+            new[] { new KeyboardButton(localizer["rbtnRepresentation"]) },
+            new[] { new KeyboardButton(localizer["rbtnProjectManagement"]) }
         })
         { ResizeKeyboard = true };
 
@@ -39,8 +39,8 @@ public partial class BotUpdateHandler
     {
         var keyboard = new ReplyKeyboardMarkup(new[]
         {
-            new[] { new KeyboardButton(localizer["btnResend"]) },
-            new[] { new KeyboardButton(localizer["btnBack"]) }
+            new[] { new KeyboardButton(localizer["rbtnResend"]) },
+            new[] { new KeyboardButton(localizer["rbtnBack"]) }
         })
         { ResizeKeyboard = true };
 
@@ -75,8 +75,8 @@ public partial class BotUpdateHandler
 
         await Task.Delay(1000, cancellationToken);
         var keyboard = new InlineKeyboardMarkup(new[] {
-            new[] { InlineKeyboardButton.WithCallbackData(localizer["btnSubmit"], "submit") },
-            new[] { InlineKeyboardButton.WithCallbackData(localizer["btnCancel"], "cancel") }
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["ibtnSubmit"], "submit") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["ibtnCancel"], "cancel") }
         });
 
         await botClient.SendTextMessageAsync(
@@ -157,8 +157,8 @@ public partial class BotUpdateHandler
 
         var keyboard = new ReplyKeyboardMarkup(new[]
         {
-            new[] { new KeyboardButton(localizer["btnUndergraduateDegree"]), new KeyboardButton(localizer["btnSpecialistDegree"]) },
-            new[] { new KeyboardButton(localizer["btnBachelorDegree"]), new KeyboardButton(localizer["btnMagistrDegree"]) }
+            new[] { new KeyboardButton(localizer["rbtnUndergraduateDegree"]), new KeyboardButton(localizer["rbtnSpecialistDegree"]) },
+            new[] { new KeyboardButton(localizer["rbtnBachelorDegree"]), new KeyboardButton(localizer["rbtnMagistrDegree"]) }
         })
         { ResizeKeyboard = true };
 
@@ -190,7 +190,7 @@ public partial class BotUpdateHandler
 
     private async Task SendRequestForPhoneNumberAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var replyKeyboard = new ReplyKeyboardMarkup( new[] { new KeyboardButton(localizer["btnSendContact"]) { RequestContact = true } } ) { ResizeKeyboard = true };
+        var replyKeyboard = new ReplyKeyboardMarkup( new[] { new KeyboardButton(localizer["rbtnSendContact"]) { RequestContact = true } } ) { ResizeKeyboard = true };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
@@ -310,14 +310,14 @@ public partial class BotUpdateHandler
     {
         var keyboard = new InlineKeyboardMarkup(new[]
         {
-            new[] { InlineKeyboardButton.WithCallbackData(localizer["btnIT"], "sectorIT") },
-            new[] { InlineKeyboardButton.WithCallbackData(localizer["btnManufacturing"], "sectorManufacturing") },
-            new[] { InlineKeyboardButton.WithCallbackData(localizer["btnTrade"], "sectorTrade") },
-            new[] { InlineKeyboardButton.WithCallbackData(localizer["btnConstruction"], "sectorConstruction") },
-            new[] { InlineKeyboardButton.WithCallbackData(localizer["btnAgriculture"], "sectorAgriculture") },
-            new[] { InlineKeyboardButton.WithCallbackData(localizer["btnEnergy"], "sectorEnergy") },
-            new[] { InlineKeyboardButton.WithCallbackData(localizer["btnEducation"], "sectorEducation") },
-            new[] { InlineKeyboardButton.WithCallbackData(localizer["btnFranchise"], "sectorFranchise") }
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["ibtnIT"], "sectorIT") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["ibtnManufacturing"], "sectorManufacturing") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["ibtnTrade"], "sectorTrade") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["ibtnConstruction"], "sectorConstruction") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["ibtnAgriculture"], "sectorAgriculture") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["ibtnEnergy"], "sectorEnergy") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["ibtnEducation"], "sectorEducation") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["ibtnFranchise"], "sectorFranchise") }
         });
 
         await botClient.SendTextMessageAsync(
