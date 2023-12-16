@@ -45,10 +45,10 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<bool>("IsSubmitted")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("OutvestmentAmount")
+                    b.Property<string>("Project")
                         .HasColumnType("text");
 
-                    b.Property<string>("Project")
+                    b.Property<string>("RequiredFunding")
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset?>("UpdatedAt")
@@ -108,9 +108,6 @@ namespace OrgBloom.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("Area")
-                        .HasColumnType("text");
-
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -122,6 +119,9 @@ namespace OrgBloom.Infrastructure.Migrations
 
                     b.Property<bool>("IsSubmitted")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("ProjectDirection")
+                        .HasColumnType("text");
 
                     b.Property<string>("Purpose")
                         .HasColumnType("text");
@@ -248,7 +248,7 @@ namespace OrgBloom.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("OrgBloom.Domain.Entities.Entrepreneur", b =>

@@ -68,6 +68,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<GetAddressQuery, string>, GetAddressQueryHendler>();
         services.AddScoped<IRequestHandler<GetLanguagesQuery, string>, GetLanguagesQueryHendler>();
         services.AddScoped<IRequestHandler<GetExperienceQuery, string>, GetExperienceQueryHendler>();
+        services.AddScoped<IRequestHandler<GetDateOfBirthQuery, DateTimeOffset>, GetDateOfBirthQueryHendler>();
 
         services.AddScoped<IRequestHandler<IsUserNewQuery, bool>, IsUserNewQueryHendler>();
 
@@ -77,9 +78,9 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<CreateInvestorWithReturnCommand, InvestorResultDto>, CreateInvestorWithReturnCommandHandler>();
 
         services.AddScoped<IRequestHandler<UpdateInvestorCommand, int>, UpdateInvestorCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateInvestorSectorCommand, int>, UpdateInvestorSectorCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateInvestorInvestmentAmountCommand, int>, UpdateInvestorInvestmentAmountCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateInvestorIsSubmittedCommand, int>, UpdateInvestorIsSubmittedCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateInvestorSectorByUserIdCommand, int>, UpdateInvestorSectorByUserIdCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateInvestorInvestmentAmountByUserIdCommand, int>, UpdateInvestorInvestmentAmountByUserIdCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateInvestorIsSubmittedByUserIdCommand, int>, UpdateInvestorIsSubmittedByUserIdCommandHandler>();
 
         services.AddScoped<IRequestHandler<DeleteInvestorCommand, bool>, DeleteInvestorCommandHandler>();
 
@@ -93,10 +94,10 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<CreateRepresentativeWithReturnCommand, RepresentativeResultDto>, CreateRepresentativeWithReturnCommandHandler>();
 
         services.AddScoped<IRequestHandler<UpdateRepresentativeCommand, int>, UpdateRepresentativeCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateRepresentativeAreaCommand, int>, UpdateRepresentativeAreaCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateRepresentativeExpectationCommand, int>, UpdateRepresentativeExpectationCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateRepresentativePurposeCommand, int>, UpdateRepresentativePurposeCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateRepresentativeIsSubmittedCommand, int>, UpdateRepresentativeIsSubmittedCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateRepresentativeAreaByUserIdCommand, int>, UpdateRepresentativeAreaByUserIdCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateRepresentativeExpectationByUserIdCommand, int>, UpdateRepresentativeExpectationByUserIdCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateRepresentativePurposeByUserIdCommand, int>, UpdateRepresentativePurposeByUserIdCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateRepresentativeIsSubmittedByUserCommand, int>, UpdateRepresentativeIsSubmittedCommandByUserHandler>();
 
         services.AddScoped<IRequestHandler<DeleteRepresentativeCommand, bool>, DeleteRepresentativeCommandHandler>();
 
@@ -113,10 +114,10 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<CreateProjectManagerWithReturnCommand, ProjectManagerResultDto>, CreateProjectManagerWithReturnCommandHandler>();
 
         services.AddScoped<IRequestHandler<UpdateProjectManagerCommand, int>, UpdateProjectManagerCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateProjectManagerProjectDirectionCommand, int>, UpdateProjectManagerAreaCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateProjectManagerExpectationCommand, int>, UpdateProjectManagerExpectationCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateProjectManagerPurposeCommand, int>, UpdateProjectManagerPurposeCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateProjectManagerIsSubmittedCommand, int>, UpdateProjectManagerIsSubmittedCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateProjectManagerProjectDirectionByUserIdCommand, int>, UpdateProjectManagerAreaByUserIdCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateProjectManagerExpectationByUserIdCommand, int>, UpdateProjectManagerExpectationByUserIdCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateProjectManagerPurposeVyUserIdCommand, int>, UpdateProjectManagerPurposeByUserIdCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateProjectManagerIsSubmittedByUserIdCommand, int>, UpdateProjectManagerIsSubmittedByUserIdCommandHandler>();
 
         services.AddScoped<IRequestHandler<DeleteProjectManagerCommand, bool>, DeleteProjectManagerCommandHandler>();
 
@@ -124,6 +125,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<GetProjectManagerByUserIdQuery, ProjectManagerResultDto>, GetProjectManagerByUserIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetProjectManagerProjectDirectionByUserIdQuery, string>, GetProjectManagerProjectDirectionByUserIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetProjectManagerExpectationByUserIdQuery, string>, GetProjectManagerExpectationByUserIdQueryHendler>();
+        services.AddScoped<IRequestHandler<GetProjectManagerPurposeByUserIdQuery, string>, GetProjectManagerPurposeByUserIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetAllProjectManagersQuery, IEnumerable<ProjectManagerResultDto>>, GetAllProjectManagersQueryHandler>();
 
 
@@ -132,10 +134,10 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<CreateEntrepreneurWithReturnCommand, EntrepreneurResultDto>, CreateEntrepreneurWithReturnCommandHandler>();
 
         services.AddScoped<IRequestHandler<UpdateEntrepreneurCommand, int>, UpdateEntrepreneurCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateEntrepreneurIsSubmittedCommand, int>, UpdateEntrepreneurIsSubmittedCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateEntrepreneurAssetsInvestedCommand, int>, UpdateEntrepreneurAssetsInvestedCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateEntrepreneurRequiredFundingCommand, int>, UpdateEntrepreneurRequiredFundingCommandHandler>();
-        services.AddScoped<IRequestHandler<UpdateEntrepreneurHelpTypeCommand, int>, UpdateEntrepreneurHelpTypeCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateEntrepreneurIsSubmittedByUserIdCommand, int>, UpdateEntrepreneurIsSubmittedByUserIdCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateEntrepreneurAssetsInvestedByUserIdCommand, int>, UpdateEntrepreneurAssetsInvestedByUserIdCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateEntrepreneurRequiredFundingByUserIdCommand, int>, UpdateEntrepreneurRequiredFundingByUserIdCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateEntrepreneurHelpTypeByUserIdCommand, int>, UpdateEntrepreneurHelpTypeByUserIdCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateEntrepreneurProjectCommand, int>, UpdateEntrepreneurProjectCommandHandler>();
 
 
@@ -145,6 +147,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<GetEntrepreneurByUserIdQuery, EntrepreneurResultDto>, GetEntrepreneurByUserIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetEntrepreneurProjectByUserIdQuery, string>, GetEntrepreneurProjectByUserIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetEntrepreneurRequiredFundingByUserIdQuery, string>, GetEntrepreneurRequiredFundingByUserIdQueryHendler>();
+        services.AddScoped<IRequestHandler<GetEntrepreneurAssetsInvestedByUserIdQuery, string>, GetEntrepreneurAssetsInvestedByUserIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetEntrepreneurHelpTypeByUserIdQuery, string>, GetEntrepreneurHelpTypeByUserIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetAllEntrepreneursQuery, IEnumerable<EntrepreneurResultDto>>, GetAllEntrepreneursQueryHandler>();
 

@@ -1,6 +1,9 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Types;
+using OrgBloom.Domain.Enums;
+using OrgBloom.Application.Users.Queries.GetUsers;
 using OrgBloom.Application.Investors.Commands.UpdateInvestors;
+using OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 
 namespace OrgBloom.Bot.BotServices;
 
@@ -12,22 +15,33 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(callbackQuery.Data);
         ArgumentNullException.ThrowIfNull(callbackQuery.Message);
 
-        var handle = callbackQuery.Data switch
+        var sector = callbackQuery.Data switch
         {
-            "sectorIT" => mediator.Send(new UpdateInvestorSectorCommand { Id = user.Id, Sector = "IT" }, cancellationToken),
-            "sectorManufacturing" => mediator.Send(new UpdateInvestorSectorCommand { Id = user.Id, Sector = "Ishlab chiqarish" }, cancellationToken),
-            "sectorTrade" => mediator.Send(new UpdateInvestorSectorCommand { Id = user.Id, Sector = "Savdo" }, cancellationToken),
-            "sectorConstruction" => mediator.Send(new UpdateInvestorSectorCommand { Id = user.Id, Sector = "Qurilish" }, cancellationToken),
-            "sectorAgriculture" => mediator.Send(new UpdateInvestorSectorCommand { Id = user.Id, Sector = "Qishloq xo'jaligi" }, cancellationToken),
-            "sectorEnergy" => mediator.Send(new UpdateInvestorSectorCommand { Id = user.Id, Sector = "Energetika" }, cancellationToken),
-            "sectorEducation" => mediator.Send(new UpdateInvestorSectorCommand { Id = user.Id, Sector = "Ta'lim" }, cancellationToken),
-            "sectorFranchise" => mediator.Send(new UpdateInvestorSectorCommand { Id = user.Id, Sector = "Franshiza" }, cancellationToken),
-            _ => HandleUnknownCallbackQueryAsync(botClient, callbackQuery, cancellationToken)
+            "sectorIT" => "Axborot texnologiyalari",
+            "sectorManufacturing" => "Ishlab chiqarish",
+            "sectorTrade" => "Savdo",
+            "sectorConstruction" => "Qurilish",
+            "sectorAgriculture" => "Qishloq xo'jaligi",
+            "sectorEnergy" => "Energetika",
+            "sectorEducation" => "Ta'lim",
+            "sectorFranchise" => "Franshiza",
+            _ => string.Empty,
         };
 
-        try { await handle; }
-        catch (Exception ex) { logger.LogError(ex, "Error handling callback query: {callbackQuery.Data}", callbackQuery.Data); }
-
-        await SendRequestForInvestmentAmountForInvestmentAsync(botClient, callbackQuery.Message, cancellationToken);
+        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
+        switch(profession)
+        {
+            case UserProfession.Investor:
+                await mediator.Send(new UpdateInvestorSectorByUserIdCommand { UserId = user.Id, Sector = sector }, cancellationToken);
+                await SendRequestForInvestmentAmountForInvestmentAsync(botClient, callbackQuery.Message, cancellationToken);
+                break;
+            case UserProfession.ProjectManager:
+                await mediator.Send(new UpdateProjectManagerProjectDirectionByUserIdCommand() { UserId = user.Id, ProjectDirection = sector }, cancellationToken);
+                await SendRequestForExpectationAsync(botClient, callbackQuery.Message, cancellationToken);
+                break;
+            default:
+                await HandleUnknownCallbackQueryAsync(botClient, callbackQuery, cancellationToken);
+                break;
+        };
     }
 }

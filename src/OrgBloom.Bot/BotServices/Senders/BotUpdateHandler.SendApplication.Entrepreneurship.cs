@@ -16,7 +16,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Loyiha haqida qisqa va tushunarli yozing:",
+            text: localizer["txtAskForAboutProject"],
             cancellationToken: cancellationToken,
             replyMarkup: string.IsNullOrEmpty(project) ? new ReplyKeyboardRemove() : keyboard
         );
@@ -31,7 +31,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Investordan qanday yordam kerak?\n(Pul,Tajriba v hkz)",
+            text: localizer["txtAskForHelpType"],
             cancellationToken: cancellationToken,
             replyMarkup: string.IsNullOrEmpty(helpType) ? new ReplyKeyboardRemove() : keyboard
         );
@@ -46,7 +46,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Investordan qanday yordam kerak?\n(Pul,Tajriba v hkz)",
+            text: localizer["txtAskForRequiredFunding"],
             cancellationToken: cancellationToken,
             replyMarkup: string.IsNullOrEmpty(requiredFunding) ? new ReplyKeyboardRemove() : keyboard
         );
@@ -56,12 +56,12 @@ public partial class BotUpdateHandler
 
     private async Task SendRequestForAssetsInvestedForEntrepreneurshipAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var assetsInvested = await mediator.Send(new GetEntrepreneurRequiredFundingByUserIdQuery(user.Id), cancellationToken);
+        var assetsInvested = await mediator.Send(new GetEntrepreneurAssetsInvestedByUserIdQuery(user.Id), cancellationToken);
         var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(assetsInvested) }) { ResizeKeyboard = true };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Loyihada tikiladigan aktivingiz:\n(pul, yer, bino, uskuna va hkz)",
+            text: localizer["txtAskForAssetInvested"],
             cancellationToken: cancellationToken,
             replyMarkup: string.IsNullOrEmpty(assetsInvested) ? new ReplyKeyboardRemove() : keyboard
         );

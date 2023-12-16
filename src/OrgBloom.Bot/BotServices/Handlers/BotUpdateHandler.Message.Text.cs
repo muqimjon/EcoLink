@@ -3,10 +3,6 @@ using Telegram.Bot.Types;
 using OrgBloom.Domain.Enums;
 using OrgBloom.Application.Users.Queries.GetUsers;
 using OrgBloom.Application.Users.Commands.UpdateUsers;
-using OrgBloom.Application.Investors.Commands.UpdateInvestors;
-using OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
-using OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
-using OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 
 namespace OrgBloom.Bot.BotServices;
 
@@ -38,14 +34,15 @@ public partial class BotUpdateHandler
             State.WaitingForEnterAddress => HandleAddressAsync(botClient, message, cancellationToken),
             State.WaitingForEnterArea => HandleAreaAsync(botClient, message, cancellationToken),
             State.WaitingForEnterExpectation => HandleExpectationAsync(botClient, message, cancellationToken),
-            State.WaitingForEnterPurpose => HandlePurposeForRepresentationAsync(botClient, message, cancellationToken),
-            State.WaitingForEnterAboutProject => HandleAboutProjectForEntrepreneurship(botClient, message, cancellationToken),
-            State.WaitingForEnterHelpType => HandleAboutHelpTypeForEntrepreneurship(botClient, message, cancellationToken),
-            State.WaitingForEnterRequiredFunding => HandleRequiredFundingForEntrepreneurship(botClient, message, cancellationToken),
-            State.WaitingForAssetInvested => HandleAssetsInvestedForEntrepreneurship(botClient, message, cancellationToken),
-            State.WaitingForEnterProjectDirection => HandleProjectDirectionForProjectManagement(botClient, message, cancellationToken),
+            State.WaitingForEnterPurpose => HandlePurposeAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterAboutProject => HandleAboutProjectForEntrepreneurshipAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterHelpType => HandleAboutHelpTypeForEntrepreneurshipAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterRequiredFunding => HandleRequiredFundingForEntrepreneurshipAsync(botClient, message, cancellationToken),
+            State.WaitingForAssetInvested => HandleAssetsInvestedForEntrepreneurshipAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterProjectDirection => HandleProjectDirectionForProjectManagementAsync(botClient, message, cancellationToken),
+            State.WaitingForSelectSettings => HandleSelectedSettingsAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
-        }; ;
+        };
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
@@ -104,7 +101,7 @@ public partial class BotUpdateHandler
         var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         var handle = profession switch
         {
-            UserProfession.Investor => SendRequestForSectorForInvestmentAsync(botClient, message, cancellationToken),
+            UserProfession.Investor => SendRequestForSectorAsync(botClient, message, cancellationToken),
             UserProfession.Representative => SendRequestForLanguagesAsync(botClient, message, cancellationToken),
             UserProfession.ProjectManager => SendRequestForLanguagesAsync(botClient, message, cancellationToken),
             UserProfession.Entrepreneur => SendRequestForExperienceAsync(botClient, message, cancellationToken),
@@ -152,9 +149,16 @@ public partial class BotUpdateHandler
 
         await mediator.Send(new UpdateExperienceCommand() { Id = user.Id, Experience = message.Text }, cancellationToken); // TODO: need validation
 
-        await SendRequestForAddressAsync(botClient, message, cancellationToken);
 
-        await SendRequestForAboutProjectForEntrepreneurshipAsync(botClient, message, cancellationToken);
+        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
+        var handle = profession switch
+        {
+            UserProfession.Entrepreneur => SendRequestForAboutProjectForEntrepreneurshipAsync(botClient, message, cancellationToken),
+            _ => SendRequestForAddressAsync(botClient, message, cancellationToken), // Works foor PM and Representative
+        };
+
+        try { await handle; }
+        catch (Exception ex) { logger.LogError(ex, "Error handling message from {from.FirstName}", user.FirstName); }
     }
 
     private async Task HandleAddressAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -168,31 +172,11 @@ public partial class BotUpdateHandler
         var handle = profession switch
         {
             UserProfession.Representative => SendRequestForAreaAsync(botClient, message, cancellationToken),
-            UserProfession.ProjectManager => SendRequestForProjectDirectionAsync(botClient, message, cancellationToken),
-            _ => throw new NotImplementedException()
+            UserProfession.ProjectManager => SendRequestForSectorAsync(botClient, message, cancellationToken),
+            _ => HandleUnknownMessageAsync(botClient, message, cancellationToken),
         };
 
         try { await handle; }
-        catch(Exception ex) { logger.LogError(ex, "Error handling message from {from.FirstName}", user.FirstName); }
-    }
-
-    private async Task HandlePurposeForRepresentationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(message);
-        ArgumentNullException.ThrowIfNull(message.Text);
-
-        await mediator.Send(new UpdateRepresentativePurposeCommand() { Id = user.Id, Purpose = message.Text }, cancellationToken); // TODO: need validation
-
-        await SendForSubmitApplicationAsync(botClient, message, cancellationToken);
-    }
-
-    private async Task HandleProjectDirectionForProjectManagement(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(message);
-        ArgumentNullException.ThrowIfNull(message.Text);
-
-        await mediator.Send(new UpdateProjectManagerProjectDirectionCommand() { Id = user.Id, ProjectDirection = message.Text }, cancellationToken); // TODO: need validation
-
-        await SendRequestForExpectationAsync(botClient, message, cancellationToken);
+        catch(Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
     }
 }

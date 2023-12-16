@@ -1,7 +1,6 @@
 ﻿using OrgBloom.Domain.Enums;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OrgBloom.Domain.Entities;
+namespace OrgBloom.Domain.Entities.Users;
 
 public class User : Auditable
 {

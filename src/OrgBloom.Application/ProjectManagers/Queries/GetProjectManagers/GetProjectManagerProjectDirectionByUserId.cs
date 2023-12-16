@@ -1,5 +1,5 @@
-﻿using OrgBloom.Domain.Entities;
-using OrgBloom.Application.Commons.Interfaces;
+﻿using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Domain.Entities.ProjectManagement;
 
 namespace OrgBloom.Application.ProjectManagers.Queries.GetProjectManagers;
 

@@ -39,14 +39,15 @@ public partial class BotUpdateHandler
 
         var handle = callbackQuery.Data switch
         {
-            "buttonLanguageUz" => mediator.Send(new UpdateLanguageCodeCommand { Id = user.Id, LanguageCode = "uz" }, cancellationToken),
-            "buttonLanguageEn" => mediator.Send(new UpdateLanguageCodeCommand { Id = user.Id, LanguageCode = "en" }, cancellationToken),
-            "buttonLanguageRu" => mediator.Send(new UpdateLanguageCodeCommand { Id = user.Id, LanguageCode = "ru" }, cancellationToken),
+            "ibtnUz" => mediator.Send(new UpdateLanguageCodeCommand { Id = user.Id, LanguageCode = "uz" }, cancellationToken),
+            "ibtnEn" => mediator.Send(new UpdateLanguageCodeCommand { Id = user.Id, LanguageCode = "en" }, cancellationToken),
+            "ibtnRu" => mediator.Send(new UpdateLanguageCodeCommand { Id = user.Id, LanguageCode = "ru" }, cancellationToken),
             _ => HandleUnknownCallbackQueryAsync(botClient, callbackQuery, cancellationToken)
         };
 
         try { await handle; }
         catch (Exception ex) { logger.LogError(ex, "Error handling callback query: {callbackQuery.Data}", callbackQuery.Data); }
+
 
         await SendMainMenuAsync(botClient, callbackQuery.Message, cancellationToken);
     }

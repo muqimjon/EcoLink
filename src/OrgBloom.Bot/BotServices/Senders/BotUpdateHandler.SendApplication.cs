@@ -14,20 +14,20 @@ namespace OrgBloom.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
-    private async Task SendApplyQuery(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendApplyQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var keyboard = new ReplyKeyboardMarkup(new[]
         {
-            new[] { new KeyboardButton("Investitsiya jalb qilish") },
-            new[] { new KeyboardButton("Investorlik qilish") },
-            new[] { new KeyboardButton("Vakil bo'lish") },
-            new[] { new KeyboardButton("Loyiha boshqarish") }
+            new[] { new KeyboardButton(localizer["rbtnEntrepreneurship"]) },
+            new[] { new KeyboardButton(localizer["rbtnInvestment"]) },
+            new[] { new KeyboardButton(localizer["rbtnRepresentation"]) },
+            new[] { new KeyboardButton(localizer["rbtnProjectManagement"]) }
         })
         { ResizeKeyboard = true };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Nima maqsadda ariza topshirmoqchisiz?",
+            text: localizer["txtAskForApplication"],
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
@@ -39,181 +39,19 @@ public partial class BotUpdateHandler
     {
         var keyboard = new ReplyKeyboardMarkup(new[]
         {
-            new[] { new KeyboardButton("Qayta yuborish") },
-            new[] { new KeyboardButton("Ortga") }
+            new[] { new KeyboardButton(localizer["rbtnResend"]) },
+            new[] { new KeyboardButton(localizer["rbtnBack"]) }
         })
         { ResizeKeyboard = true };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Sizda Tastiqlangan murojaat mavjud\n" + text,
+            text: localizer["txtSubmittedApplication"] + text,
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
 
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForResendApplication), cancellationToken);
-    }
-
-    private async Task SendRequestForFirstNameAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(user.FirstName) }) { ResizeKeyboard = true };
-
-        await botClient.SendTextMessageAsync(
-            chatId: message.Chat.Id,
-            text: "Ismingizni kiriting: ",
-            replyMarkup: keyboard,
-            cancellationToken: cancellationToken
-        );
-
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterFirstName), cancellationToken);
-    }
-
-    private async Task SendRequestForLastNameAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(user.LastName) }) { ResizeKeyboard = true };
-
-        await botClient.SendTextMessageAsync(
-            chatId: message.Chat.Id,
-            text: "Familiyangizni kiriting: ",
-            replyMarkup: keyboard,
-            cancellationToken: cancellationToken
-        );
-
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterLastName), cancellationToken);
-    }
-
-    private async Task SendRequestForPatronomycAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        var exist = await mediator.Send(new GetUserByIdQuery() { Id = user.Id }, cancellationToken);
-        await botClient.SendTextMessageAsync(
-            chatId: message.Chat.Id,
-            text: "Otangizning ismi: ",
-            cancellationToken: cancellationToken,
-            replyMarkup: string.IsNullOrEmpty(exist.Patronomyc) ?
-                new ReplyKeyboardRemove() :
-                new ReplyKeyboardMarkup(new[]
-                {
-                    new[] { new KeyboardButton(exist.Patronomyc) }
-                })
-                { ResizeKeyboard = true });
-
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterPatronomyc), cancellationToken);
-    }
-
-    private async Task SendRequestForDateOfBirthAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        var exist = await mediator.Send(new GetUserByIdQuery() { Id = user.Id }, cancellationToken);
-        var formattedDate = exist.DateOfBirth.ToString()!.Split().First();
-        var isWithinRange = exist.DateOfBirth >= new DateTimeOffset(1950, 1, 1, 0, 0, 0, TimeSpan.Zero)
-                            && exist.DateOfBirth <= new DateTimeOffset(2005, 12, 31, 23, 59, 59, TimeSpan.Zero);
-
-        await botClient.SendTextMessageAsync(
-            chatId: message.Chat.Id,
-            text: "Tug'ilgan sana: (kk.oo.yyyy)",
-            cancellationToken: cancellationToken,
-            replyMarkup: isWithinRange ?
-                new ReplyKeyboardMarkup(new[]
-                {
-                    new[] { new KeyboardButton(formattedDate) }
-                }) { ResizeKeyboard = true } :
-                new ReplyKeyboardRemove());
-
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterDateOfBirth), cancellationToken);
-    }
-
-    private async Task SendRequestForDegreeAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-
-        var keyboard = new ReplyKeyboardMarkup(new[]
-        {
-            new[] { new KeyboardButton("O'rta"), new KeyboardButton("O'rta maxsusus") },
-            new[] { new KeyboardButton("Oliy"), new KeyboardButton("Magistr") }
-        })
-        { ResizeKeyboard = true };
-
-        await botClient.SendTextMessageAsync(
-            chatId: message.Chat.Id,
-            text: "Ma'lumotingiz: ",
-            replyMarkup: keyboard,
-            cancellationToken: cancellationToken
-        );
-
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterDegree), cancellationToken);
-    }
-
-    private async Task SendRequestForLanguagesAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        var languages = await mediator.Send(new GetLanguagesQuery(user.Id), cancellationToken);
-
-        var replyKeyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(languages) }) { ResizeKeyboard = true };
-
-        await botClient.SendTextMessageAsync(
-            chatId: message.Chat.Id,
-            text: "Qaysi tillarni bilasiz: ",
-            replyMarkup: string.IsNullOrEmpty(languages) ? new ReplyKeyboardRemove() : replyKeyboard,
-            cancellationToken: cancellationToken
-        );
-
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterLanguages), cancellationToken);
-    }
-
-    private async Task SendRequestForPhoneNumberAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        var replyKeyboard = new ReplyKeyboardMarkup( new[] { new KeyboardButton("Telefon raqamni jo'natish") { RequestContact = true } } ) { ResizeKeyboard = true };
-
-        await botClient.SendTextMessageAsync(
-            chatId: message.Chat.Id,
-            text: "Telefon raqamingizni kiriting: ",
-            replyMarkup: replyKeyboard,
-            cancellationToken: cancellationToken
-        );
-
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterPhoneNumber), cancellationToken);
-    }
-
-    private async Task SendRequestForEmailAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        var email = await mediator.Send(new GetEmailQuery(user.Id), cancellationToken);
-        var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(email) }) { ResizeKeyboard = true };
-
-        await botClient.SendTextMessageAsync(
-            chatId: message.Chat.Id,
-            text: "Emailingizni kiriting: ",
-            cancellationToken: cancellationToken,
-            replyMarkup: string.IsNullOrEmpty(email) ? new ReplyKeyboardRemove() : keyboard
-        );
-
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterEmail), cancellationToken);
-    }
-
-    private async Task SendRequestForExperienceAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        var experience = await mediator.Send(new GetExperienceQuery(user.Id), cancellationToken);
-        var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(experience) }) { ResizeKeyboard = true };
-
-        await botClient.SendTextMessageAsync(
-            chatId: message.Chat.Id,
-            text: "Qaysi sohada necha yillik tajribagiz bor:",
-            cancellationToken: cancellationToken,
-            replyMarkup: string.IsNullOrEmpty(experience) ? new ReplyKeyboardRemove() : keyboard
-        );
-
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterExperience), cancellationToken);
-    }
-
-    private async Task SendRequestForAddressAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
-        var address = await mediator.Send(new GetAddressQuery(user.Id), cancellationToken);
-        var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(address) }) { ResizeKeyboard = true };
-
-        await botClient.SendTextMessageAsync(
-            chatId: message.Chat.Id,
-            text: "Qayerda yashaysiz:",
-            cancellationToken: cancellationToken,
-            replyMarkup: string.IsNullOrEmpty(address) ? new ReplyKeyboardRemove() : keyboard
-        );
-
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterAddress), cancellationToken);
     }
 
     private async Task SendForSubmitApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -230,15 +68,15 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Murojaatnoma tayyor tasdiqlash qoldi xolos!",
+            text: localizer["txtReadyApplication"],
             replyMarkup: new ReplyKeyboardRemove(),
             cancellationToken: cancellationToken
         );
 
         await Task.Delay(1000, cancellationToken);
         var keyboard = new InlineKeyboardMarkup(new[] {
-            new[] { InlineKeyboardButton.WithCallbackData("Tasdiqlash", "submit") },
-            new[] { InlineKeyboardButton.WithCallbackData("E'tiborsiz qoldrish", "cancel") }
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["ibtnSubmit"], "submit") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["ibtnCancel"], "cancel") }
         });
 
         await botClient.SendTextMessageAsync(
@@ -251,22 +89,243 @@ public partial class BotUpdateHandler
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSubmitApplication), cancellationToken);
     }
 
-    private async Task SendRequestForPurposeAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendRequestForFirstNameAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var purpose = await mediator.Send(new GetRepresentativePurposeByUserIdQuery(user.Id), cancellationToken);
+        var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(user.FirstName) }) { ResizeKeyboard = true };
+
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["txtAskForFirstName"],
+            replyMarkup: keyboard,
+            cancellationToken: cancellationToken
+        );
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterFirstName), cancellationToken);
+    }
+
+    private async Task SendRequestForLastNameAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(user.LastName) }) { ResizeKeyboard = true };
+
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["txtAskForLastName"],
+            replyMarkup: keyboard,
+            cancellationToken: cancellationToken
+        );
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterLastName), cancellationToken);
+    }
+
+    private async Task SendRequestForPatronomycAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        var exist = await mediator.Send(new GetUserByIdQuery() { Id = user.Id }, cancellationToken);
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["txtAskForPatronomyc"],
+            cancellationToken: cancellationToken,
+            replyMarkup: string.IsNullOrEmpty(exist.Patronomyc) ?
+                new ReplyKeyboardRemove() :
+                new ReplyKeyboardMarkup(new[] 
+                { 
+                    new KeyboardButton(exist.Patronomyc) 
+                }) { ResizeKeyboard = true });
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterPatronomyc), cancellationToken);
+    }
+
+    private async Task SendRequestForDateOfBirthAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        var dateOfBirth = await mediator.Send(new GetDateOfBirthQuery(user.Id), cancellationToken);
+        var formattedDate = dateOfBirth.ToString()!.Split().First();
+        var isWithinRange = dateOfBirth != new DateTimeOffset();
+
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["txtAskForDateOfBirth"],
+            cancellationToken: cancellationToken,
+            replyMarkup: isWithinRange ? 
+            new ReplyKeyboardMarkup(new[]
+            { new KeyboardButton(formattedDate) 
+            }) { ResizeKeyboard = true } : new ReplyKeyboardRemove());
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterDateOfBirth), cancellationToken);
+    }
+
+    private async Task SendRequestForDegreeAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+
         var keyboard = new ReplyKeyboardMarkup(new[]
         {
-            new[] { new KeyboardButton(purpose) }
+            new[] { new KeyboardButton(localizer["rbtnUndergraduateDegree"]), new KeyboardButton(localizer["rbtnSpecialistDegree"]) },
+            new[] { new KeyboardButton(localizer["rbtnBachelorDegree"]), new KeyboardButton(localizer["rbtnMagistrDegree"]) }
         })
         { ResizeKeyboard = true };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Vakil bo'lishdan maqsadingiz:",
+            text: localizer["txtAskForDegree"],
+            replyMarkup: keyboard,
+            cancellationToken: cancellationToken
+        );
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterDegree), cancellationToken);
+    }
+
+    private async Task SendRequestForLanguagesAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        var languages = await mediator.Send(new GetLanguagesQuery(user.Id), cancellationToken);
+
+        var replyKeyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(languages) }) { ResizeKeyboard = true };
+
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["txtAskForSkillLanguages"],
+            replyMarkup: string.IsNullOrEmpty(languages) ? new ReplyKeyboardRemove() : replyKeyboard,
+            cancellationToken: cancellationToken
+        );
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterLanguages), cancellationToken);
+    }
+
+    private async Task SendRequestForPhoneNumberAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        var replyKeyboard = new ReplyKeyboardMarkup( new[] { new KeyboardButton(localizer["rbtnSendContact"]) { RequestContact = true } } ) { ResizeKeyboard = true };
+
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["txtAskForPhoneNumber"],
+            replyMarkup: replyKeyboard,
+            cancellationToken: cancellationToken
+        );
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterPhoneNumber), cancellationToken);
+    }
+
+    private async Task SendRequestForEmailAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        var email = await mediator.Send(new GetEmailQuery(user.Id), cancellationToken);
+        var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(email) }) { ResizeKeyboard = true };
+
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["txtAskForEmail"],
+            cancellationToken: cancellationToken,
+            replyMarkup: string.IsNullOrEmpty(email) ? new ReplyKeyboardRemove() : keyboard
+        );
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterEmail), cancellationToken);
+    }
+
+    private async Task SendRequestForExperienceAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        var experience = await mediator.Send(new GetExperienceQuery(user.Id), cancellationToken);
+        var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(experience) }) { ResizeKeyboard = true };
+
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["txtAskForExperience"],
+            cancellationToken: cancellationToken,
+            replyMarkup: string.IsNullOrEmpty(experience) ? new ReplyKeyboardRemove() : keyboard
+        );
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterExperience), cancellationToken);
+    }
+
+    private async Task SendRequestForAddressAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        var address = await mediator.Send(new GetAddressQuery(user.Id), cancellationToken);
+        var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(address) }) { ResizeKeyboard = true };
+
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["txtAskForAddress"],
+            cancellationToken: cancellationToken,
+            replyMarkup: string.IsNullOrEmpty(address) ? new ReplyKeyboardRemove() : keyboard
+        );
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterAddress), cancellationToken);
+    }
+
+    private async Task SendRequestForExpectationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        var expectatiopn = string.Empty;
+        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
+        var handle = profession switch
+        {
+            UserProfession.Representative => mediator.Send(new GetRepresentativeExpectationByUserIdQuery(user.Id), cancellationToken),
+            UserProfession.ProjectManager => mediator.Send(new GetProjectManagerExpectationByUserIdQuery(user.Id), cancellationToken),
+            UserProfession.Entrepreneur => throw new NotImplementedException(),
+            UserProfession.Investor => throw new NotImplementedException(),
+            _ => Task.FromResult(string.Empty)
+        };
+
+        try { expectatiopn = await handle; }
+        catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+
+        var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(expectatiopn) }) { ResizeKeyboard = true };
+
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["txtAskForExpectation"],
+            cancellationToken: cancellationToken,
+            replyMarkup: string.IsNullOrEmpty(expectatiopn) ? new ReplyKeyboardRemove() : keyboard
+        );
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterExpectation), cancellationToken);
+    }
+
+    private async Task SendRequestForPurposeAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        var purpose = string.Empty;
+        var askPurpose = string.Empty;
+        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
+        switch(profession)
+        {
+            case UserProfession.Representative:
+                purpose = await mediator.Send(new GetRepresentativePurposeByUserIdQuery(user.Id), cancellationToken);
+                askPurpose = localizer["txtAskForRepresentativePurpose"];
+                break;
+            case UserProfession.ProjectManager:
+                purpose = await mediator.Send(new GetProjectManagerPurposeByUserIdQuery(user.Id), cancellationToken);
+                askPurpose = localizer["txtAskForProjectManagerPurpose"];
+                break;
+            default:
+                throw new NotImplementedException();
+        };
+
+        var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(purpose) }) { ResizeKeyboard = true };
+
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: askPurpose,
             cancellationToken: cancellationToken,
             replyMarkup: string.IsNullOrEmpty(purpose) ? new ReplyKeyboardRemove() : keyboard
         );
 
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterPurpose), cancellationToken);
+    }
+    
+    private async Task SendRequestForSectorAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        var keyboard = new InlineKeyboardMarkup(new[]
+        {
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["ibtnIT"], "sectorIT") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["ibtnManufacturing"], "sectorManufacturing") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["ibtnTrade"], "sectorTrade") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["ibtnConstruction"], "sectorConstruction") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["ibtnAgriculture"], "sectorAgriculture") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["ibtnEnergy"], "sectorEnergy") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["ibtnEducation"], "sectorEducation") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["ibtnFranchise"], "sectorFranchise") }
+        });
+
+        await botClient.SendTextMessageAsync(
+        chatId: message.Chat.Id,
+            text: localizer["txtAskForInvestmentSector"], // TO DO localizer["txtAskForProjectManagmentSector"] for PM and Investor
+            cancellationToken: cancellationToken,
+            replyMarkup: keyboard);
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterSector), cancellationToken);
     }
 }

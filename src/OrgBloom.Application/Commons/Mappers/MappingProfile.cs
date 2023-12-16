@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Users.DTOs;
 using OrgBloom.Application.Investors.DTOs;
 using OrgBloom.Application.Entrepreneurs.DTOs;
@@ -15,6 +14,11 @@ using OrgBloom.Application.ProjectManagers.Commands.CreateProjectManagers;
 using OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 using OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
 using OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
+using OrgBloom.Domain.Entities.Representation;
+using OrgBloom.Domain.Entities.Entrepreneurship;
+using OrgBloom.Domain.Entities.ProjectManagement;
+using OrgBloom.Domain.Entities.Investment;
+using OrgBloom.Domain.Entities.Users;
 
 namespace OrgBloom.Application.Commons.Mappers;
 
@@ -26,9 +30,9 @@ public class MappingProfile : Profile
         CreateMap<Investor, InvestorResultDto>();
 
         CreateMap<UpdateInvestorCommand, Investor>();
-        CreateMap<UpdateInvestorInvestmentAmountCommand, Investor>();
-        CreateMap<UpdateInvestorIsSubmittedCommand, Investor>();
-        CreateMap<UpdateInvestorSectorCommand, Investor>();
+        CreateMap<UpdateInvestorInvestmentAmountByUserIdCommand, Investor>();
+        CreateMap<UpdateInvestorIsSubmittedByUserIdCommand, Investor>();
+        CreateMap<UpdateInvestorSectorByUserIdCommand, Investor>();
 
         CreateMap<CreateInvestorCommand, Investor>();
         CreateMap<CreateInvestorWithReturnCommand, Investor>();
@@ -38,22 +42,23 @@ public class MappingProfile : Profile
         CreateMap<ProjectManager, ProjectManagerResultDto>();
 
         CreateMap<UpdateProjectManagerCommand, ProjectManager>();
-        CreateMap<UpdateProjectManagerProjectDirectionCommand, ProjectManager>();
-        CreateMap<UpdateProjectManagerExpectationCommand, ProjectManager>();
-        CreateMap<UpdateProjectManagerIsSubmittedCommand, ProjectManager>();
-        CreateMap<UpdateProjectManagerPurposeCommand, ProjectManager>();
+        CreateMap<UpdateProjectManagerProjectDirectionByUserIdCommand, ProjectManager>();
+        CreateMap<UpdateProjectManagerExpectationByUserIdCommand, ProjectManager>();
+        CreateMap<UpdateProjectManagerIsSubmittedByUserIdCommand, ProjectManager>();
+        CreateMap<UpdateProjectManagerPurposeVyUserIdCommand, ProjectManager>();
 
         CreateMap<CreateProjectManagerCommand, ProjectManager>();
+        CreateMap<CreateProjectManagerWithReturnCommand, ProjectManager>();
 
 
         // Entrepreneur
         CreateMap<Entrepreneur, EntrepreneurResultDto>();
 
         CreateMap<UpdateEntrepreneurCommand, Entrepreneur>();
-        CreateMap<UpdateEntrepreneurHelpTypeCommand, Entrepreneur>();
-        CreateMap<UpdateEntrepreneurAssetsInvestedCommand, Entrepreneur>();
-        CreateMap<UpdateEntrepreneurRequiredFundingCommand, Entrepreneur>();
-        CreateMap<UpdateEntrepreneurIsSubmittedCommand, Entrepreneur>();
+        CreateMap<UpdateEntrepreneurHelpTypeByUserIdCommand, Entrepreneur>();
+        CreateMap<UpdateEntrepreneurAssetsInvestedByUserIdCommand, Entrepreneur>();
+        CreateMap<UpdateEntrepreneurRequiredFundingByUserIdCommand, Entrepreneur>();
+        CreateMap<UpdateEntrepreneurIsSubmittedByUserIdCommand, Entrepreneur>();
         CreateMap<UpdateEntrepreneurProjectCommand, Entrepreneur>();
 
         CreateMap<CreateEntrepreneurCommand, Entrepreneur>();
@@ -64,10 +69,10 @@ public class MappingProfile : Profile
         CreateMap<Representative, RepresentativeResultDto>();
 
         CreateMap<UpdateRepresentativeCommand, Representative>();
-        CreateMap<UpdateRepresentativeAreaCommand, Representative>();
-        CreateMap<UpdateRepresentativeExpectationCommand, Representative>();
-        CreateMap<UpdateRepresentativeIsSubmittedCommand, Representative>();
-        CreateMap<UpdateRepresentativePurposeCommand, Representative>();
+        CreateMap<UpdateRepresentativeAreaByUserIdCommand, Representative>();
+        CreateMap<UpdateRepresentativeExpectationByUserIdCommand, Representative>();
+        CreateMap<UpdateRepresentativeIsSubmittedByUserCommand, Representative>();
+        CreateMap<UpdateRepresentativePurposeByUserIdCommand, Representative>();
 
         CreateMap<CreateRepresentativeCommand, Representative>();
         CreateMap<CreateRepresentativeWithReturnCommand, Representative>();

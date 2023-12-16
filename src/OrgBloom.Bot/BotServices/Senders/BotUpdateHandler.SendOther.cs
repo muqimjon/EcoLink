@@ -1,0 +1,93 @@
+﻿using Telegram.Bot;
+using Telegram.Bot.Types;
+using OrgBloom.Domain.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
+using OrgBloom.Application.Users.Queries.GetUsers;
+using OrgBloom.Application.Users.Commands.UpdateUsers;
+
+namespace OrgBloom.Bot.BotServices;
+
+public partial class BotUpdateHandler
+{
+    private async Task SendGreetingAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(message);
+
+        var isUserNew = await mediator.Send(new IsUserNewQuery(user.Id), cancellationToken);
+        if (isUserNew)
+        {
+            var keyboard = new InlineKeyboardMarkup(new[] {
+                new[] { InlineKeyboardButton.WithCallbackData("🇺🇿 uzbekcha 🇺🇿", "ibtnUz") },
+                new[] { InlineKeyboardButton.WithCallbackData("🇬🇧 english 🇬🇧", "ibtnEn") },
+                new[] { InlineKeyboardButton.WithCallbackData("🇷🇺 ruscha 🇷🇺", "ibtnRu") }
+            });
+
+            await botClient.SendTextMessageAsync(
+                chatId: message.Chat.Id,
+                text: localizer["greeting", user.FirstName, user.LastName],
+                replyMarkup: keyboard,
+                cancellationToken: cancellationToken);
+
+            await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectLanguage), cancellationToken);
+        }
+        else await SendMainMenuAsync(botClient, message, cancellationToken);
+    }
+
+    public async Task SendMainMenuAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        var keyboard = new ReplyKeyboardMarkup(new[]
+        {
+            new[] { new KeyboardButton(localizer["rbtnApply"]) },
+            new[] { new KeyboardButton(localizer["rbtnContact"]), new KeyboardButton(localizer["rbtnFeedback"]) },
+            new[] { new KeyboardButton(localizer["rbtnSettings"]), new KeyboardButton(localizer["rbtnInfo"]), }
+        }) { ResizeKeyboard = true };
+
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["txtMainMenu"],
+            replyMarkup: keyboard,
+            cancellationToken: cancellationToken
+        );
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectMainMenu), cancellationToken);
+    }
+
+    private async Task SendInfoAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["txtInfo"],
+            cancellationToken: cancellationToken
+        );
+    }
+
+    private async Task SendSettingsQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        ReplyKeyboardMarkup keyboard = new(new[] { new[] { new KeyboardButton(localizer["rbtnEditLanguage"]) }, new[] { new KeyboardButton(localizer["rbtnEditPersonalInfo"]) } })
+        { ResizeKeyboard = true };
+
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["txtSettings"],
+            replyMarkup: keyboard,
+            cancellationToken: cancellationToken
+        );
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectSettings), cancellationToken);
+    }
+
+    private Task SendFeedbackQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    private Task SendSelectLanguageQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    private Task SendEditPersonalInfoQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+}

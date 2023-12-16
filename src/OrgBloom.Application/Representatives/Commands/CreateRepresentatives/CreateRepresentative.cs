@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Application.Commons.Exceptions;
+using OrgBloom.Domain.Entities.Representation;
 
 namespace OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
 

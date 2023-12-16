@@ -1,6 +1,6 @@
 ﻿using OrgBloom.Domain.Enums;
-using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Domain.Entities.Users;
 
 namespace OrgBloom.Application.Users.Queries.GetUsers;
 

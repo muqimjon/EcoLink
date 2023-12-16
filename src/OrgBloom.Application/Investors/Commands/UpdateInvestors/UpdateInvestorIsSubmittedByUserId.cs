@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Application.Commons.Exceptions;
+using OrgBloom.Domain.Entities.Investment;
 
 namespace OrgBloom.Application.Investors.Commands.UpdateInvestors;
 
-public record UpdateInvestorIsSubmittedCommand : IRequest<int>
+public record UpdateInvestorIsSubmittedByUserIdCommand : IRequest<int>
 {
-    public UpdateInvestorIsSubmittedCommand(UpdateInvestorIsSubmittedCommand command)
+    public UpdateInvestorIsSubmittedByUserIdCommand(UpdateInvestorIsSubmittedByUserIdCommand command)
     {
         UserId = command.UserId;
         IsSubmitted = command.IsSubmitted;
@@ -17,9 +17,9 @@ public record UpdateInvestorIsSubmittedCommand : IRequest<int>
     public bool IsSubmitted { get; set; }
 }
 
-public class UpdateInvestorIsSubmittedCommandHandler(IRepository<Investor> repository, IMapper mapper) : IRequestHandler<UpdateInvestorIsSubmittedCommand, int>
+public class UpdateInvestorIsSubmittedByUserIdCommandHandler(IRepository<Investor> repository, IMapper mapper) : IRequestHandler<UpdateInvestorIsSubmittedByUserIdCommand, int>
 {
-    public async Task<int> Handle(UpdateInvestorIsSubmittedCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(UpdateInvestorIsSubmittedByUserIdCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.UserId == request.UserId)
             ?? throw new NotFoundException($"Investor is not found with UserId: {request.UserId} | Update Investor IsSubmitted");

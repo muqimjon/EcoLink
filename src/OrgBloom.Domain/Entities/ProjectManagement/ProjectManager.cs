@@ -1,8 +1,10 @@
-﻿namespace OrgBloom.Domain.Entities;
+﻿using OrgBloom.Domain.Entities.Users;
 
-public class Representative : Auditable
+namespace OrgBloom.Domain.Entities.ProjectManagement;
+
+public class ProjectManager : Auditable
 {
-    public string? Area { get; set; }
+    public string? ProjectDirection { get; set; }
     public string? Expectation { get; set; }
     public string? Purpose { get; set; }
     public bool IsSubmitted { get; set; }
