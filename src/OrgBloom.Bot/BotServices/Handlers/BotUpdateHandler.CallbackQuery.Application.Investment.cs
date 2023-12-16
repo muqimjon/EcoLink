@@ -1,6 +1,9 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Types;
+using OrgBloom.Domain.Enums;
+using OrgBloom.Application.Users.Queries.GetUsers;
 using OrgBloom.Application.Investors.Commands.UpdateInvestors;
+using OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 
 namespace OrgBloom.Bot.BotServices;
 
@@ -12,16 +15,24 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(callbackQuery.Data);
         ArgumentNullException.ThrowIfNull(callbackQuery.Message);
 
-        var handle = callbackQuery.Data switch
+        var sector = callbackQuery.Data switch
         {
-            "sectorIT" => mediator.Send(new UpdateInvestorSectorCommand { Id = user.Id, Sector = "IT" }, cancellationToken),
-            "sectorManufacturing" => mediator.Send(new UpdateInvestorSectorCommand { Id = user.Id, Sector = "Ishlab chiqarish" }, cancellationToken),
-            "sectorTrade" => mediator.Send(new UpdateInvestorSectorCommand { Id = user.Id, Sector = "Savdo" }, cancellationToken),
-            "sectorConstruction" => mediator.Send(new UpdateInvestorSectorCommand { Id = user.Id, Sector = "Qurilish" }, cancellationToken),
-            "sectorAgriculture" => mediator.Send(new UpdateInvestorSectorCommand { Id = user.Id, Sector = "Qishloq xo'jaligi" }, cancellationToken),
-            "sectorEnergy" => mediator.Send(new UpdateInvestorSectorCommand { Id = user.Id, Sector = "Energetika" }, cancellationToken),
-            "sectorEducation" => mediator.Send(new UpdateInvestorSectorCommand { Id = user.Id, Sector = "Ta'lim" }, cancellationToken),
-            "sectorFranchise" => mediator.Send(new UpdateInvestorSectorCommand { Id = user.Id, Sector = "Franshiza" }, cancellationToken),
+            "sectorIT" => "Axborot texnologiyalari",
+            "sectorManufacturing" => "Ishlab chiqarish",
+            "sectorTrade" => "Savdo",
+            "sectorConstruction" => "Qurilish",
+            "sectorAgriculture" => "Qishloq xo'jaligi",
+            "sectorEnergy" => "Energetika",
+            "sectorEducation" => "Ta'lim",
+            "sectorFranchise" => "Franshiza",
+            _ => string.Empty,
+        };
+
+        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
+        var handle = profession switch
+        {
+            UserProfession.Investor => mediator.Send(new UpdateInvestorSectorCommand { Id = user.Id, Sector = sector }, cancellationToken),
+            UserProfession.ProjectManager => mediator.Send(new UpdateProjectManagerProjectDirectionCommand() { Id = user.Id, ProjectDirection = sector }, cancellationToken),
             _ => HandleUnknownCallbackQueryAsync(botClient, callbackQuery, cancellationToken)
         };
 

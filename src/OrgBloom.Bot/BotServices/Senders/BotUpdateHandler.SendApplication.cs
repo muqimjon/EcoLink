@@ -101,21 +101,18 @@ public partial class BotUpdateHandler
 
     private async Task SendRequestForDateOfBirthAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var exist = await mediator.Send(new GetUserByIdQuery() { Id = user.Id }, cancellationToken);
-        var formattedDate = exist.DateOfBirth.ToString()!.Split().First();
-        var isWithinRange = exist.DateOfBirth >= new DateTimeOffset(1950, 1, 1, 0, 0, 0, TimeSpan.Zero)
-                            && exist.DateOfBirth <= new DateTimeOffset(2005, 12, 31, 23, 59, 59, TimeSpan.Zero);
+        var dateOfBirth = await mediator.Send(new GetDateOfBirthQuery(user.Id), cancellationToken);
+        var formattedDate = dateOfBirth.ToString()!.Split().First();
+        var isWithinRange = dateOfBirth != new DateTimeOffset();
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
             text: localizer["txtAskForDateOfBirth"],
             cancellationToken: cancellationToken,
-            replyMarkup: isWithinRange ?
-                new ReplyKeyboardMarkup(new[]
-                {
-                    new KeyboardButton(formattedDate)
-                }) { ResizeKeyboard = true } :
-                new ReplyKeyboardRemove());
+            replyMarkup: isWithinRange ? 
+            new ReplyKeyboardMarkup(new[]
+            { new KeyboardButton(formattedDate) 
+            }) { ResizeKeyboard = true } : new ReplyKeyboardRemove());
 
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterDateOfBirth), cancellationToken);
     }
@@ -126,7 +123,7 @@ public partial class BotUpdateHandler
         var keyboard = new ReplyKeyboardMarkup(new[]
         {
             new[] { new KeyboardButton(localizer["btnUndergraduateDegree"]), new KeyboardButton(localizer["btnSpecialistDegree"]) },
-            new[] { new KeyboardButton("btnBachelorDegree"), new KeyboardButton(localizer["btnMagistrDegree"]) }
+            new[] { new KeyboardButton(localizer["btnBachelorDegree"]), new KeyboardButton(localizer["btnMagistrDegree"]) }
         })
         { ResizeKeyboard = true };
 
@@ -316,7 +313,7 @@ public partial class BotUpdateHandler
             new[] { InlineKeyboardButton.WithCallbackData(localizer["btnIT"], "sectorIT") },
             new[] { InlineKeyboardButton.WithCallbackData(localizer["btnManufacturing"], "sectorManufacturing") },
             new[] { InlineKeyboardButton.WithCallbackData(localizer["btnTrade"], "sectorTrade") },
-            new[] { InlineKeyboardButton.WithCallbackData(localizer["Construction"], "sectorConstruction") },
+            new[] { InlineKeyboardButton.WithCallbackData(localizer["btnConstruction"], "sectorConstruction") },
             new[] { InlineKeyboardButton.WithCallbackData(localizer["btnAgriculture"], "sectorAgriculture") },
             new[] { InlineKeyboardButton.WithCallbackData(localizer["btnEnergy"], "sectorEnergy") },
             new[] { InlineKeyboardButton.WithCallbackData(localizer["btnEducation"], "sectorEducation") },

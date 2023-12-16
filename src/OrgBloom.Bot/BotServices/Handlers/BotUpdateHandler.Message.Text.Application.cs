@@ -15,8 +15,8 @@ public partial class BotUpdateHandler
     {
         var handle = message.Text switch
         {
-            { } text when text == localizer["btnEntrepreneurship"] => InvestmentQueryAsync(botClient, message, cancellationToken),
-            _ when message.Text == localizer["btnInvestment"] => EntrepreneurshipQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["btnInvestment"] => InvestmentQueryAsync(botClient, message, cancellationToken),
+            _ when message.Text == localizer["btnEntrepreneurship"] => EntrepreneurshipQueryAsync(botClient, message, cancellationToken),
             { } text when text == localizer["btnRepresentation"] => RepresentationQueryAsync(botClient, message, cancellationToken),
             { } text when text == localizer["btnProjectManagement"] => ProjectManagementQueryAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
