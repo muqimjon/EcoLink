@@ -38,19 +38,27 @@ public partial class BotUpdateHandler
     {
         var keyboard = new ReplyKeyboardMarkup(new[]
         {
-            new[] { new KeyboardButton("Ariza topshirish") },
-            new[] { new KeyboardButton("Contact"), new KeyboardButton("Fikr bildirish") },
-            new[] { new KeyboardButton("Sozlamalar"), new KeyboardButton("Information"), }
-        })
-        { ResizeKeyboard = true };
+            new[] { new KeyboardButton(localizer["btnApply"]) },
+            new[] { new KeyboardButton(localizer["btnContact"]), new KeyboardButton(localizer["btnFeedback"]) },
+            new[] { new KeyboardButton(localizer["btnSettings"]), new KeyboardButton(localizer["btnInfo"]), }
+        }) { ResizeKeyboard = true };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Menyuni tanlang:",
+            text: localizer["selectMenu"],
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
 
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectMainMenu), cancellationToken);
+    }
+
+    private async Task SendInfoAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["selectMenu"],
+            cancellationToken: cancellationToken
+        );
     }
 }

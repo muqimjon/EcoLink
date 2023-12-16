@@ -84,4 +84,23 @@ public partial class BotUpdateHandler
 
         await SendRequestForPurposeAsync(botClient, message, cancellationToken);
     }
+
+    private async Task HandlePurposeAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(message);
+        ArgumentNullException.ThrowIfNull(message.Text);
+
+        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
+        var handler = profession switch
+        {
+            UserProfession.Representative => mediator.Send(new UpdateRepresentativePurposeCommand() { Id = user.Id, Purpose = message.Text }, cancellationToken), // TODO: need validation
+            UserProfession.ProjectManager => mediator.Send(new UpdateProjectManagerPurposeCommand() { Id = user.Id, Purpose = message.Text }, cancellationToken), // TODO: need validation
+            _ => throw new NotImplementedException()
+        };
+
+        try { await handler; }
+        catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+
+        await SendForSubmitApplicationAsync(botClient, message, cancellationToken);
+    }
 }

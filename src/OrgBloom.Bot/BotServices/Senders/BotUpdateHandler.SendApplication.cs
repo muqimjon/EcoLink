@@ -14,7 +14,7 @@ namespace OrgBloom.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
-    private async Task SendApplyQuery(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendApplyQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var keyboard = new ReplyKeyboardMarkup(new[]
         {
@@ -91,11 +91,10 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken,
             replyMarkup: string.IsNullOrEmpty(exist.Patronomyc) ?
                 new ReplyKeyboardRemove() :
-                new ReplyKeyboardMarkup(new[]
-                {
-                    new[] { new KeyboardButton(exist.Patronomyc) }
-                })
-                { ResizeKeyboard = true });
+                new ReplyKeyboardMarkup(new[] 
+                { 
+                    new KeyboardButton(exist.Patronomyc) 
+                }) { ResizeKeyboard = true });
 
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterPatronomyc), cancellationToken);
     }
@@ -114,7 +113,7 @@ public partial class BotUpdateHandler
             replyMarkup: isWithinRange ?
                 new ReplyKeyboardMarkup(new[]
                 {
-                    new[] { new KeyboardButton(formattedDate) }
+                    new KeyboardButton(formattedDate)
                 }) { ResizeKeyboard = true } :
                 new ReplyKeyboardRemove());
 
@@ -282,24 +281,27 @@ public partial class BotUpdateHandler
     private async Task SendRequestForPurposeAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var purpose = string.Empty;
+        var professionName = string.Empty;
         var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
-        var handle = profession switch
+        switch(profession)
         {
-            UserProfession.Representative => mediator.Send(new GetRepresentativePurposeByUserIdQuery(user.Id), cancellationToken),
-            UserProfession.ProjectManager => mediator.Send(new GetProjectManagerPurposeByUserIdQuery(user.Id), cancellationToken),
-            UserProfession.Entrepreneur => throw new NotImplementedException(),
-            UserProfession.Investor => throw new NotImplementedException(),
-            _ => Task.FromResult(string.Empty)
+            case UserProfession.Representative:
+                purpose = await mediator.Send(new GetRepresentativePurposeByUserIdQuery(user.Id), cancellationToken);
+                professionName = "Vakil bo'lish";
+                break;
+            case UserProfession.ProjectManager:
+                purpose = await mediator.Send(new GetProjectManagerPurposeByUserIdQuery(user.Id), cancellationToken);
+                professionName = "Loyiha boshqarish";
+                break;
+            default:
+                throw new NotImplementedException();
         };
-
-        try { purpose = await handle; }
-        catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
 
         var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(purpose) }) { ResizeKeyboard = true };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Vakil bo'lishdan maqsadingiz:",
+            text: professionName + "dan maqsadingiz:",
             cancellationToken: cancellationToken,
             replyMarkup: string.IsNullOrEmpty(purpose) ? new ReplyKeyboardRemove() : keyboard
         );

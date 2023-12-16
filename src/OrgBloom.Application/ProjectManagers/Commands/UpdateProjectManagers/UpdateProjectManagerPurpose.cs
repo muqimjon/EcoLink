@@ -7,7 +7,7 @@ namespace OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 
 public record UpdateProjectManagerPurposeCommand : IRequest<int>
 {
-    public UpdateProjectManagerPurposeCommand(UpdateProjectManagerCommand command)
+    public UpdateProjectManagerPurposeCommand(UpdateProjectManagerPurposeCommand command)
     {
         Id = command.Id;
         Purpose = command.Purpose;
