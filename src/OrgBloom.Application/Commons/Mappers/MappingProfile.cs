@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Users.DTOs;
 using OrgBloom.Application.Investors.DTOs;
 using OrgBloom.Application.Entrepreneurs.DTOs;
@@ -15,6 +14,11 @@ using OrgBloom.Application.ProjectManagers.Commands.CreateProjectManagers;
 using OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 using OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
 using OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
+using OrgBloom.Domain.Entities.Representation;
+using OrgBloom.Domain.Entities.Entrepreneurship;
+using OrgBloom.Domain.Entities.ProjectManagement;
+using OrgBloom.Domain.Entities.Investment;
+using OrgBloom.Domain.Entities.Users;
 
 namespace OrgBloom.Application.Commons.Mappers;
 

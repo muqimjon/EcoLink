@@ -117,94 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnCancel" xml:space="preserve">
-    <value>E'tiborsiz qoldrish</value>
-    <comment>E'tiborsiz qoldirish tugmasi uchun</comment>
-  </data>
-  <data name="btnConstruction" xml:space="preserve">
-    <value>🏗 Qurilish</value>
-    <comment>Soha tanlash oynasi tugmasi. Qurilish yo'nalishi uchun</comment>
-  </data>
-  <data name="btnContact" xml:space="preserve">
-    <value>☎️ A'loqa</value>
-    <comment>Asosiy menyu tugmasi. Kontakt ma'lumotlari yuboriladi</comment>
-  </data>
-  <data name="btnEducation" xml:space="preserve">
-    <value>🎓 Ta'lim</value>
-    <comment>Soha tanlash oynasi tugmasi. Ta'lim yo'nalishi uchun</comment>
-  </data>
-  <data name="btnEnergy" xml:space="preserve">
-    <value>⚡ Energetika</value>
-    <comment>Soha tanlash oynasi tugmasi. Energetika yo'nalishi uchun</comment>
-  </data>
-  <data name="btnEntrepreneurship" xml:space="preserve">
-    <value>📈 Investitsiya jalb qilish</value>
-    <comment>Ariza topshirish tugmasi. Tadbirkorlar uchun</comment>
-  </data>
-  <data name="btnFeedback" xml:space="preserve">
-    <value>✍️ Fikr bildirish</value>
-    <comment>Asosiy menyu tugmasi. Fikr mulohazalar yoziladi</comment>
-  </data>
-  <data name="btnFranchise" xml:space="preserve">
-    <value>🔄 Franshiza</value>
-    <comment>Soha tanlash oynasi tugmasi. Franshiza yo'nalishi uchun</comment>
-  </data>
-  <data name="btnInfo" xml:space="preserve">
-    <value>ℹ️ Ma'lumot</value>
-    <comment>Asosiy menyu tugmasi. Tashkilot haqida Ma'lumot yuboriladi.</comment>
-  </data>
-  <data name="btnInvestment" xml:space="preserve">
-    <value>💼 Investorlik qilish</value>
-    <comment>Ariza topshirish tugmasi. Investorlar uchun</comment>
-  </data>
-  <data name="btnIT" xml:space="preserve">
-    <value>💻 Axborot texnologiyalari</value>
-    <comment>Soha tanlash oynasi tugmasi. Axborot texnologiyalari yo'nalishi uchun</comment>
-  </data>
-  <data name="btnMagistrDegree" xml:space="preserve">
-    <value>Magistr</value>
-    <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. Magistr draja uchun</comment>
-  </data>
-  <data name="btnManufacturing" xml:space="preserve">
-    <value>🏭 Ishlab chiqarish</value>
-    <comment>Soha tanlash oynasi tugmasi. Ishlab chiqarish yo'nalishi uchun</comment>
-  </data>
-  <data name="btnProjectManagement" xml:space="preserve">
-    <value>🚀 Loyiha boshqarish</value>
-    <comment>Ariza topshirish tugmasi. Loyiha boshqaruvchisi uchun</comment>
-  </data>
-  <data name="btnRepresentation" xml:space="preserve">
-    <value>👔 Vakil bo'lish</value>
-    <comment>Ariza topshirish tugmasi. Vakillik uchun</comment>
-  </data>
-  <data name="btnResend" xml:space="preserve">
-    <value>Qayta yuborish 🔄</value>
-    <comment>Tasdiqlangan murojaat oyna tugmasi. Arizani qayta yuborish uchun</comment>
-  </data>
-  <data name="btnSendContact" xml:space="preserve">
-    <value>☎️ Telefon raqamini yuborish</value>
-    <comment>Foydalanuvchidan telefon raqamini so'rash oyna tugmasi. tugma yordamida osonlik bilan telefon raqamini yuborish mumkin.</comment>
-  </data>
-  <data name="btnSettings" xml:space="preserve">
-    <value>⚙️ Sozlamalar</value>
-    <comment>Asosiy menyu tugmasi. Sozlamalar oynasi uchun</comment>
-  </data>
-  <data name="btnSpecialistDegree" xml:space="preserve">
-    <value>O'rta maxsus</value>
-    <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. O'rta maxsus draja uchun</comment>
-  </data>
-  <data name="btnSubmit" xml:space="preserve">
-    <value>Tasdiqlash</value>
-    <comment>Tasdiqlash tugmasi uchun</comment>
-  </data>
-  <data name="btnTrade" xml:space="preserve">
-    <value>🛍️ Savdo</value>
-    <comment>Soha tanlash oynasi tugmasi. Savdo yo'nalishi uchun</comment>
-  </data>
-  <data name="btnUndergraduateDegree" xml:space="preserve">
-    <value>O'rta</value>
-    <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. O'rta draja uchun</comment>
-  </data>
   <data name="greeting" xml:space="preserve">
     <value>Assalomu alaykum {0} {1}!
 O'zingiz uchun qulay tilni tanlang:</value>
@@ -213,6 +125,46 @@ O'zingiz uchun qulay tilni tanlang:</value>
   <data name="ibtnAgriculture" xml:space="preserve">
     <value>🌾 Qishloq xo'jaligi</value>
     <comment>Soha tanlash oynasi tugmasi. Qishloq xo'jaligi yo'nalishi uchun</comment>
+  </data>
+  <data name="ibtnCancel" xml:space="preserve">
+    <value>E'tiborsiz qoldrish</value>
+    <comment>E'tiborsiz qoldirish tugmasi uchun</comment>
+  </data>
+  <data name="ibtnConstruction" xml:space="preserve">
+    <value>🏗 Qurilish</value>
+    <comment>Soha tanlash oynasi tugmasi. Qurilish yo'nalishi uchun</comment>
+  </data>
+  <data name="ibtnEducation" xml:space="preserve">
+    <value>🎓 Ta'lim</value>
+    <comment>Soha tanlash oynasi tugmasi. Ta'lim yo'nalishi uchun</comment>
+  </data>
+  <data name="ibtnEnergy" xml:space="preserve">
+    <value>⚡ Energetika</value>
+    <comment>Soha tanlash oynasi tugmasi. Energetika yo'nalishi uchun</comment>
+  </data>
+  <data name="ibtnFranchise" xml:space="preserve">
+    <value>🔄 Franshiza</value>
+    <comment>Soha tanlash oynasi tugmasi. Franshiza yo'nalishi uchun</comment>
+  </data>
+  <data name="ibtnIT" xml:space="preserve">
+    <value>💻 Axborot texnologiyalari</value>
+    <comment>Soha tanlash oynasi tugmasi. Axborot texnologiyalari yo'nalishi uchun</comment>
+  </data>
+  <data name="ibtnManufacturing" xml:space="preserve">
+    <value>🏭 Ishlab chiqarish</value>
+    <comment>Soha tanlash oynasi tugmasi. Ishlab chiqarish yo'nalishi uchun</comment>
+  </data>
+  <data name="ibtnResend" xml:space="preserve">
+    <value>Qayta yuborish 🔄</value>
+    <comment>Tasdiqlangan murojaat oyna tugmasi. Arizani qayta yuborish uchun</comment>
+  </data>
+  <data name="ibtnSubmit" xml:space="preserve">
+    <value>Tasdiqlash</value>
+    <comment>Tasdiqlash tugmasi uchun</comment>
+  </data>
+  <data name="ibtnTrade" xml:space="preserve">
+    <value>🛍️ Savdo</value>
+    <comment>Soha tanlash oynasi tugmasi. Savdo yo'nalishi uchun</comment>
   </data>
   <data name="rbtnApply" xml:space="preserve">
     <value>📋 Ariza topshirish</value>
@@ -226,9 +178,57 @@ O'zingiz uchun qulay tilni tanlang:</value>
     <value>Ortga ⬅️</value>
     <comment>Ortga qaytish tugmasi</comment>
   </data>
+  <data name="rbtnContact" xml:space="preserve">
+    <value>☎️ A'loqa</value>
+    <comment>Asosiy menyu tugmasi. Kontakt ma'lumotlari yuboriladi</comment>
+  </data>
   <data name="rbtnEditPersonalInfo" xml:space="preserve">
     <value>Shaxsiy ma'lumotlarni o'zgartirish</value>
     <comment>Sozlamalar oynasidan shaxsiy ma'lumotlarni o'zgartirish</comment>
+  </data>
+  <data name="rbtnEntrepreneurship" xml:space="preserve">
+    <value>📈 Investitsiya jalb qilish</value>
+    <comment>Ariza topshirish tugmasi. Tadbirkorlar uchun</comment>
+  </data>
+  <data name="rbtnFeedback" xml:space="preserve">
+    <value>✍️ Fikr bildirish</value>
+    <comment>Asosiy menyu tugmasi. Fikr mulohazalar yoziladi</comment>
+  </data>
+  <data name="rbtnInfo" xml:space="preserve">
+    <value>ℹ️ Ma'lumot</value>
+    <comment>Asosiy menyu tugmasi. Tashkilot haqida Ma'lumot yuboriladi.</comment>
+  </data>
+  <data name="rbtnInvestment" xml:space="preserve">
+    <value>💼 Investorlik qilish</value>
+    <comment>Ariza topshirish tugmasi. Investorlar uchun</comment>
+  </data>
+  <data name="rbtnMagistrDegree" xml:space="preserve">
+    <value>Magistr</value>
+    <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. Magistr draja uchun</comment>
+  </data>
+  <data name="rbtnProjectManagement" xml:space="preserve">
+    <value>🚀 Loyiha boshqarish</value>
+    <comment>Ariza topshirish tugmasi. Loyiha boshqaruvchisi uchun</comment>
+  </data>
+  <data name="rbtnRepresentation" xml:space="preserve">
+    <value>👔 Vakil bo'lish</value>
+    <comment>Ariza topshirish tugmasi. Vakillik uchun</comment>
+  </data>
+  <data name="rbtnSendContact" xml:space="preserve">
+    <value>☎️ Telefon raqamini yuborish</value>
+    <comment>Foydalanuvchidan telefon raqamini so'rash oyna tugmasi. tugma yordamida osonlik bilan telefon raqamini yuborish mumkin.</comment>
+  </data>
+  <data name="rbtnSettings" xml:space="preserve">
+    <value>⚙️ Sozlamalar</value>
+    <comment>Asosiy menyu tugmasi. Sozlamalar oynasi uchun</comment>
+  </data>
+  <data name="rbtnSpecialistDegree" xml:space="preserve">
+    <value>O'rta maxsus</value>
+    <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. O'rta maxsus draja uchun</comment>
+  </data>
+  <data name="rbtnUndergraduateDegree" xml:space="preserve">
+    <value>O'rta</value>
+    <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. O'rta draja uchun</comment>
   </data>
   <data name="txtAskForAboutProject" xml:space="preserve">
     <value>Loyiha haqida qisqa va tushunarli yozing:</value>

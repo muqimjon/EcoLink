@@ -17,9 +17,9 @@ public partial class BotUpdateHandler
         if (isUserNew)
         {
             var keyboard = new InlineKeyboardMarkup(new[] {
-                InlineKeyboardButton.WithCallbackData("🇺🇿", "buttonLanguageUz"),
-                InlineKeyboardButton.WithCallbackData("🇬🇧", "buttonLanguageEn"),
-                InlineKeyboardButton.WithCallbackData("🇷🇺", "buttonLanguageRu")
+                new[] { InlineKeyboardButton.WithCallbackData("🇺🇿 uzbekcha 🇺🇿", "ibtnUz") },
+                new[] { InlineKeyboardButton.WithCallbackData("🇬🇧 english 🇬🇧", "ibtnEn") },
+                new[] { InlineKeyboardButton.WithCallbackData("🇷🇺 ruscha 🇷🇺", "ibtnRu") }
             });
 
             await botClient.SendTextMessageAsync(
@@ -37,9 +37,9 @@ public partial class BotUpdateHandler
     {
         var keyboard = new ReplyKeyboardMarkup(new[]
         {
-            new[] { new KeyboardButton(localizer["btnApply"]) },
-            new[] { new KeyboardButton(localizer["btnContact"]), new KeyboardButton(localizer["btnFeedback"]) },
-            new[] { new KeyboardButton(localizer["btnSettings"]), new KeyboardButton(localizer["btnInfo"]), }
+            new[] { new KeyboardButton(localizer["rbtnApply"]) },
+            new[] { new KeyboardButton(localizer["rbtnContact"]), new KeyboardButton(localizer["rbtnFeedback"]) },
+            new[] { new KeyboardButton(localizer["rbtnSettings"]), new KeyboardButton(localizer["rbtnInfo"]), }
         }) { ResizeKeyboard = true };
 
         await botClient.SendTextMessageAsync(

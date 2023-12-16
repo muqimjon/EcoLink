@@ -13,7 +13,7 @@ namespace OrgBloom.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -41,7 +41,7 @@ namespace OrgBloom.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,9 +64,9 @@ namespace OrgBloom.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Entrepreneurs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Entrepreneurs_User_UserId",
+                        name: "FK_Entrepreneurs_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -89,9 +89,9 @@ namespace OrgBloom.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Investors", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Investors_User_UserId",
+                        name: "FK_Investors_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -115,9 +115,9 @@ namespace OrgBloom.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_ProjectManagers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProjectManagers_User_UserId",
+                        name: "FK_ProjectManagers_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -141,9 +141,9 @@ namespace OrgBloom.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Representatives", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Representatives_User_UserId",
+                        name: "FK_Representatives_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -185,7 +185,7 @@ namespace OrgBloom.Infrastructure.Migrations
                 name: "Representatives");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Users");
         }
     }
 }

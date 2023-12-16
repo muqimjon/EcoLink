@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using OrgBloom.Domain.Enums;
-using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Domain.Entities.Users;
 
 namespace OrgBloom.Application.Users.Commands.CreateUsers;
 
@@ -9,23 +9,23 @@ public record class CreateUserCommand : IRequest<int>
 {
     public CreateUserCommand(CreateUserCommand command)
     {
+        State = command.State;
         Phone = command.Phone;
         Email = command.Email;
         IsBot = command.IsBot;
         Degree = command.Degree;
         ChatId = command.ChatId;
+        Address = command.Address;
         Username = command.Username;
         LastName = command.LastName;
         FirstName = command.FirstName;
+        Languages = command.Languages;
         TelegramId = command.TelegramId;
         Patronomyc = command.Patronomyc;
         Profession = command.Profession;
+        Experience = command.Experience;
         DateOfBirth = command.DateOfBirth;
         LanguageCode = command.LanguageCode;
-        State = command.State;
-        Address = command.Address;
-        Languages = command.Languages;
-        Experience = command.Experience;
     }
 
     public string FirstName { get; set; } = string.Empty;

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Domain.Enums;
 using OrgBloom.Application.Commons.Exceptions;
+using OrgBloom.Domain.Entities.Users;
 
 namespace OrgBloom.Application.Users.Commands.UpdateUsers;
 

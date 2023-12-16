@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Application.Commons.Exceptions;
 using OrgBloom.Application.ProjectManagers.DTOs;
+using OrgBloom.Domain.Entities.ProjectManagement;
 
 namespace OrgBloom.Application.ProjectManagers.Commands.CreateProjectManagers;
 

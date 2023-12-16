@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using OrgBloom.Domain.Entities;
 using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Domain.Entities.Investment;
 
 namespace OrgBloom.Application.Investors.Commands.CreateInvestors;
 

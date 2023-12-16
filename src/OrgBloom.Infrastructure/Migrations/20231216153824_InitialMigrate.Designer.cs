@@ -12,7 +12,7 @@ using OrgBloom.Infrastructure.Contexts;
 namespace OrgBloom.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231216040830_InitialMigrate")]
+    [Migration("20231216153824_InitialMigrate")]
     partial class InitialMigrate
     {
         /// <inheritdoc />
@@ -251,7 +251,7 @@ namespace OrgBloom.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("OrgBloom.Domain.Entities.Entrepreneur", b =>

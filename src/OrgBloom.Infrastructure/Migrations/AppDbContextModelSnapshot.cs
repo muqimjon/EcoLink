@@ -248,7 +248,7 @@ namespace OrgBloom.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("OrgBloom.Domain.Entities.Entrepreneur", b =>
