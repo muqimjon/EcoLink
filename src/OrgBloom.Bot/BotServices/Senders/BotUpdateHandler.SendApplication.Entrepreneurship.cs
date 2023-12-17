@@ -14,8 +14,8 @@ public partial class BotUpdateHandler
         var project = await mediator.Send(new GetEntrepreneurProjectByUserIdQuery(user.Id), cancellationToken);
         var replyKeyboard = string.IsNullOrEmpty(project) switch
         {
-            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnBack"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(project)], [new(localizer["rbtnBack"])] }) { ResizeKeyboard = true },
+            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(project)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
         };
 
         await botClient.SendTextMessageAsync(
@@ -33,8 +33,8 @@ public partial class BotUpdateHandler
         var helpType = await mediator.Send(new GetEntrepreneurHelpTypeByUserIdQuery(user.Id), cancellationToken);
         var replyKeyboard = string.IsNullOrEmpty(helpType) switch
         {
-            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnBack"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(helpType)], [new(localizer["rbtnBack"])] }) { ResizeKeyboard = true },
+            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(helpType)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
         };
 
         await botClient.SendTextMessageAsync(
@@ -52,8 +52,8 @@ public partial class BotUpdateHandler
         var requiredFunding = await mediator.Send(new GetEntrepreneurRequiredFundingByUserIdQuery(user.Id), cancellationToken);
         var replyKeyboard = string.IsNullOrEmpty(requiredFunding) switch
         {
-            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnBack"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(requiredFunding)], [new(localizer["rbtnBack"])] }) { ResizeKeyboard = true },
+            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(requiredFunding)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
         };
 
         await botClient.SendTextMessageAsync(
@@ -71,8 +71,8 @@ public partial class BotUpdateHandler
         var assetsInvested = await mediator.Send(new GetEntrepreneurAssetsInvestedByUserIdQuery(user.Id), cancellationToken);
         var replyKeyboard = string.IsNullOrEmpty(assetsInvested) switch
         {
-            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnBack"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(assetsInvested)], [new(localizer["rbtnBack"])] }) { ResizeKeyboard = true },
+            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(assetsInvested)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
         };
 
         await botClient.SendTextMessageAsync(

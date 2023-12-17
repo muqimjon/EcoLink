@@ -14,8 +14,8 @@ public partial class BotUpdateHandler
         var area = await mediator.Send(new GetRepresentativeAreaByUserIdQuery(user.Id), cancellationToken);
         var replyKeyboard = string.IsNullOrEmpty(area) switch
         {
-            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnBack"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(area)], [new(localizer["rbtnBack"])] }) { ResizeKeyboard = true },
+            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(area)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
         };
 
         await botClient.SendTextMessageAsync(

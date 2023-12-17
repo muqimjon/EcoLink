@@ -37,16 +37,16 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(callbackQuery.Data);
         ArgumentNullException.ThrowIfNull(callbackQuery.Message);
 
-        var handle = callbackQuery.Data switch
+        await mediator.Send(new UpdateLanguageCodeCommand
         {
-            "ibtnUz" => mediator.Send(new UpdateLanguageCodeCommand { Id = user.Id, LanguageCode = "uz" }, cancellationToken),
-            "ibtnEn" => mediator.Send(new UpdateLanguageCodeCommand { Id = user.Id, LanguageCode = "en" }, cancellationToken),
-            "ibtnRu" => mediator.Send(new UpdateLanguageCodeCommand { Id = user.Id, LanguageCode = "ru" }, cancellationToken),
-            _ => HandleUnknownCallbackQueryAsync(botClient, callbackQuery, cancellationToken)
-        };
-
-        try { await handle; }
-        catch (Exception ex) { logger.LogError(ex, "Error handling callback query: {callbackQuery.Data}", callbackQuery.Data); }
+            Id = user.Id,
+            LanguageCode = callbackQuery.Data switch
+            {
+                "ibtnEn" => "en",
+                "ibtnRu" => "ru",
+                _ => "uz",
+            }
+        }, cancellationToken);
 
 
         await SendMainMenuAsync(botClient, callbackQuery.Message, cancellationToken);

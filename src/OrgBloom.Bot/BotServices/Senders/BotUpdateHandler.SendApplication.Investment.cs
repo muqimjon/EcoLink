@@ -11,11 +11,11 @@ public partial class BotUpdateHandler
 {
     private async Task SendRequestForInvestmentAmountForInvestmentAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var investmrntAmount = await mediator.Send(new GetInvestmentAmountByUserIdQuery(user.Id));
+        var investmrntAmount = await mediator.Send(new GetInvestmentAmountByUserIdQuery(user.Id), cancellationToken);
         var replyKeyboard = string.IsNullOrEmpty(investmrntAmount) switch
         {
-            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnBack"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(investmrntAmount)], [new(localizer["rbtnBack"])] }) { ResizeKeyboard = true },
+            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(investmrntAmount)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
         };
 
         await botClient.SendTextMessageAsync(

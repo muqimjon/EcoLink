@@ -27,6 +27,10 @@ public class UpdateStateCommandHandler(IRepository<User> repository, IMapper map
             ?? throw new NotFoundException($"This User is not found by id: {request.Id} | state update");
 
         mapper.Map(request, entity);
+        
+        if(request.State == State.WaitingForSelectProfession)
+            entity.Profession = UserProfession.None;
+
         entity.UpdatedAt = TimeHelper.GetDateTime();
         repository.Update(entity);
         return await repository.SaveAsync();

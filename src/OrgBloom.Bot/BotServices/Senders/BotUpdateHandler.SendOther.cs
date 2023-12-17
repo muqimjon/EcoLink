@@ -81,29 +81,58 @@ public partial class BotUpdateHandler
 
     private async Task SendFeedbackQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
+        var replyKeyboard = new ReplyKeyboardMarkup(new KeyboardButton[][]
+        {
+            [new(localizer["rbtnFeedbackForOrganization"]), new(localizer["rbtnFeedbackForTelegramBot"])],
+            [new(localizer["rbtnBack"])]
+        }) { ResizeKeyboard = true };
+
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Feedback so'raladigan menyu chiqadi //TO DO write request for feedback",
-            cancellationToken: cancellationToken
-        );
+            text: localizer["txtAskForFeedback"],
+            replyMarkup: replyKeyboard,
+            cancellationToken: cancellationToken);
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectForFeedback), cancellationToken);
     }
 
     private async Task SendSelectLanguageQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
+        var replyKeyboard = new ReplyKeyboardMarkup(new KeyboardButton[][]
+        {
+            [new(localizer["rbtnUzbek"])],
+            [new(localizer["rbtnRussian"])],
+            [new(localizer["rbtnEnglish"])],
+            [new(localizer["rbtnBack"])]
+        })
+        { ResizeKeyboard = true };
+
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Tilni o'zgartirish uchun menyu chiqadi //TO DO write request for language",
-            cancellationToken: cancellationToken
-        );
+            text: localizer["txtAskForSelectLanguage"],
+            replyMarkup: replyKeyboard,
+            cancellationToken: cancellationToken);
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectLanguage), cancellationToken);
     }
 
     private async Task SendEditPersonalInfoQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
+        var replyKeyboard = new ReplyKeyboardMarkup(new KeyboardButton[][]
+        {
+            [new(localizer["rbtnPhoneNumber"]), new(localizer["rbtnEmail"])],
+            [new(localizer["rbtnBack"])]
+        })
+        { ResizeKeyboard = true };
+
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Shaxsiy ma'lumotlarni tahrirlash uchun uchun menyu chiqadi //TO DO write request for edit personal info",
+            text: localizer["txtEditPersonalInfo"],
+            replyMarkup: replyKeyboard,
             cancellationToken: cancellationToken
         );
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectPersonalInfo), cancellationToken);
     }
 
     private async Task SendContactAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -113,5 +142,15 @@ public partial class BotUpdateHandler
             text: localizer["txtContactInfo"],
             cancellationToken: cancellationToken
         );
+    }
+
+    private Task SendRequestFeedbackForTelegramBotQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    private Task SendRequestFeedbackForOrganizationQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
     }
 }

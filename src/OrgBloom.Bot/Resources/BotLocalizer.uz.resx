@@ -190,6 +190,14 @@ O'zingiz uchun qulay tilni tanlang:</value>
     <value>Shaxsiy ma'lumotlarni o'zgartirish</value>
     <comment>Sozlamalar oynasidan shaxsiy ma'lumotlarni o'zgartirish</comment>
   </data>
+  <data name="rbtnEmail" xml:space="preserve">
+    <value>Eloktron pochta manzili</value>
+    <comment>Sozlamalar bo'limida shaxsiy ma'lumotlarni o'zgartirish oyna tugmasi. Elektron pochta manzili tanlash uchun</comment>
+  </data>
+  <data name="rbtnEnglish" xml:space="preserve">
+    <value>ingliz tili uchun</value>
+    <comment>Sozlamalar bo'limidagi bot tiilini o'zgartirish oyna tugmasi. Bot tilini ingliz tiliga o'zgartirish uchun</comment>
+  </data>
   <data name="rbtnEntrepreneurship" xml:space="preserve">
     <value>📈 Investitsiya jalb qilish</value>
     <comment>Ariza topshirish tugmasi. Tadbirkorlar uchun</comment>
@@ -197,6 +205,14 @@ O'zingiz uchun qulay tilni tanlang:</value>
   <data name="rbtnFeedback" xml:space="preserve">
     <value>✍️ Fikr bildirish</value>
     <comment>Asosiy menyu tugmasi. Fikr mulohazalar yoziladi</comment>
+  </data>
+  <data name="rbtnFeedbackForOrganization" xml:space="preserve">
+    <value>Assambleya uchun</value>
+    <comment>Fikr bildirish oyna tugmasi. Tashkilot uchun fikr bildirish</comment>
+  </data>
+  <data name="rbtnFeedbackForTelegramBot" xml:space="preserve">
+    <value>Telegram bot uchun</value>
+    <comment>Fikr bildirish oyna tugmasi. Telegram bot uchun fikr bildirish</comment>
   </data>
   <data name="rbtnInfo" xml:space="preserve">
     <value>ℹ️ Ma'lumot</value>
@@ -210,6 +226,10 @@ O'zingiz uchun qulay tilni tanlang:</value>
     <value>Magistr</value>
     <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. Magistr draja uchun</comment>
   </data>
+  <data name="rbtnPhoneNumber" xml:space="preserve">
+    <value>Telefon raqami</value>
+    <comment>Sozlamalar bo'limida shaxsiy ma'lumotlarni o'zgartirish oyna tugmasi. Telefon raqamini tanlash uchun</comment>
+  </data>
   <data name="rbtnProjectManagement" xml:space="preserve">
     <value>🚀 Loyiha boshqarish</value>
     <comment>Ariza topshirish tugmasi. Loyiha boshqaruvchisi uchun</comment>
@@ -221,6 +241,10 @@ O'zingiz uchun qulay tilni tanlang:</value>
   <data name="rbtnResend" xml:space="preserve">
     <value>Qayta yuborish 🔄</value>
     <comment>Tasdiqlangan murojaat oyna tugmasi. Arizani qayta yuborish uchun</comment>
+  </data>
+  <data name="rbtnRussian" xml:space="preserve">
+    <value>rus tili uchun</value>
+    <comment>Sozlamalar bo'limidagi bot tiilini o'zgartirish oyna tugmasi. Bot tilini rus tiliga o'zgartirish uchun</comment>
   </data>
   <data name="rbtnSendContact" xml:space="preserve">
     <value>☎️ Telefon raqamini yuborish</value>
@@ -237,6 +261,10 @@ O'zingiz uchun qulay tilni tanlang:</value>
   <data name="rbtnUndergraduateDegree" xml:space="preserve">
     <value>O'rta</value>
     <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. O'rta draja uchun</comment>
+  </data>
+  <data name="rbtnUzbek" xml:space="preserve">
+    <value>O'zbekcha</value>
+    <comment>Sozlamalar bo'limidagi bot tiilini o'zgartirish oyna tugmasi. Bot tilini o'zbek tiliga o'zgartirish uchun</comment>
   </data>
   <data name="txtAskForAboutProject" xml:space="preserve">
     <value>Loyiha haqida qisqa va tushunarli yozing:</value>
@@ -277,6 +305,10 @@ O'zingiz uchun qulay tilni tanlang:</value>
   <data name="txtAskForExperience" xml:space="preserve">
     <value>Qaysi sohada necha yillik tajribagiz bor:</value>
     <comment>Foydalanuvchidan ish tajribasini so'rash</comment>
+  </data>
+  <data name="txtAskForFeedback" xml:space="preserve">
+    <value>Kim uchun fikr bildirmoqchisiz?</value>
+    <comment>Fikr bildirish oyna xabari. foydalanuvchidan nima maqsadda fikr bildirayotgani so'raladi.</comment>
   </data>
   <data name="txtAskForFirstName" xml:space="preserve">
     <value>Ismingizni kiriting:</value>
@@ -323,6 +355,10 @@ Dollardayozing:</value>
     <value>Loyihaga keralkli investitysa summasi (aniq yoki tahminiy):</value>
     <comment>Foydalanuvchidan loyha amalga oshishi uchunkerakli summa kerakligi so'raladi</comment>
   </data>
+  <data name="txtAskForSelectLanguage" xml:space="preserve">
+    <value>Kerakli  tilni tanlang:</value>
+    <comment>Sozlamalar bo'limidagi bot tilini o'zgartirish uchun so'rov xabari</comment>
+  </data>
   <data name="txtAskForSkillLanguages" xml:space="preserve">
     <value>Qaysi tillarni bilasiz:</value>
     <comment>Foydalanuvchidan qaysi xorijiy tillarni bililshini so'rash</comment>
@@ -330,6 +366,10 @@ Dollardayozing:</value>
   <data name="txtContactInfo" xml:space="preserve">
     <value>Contact ma'lumotlarini yuborish chiqadi //TO DO write request for edit personal info</value>
     <comment>Foydalanuvchiga tashkilot bilan bog'lanishi mumkin bo'lgan a'loqa ma'lumotlari yuboriladi</comment>
+  </data>
+  <data name="txtEditPersonalInfo" xml:space="preserve">
+    <value>Shaxsiy ma'lumotlarni o'zzgartirish uchun tanlang:</value>
+    <comment>Sozlamalar bo'limi orqali shaxsiy ma'lumotlarni o'zgartirish uchun so'rov xabari</comment>
   </data>
   <data name="txtMainMenu" xml:space="preserve">
     <value>Menyuni tanlang:</value>
