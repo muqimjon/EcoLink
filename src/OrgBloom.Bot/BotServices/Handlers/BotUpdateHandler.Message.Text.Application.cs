@@ -6,7 +6,6 @@ using OrgBloom.Application.Investors.Commands.UpdateInvestors;
 using OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
 using OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 using OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
-using OrgBloom.Application.Users.Commands.UpdateUsers;
 
 namespace OrgBloom.Bot.BotServices;
 
@@ -108,7 +107,10 @@ public partial class BotUpdateHandler
                     _ => throw new NotImplementedException()
                 };
 
-                await SendForSubmitApplicationAsync(botClient, message, cancellationToken);
+                try { await handler; }
+                catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+
+                handler = SendForSubmitApplicationAsync(botClient, message, cancellationToken);
                 break;
         }
 

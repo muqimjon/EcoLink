@@ -38,7 +38,7 @@ public partial class BotUpdateHandler
 
     private async Task SendAlreadyExistApplicationAsync(string text, ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var keyboard = new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(localizer["rbtnResend"])], [new(localizer["rbtnBack"])] }) { ResizeKeyboard = true };
+        var keyboard = new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(localizer["rbtnResend"])], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
@@ -89,8 +89,8 @@ public partial class BotUpdateHandler
     {
         var keyboard = string.IsNullOrEmpty(user.FirstName) switch
         {
-            true => new ReplyKeyboardMarkup(new[] { new KeyboardButton(localizer["rbtnBack"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.FirstName)], [new(localizer["rbtnBack"])] }) { ResizeKeyboard = true },
+            true => new ReplyKeyboardMarkup(new[] { new KeyboardButton(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.FirstName)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
         };
 
         await botClient.SendTextMessageAsync(
@@ -107,8 +107,8 @@ public partial class BotUpdateHandler
     {
         var keyboard = string.IsNullOrEmpty(user.LastName) switch
         {
-            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnBack"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.LastName)], [new(localizer["rbtnBack"])] }) { ResizeKeyboard = true },
+            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.LastName)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
         };
 
         await botClient.SendTextMessageAsync(
@@ -126,8 +126,8 @@ public partial class BotUpdateHandler
         var exist = await mediator.Send(new GetUserByIdQuery() { Id = user.Id }, cancellationToken);
         var keyboard = string.IsNullOrEmpty(exist.Patronomyc) switch
         {
-            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnBack"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(exist.Patronomyc)], [new(localizer["rbtnBack"])] }) { ResizeKeyboard = true },
+            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(exist.Patronomyc)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
         };
 
         await botClient.SendTextMessageAsync(
@@ -146,8 +146,8 @@ public partial class BotUpdateHandler
         
         var replyKeyboard = (dateOfBirth == DateTimeOffset.MinValue) switch
         {
-            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnBack"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(formattedDate)], [new(localizer["rbtnBack"])] }) { ResizeKeyboard = true },
+            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(formattedDate)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
         };
 
         await botClient.SendTextMessageAsync(
@@ -164,7 +164,8 @@ public partial class BotUpdateHandler
         var keyboard = new ReplyKeyboardMarkup(new KeyboardButton[][]
         {
             [new(localizer["rbtnUndergraduateDegree"]), new (localizer["rbtnSpecialistDegree"])],
-            [new (localizer["rbtnBachelorDegree"]), new (localizer["rbtnMagistrDegree"])]
+            [new (localizer["rbtnBachelorDegree"]), new (localizer["rbtnMagistrDegree"])],
+            [new (localizer["rbtnCancel"])],
         })
         { ResizeKeyboard = true };
 
@@ -183,8 +184,8 @@ public partial class BotUpdateHandler
         var languages = await mediator.Send(new GetLanguagesQuery(user.Id), cancellationToken);
         var replyKeyboard = string.IsNullOrEmpty(languages) switch
         {
-            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnBack"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(languages)], [new(localizer["rbtnBack"])] }) { ResizeKeyboard = true },
+            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(languages)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
         };
 
         await botClient.SendTextMessageAsync(
@@ -202,7 +203,7 @@ public partial class BotUpdateHandler
         var replyKeyboard = new ReplyKeyboardMarkup( new KeyboardButton[][] 
         { 
             [new(localizer["rbtnSendContact"]) { RequestContact = true }], 
-            [new(localizer["rbtnBack"])] 
+            [new(localizer["rbtnCancel"])] 
         }) { ResizeKeyboard = true };
 
         await botClient.SendTextMessageAsync(
@@ -220,8 +221,8 @@ public partial class BotUpdateHandler
         var email = await mediator.Send(new GetEmailQuery(user.Id), cancellationToken);
         var replyKeyboard = string.IsNullOrEmpty(email) switch
         {
-            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnBack"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(email)], [new(localizer["rbtnBack"])] }) { ResizeKeyboard = true },
+            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(email)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
         };
 
         await botClient.SendTextMessageAsync(
@@ -239,8 +240,8 @@ public partial class BotUpdateHandler
         var experience = await mediator.Send(new GetExperienceQuery(user.Id), cancellationToken);
         var replyKeyboard = string.IsNullOrEmpty(experience) switch
         {
-            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnBack"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(experience)], [new(localizer["rbtnBack"])] }) { ResizeKeyboard = true },
+            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(experience)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
         };
 
         await botClient.SendTextMessageAsync(
@@ -258,8 +259,8 @@ public partial class BotUpdateHandler
         var address = await mediator.Send(new GetAddressQuery(user.Id), cancellationToken);
         var replyKeyboard = string.IsNullOrEmpty(address) switch
         {
-            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnBack"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(address)], [new(localizer["rbtnBack"])] }) { ResizeKeyboard = true },
+            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(address)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
         };
 
         await botClient.SendTextMessageAsync(
@@ -290,8 +291,8 @@ public partial class BotUpdateHandler
         
         var replyKeyboard = string.IsNullOrEmpty(expectatiopn) switch
         {
-            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnBack"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(expectatiopn)], [new(localizer["rbtnBack"])] }) { ResizeKeyboard = true },
+            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(expectatiopn)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
         };
 
         await botClient.SendTextMessageAsync(
@@ -326,8 +327,8 @@ public partial class BotUpdateHandler
 
         var replyKeyboard = string.IsNullOrEmpty(purpose) switch
         {
-            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnBack"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(purpose)], [new(localizer["rbtnBack"])] }) { ResizeKeyboard = true },
+            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(purpose)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
         };
 
         await botClient.SendTextMessageAsync(

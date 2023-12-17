@@ -300,7 +300,7 @@ Dollardayozing:</value>
     <comment>Foydalanuvchidan familiyasini so'rash</comment>
   </data>
   <data name="txtAskForPatronomyc" xml:space="preserve">
-    <value>Otangizning kiriting:</value>
+    <value>Otangizning ismini kiriting:</value>
     <comment>Foydalanuvchidan otasining ismini so'rash</comment>
   </data>
   <data name="txtAskForPhoneNumber" xml:space="preserve">
