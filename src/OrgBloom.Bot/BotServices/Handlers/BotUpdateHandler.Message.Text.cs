@@ -44,6 +44,8 @@ public partial class BotUpdateHandler
             State.WaitingForSelectLanguage => HandleSentLanguageAsync(botClient, message, cancellationToken),
             State.WaitingForSelectForFeedback => HandleSelectedFeedbackAsync(botClient, message, cancellationToken),
             State.WaitingForSelectPersonalInfo => HandleSelectedPersonalInfoAsync(botClient, message, cancellationToken),
+            State.WaitingForFeedbackForOrganization => HandleFeedbackForOrganizationAsync(botClient, message, cancellationToken),
+            State.WaitingForFeedbackForTelegramBot => HandleFeedbackForTelegramBotAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 

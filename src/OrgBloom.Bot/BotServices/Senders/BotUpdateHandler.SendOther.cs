@@ -146,9 +146,12 @@ public partial class BotUpdateHandler
 
     private async Task SendRequestFeedbackForTelegramBotQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
+        var replyKeyboard = new ReplyKeyboardMarkup(new KeyboardButton[]{new(localizer["rbtnCancel"])}) { ResizeKeyboard = true };
+
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
             text: localizer["txtAskFeedbackFoTelegramBot"],
+            replyMarkup: replyKeyboard,
             cancellationToken: cancellationToken);
 
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForFeedbackForTelegramBot), cancellationToken);
@@ -156,9 +159,12 @@ public partial class BotUpdateHandler
 
     private async Task SendRequestFeedbackForOrganizationQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
+        var replyKeyboard = new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true };
+
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
             text: localizer["txtAskFeedbackForOrganization"],
+            replyMarkup: replyKeyboard,
             cancellationToken: cancellationToken);
 
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForFeedbackForOrganization), cancellationToken);

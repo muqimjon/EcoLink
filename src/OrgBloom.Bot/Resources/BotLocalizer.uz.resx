@@ -267,10 +267,10 @@ O'zingiz uchun qulay tilni tanlang:</value>
     <comment>Sozlamalar bo'limidagi bot tiilini o'zgartirish oyna tugmasi. Bot tilini o'zbek tiliga o'zgartirish uchun</comment>
   </data>
   <data name="txtAskFeedbackForOrganization" xml:space="preserve">
-    <value>Iqtisodiyot Assambleyasi rivoji uchun yana qanday ishlar qilishimiz mumkinligi haqida o'z fikringizni qoldiring. Bu biz uchun juda muhim!</value>
+    <value>Iqtisodiyot Assambleyasi tashkilotining rivoji uchun yana qanday ishlar qilishimiz mumkinligi haqida o'z fikringizni qoldiring. Bu biz uchun juda muhim!</value>
   </data>
   <data name="txtAskFeedbackFoTelegramBot" xml:space="preserve">
-    <value>Ushbu botdan foydalanish jarayonida qanday muammo va kamchiliklar kuzatilgani haqida </value>
+    <value>Ushbu botdan foydalanish jarayonida kuzatilgan xato va kamchiliklar yoki yana qanday imkoniyatlar qo'shish mumkinligi haqida o'z fikringizni qoldirish orqali foydalanuvchilar uchun qulay foydalanish imkoniyatini tashkil etishimizga hissa qo'shgan bo'lasiz.</value>
   </data>
   <data name="txtAskForAboutProject" xml:space="preserve">
     <value>Loyiha haqida qisqa va tushunarli yozing:</value>
@@ -388,6 +388,9 @@ Dollardayozing:</value>
   <data name="txtReadyApplication" xml:space="preserve">
     <value>Murojaatnoma tayyor tasdiqlash qoldi xolos!</value>
     <comment>Murojaatnoma tayyorligi haqida xabar berish va bir vaqtning o'zida joriy tugmalarni o'chirib yuborish uchun</comment>
+  </data>
+  <data name="txtResponseForFeedback" xml:space="preserve">
+    <value>Fikringizni bildirganingiz uchun katta rahmat!</value>
   </data>
   <data name="txtSettings" xml:space="preserve">
     <value>Sozlamalar:</value>
