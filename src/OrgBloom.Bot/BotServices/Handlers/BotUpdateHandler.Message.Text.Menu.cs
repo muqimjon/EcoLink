@@ -1,6 +1,7 @@
 ﻿using OrgBloom.Application.Users.Commands.UpdateUsers;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace OrgBloom.Bot.BotServices;
 
@@ -47,8 +48,8 @@ public partial class BotUpdateHandler
                 Id = user.Id,
                 LanguageCode = message.Text switch
                 {
-                    "en" => "en",
-                    "ru" => "ru",
+                    { } text when text == localizer["rbtnEnglish"] => "en",
+                    { } text when text == localizer["rbtnRussian"] => "ru",
                     _ => "uz",
                 }
 
@@ -83,5 +84,41 @@ public partial class BotUpdateHandler
 
         try { await handle; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+    }
+
+    private async Task HandleFeedbackForTelegramBotAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(message);
+        ArgumentNullException.ThrowIfNull(message.Text);
+
+        if (!message.Text.Equals(localizer["rbtnCancel"]))
+        {
+            // TO DO Send message to developer with email or telegram bot
+            await botClient.SendTextMessageAsync(
+                chatId: message.Chat.Id,
+                text: localizer["txtAskFeedback"],
+                replyMarkup: new ReplyKeyboardRemove(),
+                cancellationToken: cancellationToken);
+        }
+
+        await SendMainMenuAsync(botClient, message, cancellationToken);
+    }
+
+    private async Task HandleFeedbackForOrganizationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(message);
+        ArgumentNullException.ThrowIfNull(message.Text);
+
+        if (!message.Text.Equals(localizer["rbtnCancel"]))
+        {
+            // TO DO Send message to organization telegram channel or group
+            await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["txtResponseToFeedback"],
+            replyMarkup: new ReplyKeyboardRemove(),
+            cancellationToken: cancellationToken);
+        }
+
+        await SendMainMenuAsync(botClient, message, cancellationToken);
     }
 }

@@ -8,7 +8,6 @@ namespace OrgBloom.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
-
     private async Task HandleContactMessageAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(message);
@@ -30,8 +29,17 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Contact);
 
+        Task handler;
+        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         await mediator.Send(new UpdatePhoneCommand() { Id = user.Id, Phone = message.Contact.PhoneNumber }, cancellationToken); // TODO: need validation
 
-        await SendRequestForEmailAsync(botClient, message, cancellationToken);
+        handler = profession switch
+        {
+            UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
+            _ => SendRequestForEmailAsync(botClient, message, cancellationToken)
+        };
+
+        try { await handler; }
+        catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
     }
 }

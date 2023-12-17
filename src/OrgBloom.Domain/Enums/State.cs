@@ -31,4 +31,6 @@ public enum State
     WaitingForSelectSettings,
     WaitingForSelectForFeedback,
     WaitingForSelectPersonalInfo,
+    WaitingForFeedbackForOrganization,
+    WaitingForFeedbackForTelegramBot,
 }
