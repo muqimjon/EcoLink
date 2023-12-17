@@ -266,6 +266,12 @@ O'zingiz uchun qulay tilni tanlang:</value>
     <value>O'zbekcha</value>
     <comment>Sozlamalar bo'limidagi bot tiilini o'zgartirish oyna tugmasi. Bot tilini o'zbek tiliga o'zgartirish uchun</comment>
   </data>
+  <data name="txtAskFeedbackForOrganization" xml:space="preserve">
+    <value>Iqtisodiyot Assambleyasi rivoji uchun yana qanday ishlar qilishimiz mumkinligi haqida o'z fikringizni qoldiring. Bu biz uchun juda muhim!</value>
+  </data>
+  <data name="txtAskFeedbackFoTelegramBot" xml:space="preserve">
+    <value>Ushbu botdan foydalanish jarayonida qanday muammo va kamchiliklar kuzatilgani haqida </value>
+  </data>
   <data name="txtAskForAboutProject" xml:space="preserve">
     <value>Loyiha haqida qisqa va tushunarli yozing:</value>
     <comment>Foydalanuvchidan loyiha haqida so'raladi</comment>

@@ -144,13 +144,23 @@ public partial class BotUpdateHandler
         );
     }
 
-    private Task SendRequestFeedbackForTelegramBotQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendRequestFeedbackForTelegramBotQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["txtAskFeedbackFoTelegramBot"],
+            cancellationToken: cancellationToken);
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForFeedbackForTelegramBot), cancellationToken);
     }
 
-    private Task SendRequestFeedbackForOrganizationQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendRequestFeedbackForOrganizationQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["txtAskFeedbackForOrganization"],
+            cancellationToken: cancellationToken);
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForFeedbackForOrganization), cancellationToken);
     }
 }

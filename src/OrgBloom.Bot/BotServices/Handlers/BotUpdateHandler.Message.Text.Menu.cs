@@ -47,8 +47,8 @@ public partial class BotUpdateHandler
                 Id = user.Id,
                 LanguageCode = message.Text switch
                 {
-                    "en" => "en",
-                    "ru" => "ru",
+                    { } text when text == localizer["rbtnEnglish"] => "en",
+                    { } text when text == localizer["rbtnRussian"] => "ru",
                     _ => "uz",
                 }
 
