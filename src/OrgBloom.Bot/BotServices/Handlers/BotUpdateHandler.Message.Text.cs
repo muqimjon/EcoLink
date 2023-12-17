@@ -191,7 +191,7 @@ public partial class BotUpdateHandler
         }
         else
         {
-            await mediator.Send(new UpdateDegreeCommand() { Id = user.Id, Degree = message.Text }, cancellationToken); // TODO: need validation
+            await mediator.Send(new UpdateDegreeCommand() { Id = user.Id, Degree = message.Text.TrimStart('✅') }, cancellationToken); // TODO: need validation
             handler = profession switch
             {
                 UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
