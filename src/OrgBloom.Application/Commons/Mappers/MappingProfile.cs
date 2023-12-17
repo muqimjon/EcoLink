@@ -59,7 +59,7 @@ public class MappingProfile : Profile
         CreateMap<UpdateEntrepreneurAssetsInvestedByUserIdCommand, Entrepreneur>();
         CreateMap<UpdateEntrepreneurRequiredFundingByUserIdCommand, Entrepreneur>();
         CreateMap<UpdateEntrepreneurIsSubmittedByUserIdCommand, Entrepreneur>();
-        CreateMap<UpdateEntrepreneurProjectCommand, Entrepreneur>();
+        CreateMap<UpdateEntrepreneurProjectByUserIdCommand, Entrepreneur>();
 
         CreateMap<CreateEntrepreneurCommand, Entrepreneur>();
         CreateMap<CreateEntrepreneurWithReturnCommand, Entrepreneur>();

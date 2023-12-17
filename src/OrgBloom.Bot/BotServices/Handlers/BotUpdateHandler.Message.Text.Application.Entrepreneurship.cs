@@ -28,7 +28,7 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        await mediator.Send(new UpdateEntrepreneurProjectCommand() { Id = user.Id, Project = message.Text }, cancellationToken); // TODO: need validation
+        await mediator.Send(new UpdateEntrepreneurProjectByUserIdCommand() { UserId = user.Id, Project = message.Text }, cancellationToken); // TODO: need validation
 
         await SendRequestForHelpTypeEntrepreneurshipAsync(botClient, message, cancellationToken);
     }

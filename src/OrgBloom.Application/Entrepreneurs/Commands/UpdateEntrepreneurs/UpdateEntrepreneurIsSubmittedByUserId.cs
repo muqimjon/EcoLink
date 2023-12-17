@@ -2,6 +2,7 @@
 using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Application.Commons.Exceptions;
 using OrgBloom.Domain.Entities.Entrepreneurship;
+using OrgBloom.Application.Commons.Helpers;
 
 namespace OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
 
@@ -25,6 +26,7 @@ public class UpdateEntrepreneurIsSubmittedByUserIdCommandHandler(IRepository<Ent
             ?? throw new NotFoundException($"Entrepreneur is not found with id: {request.UserId} | Update Entrepreneur IsSubmitted");
 
         mapper.Map(request, entity);
+        entity.UpdatedAt = TimeHelper.GetDateTime();
         repository.Update(entity);
         return await repository.SaveAsync();
     }

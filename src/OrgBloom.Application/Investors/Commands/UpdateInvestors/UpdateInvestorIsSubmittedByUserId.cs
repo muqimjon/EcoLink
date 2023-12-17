@@ -2,6 +2,7 @@
 using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Application.Commons.Exceptions;
 using OrgBloom.Domain.Entities.Investment;
+using OrgBloom.Application.Commons.Helpers;
 
 namespace OrgBloom.Application.Investors.Commands.UpdateInvestors;
 
@@ -25,6 +26,7 @@ public class UpdateInvestorIsSubmittedByUserIdCommandHandler(IRepository<Investo
             ?? throw new NotFoundException($"Investor is not found with UserId: {request.UserId} | Update Investor IsSubmitted");
 
         mapper.Map(request, entity);
+        entity.UpdatedAt = TimeHelper.GetDateTime();
         repository.Update(entity);
         return await repository.SaveAsync();
     }

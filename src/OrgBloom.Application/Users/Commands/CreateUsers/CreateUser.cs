@@ -2,6 +2,7 @@
 using OrgBloom.Domain.Enums;
 using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Domain.Entities.Users;
+using OrgBloom.Application.Commons.Helpers;
 
 namespace OrgBloom.Application.Users.Commands.CreateUsers;
 
@@ -55,7 +56,9 @@ public class CreateUserCommandHandler(IRepository<User> repository, IMapper mapp
         if (entity is not null)
             throw new($"User Already exist user command create with telegram id: {request.TelegramId} | create user");
 
-        await repository.InsertAsync(mapper.Map<User>(request));
+        entity = mapper.Map<User>(request);
+        entity.CreatedAt = TimeHelper.GetDateTime();
+        await repository.InsertAsync(entity);
         return await repository.SaveAsync();
     }
 }

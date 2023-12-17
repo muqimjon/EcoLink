@@ -2,6 +2,7 @@
 using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Application.Commons.Exceptions;
 using OrgBloom.Domain.Entities.ProjectManagement;
+using OrgBloom.Application.Commons.Helpers;
 
 namespace OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 
@@ -39,6 +40,7 @@ public class UpdateProjectManagerCommandHandler(IRepository<ProjectManager> repo
             ?? throw new NotFoundException($"PM is not found with id: {request.Id} | update PM");
 
         mapper.Map(request, entity);
+        entity.UpdatedAt = TimeHelper.GetDateTime();
         repository.Update(entity);
         return await repository.SaveAsync();
     }

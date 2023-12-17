@@ -15,10 +15,11 @@ public partial class BotUpdateHandler
     {
         var handle = message.Text switch
         {
+            { } text when text == localizer["rbtnEntrepreneurship"] => EntrepreneurshipQueryAsync(botClient, message, cancellationToken),
             { } text when text == localizer["rbtnInvestment"] => InvestmentQueryAsync(botClient, message, cancellationToken),
             { } text when text == localizer["rbtnRepresentation"] => RepresentationQueryAsync(botClient, message, cancellationToken),
             { } text when text == localizer["rbtnProjectManagement"] => ProjectManagementQueryAsync(botClient, message, cancellationToken),
-            _ when message.Text == localizer["rbtnEntrepreneurship"] => EntrepreneurshipQueryAsync(botClient, message, cancellationToken),
+            _ when message.Text == localizer["rbtnBack"] => SendMainMenuAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 
@@ -30,8 +31,8 @@ public partial class BotUpdateHandler
     {
         var handle = message.Text switch
         {
-            { } text when text == localizer["ibtnResend"] => ClarifyProfessionQueryAsync(botClient, message, cancellationToken),
-            { } text when text == localizer["ibtnBack"] => SendMainMenuAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnResend"] => ClarifyProfessionQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnBack"] => SendMainMenuAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 
@@ -42,7 +43,7 @@ public partial class BotUpdateHandler
     private async Task ClarifyProfessionQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
-        switch(profession)
+        switch (profession)
         {
             case UserProfession.Investor:
                 await mediator.Send(new UpdateInvestorIsSubmittedByUserIdCommand() { UserId = user.Id, IsSubmitted = false }, cancellationToken);
@@ -60,11 +61,12 @@ public partial class BotUpdateHandler
                 await mediator.Send(new UpdateRepresentativeIsSubmittedByUserCommand() { UserId = user.Id, IsSubmitted = false }, cancellationToken);
                 await RepresentationQueryAsync(botClient, message, cancellationToken);
                 break;
-            default: 
+            default:
                 await HandleUnknownMessageAsync(botClient, message, cancellationToken);
                 break;
         };
     }
+
 
     private async Task HandleExpectationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
@@ -91,16 +93,28 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message.Text);
 
         var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
-        var handler = profession switch
+        Task handler;
+        switch (message.Text)
         {
-            UserProfession.Representative => mediator.Send(new UpdateRepresentativePurposeByUserIdCommand() { UserId = user.Id, Purpose = message.Text }, cancellationToken), // TODO: need validation
-            UserProfession.ProjectManager => mediator.Send(new UpdateProjectManagerPurposeVyUserIdCommand() { UserId = user.Id, Purpose = message.Text }, cancellationToken), // TODO: need validation
-            _ => throw new NotImplementedException()
-        };
+            case var text when text == localizer["rbtnCancel"]:
+                handler = SendApplyQueryAsync(botClient, message, cancellationToken);
+                break;
+            default:
+                handler = profession switch
+                {
+                    UserProfession.Representative => mediator.Send(new UpdateRepresentativePurposeByUserIdCommand() { UserId = user.Id, Purpose = message.Text }, cancellationToken), // TODO: need validation
+                    UserProfession.ProjectManager => mediator.Send(new UpdateProjectManagerPurposeVyUserIdCommand() { UserId = user.Id, Purpose = message.Text }, cancellationToken), // TODO: need validation
+                    _ => throw new NotImplementedException()
+                };
+
+                try { await handler; }
+                catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+
+                handler = SendForSubmitApplicationAsync(botClient, message, cancellationToken);
+                break;
+        }
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
-
-        await SendForSubmitApplicationAsync(botClient, message, cancellationToken);
     }
 }

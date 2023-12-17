@@ -12,14 +12,17 @@ public partial class BotUpdateHandler
     private async Task SendRequestForAreaAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var area = await mediator.Send(new GetRepresentativeAreaByUserIdQuery(user.Id), cancellationToken);
-        var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(area) }) { ResizeKeyboard = true };
+        var replyKeyboard = string.IsNullOrEmpty(area) switch
+        {
+            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(area)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
+        };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
             text: localizer["txtAskForArea"],
             cancellationToken: cancellationToken,
-            replyMarkup: string.IsNullOrEmpty(area) ? new ReplyKeyboardRemove() : keyboard
-        );
+            replyMarkup: replyKeyboard);
 
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterArea), cancellationToken);
     }

@@ -12,13 +12,17 @@ public partial class BotUpdateHandler
     private async Task SendRequestForAboutProjectForEntrepreneurshipAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var project = await mediator.Send(new GetEntrepreneurProjectByUserIdQuery(user.Id), cancellationToken);
-        var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(project) }) { ResizeKeyboard = true };
+        var replyKeyboard = string.IsNullOrEmpty(project) switch
+        {
+            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(project)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
+        };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
             text: localizer["txtAskForAboutProject"],
             cancellationToken: cancellationToken,
-            replyMarkup: string.IsNullOrEmpty(project) ? new ReplyKeyboardRemove() : keyboard
+            replyMarkup: replyKeyboard
         );
 
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterAboutProject), cancellationToken);
@@ -27,13 +31,17 @@ public partial class BotUpdateHandler
     private async Task SendRequestForHelpTypeEntrepreneurshipAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var helpType = await mediator.Send(new GetEntrepreneurHelpTypeByUserIdQuery(user.Id), cancellationToken);
-        var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(helpType) }) { ResizeKeyboard = true };
+        var replyKeyboard = string.IsNullOrEmpty(helpType) switch
+        {
+            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(helpType)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
+        };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
             text: localizer["txtAskForHelpType"],
             cancellationToken: cancellationToken,
-            replyMarkup: string.IsNullOrEmpty(helpType) ? new ReplyKeyboardRemove() : keyboard
+            replyMarkup: replyKeyboard
         );
 
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterHelpType), cancellationToken);
@@ -42,13 +50,17 @@ public partial class BotUpdateHandler
     private async Task SendRequestForRequiredFundingForEntrepreneurshipAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var requiredFunding = await mediator.Send(new GetEntrepreneurRequiredFundingByUserIdQuery(user.Id), cancellationToken);
-        var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(requiredFunding) }) { ResizeKeyboard = true };
+        var replyKeyboard = string.IsNullOrEmpty(requiredFunding) switch
+        {
+            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(requiredFunding)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
+        };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
             text: localizer["txtAskForRequiredFunding"],
             cancellationToken: cancellationToken,
-            replyMarkup: string.IsNullOrEmpty(requiredFunding) ? new ReplyKeyboardRemove() : keyboard
+            replyMarkup: replyKeyboard
         );
 
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterRequiredFunding), cancellationToken);
@@ -57,13 +69,17 @@ public partial class BotUpdateHandler
     private async Task SendRequestForAssetsInvestedForEntrepreneurshipAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var assetsInvested = await mediator.Send(new GetEntrepreneurAssetsInvestedByUserIdQuery(user.Id), cancellationToken);
-        var keyboard = new ReplyKeyboardMarkup(new[] { new KeyboardButton(assetsInvested) }) { ResizeKeyboard = true };
+        var replyKeyboard = string.IsNullOrEmpty(assetsInvested) switch
+        {
+            true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(assetsInvested)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
+        };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
             text: localizer["txtAskForAssetInvested"],
             cancellationToken: cancellationToken,
-            replyMarkup: string.IsNullOrEmpty(assetsInvested) ? new ReplyKeyboardRemove() : keyboard
+            replyMarkup: replyKeyboard
         );
 
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForAssetInvested), cancellationToken);
