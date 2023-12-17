@@ -55,10 +55,10 @@ public partial class BotUpdateHandler
         var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         var applicationText = profession switch
         {
-            UserProfession.ProjectManager => StringHelper.GetProjectManagementApplicationInfoForm(await mediator.Send(new GetProjectManagerByUserIdQuery(user.Id), cancellationToken)),
-            UserProfession.Investor => StringHelper.GetInvestmentApplicationInfoForm(await mediator.Send(new GetInvestorByUserIdQuery(user.Id), cancellationToken)),
-            UserProfession.Entrepreneur => StringHelper.GetEntrepreneurshipApplicationInfoForm(await mediator.Send(new GetEntrepreneurByUserIdQuery(user.Id), cancellationToken)),
-            UserProfession.Representative => StringHelper.GetRepresentationApplicationInfoForm(await mediator.Send(new GetRepresentativeByUserIdQuery(user.Id), cancellationToken)),
+            UserProfession.ProjectManager => StringHelper.GetApplicationInfoForm(await mediator.Send(new GetProjectManagerByUserIdQuery(user.Id), cancellationToken)),
+            UserProfession.Investor => StringHelper.GetApplicationInfoForm(await mediator.Send(new GetInvestorByUserIdQuery(user.Id), cancellationToken)),
+            UserProfession.Entrepreneur => StringHelper.GetApplicationInfoForm(await mediator.Send(new GetEntrepreneurByUserIdQuery(user.Id), cancellationToken)),
+            UserProfession.Representative => StringHelper.GetApplicationInfoForm(await mediator.Send(new GetRepresentativeByUserIdQuery(user.Id), cancellationToken)),
             _ => string.Empty,
         };
 
