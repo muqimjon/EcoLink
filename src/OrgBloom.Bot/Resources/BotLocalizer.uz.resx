@@ -154,10 +154,6 @@ O'zingiz uchun qulay tilni tanlang:</value>
     <value>🏭 Ishlab chiqarish</value>
     <comment>Soha tanlash oynasi tugmasi. Ishlab chiqarish yo'nalishi uchun</comment>
   </data>
-  <data name="ibtnResend" xml:space="preserve">
-    <value>Qayta yuborish 🔄</value>
-    <comment>Tasdiqlangan murojaat oyna tugmasi. Arizani qayta yuborish uchun</comment>
-  </data>
   <data name="ibtnSubmit" xml:space="preserve">
     <value>Tasdiqlash</value>
     <comment>Tasdiqlash tugmasi uchun</comment>
@@ -221,6 +217,10 @@ O'zingiz uchun qulay tilni tanlang:</value>
   <data name="rbtnRepresentation" xml:space="preserve">
     <value>👔 Vakil bo'lish</value>
     <comment>Ariza topshirish tugmasi. Vakillik uchun</comment>
+  </data>
+  <data name="rbtnResend" xml:space="preserve">
+    <value>Qayta yuborish 🔄</value>
+    <comment>Tasdiqlangan murojaat oyna tugmasi. Arizani qayta yuborish uchun</comment>
   </data>
   <data name="rbtnSendContact" xml:space="preserve">
     <value>☎️ Telefon raqamini yuborish</value>

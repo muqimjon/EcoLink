@@ -2,6 +2,7 @@
 using Telegram.Bot.Types;
 using OrgBloom.Domain.Enums;
 using OrgBloom.Application.Users.Queries.GetUsers;
+using OrgBloom.Application.Users.Commands.UpdateUsers;
 using OrgBloom.Application.Investors.Commands.UpdateInvestors;
 using OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
 using OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
@@ -27,7 +28,7 @@ public partial class BotUpdateHandler
 
         try { await handle; }
         catch (Exception ex) { logger.LogError(ex, "Error handling callback query application submit: {callbackQuery.Data}", callbackQuery.Data); }
-
+        
         await SendMainMenuAsync(botClient, callbackQuery.Message, cancellationToken);
     }
 

@@ -16,11 +16,10 @@ public partial class BotUpdateHandler
         var isUserNew = await mediator.Send(new IsUserNewQuery(user.Id), cancellationToken);
         if (isUserNew)
         {
-            var keyboard = new InlineKeyboardMarkup(new[] {
-                new[] { InlineKeyboardButton.WithCallbackData("🇺🇿 o'zbekcha 🇺🇿", "ibtnUz") },
-                new[] { InlineKeyboardButton.WithCallbackData("🇬🇧 english 🇬🇧", "ibtnEn") },
-                new[] { InlineKeyboardButton.WithCallbackData("🇷🇺 русский 🇷🇺", "ibtnRu") }
-            });
+            var keyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[][] {
+                [InlineKeyboardButton.WithCallbackData("🇺🇿 o'zbekcha 🇺🇿", "ibtnUz")],
+                [InlineKeyboardButton.WithCallbackData("🇬🇧 english 🇬🇧", "ibtnEn")],
+                [InlineKeyboardButton.WithCallbackData("🇷🇺 русский 🇷🇺", "ibtnRu")] });
 
             await botClient.SendTextMessageAsync(
                 chatId: message.Chat.Id,
