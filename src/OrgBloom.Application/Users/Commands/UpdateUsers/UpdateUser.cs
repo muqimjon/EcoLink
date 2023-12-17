@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using OrgBloom.Domain.Enums;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
 using OrgBloom.Domain.Entities.Users;
 using OrgBloom.Application.Commons.Helpers;
+using OrgBloom.Application.Commons.Constants;
+using OrgBloom.Application.Commons.Interfaces;
+using OrgBloom.Application.Commons.Exceptions;
 
 namespace OrgBloom.Application.Users.Commands.UpdateUsers;
 
@@ -52,6 +53,7 @@ public class UpdateUserCommandHandler(IRepository<User> repository, IMapper mapp
 
         mapper.Map(request, entity);
         entity.UpdatedAt = TimeHelper.GetDateTime();
+        entity.DateOfBirth = request.DateOfBirth.AddHours(TimeConstants.UTC);
         repository.Update(entity);
         return await repository.SaveAsync();
     }

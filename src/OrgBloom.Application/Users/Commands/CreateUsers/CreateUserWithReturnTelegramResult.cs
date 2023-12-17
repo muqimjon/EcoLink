@@ -5,6 +5,7 @@ using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Application.Commons.Exceptions;
 using OrgBloom.Domain.Entities.Users;
 using OrgBloom.Application.Commons.Helpers;
+using OrgBloom.Application.Commons.Constants;
 
 namespace OrgBloom.Application.Users.Commands.CreateUsers;
 
@@ -58,6 +59,7 @@ public class CreateUserWithReturnTgResultCommandHandler(IRepository<User> reposi
 
         entity = mapper.Map<User>(request);
         entity.CreatedAt = TimeHelper.GetDateTime();
+        entity.DateOfBirth = request.DateOfBirth.AddHours(TimeConstants.UTC);
         await repository.InsertAsync(entity);
         await repository.SaveAsync();
 

@@ -127,7 +127,7 @@ O'zingiz uchun qulay tilni tanlang:</value>
     <comment>Soha tanlash oynasi tugmasi. Qishloq xo'jaligi yo'nalishi uchun</comment>
   </data>
   <data name="ibtnCancel" xml:space="preserve">
-    <value>E'tiborsiz qoldrish</value>
+    <value>❌ E'tiborsiz qoldrish</value>
     <comment>E'tiborsiz qoldirish tugmasi uchun</comment>
   </data>
   <data name="ibtnConstruction" xml:space="preserve">
@@ -155,7 +155,7 @@ O'zingiz uchun qulay tilni tanlang:</value>
     <comment>Soha tanlash oynasi tugmasi. Ishlab chiqarish yo'nalishi uchun</comment>
   </data>
   <data name="ibtnSubmit" xml:space="preserve">
-    <value>Tasdiqlash</value>
+    <value>✅ Tasdiqlash</value>
     <comment>Tasdiqlash tugmasi uchun</comment>
   </data>
   <data name="ibtnTrade" xml:space="preserve">
@@ -167,7 +167,7 @@ O'zingiz uchun qulay tilni tanlang:</value>
     <comment>Asosiy menyu tugmasi bu yordamida foydalanuvchilar uchun ariza topshirish  yo'nalishlari oynasi ochiladi</comment>
   </data>
   <data name="rbtnBachelorDegree" xml:space="preserve">
-    <value>Oliy</value>
+    <value>✅ Oliy</value>
     <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. Oliy draja uchun</comment>
   </data>
   <data name="rbtnBack" xml:space="preserve">
@@ -175,7 +175,7 @@ O'zingiz uchun qulay tilni tanlang:</value>
     <comment>Ortga qaytish tugmasi</comment>
   </data>
   <data name="rbtnCancel" xml:space="preserve">
-    <value>Bekor qilish</value>
+    <value>Bekor qilish 🔴</value>
     <comment>Ko'p sahifalarda foydalanish va  borayotgan jarayonni bekor qilish uchun</comment>
   </data>
   <data name="rbtnContact" xml:space="preserve">
@@ -183,15 +183,15 @@ O'zingiz uchun qulay tilni tanlang:</value>
     <comment>Asosiy menyu tugmasi. Kontakt ma'lumotlari yuboriladi</comment>
   </data>
   <data name="rbtnEditLanguage" xml:space="preserve">
-    <value>Tilni o'zgartirish</value>
+    <value>🌐 Tilni o'zgartirish</value>
     <comment>Sozlamalar oynasidan tilni o'zgartirish</comment>
   </data>
   <data name="rbtnEditPersonalInfo" xml:space="preserve">
-    <value>Shaxsiy ma'lumotlarni o'zgartirish</value>
+    <value>🔄 Shaxsiy ma'lumotlarni o'zgartirish</value>
     <comment>Sozlamalar oynasidan shaxsiy ma'lumotlarni o'zgartirish</comment>
   </data>
   <data name="rbtnEmail" xml:space="preserve">
-    <value>Eloktron pochta manzili</value>
+    <value>📧 Eloktron pochta manzili</value>
     <comment>Sozlamalar bo'limida shaxsiy ma'lumotlarni o'zgartirish oyna tugmasi. Elektron pochta manzili tanlash uchun</comment>
   </data>
   <data name="rbtnEnglish" xml:space="preserve">
@@ -207,11 +207,11 @@ O'zingiz uchun qulay tilni tanlang:</value>
     <comment>Asosiy menyu tugmasi. Fikr mulohazalar yoziladi</comment>
   </data>
   <data name="rbtnFeedbackForOrganization" xml:space="preserve">
-    <value>Assambleya uchun</value>
+    <value>🏢 Assambleya uchun</value>
     <comment>Fikr bildirish oyna tugmasi. Tashkilot uchun fikr bildirish</comment>
   </data>
   <data name="rbtnFeedbackForTelegramBot" xml:space="preserve">
-    <value>Telegram bot uchun</value>
+    <value>🤖 Telegram bot uchun</value>
     <comment>Fikr bildirish oyna tugmasi. Telegram bot uchun fikr bildirish</comment>
   </data>
   <data name="rbtnInfo" xml:space="preserve">
@@ -223,11 +223,11 @@ O'zingiz uchun qulay tilni tanlang:</value>
     <comment>Ariza topshirish tugmasi. Investorlar uchun</comment>
   </data>
   <data name="rbtnMagistrDegree" xml:space="preserve">
-    <value>Magistr</value>
+    <value>✅ Magistr</value>
     <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. Magistr draja uchun</comment>
   </data>
   <data name="rbtnPhoneNumber" xml:space="preserve">
-    <value>Telefon raqami</value>
+    <value>📱 Telefon raqami</value>
     <comment>Sozlamalar bo'limida shaxsiy ma'lumotlarni o'zgartirish oyna tugmasi. Telefon raqamini tanlash uchun</comment>
   </data>
   <data name="rbtnProjectManagement" xml:space="preserve">
@@ -255,11 +255,11 @@ O'zingiz uchun qulay tilni tanlang:</value>
     <comment>Asosiy menyu tugmasi. Sozlamalar oynasi uchun</comment>
   </data>
   <data name="rbtnSpecialistDegree" xml:space="preserve">
-    <value>O'rta maxsus</value>
+    <value>✅ O'rta maxsus</value>
     <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. O'rta maxsus draja uchun</comment>
   </data>
   <data name="rbtnUndergraduateDegree" xml:space="preserve">
-    <value>O'rta</value>
+    <value>✅ O'rta</value>
     <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. O'rta draja uchun</comment>
   </data>
   <data name="rbtnUzbek" xml:space="preserve">
@@ -389,7 +389,7 @@ Dollardayozing:</value>
     <value>Murojaatnoma tayyor tasdiqlash qoldi xolos!</value>
     <comment>Murojaatnoma tayyorligi haqida xabar berish va bir vaqtning o'zida joriy tugmalarni o'chirib yuborish uchun</comment>
   </data>
-  <data name="txtResponseForFeedback" xml:space="preserve">
+  <data name="txtResponseToFeedback" xml:space="preserve">
     <value>Fikringizni bildirganingiz uchun katta rahmat!</value>
   </data>
   <data name="txtSettings" xml:space="preserve">
