@@ -3,6 +3,7 @@ using OrgBloom.Application.Entrepreneurs.DTOs;
 using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Application.Commons.Exceptions;
 using OrgBloom.Domain.Entities.Entrepreneurship;
+using OrgBloom.Application.Commons.Helpers;
 
 namespace OrgBloom.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
 
@@ -33,6 +34,7 @@ public class CreateEntrepreneurWithReturnCommandHandler(IRepository<Entrepreneur
             throw new AlreadyExistException($"Entrepreneur is already exist create Entrepreneur by user id {request.UserId}");
 
         entity = mapper.Map<Entrepreneur>(request);
+        entity.CreatedAt = TimeHelper.GetDateTime();
         await repository.InsertAsync(entity);
         await repository.SaveAsync();
 

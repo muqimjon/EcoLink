@@ -140,7 +140,7 @@ public partial class BotUpdateHandler
     }
 
     private async Task SendRequestForDateOfBirthAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
-    {
+    r added and {
         var dateOfBirth = await mediator.Send(new GetDateOfBirthQuery(user.Id), cancellationToken);
         var formattedDate = dateOfBirth.ToString().Split().First();
         

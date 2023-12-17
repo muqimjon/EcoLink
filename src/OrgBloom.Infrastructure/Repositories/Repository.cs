@@ -24,7 +24,6 @@ public class Repository<T>(AppDbContext dbContext) : IRepository<T> where T : Au
     public void Update(T entity)
     {
         Table.Entry(entity).State = EntityState.Modified;
-        entity.UpdatedAt = DateTime.UtcNow;
     }
 
     public void Delete(T entity)

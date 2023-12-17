@@ -12,5 +12,10 @@ public record GetDateOfBirthQuery : IRequest<DateTimeOffset>
 public class GetDateOfBirthQueryHendler(IRepository<User> repository) : IRequestHandler<GetDateOfBirthQuery, DateTimeOffset>
 {
     public async Task<DateTimeOffset> Handle(GetDateOfBirthQuery request, CancellationToken cancellationToken)
-        => (await repository.SelectAsync(i => i.Id.Equals(request.Id))).DateOfBirth ?? DateTimeOffset.MinValue;
+    {
+        var d = await repository.SelectAsync(i => i.Id.Equals(request.Id));
+        var o = d.DateOfBirth;
+        return o ?? DateTimeOffset.MinValue;
+    }
+        //=> (await repository.SelectAsync(i => i.Id.Equals(request.Id))).DateOfBirth ?? DateTimeOffset.MinValue;
 }

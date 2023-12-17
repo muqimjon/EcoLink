@@ -2,6 +2,8 @@
 using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Application.Commons.Exceptions;
 using OrgBloom.Domain.Entities.Representation;
+using OrgBloom.Application.Commons.Helpers;
+using OrgBloom.Domain.Entities.Users;
 
 namespace OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
 
@@ -37,7 +39,9 @@ public class CreateRepresentativeCommandHandler(IRepository<Representative> repo
         if (entity is not null)
             throw new AlreadyExistException($"Languages is already exist with user id: {request.UserId} | update representative");
 
-        await repository.InsertAsync(mapper.Map<Representative>(request));
+        entity = mapper.Map<Representative>(request);
+        entity.CreatedAt = TimeHelper.GetDateTime();
+        await repository.InsertAsync(entity);
         return await repository.SaveAsync();
     }
 }

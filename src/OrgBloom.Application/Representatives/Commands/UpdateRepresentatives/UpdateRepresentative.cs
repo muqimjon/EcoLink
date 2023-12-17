@@ -2,6 +2,7 @@
 using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Application.Commons.Exceptions;
 using OrgBloom.Domain.Entities.Representation;
+using OrgBloom.Application.Commons.Helpers;
 
 namespace OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
 
@@ -39,6 +40,7 @@ public class UpdateRepresentativeCommandHandler(IRepository<Representative> repo
             ?? throw new NotFoundException($"Representative is not found with id: {request.Id} | update representative");
 
         mapper.Map(request, entity);
+        entity.UpdatedAt = TimeHelper.GetDateTime();
         repository.Update(entity);
         return await repository.SaveAsync();
     }

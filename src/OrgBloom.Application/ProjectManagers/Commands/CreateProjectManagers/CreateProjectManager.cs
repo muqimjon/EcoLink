@@ -2,6 +2,7 @@
 using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Application.Commons.Exceptions;
 using OrgBloom.Domain.Entities.ProjectManagement;
+using OrgBloom.Application.Commons.Helpers;
 
 namespace OrgBloom.Application.ProjectManagers.Commands.CreateProjectManagers;
 
@@ -31,7 +32,9 @@ public class CreateProjectManagerCommandHandler(IRepository<ProjectManager> repo
         if (entity is not null)
             throw new AlreadyExistException($"PM is already exist with user id: {request.UserId} | create project manager");
 
-        await repository.InsertAsync(mapper.Map<ProjectManager>(request));
+        entity = mapper.Map<ProjectManager>(request);
+        entity.CreatedAt = TimeHelper.GetDateTime();
+        await repository.InsertAsync(entity);
         return await repository.SaveAsync();
     }
 }

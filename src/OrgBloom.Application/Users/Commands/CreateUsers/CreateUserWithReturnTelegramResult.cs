@@ -4,6 +4,7 @@ using OrgBloom.Application.Users.DTOs;
 using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Application.Commons.Exceptions;
 using OrgBloom.Domain.Entities.Users;
+using OrgBloom.Application.Commons.Helpers;
 
 namespace OrgBloom.Application.Users.Commands.CreateUsers;
 
@@ -55,10 +56,11 @@ public class CreateUserWithReturnTgResultCommandHandler(IRepository<User> reposi
         if (entity is not null)
             throw new AlreadyExistException($"User Already exist user command create with telegram id: {request.TelegramId} | create user with return tg result");
 
-        var user = mapper.Map<User>(request);
-        await repository.InsertAsync(user);
+        entity = mapper.Map<User>(request);
+        entity.CreatedAt = TimeHelper.GetDateTime();
+        await repository.InsertAsync(entity);
         await repository.SaveAsync();
 
-        return mapper.Map<UserTelegramResultDto>(user);
+        return mapper.Map<UserTelegramResultDto>(entity);
     }
 }

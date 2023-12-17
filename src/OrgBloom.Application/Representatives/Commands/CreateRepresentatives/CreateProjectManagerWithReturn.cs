@@ -3,6 +3,7 @@ using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Application.Commons.Exceptions;
 using OrgBloom.Application.Representatives.DTOs;
 using OrgBloom.Domain.Entities.Representation;
+using OrgBloom.Application.Commons.Helpers;
 
 namespace OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
 
@@ -33,6 +34,7 @@ public class CreateRepresentativeWithReturnCommandHandler(IRepository<Representa
             throw new AlreadyExistException($"Representative is already exist create Representative by user id {request.UserId}");
 
         entity = mapper.Map<Representative>(request);
+        entity.CreatedAt = TimeHelper.GetDateTime();
         await repository.InsertAsync(entity);
         await repository.SaveAsync();
 

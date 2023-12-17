@@ -3,6 +3,7 @@ using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Domain.Enums;
 using OrgBloom.Application.Commons.Exceptions;
 using OrgBloom.Domain.Entities.Users;
+using OrgBloom.Application.Commons.Helpers;
 
 namespace OrgBloom.Application.Users.Commands.UpdateUsers;
 
@@ -27,6 +28,7 @@ public class UpdateProfessionCommandHandler(IRepository<User> repository, IMappe
             ?? throw new NotFoundException($"This User is not found by id: {request.Id} | update profession");
 
         mapper.Map(request, entity);
+        entity.UpdatedAt = TimeHelper.GetDateTime();
         repository.Update(entity);
         return await repository.SaveAsync();
     }
