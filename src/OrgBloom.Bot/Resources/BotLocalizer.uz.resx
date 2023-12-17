@@ -178,9 +178,17 @@ O'zingiz uchun qulay tilni tanlang:</value>
     <value>Ortga ⬅️</value>
     <comment>Ortga qaytish tugmasi</comment>
   </data>
+  <data name="rbtnCancel" xml:space="preserve">
+    <value>Bekor qilish</value>
+    <comment>Ko'p sahifalarda foydalanish va  borayotgan jarayonni bekor qilish uchun</comment>
+  </data>
   <data name="rbtnContact" xml:space="preserve">
     <value>☎️ A'loqa</value>
     <comment>Asosiy menyu tugmasi. Kontakt ma'lumotlari yuboriladi</comment>
+  </data>
+  <data name="rbtnEditLanguage" xml:space="preserve">
+    <value>Tilni o'zgartirish</value>
+    <comment>Sozlamalar oynasidan tilni o'zgartirish</comment>
   </data>
   <data name="rbtnEditPersonalInfo" xml:space="preserve">
     <value>Shaxsiy ma'lumotlarni o'zgartirish</value>
@@ -319,13 +327,17 @@ Dollardayozing:</value>
     <value>Qaysi tillarni bilasiz:</value>
     <comment>Foydalanuvchidan qaysi xorijiy tillarni bililshini so'rash</comment>
   </data>
-  <data name="txtInfo" xml:space="preserve">
-    <value>Kompaniya haqida ma'lumot yozilishi kerak // TO DO text about organization</value>
-    <comment>Tashkilot haqida ma'lumot xabari</comment>
+  <data name="txtContactInfo" xml:space="preserve">
+    <value>Contact ma'lumotlarini yuborish chiqadi //TO DO write request for edit personal info</value>
+    <comment>Foydalanuvchiga tashkilot bilan bog'lanishi mumkin bo'lgan a'loqa ma'lumotlari yuboriladi</comment>
   </data>
   <data name="txtMainMenu" xml:space="preserve">
     <value>Menyuni tanlang:</value>
     <comment>Asosiy menyu xabari</comment>
+  </data>
+  <data name="txtOrganizationInfo" xml:space="preserve">
+    <value>Kompaniya haqida ma'lumot yozilishi kerak // TO DO text about organization</value>
+    <comment>Tashkilot haqida ma'lumot xabari</comment>
   </data>
   <data name="txtReadyApplication" xml:space="preserve">
     <value>Murojaatnoma tayyor tasdiqlash qoldi xolos!</value>

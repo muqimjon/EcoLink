@@ -13,6 +13,7 @@ public partial class BotUpdateHandler
             { } text when text == localizer["rbtnSettings"] => SendSettingsQueryAsync(botClient, message, cancellationToken),
             _ when message.Text == localizer["rbtnInfo"] => SendInfoAsync(botClient, message, cancellationToken),
             { } text when text == localizer["rbtnFeedback"] => SendFeedbackQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnContact"] => SendContactAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 
@@ -26,6 +27,7 @@ public partial class BotUpdateHandler
         {
             { } text when text == localizer["rbtnEditLanguage"] => SendSelectLanguageQueryAsync(botClient, message, cancellationToken),
             { } text when text == localizer["rbtnEditPersonalInfo"] => SendEditPersonalInfoQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnBack"] => SendMainMenuAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 

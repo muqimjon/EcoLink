@@ -19,6 +19,7 @@ public partial class BotUpdateHandler
             { } text when text == localizer["rbtnRepresentation"] => RepresentationQueryAsync(botClient, message, cancellationToken),
             { } text when text == localizer["rbtnProjectManagement"] => ProjectManagementQueryAsync(botClient, message, cancellationToken),
             _ when message.Text == localizer["rbtnEntrepreneurship"] => EntrepreneurshipQueryAsync(botClient, message, cancellationToken),
+            _ when message.Text == localizer["rbtnBack"] => SendMainMenuAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 

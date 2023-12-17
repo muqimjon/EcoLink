@@ -17,9 +17,9 @@ public partial class BotUpdateHandler
         if (isUserNew)
         {
             var keyboard = new InlineKeyboardMarkup(new[] {
-                new[] { InlineKeyboardButton.WithCallbackData("🇺🇿 uzbekcha 🇺🇿", "ibtnUz") },
+                new[] { InlineKeyboardButton.WithCallbackData("🇺🇿 o'zbekcha 🇺🇿", "ibtnUz") },
                 new[] { InlineKeyboardButton.WithCallbackData("🇬🇧 english 🇬🇧", "ibtnEn") },
-                new[] { InlineKeyboardButton.WithCallbackData("🇷🇺 ruscha 🇷🇺", "ibtnRu") }
+                new[] { InlineKeyboardButton.WithCallbackData("🇷🇺 русский 🇷🇺", "ibtnRu") }
             });
 
             await botClient.SendTextMessageAsync(
@@ -35,11 +35,11 @@ public partial class BotUpdateHandler
 
     public async Task SendMainMenuAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var keyboard = new ReplyKeyboardMarkup(new[]
+        var keyboard = new ReplyKeyboardMarkup(new KeyboardButton[][]
         {
-            new[] { new KeyboardButton(localizer["rbtnApply"]) },
-            new[] { new KeyboardButton(localizer["rbtnContact"]), new KeyboardButton(localizer["rbtnFeedback"]) },
-            new[] { new KeyboardButton(localizer["rbtnSettings"]), new KeyboardButton(localizer["rbtnInfo"]), }
+            [new(localizer["rbtnApply"])],
+            [new(localizer["rbtnContact"]), new(localizer["rbtnFeedback"])],
+            [new(localizer["rbtnSettings"]), new(localizer["rbtnInfo"]),]
         }) { ResizeKeyboard = true };
 
         await botClient.SendTextMessageAsync(
@@ -56,15 +56,19 @@ public partial class BotUpdateHandler
     {
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: localizer["txtInfo"],
+            text: localizer["txtOrganizationInfo"],
             cancellationToken: cancellationToken
         );
     }
 
     private async Task SendSettingsQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        ReplyKeyboardMarkup keyboard = new(new[] { new[] { new KeyboardButton(localizer["rbtnEditLanguage"]) }, new[] { new KeyboardButton(localizer["rbtnEditPersonalInfo"]) } })
-        { ResizeKeyboard = true };
+        ReplyKeyboardMarkup keyboard = new(new KeyboardButton[][]
+        {
+            [new(localizer["rbtnEditLanguage"])],
+            [new(localizer["rbtnEditPersonalInfo"])],
+            [new(localizer["rbtnBack"])]
+        }) { ResizeKeyboard = true };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
@@ -76,18 +80,39 @@ public partial class BotUpdateHandler
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectSettings), cancellationToken);
     }
 
-    private Task SendFeedbackQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendFeedbackQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: "Feedback so'raladigan menyu chiqadi //TO DO write request for feedback",
+            cancellationToken: cancellationToken
+        );
     }
 
-    private Task SendSelectLanguageQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendSelectLanguageQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: "Tilni o'zgartirish uchun menyu chiqadi //TO DO write request for language",
+            cancellationToken: cancellationToken
+        );
     }
 
-    private Task SendEditPersonalInfoQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendEditPersonalInfoQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: "Shaxsiy ma'lumotlarni tahrirlash uchun uchun menyu chiqadi //TO DO write request for edit personal info",
+            cancellationToken: cancellationToken
+        );
+    }
+
+    private async Task SendContactAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["txtContactInfo"],
+            cancellationToken: cancellationToken
+        );
     }
 }

@@ -85,6 +85,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<DeleteInvestorCommand, bool>, DeleteInvestorCommandHandler>();
 
         services.AddScoped<IRequestHandler<GetInvestorQuery, InvestorResultDto>, GetInvestorQueryHendler>();
+        services.AddScoped<IRequestHandler<GetInvestmentAmountByUserIdQuery, string>, GetInvestmentAmountByUserIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetInvestorByUserIdQuery, InvestorResultDto>, GetInvestorByUserIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetAllInvestorsQuery, IEnumerable<InvestorResultDto>>, GetAllInvestorsQueryHandler>();
 
