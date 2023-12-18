@@ -22,6 +22,11 @@ public partial class BotUpdateHandler
             State.WaitingForSelectMainMenu => HandleMainMenuAsync(botClient, message, cancellationToken),
             State.WaitingForSelectProfession => HandleProfessionAsync(botClient, message, cancellationToken),
             State.WaitingForSelectSettings => HandleSelectedSettingsAsync(botClient, message, cancellationToken),
+            State.WaitingForSelectLanguage => HandleSentLanguageAsync(botClient, message, cancellationToken),
+            State.WaitingForSelectForFeedback => HandleSelectedFeedbackAsync(botClient, message, cancellationToken),
+            State.WaitingForSelectPersonalInfo => HandleSelectedPersonalInfoAsync(botClient, message, cancellationToken),
+            State.WaitingForFeedbackForOrganization => HandleFeedbackForOrganizationAsync(botClient, message, cancellationToken),
+            State.WaitingForFeedbackForTelegramBot => HandleFeedbackForTelegramBotAsync(botClient, message, cancellationToken),
             State.WaitingForEnterFirstName => HandleFirstNameAsync(botClient, message, cancellationToken),
             State.WaitingForEnterLastName => HandleLastNameAsync(botClient, message, cancellationToken),
             State.WaitingForEnterPatronomyc => HandlePatronomycAsync(botClient, message, cancellationToken),
@@ -41,11 +46,7 @@ public partial class BotUpdateHandler
             State.WaitingForEnterRequiredFunding => HandleRequiredFundingForEntrepreneurshipAsync(botClient, message, cancellationToken),
             State.WaitingForAssetInvested => HandleAssetsInvestedForEntrepreneurshipAsync(botClient, message, cancellationToken),
             State.WaitingForEnterProjectDirection => HandleProjectDirectionForProjectManagementAsync(botClient, message, cancellationToken),
-            State.WaitingForSelectLanguage => HandleSentLanguageAsync(botClient, message, cancellationToken),
-            State.WaitingForSelectForFeedback => HandleSelectedFeedbackAsync(botClient, message, cancellationToken),
-            State.WaitingForSelectPersonalInfo => HandleSelectedPersonalInfoAsync(botClient, message, cancellationToken),
-            State.WaitingForFeedbackForOrganization => HandleFeedbackForOrganizationAsync(botClient, message, cancellationToken),
-            State.WaitingForFeedbackForTelegramBot => HandleFeedbackForTelegramBotAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterSector => HandleSectorFromTextAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 
@@ -190,7 +191,7 @@ public partial class BotUpdateHandler
         }
         else
         {
-            await mediator.Send(new UpdateDegreeCommand() { Id = user.Id, Degree = message.Text }, cancellationToken); // TODO: need validation
+            await mediator.Send(new UpdateDegreeCommand() { Id = user.Id, Degree = message.Text.TrimStart('✅') }, cancellationToken); // TODO: need validation
             handler = profession switch
             {
                 UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
@@ -350,5 +351,24 @@ public partial class BotUpdateHandler
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+    }
+
+    private async Task HandleSectorFromTextAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(message);
+        ArgumentNullException.ThrowIfNull(message.Text);
+
+        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
+        if (message.Text.Equals(localizer["rbtnCancel"]))
+        {
+            var handler = profession switch
+            {
+                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
+                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+            };
+
+            try { await handler; }
+            catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+        }
     }
 }

@@ -96,7 +96,7 @@ public partial class BotUpdateHandler
             // TO DO Send message to developer with email or telegram bot
             await botClient.SendTextMessageAsync(
                 chatId: message.Chat.Id,
-                text: localizer["txtAskFeedback"],
+                text: localizer["txtResponseToFeedback"],
                 replyMarkup: new ReplyKeyboardRemove(),
                 cancellationToken: cancellationToken);
         }

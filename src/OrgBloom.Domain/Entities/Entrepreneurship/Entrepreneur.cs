@@ -4,6 +4,7 @@ namespace OrgBloom.Domain.Entities.Entrepreneurship;
 
 public class Entrepreneur : Auditable
 {
+    public string? Sector { get; set; }
     public string? Project { get; set; }
     public string? HelpType { get; set; }
     public string? RequiredFunding { get; set; }

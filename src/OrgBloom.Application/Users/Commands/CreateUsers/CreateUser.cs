@@ -3,6 +3,7 @@ using OrgBloom.Domain.Enums;
 using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Domain.Entities.Users;
 using OrgBloom.Application.Commons.Helpers;
+using OrgBloom.Application.Commons.Constants;
 
 namespace OrgBloom.Application.Users.Commands.CreateUsers;
 
@@ -58,6 +59,7 @@ public class CreateUserCommandHandler(IRepository<User> repository, IMapper mapp
 
         entity = mapper.Map<User>(request);
         entity.CreatedAt = TimeHelper.GetDateTime();
+        entity.DateOfBirth = request.DateOfBirth.AddHours(TimeConstants.UTC);
         await repository.InsertAsync(entity);
         return await repository.SaveAsync();
     }

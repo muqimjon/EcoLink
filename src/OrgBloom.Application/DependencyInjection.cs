@@ -138,9 +138,9 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<UpdateEntrepreneurIsSubmittedByUserIdCommand, int>, UpdateEntrepreneurIsSubmittedByUserIdCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateEntrepreneurAssetsInvestedByUserIdCommand, int>, UpdateEntrepreneurAssetsInvestedByUserIdCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateEntrepreneurRequiredFundingByUserIdCommand, int>, UpdateEntrepreneurRequiredFundingByUserIdCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateEntrepreneurSectorByUserIdCommand, int>, UpdateEntrepreneurSectorByUserIdCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateEntrepreneurHelpTypeByUserIdCommand, int>, UpdateEntrepreneurHelpTypeByUserIdCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateEntrepreneurProjectByUserIdCommand, int>, UpdateEntrepreneurProjectCommandHandler>();
-
 
         services.AddScoped<IRequestHandler<DeleteEntrepreneurCommand, bool>, DeleteEntrepreneurCommandHandler>();
 

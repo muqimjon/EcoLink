@@ -1,4 +1,5 @@
-﻿using OrgBloom.Application.Commons.Interfaces;
+﻿using OrgBloom.Application.Commons.Constants;
+using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Domain.Entities.Users;
 
 namespace OrgBloom.Application.Users.Queries.GetUsers;
@@ -12,5 +13,5 @@ public record IsUserNewQuery : IRequest<bool>
 public class IsUserNewQueryHendler(IRepository<User> repository) : IRequestHandler<IsUserNewQuery, bool>
 {
     public async Task<bool> Handle(IsUserNewQuery request, CancellationToken cancellationToken)
-        => DateTime.UtcNow - (await repository.SelectAsync(i => i.Id.Equals(request.Id))).CreatedAt < TimeSpan.FromSeconds(5);
+        => DateTime.UtcNow.AddHours(TimeConstants.UTC) - (await repository.SelectAsync(i => i.Id.Equals(request.Id))).CreatedAt < TimeSpan.FromSeconds(5);
 }

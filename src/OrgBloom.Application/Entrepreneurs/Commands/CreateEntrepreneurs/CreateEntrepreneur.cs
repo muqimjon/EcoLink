@@ -10,6 +10,7 @@ public record class CreateEntrepreneurCommand : IRequest<int>
 {
     public CreateEntrepreneurCommand(CreateEntrepreneurCommand command)
     {
+        Sector = command.Sector;
         UserId = command.UserId;
         Project = command.Project;
         HelpType = command.HelpType;
@@ -17,6 +18,7 @@ public record class CreateEntrepreneurCommand : IRequest<int>
         RequiredFunding = command.RequiredFunding;
     }
 
+    public string Sector { get; set; } = string.Empty;
     public string Project { get; set; } = string.Empty;
     public string HelpType { get; set; } = string.Empty;
     public string RequiredFunding { get; set; } = string.Empty;

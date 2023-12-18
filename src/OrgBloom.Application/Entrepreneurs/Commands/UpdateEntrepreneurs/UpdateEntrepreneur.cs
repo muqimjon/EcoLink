@@ -11,17 +11,17 @@ public record UpdateEntrepreneurCommand : IRequest<int>
     public UpdateEntrepreneurCommand(UpdateEntrepreneurCommand command)
     {
         Id = command.Id;
+        Sector = command.Sector;
         UserId = command.UserId;
         Project = command.Project;
         HelpType = command.HelpType;
-        Experience = command.Experience;
         IsSubmitted = command.IsSubmitted;
         AssetsInvested = command.AssetsInvested;
         InvestmentAmount = command.InvestmentAmount;
     }
 
     public long Id { get; set; }
-    public string Experience { get; set; } = string.Empty;
+    public string Sector { get; set; } = string.Empty;
     public string Project { get; set; } = string.Empty;
     public string HelpType { get; set; } = string.Empty;
     public decimal? InvestmentAmount { get; set; }
