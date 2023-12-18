@@ -104,7 +104,7 @@ public partial class BotUpdateHandler
             handler = profession switch
             {
                 UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
-                _ => SendRequestForPatronomycAsync(botClient, message, cancellationToken)
+                _ => SendRequestForDateOfBirthAsync(botClient, message, cancellationToken)
             };
         }
 
@@ -191,7 +191,8 @@ public partial class BotUpdateHandler
         }
         else
         {
-            await mediator.Send(new UpdateDegreeCommand() { Id = user.Id, Degree = message.Text.TrimStart('✅') }, cancellationToken); // TODO: need validation
+            await mediator.Send(new UpdateDegreeCommand() { Id = user.Id, Degree = message.Text.TrimStart('✅').Trim() }, cancellationToken); // TODO: need validation
+
             handler = profession switch
             {
                 UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
@@ -313,7 +314,7 @@ public partial class BotUpdateHandler
             handler = profession switch
             {
                 UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
-                UserProfession.Entrepreneur => SendRequestForAboutProjectForEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Entrepreneur => SendRequestForSectorAsync(botClient, message, cancellationToken),
                 _ => SendRequestForAddressAsync(botClient, message, cancellationToken), // Works for PM and Representative
             };
         }

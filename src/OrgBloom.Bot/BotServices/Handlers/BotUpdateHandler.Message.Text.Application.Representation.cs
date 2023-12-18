@@ -6,6 +6,8 @@ using OrgBloom.Application.Users.Commands.UpdateUsers;
 using OrgBloom.Application.Representatives.Queries.GetRepresentatives;
 using OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
 using OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
+using OrgBloom.Application.Investors.Commands.UpdateInvestors;
+using OrgBloom.Application.Users.Queries.GetUsers;
 
 namespace OrgBloom.Bot.BotServices;
 
@@ -28,8 +30,28 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        await mediator.Send(new UpdateRepresentativeAreaByUserIdCommand() { UserId = user.Id, Area = message.Text }, cancellationToken); // TODO: need validation
+        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
+        Task handler;
 
-        await SendRequestForExpectationAsync(botClient, message, cancellationToken);
+        if (message.Text.Equals(localizer["rbtnCancel"]))
+        {
+            handler = profession switch
+            {
+                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
+                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+            };
+        }
+        else
+        {
+            await mediator.Send(new UpdateRepresentativeAreaByUserIdCommand() { UserId = user.Id, Area = message.Text }, cancellationToken); // TODO: need validation
+            handler = profession switch
+            {
+                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
+                _ => SendRequestForExpectationAsync(botClient, message, cancellationToken)
+            };
+        }
+
+        try { await handler; }
+        catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
     }
 }

@@ -359,7 +359,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
         chatId: message.Chat.Id,
-            text: localizer["txtAskForInvestmentSector"], // TO DO localizer["txtAskForProjectManagmentSector"] for PM and Investor
+            text: localizer["txtAskForSector"], // TO DO localizer["txtAskForProjectManagmentSector"] for PM and Investor
             cancellationToken: cancellationToken,
             replyMarkup: keyboard);
 
