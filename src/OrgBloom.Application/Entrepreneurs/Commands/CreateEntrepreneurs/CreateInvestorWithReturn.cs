@@ -11,6 +11,7 @@ public record CreateEntrepreneurWithReturnCommand : IRequest<EntrepreneurResultD
 {
     public CreateEntrepreneurWithReturnCommand(CreateEntrepreneurWithReturnCommand command)
     {
+        Sector = command.Sector;
         UserId = command.UserId;
         Project = command.Project;
         HelpType = command.HelpType;
@@ -18,6 +19,7 @@ public record CreateEntrepreneurWithReturnCommand : IRequest<EntrepreneurResultD
         RequiredFunding = command.RequiredFunding;
     }
 
+    public string Sector { get; set; } = string.Empty;
     public string Project { get; set; } = string.Empty;
     public string HelpType { get; set; } = string.Empty;
     public string RequiredFunding { get; set; } = string.Empty;

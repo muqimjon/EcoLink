@@ -123,147 +123,147 @@ O'zingiz uchun qulay tilni tanlang:</value>
     <comment>Salomlashish matni, bir vaqtda foydalanuvchiga qulay bo'lgan tilni belgilashi so'raladi bundan foydalanilayotganda foudalanuvchining ismi va familiyasi talab qilinadi.</comment>
   </data>
   <data name="ibtnAgriculture" xml:space="preserve">
-    <value>🌾 Qishloq xo'jaligi</value>
+    <value>🌾  Qishloq xo'jaligi</value>
     <comment>Soha tanlash oynasi tugmasi. Qishloq xo'jaligi yo'nalishi uchun</comment>
   </data>
   <data name="ibtnCancel" xml:space="preserve">
-    <value>❌ E'tiborsiz qoldrish</value>
+    <value>❌  Keyinchalik davom ettirish</value>
     <comment>E'tiborsiz qoldirish tugmasi uchun</comment>
   </data>
   <data name="ibtnConstruction" xml:space="preserve">
-    <value>🏗 Qurilish</value>
+    <value>🏗  Qurilish</value>
     <comment>Soha tanlash oynasi tugmasi. Qurilish yo'nalishi uchun</comment>
   </data>
   <data name="ibtnEducation" xml:space="preserve">
-    <value>🎓 Ta'lim</value>
+    <value>🎓  Ta'lim</value>
     <comment>Soha tanlash oynasi tugmasi. Ta'lim yo'nalishi uchun</comment>
   </data>
   <data name="ibtnEnergy" xml:space="preserve">
-    <value>⚡ Energetika</value>
+    <value>⚡  Energetika</value>
     <comment>Soha tanlash oynasi tugmasi. Energetika yo'nalishi uchun</comment>
   </data>
   <data name="ibtnFranchise" xml:space="preserve">
-    <value>🔄 Franshiza</value>
+    <value>🔄  Franshiza</value>
     <comment>Soha tanlash oynasi tugmasi. Franshiza yo'nalishi uchun</comment>
   </data>
   <data name="ibtnIT" xml:space="preserve">
-    <value>💻 Axborot texnologiyalari</value>
+    <value>💻  Axborot texnologiyalari</value>
     <comment>Soha tanlash oynasi tugmasi. Axborot texnologiyalari yo'nalishi uchun</comment>
   </data>
   <data name="ibtnManufacturing" xml:space="preserve">
-    <value>🏭 Ishlab chiqarish</value>
+    <value>🏭  Ishlab chiqarish</value>
     <comment>Soha tanlash oynasi tugmasi. Ishlab chiqarish yo'nalishi uchun</comment>
   </data>
   <data name="ibtnSubmit" xml:space="preserve">
-    <value>✅ Tasdiqlash</value>
+    <value>✅  Tasdiqlash</value>
     <comment>Tasdiqlash tugmasi uchun</comment>
   </data>
   <data name="ibtnTrade" xml:space="preserve">
-    <value>🛍️ Savdo</value>
+    <value>🛍️  Savdo</value>
     <comment>Soha tanlash oynasi tugmasi. Savdo yo'nalishi uchun</comment>
   </data>
   <data name="rbtnApply" xml:space="preserve">
-    <value>📋 Ariza topshirish</value>
+    <value>📂  Bo'limlar</value>
     <comment>Asosiy menyu tugmasi bu yordamida foydalanuvchilar uchun ariza topshirish  yo'nalishlari oynasi ochiladi</comment>
   </data>
   <data name="rbtnBachelorDegree" xml:space="preserve">
-    <value>✅ Oliy</value>
+    <value>✅  Oliy</value>
     <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. Oliy draja uchun</comment>
   </data>
   <data name="rbtnBack" xml:space="preserve">
-    <value>Ortga ⬅️</value>
+    <value>Ortga  ⬅️</value>
     <comment>Ortga qaytish tugmasi</comment>
   </data>
   <data name="rbtnCancel" xml:space="preserve">
-    <value>Bekor qilish 🔴</value>
+    <value>Bekor qilish  🔴</value>
     <comment>Ko'p sahifalarda foydalanish va  borayotgan jarayonni bekor qilish uchun</comment>
   </data>
   <data name="rbtnContact" xml:space="preserve">
-    <value>☎️ A'loqa</value>
+    <value>☎️  A'loqa</value>
     <comment>Asosiy menyu tugmasi. Kontakt ma'lumotlari yuboriladi</comment>
   </data>
   <data name="rbtnEditLanguage" xml:space="preserve">
-    <value>🌐 Tilni o'zgartirish</value>
+    <value>🌐  Tilni o'zgartirish</value>
     <comment>Sozlamalar oynasidan tilni o'zgartirish</comment>
   </data>
   <data name="rbtnEditPersonalInfo" xml:space="preserve">
-    <value>🔄 Shaxsiy ma'lumotlarni o'zgartirish</value>
+    <value>🔄  Shaxsiy ma'lumotlarni o'zgartirish</value>
     <comment>Sozlamalar oynasidan shaxsiy ma'lumotlarni o'zgartirish</comment>
   </data>
   <data name="rbtnEmail" xml:space="preserve">
-    <value>📧 Eloktron pochta manzili</value>
+    <value>📧  Eloktron pochta manzili</value>
     <comment>Sozlamalar bo'limida shaxsiy ma'lumotlarni o'zgartirish oyna tugmasi. Elektron pochta manzili tanlash uchun</comment>
   </data>
   <data name="rbtnEnglish" xml:space="preserve">
-    <value>ingliz tili uchun</value>
+    <value>🇬🇧  english language</value>
     <comment>Sozlamalar bo'limidagi bot tiilini o'zgartirish oyna tugmasi. Bot tilini ingliz tiliga o'zgartirish uchun</comment>
   </data>
   <data name="rbtnEntrepreneurship" xml:space="preserve">
-    <value>📈 Investitsiya jalb qilish</value>
+    <value>📈  Investitsiya jalb qilish</value>
     <comment>Ariza topshirish tugmasi. Tadbirkorlar uchun</comment>
   </data>
   <data name="rbtnFeedback" xml:space="preserve">
-    <value>✍️ Fikr bildirish</value>
+    <value>✍️  Fikr bildirish</value>
     <comment>Asosiy menyu tugmasi. Fikr mulohazalar yoziladi</comment>
   </data>
   <data name="rbtnFeedbackForOrganization" xml:space="preserve">
-    <value>🏢 Assambleya uchun</value>
+    <value>🏢  Assambleya uchun</value>
     <comment>Fikr bildirish oyna tugmasi. Tashkilot uchun fikr bildirish</comment>
   </data>
   <data name="rbtnFeedbackForTelegramBot" xml:space="preserve">
-    <value>🤖 Telegram bot uchun</value>
+    <value>🤖  Telegram bot uchun</value>
     <comment>Fikr bildirish oyna tugmasi. Telegram bot uchun fikr bildirish</comment>
   </data>
   <data name="rbtnInfo" xml:space="preserve">
-    <value>ℹ️ Ma'lumot</value>
+    <value>ℹ️  Ma'lumot</value>
     <comment>Asosiy menyu tugmasi. Tashkilot haqida Ma'lumot yuboriladi.</comment>
   </data>
   <data name="rbtnInvestment" xml:space="preserve">
-    <value>💼 Investorlik qilish</value>
+    <value>💼  Investorlik qilish</value>
     <comment>Ariza topshirish tugmasi. Investorlar uchun</comment>
   </data>
   <data name="rbtnMagistrDegree" xml:space="preserve">
-    <value>✅ Magistr</value>
+    <value>✅  Magistr</value>
     <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. Magistr draja uchun</comment>
   </data>
   <data name="rbtnPhoneNumber" xml:space="preserve">
-    <value>📱 Telefon raqami</value>
+    <value>📱  Telefon raqami</value>
     <comment>Sozlamalar bo'limida shaxsiy ma'lumotlarni o'zgartirish oyna tugmasi. Telefon raqamini tanlash uchun</comment>
   </data>
   <data name="rbtnProjectManagement" xml:space="preserve">
-    <value>🚀 Loyiha boshqarish</value>
+    <value>🚀  Loyiha boshqarish</value>
     <comment>Ariza topshirish tugmasi. Loyiha boshqaruvchisi uchun</comment>
   </data>
   <data name="rbtnRepresentation" xml:space="preserve">
-    <value>👔 Vakil bo'lish</value>
+    <value>👔  Vakil bo'lish</value>
     <comment>Ariza topshirish tugmasi. Vakillik uchun</comment>
   </data>
   <data name="rbtnResend" xml:space="preserve">
-    <value>Qayta yuborish 🔄</value>
+    <value>Qayta yuborish  🔄</value>
     <comment>Tasdiqlangan murojaat oyna tugmasi. Arizani qayta yuborish uchun</comment>
   </data>
   <data name="rbtnRussian" xml:space="preserve">
-    <value>rus tili uchun</value>
+    <value>🇷🇺  русский язык</value>
     <comment>Sozlamalar bo'limidagi bot tiilini o'zgartirish oyna tugmasi. Bot tilini rus tiliga o'zgartirish uchun</comment>
   </data>
   <data name="rbtnSendContact" xml:space="preserve">
-    <value>☎️ Telefon raqamini yuborish</value>
+    <value>☎️  Telefon raqamini yuborish</value>
     <comment>Foydalanuvchidan telefon raqamini so'rash oyna tugmasi. tugma yordamida osonlik bilan telefon raqamini yuborish mumkin.</comment>
   </data>
   <data name="rbtnSettings" xml:space="preserve">
-    <value>⚙️ Sozlamalar</value>
+    <value>⚙️  Sozlamalar</value>
     <comment>Asosiy menyu tugmasi. Sozlamalar oynasi uchun</comment>
   </data>
   <data name="rbtnSpecialistDegree" xml:space="preserve">
-    <value>✅ O'rta maxsus</value>
+    <value>✅  O'rta maxsus</value>
     <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. O'rta maxsus draja uchun</comment>
   </data>
   <data name="rbtnUndergraduateDegree" xml:space="preserve">
-    <value>✅ O'rta</value>
+    <value>✅  O'rta</value>
     <comment>Foydalanuvchidan ilmiy darajasini so'rash oynasi tugmasi. O'rta draja uchun</comment>
   </data>
   <data name="rbtnUzbek" xml:space="preserve">
-    <value>O'zbekcha</value>
+    <value>🇺🇿  o'zbek tili</value>
     <comment>Sozlamalar bo'limidagi bot tiilini o'zgartirish oyna tugmasi. Bot tilini o'zbek tiliga o'zgartirish uchun</comment>
   </data>
   <data name="txtAskFeedbackForOrganization" xml:space="preserve">
