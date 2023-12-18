@@ -3,6 +3,7 @@ using Telegram.Bot.Types;
 using OrgBloom.Domain.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 using OrgBloom.Bot.BotServices.Helpers;
+using OrgBloom.Application.Commons.Constants;
 using OrgBloom.Application.Users.Queries.GetUsers;
 using OrgBloom.Application.Users.Commands.UpdateUsers;
 using OrgBloom.Application.Investors.Queries.GetInvestors;
@@ -143,8 +144,9 @@ public partial class BotUpdateHandler
     {
         var dateOfBirth = await mediator.Send(new GetDateOfBirthQuery(user.Id), cancellationToken);
         var formattedDate = dateOfBirth.ToString().Split().First();
-        
-        var replyKeyboard = (dateOfBirth == DateTimeOffset.MinValue) switch
+        var @default = DateTimeOffset.MinValue.AddHours(TimeConstants.UTC);
+
+        var replyKeyboard = (dateOfBirth == @default) switch
         {
             true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
             false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(formattedDate)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
