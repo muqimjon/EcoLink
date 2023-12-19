@@ -11,10 +11,10 @@ public partial class BotUpdateHandler
     {
         var handle = message.Text switch
         {
-            { } text when text == localizer["rbtnApply"] => SendApplyQueryAsync(botClient, message, cancellationToken),
-            { } text when text == localizer["rbtnSettings"] => SendSettingsQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnDepartaments"] => SendApplyQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnSettings"] => SendMenuSettingsAsync(botClient, message, cancellationToken),
             _ when message.Text == localizer["rbtnInfo"] => SendInfoAsync(botClient, message, cancellationToken),
-            { } text when text == localizer["rbtnFeedback"] => SendFeedbackQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnFeedback"] => SendFeedbackMenuQueryAsync(botClient, message, cancellationToken),
             { } text when text == localizer["rbtnContact"] => SendContactAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
@@ -28,7 +28,7 @@ public partial class BotUpdateHandler
         var handle = message.Text switch
         {
             { } text when text == localizer["rbtnEditLanguage"] => SendSelectLanguageQueryAsync(botClient, message, cancellationToken),
-            { } text when text == localizer["rbtnEditPersonalInfo"] => SendEditPersonalInfoQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnEditPersonalInfo"] => SendMenuEditPersonalInfoAsync(botClient, message, cancellationToken),
             { } text when text == localizer["rbtnBack"] => SendMainMenuAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
@@ -55,15 +55,15 @@ public partial class BotUpdateHandler
 
             }, cancellationToken);
 
-        await SendSettingsQueryAsync(botClient, message, cancellationToken);
+        await SendMenuSettingsAsync(botClient, message, cancellationToken);
     }
 
     private async Task HandleSelectedFeedbackAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var handle = message.Text switch
         {
-            { } text when text == localizer["rbtnFeedbackForOrganization"] => SendRequestFeedbackForOrganizationQueryAsync(botClient, message, cancellationToken),
-            { } text when text == localizer["rbtnFeedbackForTelegramBot"] => SendRequestFeedbackForTelegramBotQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnFeedbackForOrganization"] => SendRequestFeedbackForOrganizationAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnFeedbackForTelegramBot"] => SendRequestFeedbackForTelegramBotAsync(botClient, message, cancellationToken),
             { } text when text == localizer["rbtnBack"] => SendMainMenuAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
@@ -101,7 +101,7 @@ public partial class BotUpdateHandler
                 cancellationToken: cancellationToken);
         }
 
-        await SendMainMenuAsync(botClient, message, cancellationToken);
+        await SendFeedbackMenuQueryAsync(botClient, message, cancellationToken);
     }
 
     private async Task HandleFeedbackForOrganizationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -119,6 +119,6 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken);
         }
 
-        await SendMainMenuAsync(botClient, message, cancellationToken);
+        await SendFeedbackMenuQueryAsync(botClient, message, cancellationToken);
     }
 }

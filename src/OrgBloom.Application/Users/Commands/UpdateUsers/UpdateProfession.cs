@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using OrgBloom.Application.Commons.Interfaces;
 using OrgBloom.Domain.Enums;
-using OrgBloom.Application.Commons.Exceptions;
 using OrgBloom.Domain.Entities.Users;
 using OrgBloom.Application.Commons.Helpers;
+using OrgBloom.Application.Commons.Exceptions;
+using OrgBloom.Application.Commons.Interfaces;
 
 namespace OrgBloom.Application.Users.Commands.UpdateUsers;
 
@@ -17,7 +17,6 @@ public record UpdateProfessionCommand : IRequest<int>
 
     public long Id { get; set; }
     public UserProfession Profession { get; set; }
-    public State State { get; set; } = State.WaitingForSelectProfession;
 }
 
 public class UpdateProfessionCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<UpdateProfessionCommand, int>

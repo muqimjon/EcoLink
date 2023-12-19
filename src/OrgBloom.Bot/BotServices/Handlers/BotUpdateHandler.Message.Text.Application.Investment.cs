@@ -2,20 +2,33 @@
 using Telegram.Bot.Types;
 using OrgBloom.Domain.Enums;
 using OrgBloom.Bot.BotServices.Helpers;
+using OrgBloom.Application.Users.Queries.GetUsers;
 using OrgBloom.Application.Users.Commands.UpdateUsers;
 using OrgBloom.Application.Investors.Queries.GetInvestors;
 using OrgBloom.Application.Investors.Commands.UpdateInvestors;
 using OrgBloom.Application.Investors.Commands.CreateInvestors;
-using OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
-using OrgBloom.Application.Users.Queries.GetUsers;
 
 namespace OrgBloom.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
-    private async Task InvestmentQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task HandleSelectedInvestmentMenuAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         await mediator.Send(new UpdateProfessionCommand() { Id = user.Id, Profession = UserProfession.Investor }, cancellationToken);
+        var handler = message.Text switch
+        {
+            { } text when text == localizer["rbtnApply"] => InvestmentQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnInfo"] => SendProfessionInfoAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnBack"] => SendMainMenuAsync(botClient, message, cancellationToken),
+            _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
+        };
+
+        try { await handler; }
+        catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+    }
+
+    private async Task InvestmentQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
         var application = await mediator.Send(new GetInvestorByUserIdQuery(user.Id), cancellationToken)
             ?? await mediator.Send(new CreateInvestorWithReturnCommand() { UserId = user.Id }, cancellationToken);
 
@@ -37,7 +50,7 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
+                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 _ => SendApplyQueryAsync(botClient, message, cancellationToken)
             };
         }
@@ -46,7 +59,7 @@ public partial class BotUpdateHandler
             await mediator.Send(new UpdateInvestorInvestmentAmountByUserIdCommand() { UserId = user.Id, InvestmentAmount = message.Text }, cancellationToken); // TODO: need validation
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
+                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 _ => SendRequestForPhoneNumberAsync(botClient, message, cancellationToken)
             };
         }

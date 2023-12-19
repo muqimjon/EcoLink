@@ -163,7 +163,8 @@ O'zingiz uchun qulay tilni tanlang: </value>
     <comment>Soha tanlash oynasi tugmasi. Savdo yo'nalishi uchun</comment>
   </data>
   <data name="rbtnApply" xml:space="preserve">
-    <value>📂  Bo'limlar</value>
+    <value>📋  Ariza topshirish</value>
+    <comment>Asosiy menyu tugmasi bu yordamida foydalanuvchilar uchun ariza topshirish  yo'nalishlari oynasi ochiladi</comment>
   </data>
   <data name="rbtnBachelorDegree" xml:space="preserve">
     <value>✅  Oliy</value>
@@ -183,7 +184,7 @@ O'zingiz uchun qulay tilni tanlang: </value>
   </data>
   <data name="rbtnDepartaments" xml:space="preserve">
     <value>📂  Bo'limlar</value>
-    <comment>Asosiy menyu tugmasi bu yordamida foydalanuvchilar uchun ariza topshirish  yo'nalishlari oynasi ochiladi</comment>
+    <comment>Bosh menyu tugmasi. Bo'limlarni tanlash uchun</comment>
   </data>
   <data name="rbtnEditLanguage" xml:space="preserve">
     <value>🌐  Tilni o'zgartirish</value>

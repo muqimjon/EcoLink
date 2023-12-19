@@ -91,7 +91,7 @@ public partial class BotUpdateHandler
             case var text when text == localizer["rbtnCancel"]:
                 handler = profession switch
                 {
-                    UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
+                    UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                     _ => SendApplyQueryAsync(botClient, message, cancellationToken)
                 };
                 break;
@@ -108,7 +108,7 @@ public partial class BotUpdateHandler
 
                 handler = profession switch
                 {
-                    UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
+                    UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                     _ => SendRequestForPurposeAsync(botClient, message, cancellationToken)
                 };
                 break;
@@ -131,7 +131,7 @@ public partial class BotUpdateHandler
             case var text when text == localizer["rbtnCancel"]:
                 handler = profession switch
                 {
-                    UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
+                    UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                     _ => SendApplyQueryAsync(botClient, message, cancellationToken)
                 };
                 break;
@@ -148,7 +148,7 @@ public partial class BotUpdateHandler
 
                 handler = profession switch
                 {
-                    UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
+                    UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                     _ => SendForSubmitApplicationAsync(botClient, message, cancellationToken)
                 };
                 break;

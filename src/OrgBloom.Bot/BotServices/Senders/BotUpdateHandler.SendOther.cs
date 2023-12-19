@@ -60,7 +60,7 @@ public partial class BotUpdateHandler
         );
     }
 
-    private async Task SendSettingsQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendMenuSettingsAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         ReplyKeyboardMarkup keyboard = new(new KeyboardButton[][]
         {
@@ -79,7 +79,7 @@ public partial class BotUpdateHandler
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectSettings), cancellationToken);
     }
 
-    private async Task SendFeedbackQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendFeedbackMenuQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var replyKeyboard = new ReplyKeyboardMarkup(new KeyboardButton[][]
         {
@@ -116,7 +116,7 @@ public partial class BotUpdateHandler
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectLanguage), cancellationToken);
     }
 
-    private async Task SendEditPersonalInfoQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendMenuEditPersonalInfoAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var replyKeyboard = new ReplyKeyboardMarkup(new KeyboardButton[][]
         {
@@ -144,7 +144,7 @@ public partial class BotUpdateHandler
         );
     }
 
-    private async Task SendRequestFeedbackForTelegramBotQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendRequestFeedbackForTelegramBotAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var replyKeyboard = new ReplyKeyboardMarkup(new KeyboardButton[]{new(localizer["rbtnCancel"])}) { ResizeKeyboard = true };
 
@@ -157,7 +157,7 @@ public partial class BotUpdateHandler
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForFeedbackForTelegramBot), cancellationToken);
     }
 
-    private async Task SendRequestFeedbackForOrganizationQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendRequestFeedbackForOrganizationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var replyKeyboard = new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true };
 

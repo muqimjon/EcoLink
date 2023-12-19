@@ -34,4 +34,7 @@ public enum State
     WaitingForFeedbackForOrganization,
     WaitingForFeedbackForTelegramBot,
     WaitingForSelectEntrepreneurshipMenu,
+    WaitingForSelectInvestmentMenu,
+    WaitingForSelectProjectManagementMenu,
+    WaitingForSelectRepresentationMenu,
 }

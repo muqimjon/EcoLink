@@ -12,9 +12,23 @@ namespace OrgBloom.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
-    private async Task ProjectManagementQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task HandleSelectedProjectManagementMenuAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         await mediator.Send(new UpdateProfessionCommand() { Id = user.Id, Profession = UserProfession.ProjectManager }, cancellationToken);
+        var handler = message.Text switch
+        {
+            { } text when text == localizer["rbtnApply"] => ProjectManagementQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnInfo"] => SendProfessionInfoAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnBack"] => SendMainMenuAsync(botClient, message, cancellationToken),
+            _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
+        };
+
+        try { await handler; }
+        catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+    }
+
+    private async Task ProjectManagementQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
         var application = await mediator.Send(new GetProjectManagerByUserIdQuery(user.Id), cancellationToken)
             ?? await mediator.Send(new CreateProjectManagerWithReturnCommand() { UserId = user.Id }, cancellationToken);
 
@@ -36,7 +50,7 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
+                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 _ => SendApplyQueryAsync(botClient, message, cancellationToken)
             };
         }
@@ -45,7 +59,7 @@ public partial class BotUpdateHandler
             await mediator.Send(new UpdateProjectManagerProjectDirectionByUserIdCommand() { UserId = user.Id, ProjectDirection = message.Text }, cancellationToken); // TODO: need validation
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
+                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 _ => SendRequestForExpectationAsync(botClient, message, cancellationToken)
             };
         }

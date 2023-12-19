@@ -9,9 +9,23 @@ namespace OrgBloom.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
-    private Task SendRepresentationMenuAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendRepresentationMenuAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var keyboard = new ReplyKeyboardMarkup(new KeyboardButton[][]
+        {
+            [new(localizer["rbtnApply"]), new(localizer["rbtnInfo"]),],
+            [new(localizer["rbtnBack"])],
+        })
+        { ResizeKeyboard = true };
+
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["txtRepresentationMenu"],
+            replyMarkup: keyboard,
+            cancellationToken: cancellationToken
+        );
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectRepresentationMenu), cancellationToken);
     }
 
     private async Task SendRequestForAreaAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)

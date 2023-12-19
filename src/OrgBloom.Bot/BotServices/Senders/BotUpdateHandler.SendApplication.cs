@@ -366,4 +366,12 @@ public partial class BotUpdateHandler
 
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterSector), cancellationToken);
     }
+
+    private async Task SendProfessionInfoAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        await botClient.SendTextMessageAsync(
+        chatId: message.Chat.Id,
+            text: "Professia haqida",
+            cancellationToken: cancellationToken);
+    }
 }

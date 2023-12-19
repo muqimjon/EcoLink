@@ -25,7 +25,7 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken
         );
 
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectEntrepreneurshipMenu), cancellationToken);
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectEntrepreneurshipMenu), cancellationToken: cancellationToken);
     }
 
     private async Task SendRequestForAboutProjectForEntrepreneurshipAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
