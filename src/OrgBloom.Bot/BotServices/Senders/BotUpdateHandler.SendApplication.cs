@@ -372,10 +372,10 @@ public partial class BotUpdateHandler
         var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         var handler = profession switch
         {
-            UserProfession.Investor => botClient.SendTextMessageAsync(chatId: message.Chat.Id,text: localizer["txtInfoForInvestment"],cancellationToken: cancellationToken),
-            UserProfession.Entrepreneur => botClient.SendTextMessageAsync(chatId: message.Chat.Id, text: localizer["txtInfoForEntrepreneur"], cancellationToken: cancellationToken),
-            UserProfession.Representative => botClient.SendTextMessageAsync(chatId: message.Chat.Id, text: localizer["txtInfoForRepresentative"], cancellationToken: cancellationToken),
-            UserProfession.ProjectManager => botClient.SendTextMessageAsync(chatId: message.Chat.Id, text: localizer["txtInfoForProjectManager"], cancellationToken: cancellationToken),
+            UserProfession.Investor => botClient.SendTextMessageAsync(chatId: message.Chat.Id,text: localizer["txtInfoInvestment"],cancellationToken: cancellationToken),
+            UserProfession.Entrepreneur => botClient.SendTextMessageAsync(chatId: message.Chat.Id, text: localizer["txtInfoEntrepreneurship"], cancellationToken: cancellationToken),
+            UserProfession.Representative => botClient.SendTextMessageAsync(chatId: message.Chat.Id, text: localizer["txtInfoRepresentation"], cancellationToken: cancellationToken),
+            UserProfession.ProjectManager => botClient.SendTextMessageAsync(chatId: message.Chat.Id, text: localizer["txtInfoProjectManagement"], cancellationToken: cancellationToken),
             _ => throw new NotImplementedException()
         };
 

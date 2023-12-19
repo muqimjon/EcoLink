@@ -374,11 +374,11 @@ Dollardayozing: </value>
     <value>Contact ma'lumotlarini yuborish chiqadi //TO DO write request for edit personal info</value>
     <comment>Foydalanuvchiga tashkilot bilan bog'lanishi mumkin bo'lgan a'loqa ma'lumotlari yuboriladi</comment>
   </data>
-  <data name="txtInfoEntrepreneur" xml:space="preserve">
+  <data name="txtInfoEntrepreneurship" xml:space="preserve">
     <value>Tadbirkorlik (Investitsiya jalb qilish) bo'limi uchun ma'lumot // TO DO</value>
     <comment>Tadbirkorlik bo'limi haqida ma'lumot berish uchun yuboriladigan xabar</comment>
   </data>
-  <data name="txtInfoForInvestment" xml:space="preserve">
+  <data name="txtInfoInvestment" xml:space="preserve">
     <value>Investorlik bo'limi uchun ma'lumot // TO DO </value>
     <comment>Investorlik bo'limi haqida ma'lumot berish uchun yuboriladigan xabar </comment>
   </data>
