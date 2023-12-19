@@ -9,6 +9,11 @@ namespace OrgBloom.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
+    private Task SendRepresentationMenuAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
     private async Task SendRequestForAreaAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var area = await mediator.Send(new GetRepresentativeAreaByUserIdQuery(user.Id), cancellationToken);

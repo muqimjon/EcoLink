@@ -9,6 +9,11 @@ namespace OrgBloom.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
+    private Task SendInvestmentMenuAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
     private async Task SendRequestForInvestmentAmountForInvestmentAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var investmrntAmount = await mediator.Send(new GetInvestmentAmountByUserIdQuery(user.Id), cancellationToken);

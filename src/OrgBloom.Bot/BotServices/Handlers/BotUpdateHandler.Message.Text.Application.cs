@@ -13,17 +13,28 @@ public partial class BotUpdateHandler
 {
     private async Task HandleProfessionAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var handle = message.Text switch
+        var handler = message.Text switch
         {
-            { } text when text == localizer["rbtnEntrepreneurship"] => EntrepreneurshipQueryAsync(botClient, message, cancellationToken),
-            { } text when text == localizer["rbtnInvestment"] => InvestmentQueryAsync(botClient, message, cancellationToken),
-            { } text when text == localizer["rbtnRepresentation"] => RepresentationQueryAsync(botClient, message, cancellationToken),
-            { } text when text == localizer["rbtnProjectManagement"] => ProjectManagementQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnEntrepreneurship"] => SendEntrepreneurshipMenuAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnInvestment"] => SendInvestmentMenuAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnRepresentation"] => SendRepresentationMenuAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnProjectManagement"] => SendProjectManagementMenuAsync(botClient, message, cancellationToken),
             _ when message.Text == localizer["rbtnBack"] => SendMainMenuAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 
-        try { await handle; }
+
+        /*        var handle = message.Text switch
+                {
+                    { } text when text == localizer["rbtnEntrepreneurship"] => EntrepreneurshipQueryAsync(botClient, message, cancellationToken),
+                    { } text when text == localizer["rbtnInvestment"] => InvestmentQueryAsync(botClient, message, cancellationToken),
+                    { } text when text == localizer["rbtnRepresentation"] => RepresentationQueryAsync(botClient, message, cancellationToken),
+                    { } text when text == localizer["rbtnProjectManagement"] => ProjectManagementQueryAsync(botClient, message, cancellationToken),
+                    _ when message.Text == localizer["rbtnBack"] => SendMainMenuAsync(botClient, message, cancellationToken),
+                    _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
+                };*/
+
+        try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {from.FirstName}", user.FirstName); }
     }
 

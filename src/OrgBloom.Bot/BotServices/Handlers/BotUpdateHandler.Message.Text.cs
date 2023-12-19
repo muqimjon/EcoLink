@@ -50,6 +50,7 @@ public partial class BotUpdateHandler
             State.WaitingForAssetInvested => HandleAssetsInvestedForEntrepreneurshipAsync(botClient, message, cancellationToken),
             State.WaitingForEnterProjectDirection => HandleProjectDirectionForProjectManagementAsync(botClient, message, cancellationToken),
             State.WaitingForEnterSector => HandleSectorFromTextAsync(botClient, message, cancellationToken),
+            State.WaitingForSelectEntrepreneurshipMenu => HandleSelectedEntrepreneurshipMenuAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 

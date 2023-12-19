@@ -164,7 +164,6 @@ O'zingiz uchun qulay tilni tanlang: </value>
   </data>
   <data name="rbtnApply" xml:space="preserve">
     <value>📂  Bo'limlar</value>
-    <comment>Asosiy menyu tugmasi bu yordamida foydalanuvchilar uchun ariza topshirish  yo'nalishlari oynasi ochiladi</comment>
   </data>
   <data name="rbtnBachelorDegree" xml:space="preserve">
     <value>✅  Oliy</value>
@@ -181,6 +180,10 @@ O'zingiz uchun qulay tilni tanlang: </value>
   <data name="rbtnContact" xml:space="preserve">
     <value>☎️  A'loqa</value>
     <comment>Asosiy menyu tugmasi. Kontakt ma'lumotlari yuboriladi</comment>
+  </data>
+  <data name="rbtnDepartaments" xml:space="preserve">
+    <value>📂  Bo'limlar</value>
+    <comment>Asosiy menyu tugmasi bu yordamida foydalanuvchilar uchun ariza topshirish  yo'nalishlari oynasi ochiladi</comment>
   </data>
   <data name="rbtnEditLanguage" xml:space="preserve">
     <value>🌐  Tilni o'zgartirish</value>
@@ -385,6 +388,9 @@ Dollardayozing: </value>
   <data name="txtEditPersonalInfo" xml:space="preserve">
     <value>Shaxsiy ma'lumotlarni o'zgartirish uchun tanlang </value>
     <comment>Sozlamalar bo'limi orqali shaxsiy ma'lumotlarni o'zgartirish uchun so'rov xabari</comment>
+  </data>
+  <data name="txtEntrepreneurshipMenu" xml:space="preserve">
+    <value>Investitsiya jalb qilish bo'limi</value>
   </data>
   <data name="txtMainMenu" xml:space="preserve">
     <value>Menyuni tanlang </value>

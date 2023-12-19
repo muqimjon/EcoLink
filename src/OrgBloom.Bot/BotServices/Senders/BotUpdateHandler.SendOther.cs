@@ -36,7 +36,7 @@ public partial class BotUpdateHandler
     {
         var keyboard = new ReplyKeyboardMarkup(new KeyboardButton[][]
         {
-            [new(localizer["rbtnApply"])],
+            [new(localizer["rbtnDepartaments"])],
             [new(localizer["rbtnContact"]), new(localizer["rbtnFeedback"])],
             [new(localizer["rbtnSettings"]), new(localizer["rbtnInfo"]),]
         }) { ResizeKeyboard = true };

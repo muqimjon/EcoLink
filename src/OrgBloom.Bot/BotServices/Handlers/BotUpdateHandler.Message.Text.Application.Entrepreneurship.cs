@@ -12,6 +12,14 @@ namespace OrgBloom.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
+    private Task HandleSelectedEntrepreneurshipMenuAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        var handler = message.Text switch
+        {
+            { } text when text == localizer["rbtnApply"] => SendApplyQueryAsync(botClient, message, cancellationToken),
+        }
+    }
+
     private async Task EntrepreneurshipQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         await mediator.Send(new UpdateProfessionCommand() { Id = user.Id, Profession = UserProfession.Entrepreneur }, cancellationToken);

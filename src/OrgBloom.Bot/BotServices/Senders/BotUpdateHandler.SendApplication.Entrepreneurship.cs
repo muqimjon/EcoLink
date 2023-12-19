@@ -9,6 +9,25 @@ namespace OrgBloom.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
+    private async Task SendEntrepreneurshipMenuAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        var keyboard = new ReplyKeyboardMarkup(new KeyboardButton[][]
+        {
+            [new(localizer["rbtnApply"]), new(localizer["rbtnInfo"]),],
+            [new(localizer["rbtnBack"])],
+        })
+        { ResizeKeyboard = true };
+
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: localizer["txtEntrepreneurshipMenu"],
+            replyMarkup: keyboard,
+            cancellationToken: cancellationToken
+        );
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectEntrepreneurshipMenu), cancellationToken);
+    }
+
     private async Task SendRequestForAboutProjectForEntrepreneurshipAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var project = await mediator.Send(new GetEntrepreneurProjectByUserIdQuery(user.Id), cancellationToken);
