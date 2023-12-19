@@ -15,10 +15,10 @@ public partial class BotUpdateHandler
     {
         var handler = message.Text switch
         {
-            { } text when text == localizer["rbtnEntrepreneurship"] => SendEntrepreneurshipMenuAsync(botClient, message, cancellationToken),
-            { } text when text == localizer["rbtnInvestment"] => SendInvestmentMenuAsync(botClient, message, cancellationToken),
-            { } text when text == localizer["rbtnRepresentation"] => SendRepresentationMenuAsync(botClient, message, cancellationToken),
-            { } text when text == localizer["rbtnProjectManagement"] => SendProjectManagementMenuAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnEntrepreneurship"] => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnInvestment"] => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnRepresentation"] => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnProjectManagement"] => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
             _ when message.Text == localizer["rbtnBack"] => SendMainMenuAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
@@ -92,7 +92,7 @@ public partial class BotUpdateHandler
                 handler = profession switch
                 {
                     UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
-                    _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                    _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
                 };
                 break;
             default:
@@ -132,7 +132,7 @@ public partial class BotUpdateHandler
                 handler = profession switch
                 {
                     UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
-                    _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                    _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
                 };
                 break;
             default:

@@ -19,7 +19,7 @@ public partial class BotUpdateHandler
         {
             { } text when text == localizer["rbtnApply"] => RepresentationQueryAsync(botClient, message, cancellationToken),
             { } text when text == localizer["rbtnInfo"] => SendProfessionInfoAsync(botClient, message, cancellationToken),
-            { } text when text == localizer["rbtnBack"] => SendMainMenuAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnBack"] => SendMenuProfessionsAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 
@@ -51,7 +51,7 @@ public partial class BotUpdateHandler
             handler = profession switch
             {
                 UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
         }
         else

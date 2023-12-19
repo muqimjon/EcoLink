@@ -11,7 +11,7 @@ public partial class BotUpdateHandler
     {
         var handle = message.Text switch
         {
-            { } text when text == localizer["rbtnDepartaments"] => SendApplyQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnDepartaments"] => SendMenuProfessionsAsync(botClient, message, cancellationToken),
             { } text when text == localizer["rbtnSettings"] => SendMenuSettingsAsync(botClient, message, cancellationToken),
             _ when message.Text == localizer["rbtnInfo"] => SendInfoAsync(botClient, message, cancellationToken),
             { } text when text == localizer["rbtnFeedback"] => SendFeedbackMenuQueryAsync(botClient, message, cancellationToken),
@@ -78,7 +78,7 @@ public partial class BotUpdateHandler
         {
             { } text when text == localizer["rbtnPhoneNumber"] => SendRequestForPhoneNumberAsync(botClient, message, cancellationToken),
             { } text when text == localizer["rbtnEmail"] => SendRequestForEmailAsync(botClient, message, cancellationToken),
-            { } text when text == localizer["rbtnBack"] => SendMainMenuAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnBack"] => SendMenuSettingsAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 

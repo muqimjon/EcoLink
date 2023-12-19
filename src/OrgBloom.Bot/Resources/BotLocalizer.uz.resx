@@ -279,7 +279,7 @@ O'zingiz uchun qulay tilni tanlang: </value>
     <comment>Foydalanuvchidan telegram bot uchun fikrini so'rash xabari</comment>
   </data>
   <data name="txtAskForAboutProject" xml:space="preserve">
-    <value>Loyiha haqida qisqa va tushunarli yozingc </value>
+    <value>Loyiha haqida qisqa va tushunarli yozing </value>
     <comment>Foydalanuvchidan loyiha haqida so'raladi</comment>
   </data>
   <data name="txtAskForAddress" xml:space="preserve">

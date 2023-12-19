@@ -71,9 +71,12 @@ public partial class BotUpdateHandler
         if(message.Text.Equals(localizer["rbtnCancel"]))
         {
             handler = profession switch
-            {
-                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+            { 
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
+                _ => SendMenuSettingsAsync(botClient, message, cancellationToken),
             };
         }
         else
@@ -101,8 +104,11 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
+                _ => SendMenuSettingsAsync(botClient, message, cancellationToken),
             };
         }
         else
@@ -131,7 +137,7 @@ public partial class BotUpdateHandler
             handler = profession switch
             {
                 UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
         }
         else
@@ -159,8 +165,11 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
+                _ => SendMenuSettingsAsync(botClient, message, cancellationToken),
             };
         }
         else
@@ -192,8 +201,12 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
                 UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
         }
         else
@@ -224,8 +237,11 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.None => SendMenuEditPersonalInfoAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
+                _ => SendMenuEditPersonalInfoAsync(botClient, message, cancellationToken),
             };
         }
         else
@@ -253,8 +269,11 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.None => SendMenuEditPersonalInfoAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
+                _ => SendMenuEditPersonalInfoAsync(botClient, message, cancellationToken),
             };
         }
         else
@@ -282,8 +301,11 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
+                _ => SendMenuSettingsAsync(botClient, message, cancellationToken),
             };
         }
         else
@@ -311,8 +333,11 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
+                _ => SendMenuSettingsAsync(botClient, message, cancellationToken),
             };
         }
         else
@@ -341,8 +366,11 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
+                _ => SendMenuSettingsAsync(botClient, message, cancellationToken),
             };
         }
         else
@@ -371,8 +399,11 @@ public partial class BotUpdateHandler
         {
             var handler = profession switch
             {
-                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
+                _ => SendMenuSettingsAsync(botClient, message, cancellationToken),
             };
 
             try { await handler; }
