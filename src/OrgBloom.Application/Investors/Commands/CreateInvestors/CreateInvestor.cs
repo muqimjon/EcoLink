@@ -16,7 +16,7 @@ public record CreateInvestorCommand : IRequest<int>
     }
 
     public string Sector { get; set; } = string.Empty;
-    public decimal InvestmentAmount { get; set; }
+    public string InvestmentAmount { get; set; } = string.Empty;
     public long UserId { get; set; }
     public bool IsSubmitted { get; set; }
 }

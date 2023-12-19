@@ -60,6 +60,7 @@ public class MappingProfile : Profile
         CreateMap<UpdateEntrepreneurRequiredFundingByUserIdCommand, Entrepreneur>();
         CreateMap<UpdateEntrepreneurIsSubmittedByUserIdCommand, Entrepreneur>();
         CreateMap<UpdateEntrepreneurProjectByUserIdCommand, Entrepreneur>();
+        CreateMap<UpdateEntrepreneurSectorByUserIdCommand, Entrepreneur>();
 
         CreateMap<CreateEntrepreneurCommand, Entrepreneur>();
         CreateMap<CreateEntrepreneurWithReturnCommand, Entrepreneur>();

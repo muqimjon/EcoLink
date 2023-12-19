@@ -12,7 +12,7 @@ using OrgBloom.Infrastructure.Contexts;
 namespace OrgBloom.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231216153824_InitialMigrate")]
+    [Migration("20231218183242_InitialMigrate")]
     partial class InitialMigrate
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace OrgBloom.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("OrgBloom.Domain.Entities.Entrepreneur", b =>
+            modelBuilder.Entity("OrgBloom.Domain.Entities.Entrepreneurship.Entrepreneur", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -54,6 +54,9 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<string>("RequiredFunding")
                         .HasColumnType("text");
 
+                    b.Property<string>("Sector")
+                        .HasColumnType("text");
+
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -67,7 +70,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.ToTable("Entrepreneurs");
                 });
 
-            modelBuilder.Entity("OrgBloom.Domain.Entities.Investor", b =>
+            modelBuilder.Entity("OrgBloom.Domain.Entities.Investment.Investor", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -103,7 +106,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.ToTable("Investors");
                 });
 
-            modelBuilder.Entity("OrgBloom.Domain.Entities.ProjectManager", b =>
+            modelBuilder.Entity("OrgBloom.Domain.Entities.ProjectManagement.ProjectManager", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -142,7 +145,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.ToTable("ProjectManagers");
                 });
 
-            modelBuilder.Entity("OrgBloom.Domain.Entities.Representative", b =>
+            modelBuilder.Entity("OrgBloom.Domain.Entities.Representation.Representative", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -181,7 +184,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.ToTable("Representatives");
                 });
 
-            modelBuilder.Entity("OrgBloom.Domain.Entities.User", b =>
+            modelBuilder.Entity("OrgBloom.Domain.Entities.Users.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -254,9 +257,9 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("OrgBloom.Domain.Entities.Entrepreneur", b =>
+            modelBuilder.Entity("OrgBloom.Domain.Entities.Entrepreneurship.Entrepreneur", b =>
                 {
-                    b.HasOne("OrgBloom.Domain.Entities.User", "User")
+                    b.HasOne("OrgBloom.Domain.Entities.Users.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -265,9 +268,9 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("OrgBloom.Domain.Entities.Investor", b =>
+            modelBuilder.Entity("OrgBloom.Domain.Entities.Investment.Investor", b =>
                 {
-                    b.HasOne("OrgBloom.Domain.Entities.User", "User")
+                    b.HasOne("OrgBloom.Domain.Entities.Users.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -276,9 +279,9 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("OrgBloom.Domain.Entities.ProjectManager", b =>
+            modelBuilder.Entity("OrgBloom.Domain.Entities.ProjectManagement.ProjectManager", b =>
                 {
-                    b.HasOne("OrgBloom.Domain.Entities.User", "User")
+                    b.HasOne("OrgBloom.Domain.Entities.Users.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -287,9 +290,9 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("OrgBloom.Domain.Entities.Representative", b =>
+            modelBuilder.Entity("OrgBloom.Domain.Entities.Representation.Representative", b =>
                 {
-                    b.HasOne("OrgBloom.Domain.Entities.User", "User")
+                    b.HasOne("OrgBloom.Domain.Entities.Users.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

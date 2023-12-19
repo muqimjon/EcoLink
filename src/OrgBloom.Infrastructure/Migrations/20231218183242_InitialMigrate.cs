@@ -50,6 +50,7 @@ namespace OrgBloom.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Sector = table.Column<string>(type: "text", nullable: true),
                     Project = table.Column<string>(type: "text", nullable: true),
                     HelpType = table.Column<string>(type: "text", nullable: true),
                     RequiredFunding = table.Column<string>(type: "text", nullable: true),

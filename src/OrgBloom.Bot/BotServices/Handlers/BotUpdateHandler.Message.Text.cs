@@ -3,6 +3,9 @@ using Telegram.Bot.Types;
 using OrgBloom.Domain.Enums;
 using OrgBloom.Application.Users.Queries.GetUsers;
 using OrgBloom.Application.Users.Commands.UpdateUsers;
+using OrgBloom.Application.Investors.Commands.UpdateInvestors;
+using OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
+using OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 
 namespace OrgBloom.Bot.BotServices;
 
@@ -47,6 +50,10 @@ public partial class BotUpdateHandler
             State.WaitingForAssetInvested => HandleAssetsInvestedForEntrepreneurshipAsync(botClient, message, cancellationToken),
             State.WaitingForEnterProjectDirection => HandleProjectDirectionForProjectManagementAsync(botClient, message, cancellationToken),
             State.WaitingForEnterSector => HandleSectorFromTextAsync(botClient, message, cancellationToken),
+            State.WaitingForSelectEntrepreneurshipMenu => HandleSelectedEntrepreneurshipMenuAsync(botClient, message, cancellationToken),
+            State.WaitingForSelectProjectManagementMenu => HandleSelectedProjectManagementMenuAsync(botClient, message, cancellationToken),
+            State.WaitingForSelectInvestmentMenu => HandleSelectedInvestmentMenuAsync(botClient, message, cancellationToken),
+            State.WaitingForSelectRepresentationMenu => HandleSelectedRepresentationMenuAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 
@@ -64,9 +71,12 @@ public partial class BotUpdateHandler
         if(message.Text.Equals(localizer["rbtnCancel"]))
         {
             handler = profession switch
-            {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+            { 
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
+                _ => SendMenuSettingsAsync(botClient, message, cancellationToken),
             };
         }
         else
@@ -74,7 +84,7 @@ public partial class BotUpdateHandler
             await mediator.Send(new UpdateFirstNameCommand() { Id = user.Id, FirstName = message.Text }, cancellationToken); // TODO: need validation
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
+                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 _ => SendRequestForLastNameAsync(botClient, message, cancellationToken)
             };
         }
@@ -94,8 +104,11 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
+                _ => SendMenuSettingsAsync(botClient, message, cancellationToken),
             };
         }
         else
@@ -103,8 +116,8 @@ public partial class BotUpdateHandler
             await mediator.Send(new UpdateLastNameCommand() { Id = user.Id, LastName = message.Text }, cancellationToken); // TODO: need validation
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
-                _ => SendRequestForPatronomycAsync(botClient, message, cancellationToken)
+                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
+                _ => SendRequestForDateOfBirthAsync(botClient, message, cancellationToken)
             };
         }
 
@@ -123,8 +136,8 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
+                _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
         }
         else
@@ -132,7 +145,7 @@ public partial class BotUpdateHandler
             await mediator.Send(new UpdatePatronomycCommand() { Id = user.Id, Patronomyc = message.Text }, cancellationToken); // TODO: need validation
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
+                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 _ => SendRequestForDateOfBirthAsync(botClient, message, cancellationToken)
             };
         }
@@ -152,8 +165,11 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
+                _ => SendMenuSettingsAsync(botClient, message, cancellationToken),
             };
         }
         else
@@ -163,7 +179,7 @@ public partial class BotUpdateHandler
                 await mediator.Send(new UpdateDateOfBirthCommand() { Id = user.Id, DateOfBirth = dateOfBirth.ToUniversalTime() }, cancellationToken);
                 handler = profession switch
                 {
-                    UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
+                    UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                     _ => SendRequestForDegreeAsync(botClient, message, cancellationToken)
                 };
             }
@@ -185,16 +201,21 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
+                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
+                _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
         }
         else
         {
-            await mediator.Send(new UpdateDegreeCommand() { Id = user.Id, Degree = message.Text.TrimStart('✅') }, cancellationToken); // TODO: need validation
+            await mediator.Send(new UpdateDegreeCommand() { Id = user.Id, Degree = message.Text.TrimStart('✅').Trim() }, cancellationToken); // TODO: need validation
+
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
+                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 UserProfession.Investor => SendRequestForSectorAsync(botClient, message, cancellationToken),
                 UserProfession.Entrepreneur => SendRequestForExperienceAsync(botClient, message, cancellationToken),
                 _ => SendRequestForLanguagesAsync(botClient, message, cancellationToken),
@@ -216,8 +237,11 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
+                _ => SendMenuEditPersonalInfoAsync(botClient, message, cancellationToken),
             };
         }
         else
@@ -225,7 +249,7 @@ public partial class BotUpdateHandler
             await mediator.Send(new UpdatePhoneCommand() { Id = user.Id, Phone = message.Text }, cancellationToken); // TODO: need validation
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
+                UserProfession.None => SendMenuEditPersonalInfoAsync(botClient, message, cancellationToken),
                 _ => SendRequestForEmailAsync(botClient, message, cancellationToken)
             };
         }
@@ -245,8 +269,11 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
+                _ => SendMenuEditPersonalInfoAsync(botClient, message, cancellationToken),
             };
         }
         else
@@ -254,7 +281,7 @@ public partial class BotUpdateHandler
             await mediator.Send(new UpdateEmailCommand() { Id = user.Id, Email = message.Text }, cancellationToken); // TODO: need validation
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
+                UserProfession.None => SendMenuEditPersonalInfoAsync(botClient, message, cancellationToken),
                 _ => SendForSubmitApplicationAsync(botClient, message, cancellationToken)
             };
         }
@@ -274,8 +301,11 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
+                _ => SendMenuSettingsAsync(botClient, message, cancellationToken),
             };
         }
         else
@@ -283,7 +313,7 @@ public partial class BotUpdateHandler
             await mediator.Send(new UpdateLanguagesCommand() { Id = user.Id, Languages = message.Text }, cancellationToken); // TODO: need validation
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
+                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 _ => SendRequestForExperienceAsync(botClient, message, cancellationToken)
             };
         }
@@ -303,8 +333,11 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
+                _ => SendMenuSettingsAsync(botClient, message, cancellationToken),
             };
         }
         else
@@ -312,8 +345,8 @@ public partial class BotUpdateHandler
             await mediator.Send(new UpdateExperienceCommand() { Id = user.Id, Experience = message.Text }, cancellationToken); // TODO: need validation
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
-                UserProfession.Entrepreneur => SendRequestForAboutProjectForEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
+                UserProfession.Entrepreneur => SendRequestForSectorAsync(botClient, message, cancellationToken),
                 _ => SendRequestForAddressAsync(botClient, message, cancellationToken), // Works for PM and Representative
             };
         }
@@ -333,8 +366,11 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
+                _ => SendMenuSettingsAsync(botClient, message, cancellationToken),
             };
         }
         else
@@ -342,7 +378,7 @@ public partial class BotUpdateHandler
             await mediator.Send(new UpdateAddressCommand() { Id = user.Id, Address = message.Text }, cancellationToken); // TODO: need validation
             handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
+                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 UserProfession.Representative => SendRequestForAreaAsync(botClient, message, cancellationToken),
                 UserProfession.ProjectManager => SendRequestForSectorAsync(botClient, message, cancellationToken),
                 _ => HandleUnknownMessageAsync(botClient, message, cancellationToken),
@@ -363,12 +399,36 @@ public partial class BotUpdateHandler
         {
             var handler = profession switch
             {
-                UserProfession.None => SendSettingsQueryAsync(botClient, message, cancellationToken),
-                _ => SendApplyQueryAsync(botClient, message, cancellationToken)
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
+                _ => SendMenuSettingsAsync(botClient, message, cancellationToken),
             };
 
             try { await handler; }
             catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+        }
+        else
+        {
+            switch (profession)
+            {
+                case UserProfession.Investor:
+                    await mediator.Send(new UpdateInvestorSectorByUserIdCommand { UserId = user.Id, Sector = message.Text }, cancellationToken);
+                    await SendRequestForInvestmentAmountForInvestmentAsync(botClient, message, cancellationToken);
+                    break;
+                case UserProfession.ProjectManager:
+                    await mediator.Send(new UpdateProjectManagerProjectDirectionByUserIdCommand() { UserId = user.Id, ProjectDirection = message.Text }, cancellationToken);
+                    await SendRequestForExpectationAsync(botClient, message, cancellationToken);
+                    break;
+                case UserProfession.Entrepreneur:
+                    await mediator.Send(new UpdateEntrepreneurSectorByUserIdCommand() { UserId = user.Id, Sector = message.Text }, cancellationToken);
+                    await SendRequestForAboutProjectForEntrepreneurshipAsync(botClient, message, cancellationToken);
+                    break;
+                default:
+                    await HandleUnknownMessageAsync(botClient, message, cancellationToken);
+                    break;
+            };
         }
     }
 }
