@@ -17,7 +17,7 @@ public partial class BotUpdateHandler
         await mediator.Send(new UpdateProfessionCommand() { Id = user.Id, Profession = UserProfession.Entrepreneur }, cancellationToken);
         var handler = message.Text switch
         {
-            { } text when text == localizer["rbtnApply"] => EntrepreneurshipQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnApply"] => EntrepreneurshipApplicationAsync(botClient, message, cancellationToken),
             { } text when text == localizer["rbtnInfo"] => SendProfessionInfoAsync(botClient, message, cancellationToken),
             { } text when text == localizer["rbtnBack"] => SendMenuProfessionsAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
@@ -27,7 +27,7 @@ public partial class BotUpdateHandler
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
     }
 
-    private async Task EntrepreneurshipQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task EntrepreneurshipApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var application = await mediator.Send(new GetEntrepreneurByUserIdQuery(user.Id), cancellationToken)
             ?? await mediator.Send(new CreateEntrepreneurWithReturnCommand() { UserId = user.Id }, cancellationToken);
@@ -60,7 +60,7 @@ public partial class BotUpdateHandler
             handler = profession switch
             {
                 UserProfession.Entrepreneur => SendRequestForHelpTypeEntrepreneurshipAsync(botClient, message, cancellationToken),
-                _ => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
         }
 
@@ -90,7 +90,7 @@ public partial class BotUpdateHandler
             handler = profession switch
             {
                 UserProfession.Entrepreneur => SendRequestForRequiredFundingForEntrepreneurshipAsync(botClient, message, cancellationToken),
-                _ => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
         }
 
@@ -110,8 +110,8 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.Entrepreneur => SendMenuProfessionsAsync(botClient, message, cancellationToken),
-                _ => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
         }
         else
@@ -120,7 +120,7 @@ public partial class BotUpdateHandler
             handler = profession switch
             {
                 UserProfession.Entrepreneur => SendRequestForAssetsInvestedForEntrepreneurshipAsync(botClient, message, cancellationToken),
-                _ => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
         }
 
@@ -150,7 +150,7 @@ public partial class BotUpdateHandler
             handler = profession switch
             {
                 UserProfession.Entrepreneur => SendRequestForPhoneNumberAsync(botClient, message, cancellationToken),
-                _ => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
         }
 

@@ -58,11 +58,11 @@ public partial class BotUpdateHandler
         {
             case UserProfession.Investor:
                 await mediator.Send(new UpdateInvestorIsSubmittedByUserIdCommand() { UserId = user.Id, IsSubmitted = false }, cancellationToken);
-                await InvestmentQueryAsync(botClient, message, cancellationToken);
+                await InvestmentApplicationAsync(botClient, message, cancellationToken);
                 break;
             case UserProfession.Entrepreneur:
                 await mediator.Send(new UpdateEntrepreneurIsSubmittedByUserIdCommand() { UserId = user.Id, IsSubmitted = false }, cancellationToken);
-                await EntrepreneurshipQueryAsync(botClient, message, cancellationToken);
+                await EntrepreneurshipApplicationAsync(botClient, message, cancellationToken);
                 break;
             case UserProfession.ProjectManager:
                 await mediator.Send(new UpdateProjectManagerIsSubmittedByUserIdCommand() { UserId = user.Id, IsSubmitted = false }, cancellationToken);
@@ -70,7 +70,7 @@ public partial class BotUpdateHandler
                 break;
             case UserProfession.Representative:
                 await mediator.Send(new UpdateRepresentativeIsSubmittedByUserCommand() { UserId = user.Id, IsSubmitted = false }, cancellationToken);
-                await RepresentationQueryAsync(botClient, message, cancellationToken);
+                await RepresentationApplicationAsync(botClient, message, cancellationToken);
                 break;
             default:
                 await HandleUnknownMessageAsync(botClient, message, cancellationToken);

@@ -50,7 +50,7 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
                 _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
         }
@@ -59,8 +59,8 @@ public partial class BotUpdateHandler
             await mediator.Send(new UpdateProjectManagerProjectDirectionByUserIdCommand() { UserId = user.Id, ProjectDirection = message.Text }, cancellationToken); // TODO: need validation
             handler = profession switch
             {
-                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
-                _ => SendRequestForExpectationAsync(botClient, message, cancellationToken)
+                UserProfession.ProjectManager => SendRequestForExpectationAsync(botClient, message, cancellationToken),
+                _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
         }
 

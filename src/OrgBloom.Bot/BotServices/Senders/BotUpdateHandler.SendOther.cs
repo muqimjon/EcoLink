@@ -89,7 +89,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: localizer["txtAskForFeedback"],
+            text: localizer["txtMenuFeedback"],
             replyMarkup: replyKeyboard,
             cancellationToken: cancellationToken);
 
@@ -109,7 +109,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: localizer["txtAskForSelectLanguage"],
+            text: localizer["txtMenuLanguage"],
             replyMarkup: replyKeyboard,
             cancellationToken: cancellationToken);
 
@@ -127,7 +127,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: localizer["txtEditPersonalInfo"],
+            text: localizer["txtMenuPersonalInfo"],
             replyMarkup: replyKeyboard,
             cancellationToken: cancellationToken
         );

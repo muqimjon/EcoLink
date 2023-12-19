@@ -29,7 +29,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: localizer["txtAskForApplication"],
+            text: localizer["txtMenuDepartaments"],
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
@@ -369,9 +369,17 @@ public partial class BotUpdateHandler
 
     private async Task SendProfessionInfoAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        await botClient.SendTextMessageAsync(
-        chatId: message.Chat.Id,
-            text: "Professia haqida",
-            cancellationToken: cancellationToken);
+        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
+        var handler = profession switch
+        {
+            UserProfession.Investor => botClient.SendTextMessageAsync(chatId: message.Chat.Id,text: localizer["txtInfoForInvestment"],cancellationToken: cancellationToken),
+            UserProfession.Entrepreneur => botClient.SendTextMessageAsync(chatId: message.Chat.Id, text: localizer["txtInfoForEntrepreneur"], cancellationToken: cancellationToken),
+            UserProfession.Representative => botClient.SendTextMessageAsync(chatId: message.Chat.Id, text: localizer["txtInfoForRepresentative"], cancellationToken: cancellationToken),
+            UserProfession.ProjectManager => botClient.SendTextMessageAsync(chatId: message.Chat.Id, text: localizer["txtInfoForProjectManager"], cancellationToken: cancellationToken),
+            _ => throw new NotImplementedException()
+        };
+
+        try { await handler; }
+        catch(Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
     }
 }

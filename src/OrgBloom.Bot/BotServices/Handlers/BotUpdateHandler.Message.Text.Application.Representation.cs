@@ -17,7 +17,7 @@ public partial class BotUpdateHandler
         await mediator.Send(new UpdateProfessionCommand() { Id = user.Id, Profession = UserProfession.Representative }, cancellationToken);
         var handler = message.Text switch
         {
-            { } text when text == localizer["rbtnApply"] => RepresentationQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnApply"] => RepresentationApplicationAsync(botClient, message, cancellationToken),
             { } text when text == localizer["rbtnInfo"] => SendProfessionInfoAsync(botClient, message, cancellationToken),
             { } text when text == localizer["rbtnBack"] => SendMenuProfessionsAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
@@ -27,7 +27,7 @@ public partial class BotUpdateHandler
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
     }
 
-    private async Task RepresentationQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task RepresentationApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var application = await mediator.Send(new GetRepresentativeByUserIdQuery(user.Id), cancellationToken)
             ?? await mediator.Send(new CreateRepresentativeWithReturnCommand() { UserId = user.Id }, cancellationToken);
@@ -50,17 +50,17 @@ public partial class BotUpdateHandler
         {
             handler = profession switch
             {
-                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
                 _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
-            };
+            };;
         }
         else
         {
             await mediator.Send(new UpdateRepresentativeAreaByUserIdCommand() { UserId = user.Id, Area = message.Text }, cancellationToken); // TODO: need validation
             handler = profession switch
             {
-                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
-                _ => SendRequestForExpectationAsync(botClient, message, cancellationToken)
+                UserProfession.None => SendRequestForExpectationAsync(botClient, message, cancellationToken),
+                _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
         }
 

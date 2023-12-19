@@ -286,10 +286,6 @@ O'zingiz uchun qulay tilni tanlang: </value>
     <value>Hozir qayerda yashaysiz? </value>
     <comment>Foydalanuvchidan manzilini so'rash</comment>
   </data>
-  <data name="txtAskForApplication" xml:space="preserve">
-    <value>Nima maqsadda ariza topshirmoqchisiz? </value>
-    <comment>Ariza topshirish oynasi xabari</comment>
-  </data>
   <data name="txtAskForArea" xml:space="preserve">
     <value>Qayerda vakil bo'lmoqchisiz? </value>
     <comment>Foydalanuvchidan qayerda vakil bo'lishni istayotgani so'raladi.</comment>
@@ -318,10 +314,6 @@ O'zingiz uchun qulay tilni tanlang: </value>
   <data name="txtAskForExperience" xml:space="preserve">
     <value>Qaysi sohada necha yillik tajribagiz bor?</value>
     <comment>Foydalanuvchidan ish tajribasini so'rash</comment>
-  </data>
-  <data name="txtAskForFeedback" xml:space="preserve">
-    <value>Kim uchun fikr bildirmoqchisiz? </value>
-    <comment>Fikr bildirish oyna xabari. foydalanuvchidan nima maqsadda fikr bildirayotgani so'raladi.</comment>
   </data>
   <data name="txtAskForFirstName" xml:space="preserve">
     <value>Ismingizni kiriting </value>
@@ -368,10 +360,6 @@ Dollardayozing: </value>
     <value>Qaysi sohada investorlik qilmoqchisiz? </value>
     <comment>Foydalanuvchidan qaysi sohaga sarmoya kiritishi so'raladi.</comment>
   </data>
-  <data name="txtAskForSelectLanguage" xml:space="preserve">
-    <value>Kerakli  tilni tanlang </value>
-    <comment>Sozlamalar bo'limidagi bot tilini o'zgartirish uchun so'rov xabari</comment>
-  </data>
   <data name="txtAskForSelectOrWrite" xml:space="preserve">
     <value>Yuqoridagilarni tanlang yoki kiriting</value>
   </data>
@@ -386,16 +374,57 @@ Dollardayozing: </value>
     <value>Contact ma'lumotlarini yuborish chiqadi //TO DO write request for edit personal info</value>
     <comment>Foydalanuvchiga tashkilot bilan bog'lanishi mumkin bo'lgan a'loqa ma'lumotlari yuboriladi</comment>
   </data>
-  <data name="txtEditPersonalInfo" xml:space="preserve">
+  <data name="txtInfoEntrepreneur" xml:space="preserve">
+    <value>Tadbirkorlik (Investitsiya jalb qilish) bo'limi uchun ma'lumot // TO DO</value>
+    <comment>Tadbirkorlik bo'limi haqida ma'lumot berish uchun yuboriladigan xabar</comment>
+  </data>
+  <data name="txtInfoForInvestment" xml:space="preserve">
+    <value>Investorlik bo'limi uchun ma'lumot // TO DO </value>
+    <comment>Investorlik bo'limi haqida ma'lumot berish uchun yuboriladigan xabar </comment>
+  </data>
+  <data name="txtInfoProjectManagement" xml:space="preserve">
+    <value>Loyiha boshqaruvi bo'limi uchun ma'lumot // TO DO</value>
+    <comment>Loyiha boshqaruv bo'limi haqida ma'lumot berish uchun yuboriladigan xabar</comment>
+  </data>
+  <data name="txtInfoRepresentation" xml:space="preserve">
+    <value>Vakillik bo'limi uchun ma'lumot // TO DO</value>
+    <comment>Vakillik bo'limi haqida ma'lumot berish uchun yuboriladigan xabar</comment>
+  </data>
+  <data name="txtMainMenu" xml:space="preserve">
+    <value>Menyuni tanlang: </value>
+    <comment>Asosiy menyu xabari</comment>
+  </data>
+  <data name="txtMenuDepartaments" xml:space="preserve">
+    <value>Mavjud Yo'nalishlar:</value>
+    <comment>Bo'limlar oynasi xabari</comment>
+  </data>
+  <data name="txtMenuEntrepreneurship" xml:space="preserve">
+    <value>Investitsiya jalb qilish bo'limi: </value>
+    <comment>Bo'limlar qismida Investitsiya jalb qilish tugmasi bosganda yuboriladigan xabar</comment>
+  </data>
+  <data name="txtMenuFeedback" xml:space="preserve">
+    <value>Kim uchun fikr bildirmoqchisiz? </value>
+    <comment>Fikr bildirish oyna xabari. foydalanuvchidan nima maqsadda fikr bildirayotgani so'raladi.</comment>
+  </data>
+  <data name="txtMenuInvestment" xml:space="preserve">
+    <value>Investitorlik bo'limi: </value>
+    <comment>Bo'limlar qismida Investitor bo'lish tugmasi bosganda yuboriladigan xabar</comment>
+  </data>
+  <data name="txtMenuLanguage" xml:space="preserve">
+    <value>Kerakli  tilni tanlang </value>
+    <comment>Sozlamalar bo'limidagi bot tilini o'zgartirish uchun so'rov xabari</comment>
+  </data>
+  <data name="txtMenuPersonalInfo" xml:space="preserve">
     <value>Shaxsiy ma'lumotlarni o'zgartirish uchun tanlang </value>
     <comment>Sozlamalar bo'limi orqali shaxsiy ma'lumotlarni o'zgartirish uchun so'rov xabari</comment>
   </data>
-  <data name="txtEntrepreneurshipMenu" xml:space="preserve">
-    <value>Investitsiya jalb qilish bo'limi</value>
+  <data name="txtMenuProjectManagement" xml:space="preserve">
+    <value>Loyiha boshqaruvi bo'limi: </value>
+    <comment>Bo'limlar qismida loyiha boshqarish tugmasi bosganda yuboriladigan xabar</comment>
   </data>
-  <data name="txtMainMenu" xml:space="preserve">
-    <value>Menyuni tanlang </value>
-    <comment>Asosiy menyu xabari</comment>
+  <data name="txtMenuRepresentation" xml:space="preserve">
+    <value>Vakillik bo'limi: </value>
+    <comment>Bo'limlar qismida vakil bo'lish tugmasi bosganda yuboriladigan xabar</comment>
   </data>
   <data name="txtOrganizationInfo" xml:space="preserve">
     <value>Kompaniya haqida ma'lumot yozilishi kerak // TO DO text about organization </value>

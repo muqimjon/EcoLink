@@ -20,7 +20,7 @@ public partial class BotUpdateHandler
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: localizer["txtEntrepreneurshipMenu"],
+            text: localizer["txtMenuEntrepreneurship"],
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
