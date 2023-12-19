@@ -10,7 +10,6 @@ public static class StringHelper
     public static string GetApplicationInfoForm(EntrepreneurResultDto dto)
         => $"Ism: {dto.User.FirstName}\n" +
         $"Familiya: {dto.User.LastName}\n" +
-        $"Otasining ismi: {dto.User.Patronomyc}\n" +
         $"Yoshi: {TimeHelper.GetAge(dto.User.DateOfBirth)}\n" +
         $"Rol: {Enum.GetName(dto.User.Profession)}\n" +
         $"Sektor: {dto.User.Experience}\n" +
@@ -24,7 +23,6 @@ public static class StringHelper
     public static string GetApplicationInfoForm(InvestorResultDto dto)
         => $"Ism: {dto.User.FirstName}\n" +
         $"Familiya: {dto.User.LastName}\n" +
-        $"Otasining ismi: {dto.User.Patronomyc}\n" +
         $"Yoshi: {TimeHelper.GetAge(dto.User.DateOfBirth)}\n" +
         $"Rol: {Enum.GetName(dto.User.Profession)}\n" +
         $"Sektor: {dto.Sector}\n" +
@@ -36,7 +34,6 @@ public static class StringHelper
     public static string GetApplicationInfoForm(RepresentativeResultDto dto)
         => $"Ism: {dto.User.FirstName}\n" +
         $"Familiya: {dto.User.LastName}\n" +
-        $"Otasining ismi: {dto.User.Patronomyc}\n" +
         $"Yoshi: {TimeHelper.GetAge(dto.User.DateOfBirth)}\n" +
         $"Rol: {Enum.GetName(dto.User.Profession)}\n" +
         $"Loyiha: {dto.User.Languages}\n" +
@@ -49,7 +46,6 @@ public static class StringHelper
     public static string GetApplicationInfoForm(ProjectManagerResultDto dto)
         => $"Ism: {dto.User.FirstName}\n" +
         $"Familiya: {dto.User.LastName}\n" +
-        $"Otasining ismi: {dto.User.Patronomyc}\n" +
         $"Yoshi: {TimeHelper.GetAge(dto.User.DateOfBirth)}\n" +
         $"Rol: {Enum.GetName(dto.User.Profession)}\n" +
         $"Loyiha: {dto.User.Languages}\n" +

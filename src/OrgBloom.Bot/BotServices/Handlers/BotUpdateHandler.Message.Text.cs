@@ -3,6 +3,9 @@ using Telegram.Bot.Types;
 using OrgBloom.Domain.Enums;
 using OrgBloom.Application.Users.Queries.GetUsers;
 using OrgBloom.Application.Users.Commands.UpdateUsers;
+using OrgBloom.Application.Investors.Commands.UpdateInvestors;
+using OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
+using OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 
 namespace OrgBloom.Bot.BotServices;
 
@@ -370,6 +373,27 @@ public partial class BotUpdateHandler
 
             try { await handler; }
             catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+        }
+        else
+        {
+            switch (profession)
+            {
+                case UserProfession.Investor:
+                    await mediator.Send(new UpdateInvestorSectorByUserIdCommand { UserId = user.Id, Sector = message.Text }, cancellationToken);
+                    await SendRequestForInvestmentAmountForInvestmentAsync(botClient, message, cancellationToken);
+                    break;
+                case UserProfession.ProjectManager:
+                    await mediator.Send(new UpdateProjectManagerProjectDirectionByUserIdCommand() { UserId = user.Id, ProjectDirection = message.Text }, cancellationToken);
+                    await SendRequestForExpectationAsync(botClient, message, cancellationToken);
+                    break;
+                case UserProfession.Entrepreneur:
+                    await mediator.Send(new UpdateEntrepreneurSectorByUserIdCommand() { UserId = user.Id, Sector = message.Text }, cancellationToken);
+                    await SendRequestForAboutProjectForEntrepreneurshipAsync(botClient, message, cancellationToken);
+                    break;
+                default:
+                    await HandleUnknownMessageAsync(botClient, message, cancellationToken);
+                    break;
+            };
         }
     }
 }

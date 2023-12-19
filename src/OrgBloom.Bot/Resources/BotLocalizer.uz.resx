@@ -119,7 +119,7 @@
   </resheader>
   <data name="greeting" xml:space="preserve">
     <value>Assalomu alaykum {0} {1}!
-O'zingiz uchun qulay tilni tanlang:</value>
+O'zingiz uchun qulay tilni tanlang: </value>
     <comment>Salomlashish matni, bir vaqtda foydalanuvchiga qulay bo'lgan tilni belgilashi so'raladi bundan foydalanilayotganda foudalanuvchining ismi va familiyasi talab qilinadi.</comment>
   </data>
   <data name="ibtnAgriculture" xml:space="preserve">
@@ -275,131 +275,138 @@ O'zingiz uchun qulay tilni tanlang:</value>
     <comment>Foydalanuvchidan telegram bot uchun fikrini so'rash xabari</comment>
   </data>
   <data name="txtAskForAboutProject" xml:space="preserve">
-    <value>Loyiha haqida qisqa va tushunarli yozing:</value>
+    <value>Loyiha haqida qisqa va tushunarli yozingc </value>
     <comment>Foydalanuvchidan loyiha haqida so'raladi</comment>
   </data>
   <data name="txtAskForAddress" xml:space="preserve">
-    <value>Hozir qayerda yashaysiz?</value>
+    <value>Hozir qayerda yashaysiz? </value>
     <comment>Foydalanuvchidan manzilini so'rash</comment>
   </data>
   <data name="txtAskForApplication" xml:space="preserve">
-    <value>Nima maqsadda ariza topshirmoqchisiz?</value>
+    <value>Nima maqsadda ariza topshirmoqchisiz? </value>
     <comment>Ariza topshirish oynasi xabari</comment>
   </data>
   <data name="txtAskForArea" xml:space="preserve">
-    <value>Qayerda vakil bo'lmoqchisiz?</value>
+    <value>Qayerda vakil bo'lmoqchisiz? </value>
     <comment>Foydalanuvchidan qayerda vakil bo'lishni istayotgani so'raladi.</comment>
   </data>
   <data name="txtAskForAssetInvested" xml:space="preserve">
-    <value>Loyihada tikiladigan aktivingiz (pul, yer, bino, uskuna va hkz)</value>
+    <value>Loyihada tikiladigan aktivingiz (pul, yer, bino, uskuna va hkz) </value>
     <comment>Foydalanuvchi o'z loyihasi uchun nimani o'rtaga qo'ya olishi so'raladi</comment>
   </data>
   <data name="txtAskForDateOfBirth" xml:space="preserve">
-    <value>Tug'ilgan sana: (kk.oo.yyyy)</value>
+    <value>Tug'ilgan sanangizni kk.oo.yyyy ko'rinishida kiriting
+ </value>
     <comment>Foydalanuvchidan tug'ilgan sanasini so'rash</comment>
   </data>
   <data name="txtAskForDegree" xml:space="preserve">
-    <value>Ma'lumotingizni kiriting yoki tugmani bosish orqali yuboring:</value>
+    <value>Ma'lumotingizni kiriting yoki tugmani bosish orqali yuboring</value>
     <comment>Foydalanuvchidan ilmiy darajasini so'rash</comment>
   </data>
   <data name="txtAskForEmail" xml:space="preserve">
-    <value>Emailingizni kiriting</value>
+    <value>Emailingizni kiriting </value>
     <comment>Foydalanuvchidan emailini so'rash</comment>
   </data>
   <data name="txtAskForExpectation" xml:space="preserve">
-    <value>Iqtisodiyot Assambleyadan nima kutasiz?</value>
+    <value>Iqtisodiyot Assambleyadan nima kutasiz? </value>
     <comment>Foydalanuvchidan ushbu tashkilotdan nima kutayotgani so'raladi</comment>
   </data>
   <data name="txtAskForExperience" xml:space="preserve">
-    <value>Qaysi sohada necha yillik tajribagiz bor:</value>
+    <value>Qaysi sohada necha yillik tajribagiz bor?</value>
     <comment>Foydalanuvchidan ish tajribasini so'rash</comment>
   </data>
   <data name="txtAskForFeedback" xml:space="preserve">
-    <value>Kim uchun fikr bildirmoqchisiz?</value>
+    <value>Kim uchun fikr bildirmoqchisiz? </value>
     <comment>Fikr bildirish oyna xabari. foydalanuvchidan nima maqsadda fikr bildirayotgani so'raladi.</comment>
   </data>
   <data name="txtAskForFirstName" xml:space="preserve">
-    <value>Ismingizni kiriting</value>
+    <value>Ismingizni kiriting </value>
     <comment>Foydalanuvchidan ismini so'rash</comment>
   </data>
   <data name="txtAskForHelpType" xml:space="preserve">
-    <value>Investordan qanday yordam kerak (Pul,Tajriba v hkz)</value>
+    <value>Investordan qanday yordam kerak? (Pul,Tajriba v hkz) </value>
     <comment>Foydalanuvchidan nima yordam kerakligi so'raladi</comment>
   </data>
   <data name="txtAskForInvestmentAmount" xml:space="preserve">
     <value>Qancha miqdorda investitsiya kiritmoqchisiz?
-Dollardayozing:</value>
+Dollardayozing: </value>
     <comment>Foydalanuvchidan qancha miqdorda sarmoya kiritishi so'raladi.</comment>
   </data>
   <data name="txtAskForLastName" xml:space="preserve">
-    <value>Familiyangizni kiriting</value>
+    <value>Familiyangizni kiriting </value>
     <comment>Foydalanuvchidan familiyasini so'rash</comment>
   </data>
   <data name="txtAskForPatronomyc" xml:space="preserve">
-    <value>Otangizning ismini kiriting</value>
+    <value>Otangizning ismini kiriting </value>
     <comment>Foydalanuvchidan otasining ismini so'rash</comment>
   </data>
   <data name="txtAskForPhoneNumber" xml:space="preserve">
-    <value>Telefon raqamingizni kiriting yoki tugmani bosish orqali yuboring:</value>
+    <value>Telefon raqamingizni kiriting yoki tugmani bosish orqali yuboring</value>
     <comment>Foydalanuvchidan telefon raqamini so'rash</comment>
   </data>
   <data name="txtAskForProjectManagerPurpose" xml:space="preserve">
-    <value>Loyiha boshqarishdan maqsadingiz</value>
+    <value>Loyiha boshqarishdan maqsadingiz </value>
     <comment>Foydalanuvchidan loyiha boshqarishdan maqsadi so'raladi</comment>
   </data>
   <data name="txtAskForProjectManagmentSector" xml:space="preserve">
-    <value>Qaysi sohada loyiha boshqarmoqchisiz?</value>
+    <value>Qaysi sohada loyiha boshqarmoqchisiz? </value>
     <comment>Foydalanuvchidan qaysi sohada loyiha boshqarishni istayotgani so'raladi.</comment>
   </data>
   <data name="txtAskForRepresentativePurpose" xml:space="preserve">
-    <value>Vakil bo'lishdan maqsadingiz</value>
+    <value>Vakil bo'lishdan maqsadingiz </value>
     <comment>Foydalanuvchidan vakil bo'lishdan maqsadi so'raladi</comment>
   </data>
   <data name="txtAskForRequiredFunding" xml:space="preserve">
-    <value>Loyihaga keralkli investitysa summasi (aniq yoki tahminiy):</value>
+    <value>Loyihaga keralkli investitysa summasi (aniq yoki tahminiy) </value>
     <comment>Foydalanuvchidan loyha amalga oshishi uchunkerakli summa kerakligi so'raladi</comment>
   </data>
   <data name="txtAskForSector" xml:space="preserve">
-    <value>Qaysi sohada investorlik qilmoqchisiz?</value>
+    <value>Qaysi sohada investorlik qilmoqchisiz? </value>
     <comment>Foydalanuvchidan qaysi sohaga sarmoya kiritishi so'raladi.</comment>
   </data>
   <data name="txtAskForSelectLanguage" xml:space="preserve">
-    <value>Kerakli  tilni tanlang</value>
+    <value>Kerakli  tilni tanlang </value>
     <comment>Sozlamalar bo'limidagi bot tilini o'zgartirish uchun so'rov xabari</comment>
   </data>
+  <data name="txtAskForSelectOrWrite" xml:space="preserve">
+    <value>Yuqoridagilarni tanlang yoki kiriting</value>
+  </data>
   <data name="txtAskForSkillLanguages" xml:space="preserve">
-    <value>Qaysi tillarni bilasiz</value>
+    <value>Qaysi tillarni bilasiz </value>
     <comment>Foydalanuvchidan qaysi xorijiy tillarni bililshini so'rash</comment>
+  </data>
+  <data name="txtAskWithButton" xml:space="preserve">
+    <value>yoki tugmani bosish orqali yuboring </value>
   </data>
   <data name="txtContactInfo" xml:space="preserve">
     <value>Contact ma'lumotlarini yuborish chiqadi //TO DO write request for edit personal info</value>
     <comment>Foydalanuvchiga tashkilot bilan bog'lanishi mumkin bo'lgan a'loqa ma'lumotlari yuboriladi</comment>
   </data>
   <data name="txtEditPersonalInfo" xml:space="preserve">
-    <value>Shaxsiy ma'lumotlarni o'zzgartirish uchun tanlang:</value>
+    <value>Shaxsiy ma'lumotlarni o'zgartirish uchun tanlang </value>
     <comment>Sozlamalar bo'limi orqali shaxsiy ma'lumotlarni o'zgartirish uchun so'rov xabari</comment>
   </data>
   <data name="txtMainMenu" xml:space="preserve">
-    <value>Menyuni tanlang</value>
+    <value>Menyuni tanlang </value>
     <comment>Asosiy menyu xabari</comment>
   </data>
   <data name="txtOrganizationInfo" xml:space="preserve">
-    <value>Kompaniya haqida ma'lumot yozilishi kerak // TO DO text about organization</value>
+    <value>Kompaniya haqida ma'lumot yozilishi kerak // TO DO text about organization </value>
     <comment>Tashkilot haqida ma'lumot xabari</comment>
   </data>
   <data name="txtReadyApplication" xml:space="preserve">
-    <value>Murojaatnoma tayyor tasdiqlash qoldi xolos!</value>
+    <value>Murojaatnoma tayyor tasdiqlash qoldi xolos! </value>
     <comment>Murojaatnoma tayyorligi haqida xabar berish va bir vaqtning o'zida joriy tugmalarni o'chirib yuborish uchun</comment>
   </data>
   <data name="txtResponseToFeedback" xml:space="preserve">
-    <value>Fikringizni bildirganingiz uchun katta rahmat!</value>
+    <value>Fikringizni bildirganingiz uchun katta rahmat! </value>
   </data>
   <data name="txtSettings" xml:space="preserve">
-    <value>Sozlamalar</value>
+    <value>Sozlamalar </value>
     <comment>Asosiy oynadan Sozlamalar bo'limi tanlanganida yuboriladigan xabar</comment>
   </data>
   <data name="txtSubmittedApplication" xml:space="preserve">
-    <value>Sizda Tastiqlangan murojaat mavjud
+    <value>Sizda Tastiqlangan murojaat mavjud 
 </value>
     <comment>Tasdiqlangan murojaat oynasi xabari. Ariza topshirmoqchi bo'lganda va avval bu ishni qilgan bo'lsa ushbu xabar yuboriladi.</comment>
   </data>
