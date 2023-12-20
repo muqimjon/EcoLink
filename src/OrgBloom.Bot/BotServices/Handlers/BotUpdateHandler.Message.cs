@@ -6,7 +6,6 @@ namespace OrgBloom.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
-
     private async Task HandleMessageAsync(ITelegramBotClient botClient, Message? message, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(message);
