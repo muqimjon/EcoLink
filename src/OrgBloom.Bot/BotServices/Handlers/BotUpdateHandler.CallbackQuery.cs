@@ -37,17 +37,28 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(callbackQuery.Data);
         ArgumentNullException.ThrowIfNull(callbackQuery.Message);
 
-        await mediator.Send(new UpdateLanguageCodeCommand
+        string text;
+        switch (callbackQuery.Data)
         {
-            Id = user.Id,
-            LanguageCode = callbackQuery.Data switch
-            {
-                "ibtnEn" => "en",
-                "ibtnRu" => "ru",
-                _ => "uz",
-            }
-        }, cancellationToken);
+            case "ibtnEn":
+                await mediator.Send(new UpdateLanguageCodeCommand { Id = user.Id, LanguageCode = "en" }, cancellationToken);
+                text = "Great, we will continue with you in English!";
+                break;
+            case "ibtnRu":
+                await mediator.Send(new UpdateLanguageCodeCommand { Id = user.Id, LanguageCode = "ru" }, cancellationToken);
+                text = "Отлично, мы продолжим с вами на русском языке!";
+                break;
+            default:
+                await mediator.Send(new UpdateLanguageCodeCommand { Id = user.Id, LanguageCode = "uz" }, cancellationToken);
+                text = "Ajoyib, siz bilan o'zbek tilida davom ettiramiz!";
+                break;
+        }
 
+        await botClient.EditMessageTextAsync(
+            chatId: callbackQuery.Message.Chat.Id,
+            text: text,
+            messageId: callbackQuery.Message.MessageId,
+            cancellationToken: cancellationToken);
 
         await SendMainMenuAsync(botClient, callbackQuery.Message, cancellationToken);
     }

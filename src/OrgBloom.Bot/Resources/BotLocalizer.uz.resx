@@ -375,19 +375,19 @@ Dollardayozing: </value>
     <comment>Foydalanuvchiga tashkilot bilan bog'lanishi mumkin bo'lgan a'loqa ma'lumotlari yuboriladi</comment>
   </data>
   <data name="txtInfoEntrepreneurship" xml:space="preserve">
-    <value>Tadbirkorlik (Investitsiya jalb qilish) bo'limi uchun ma'lumot // TO DO</value>
+    <value>Tadbirkorlik uchun  sheriklik asosida sarmoya, lizing, islomiy moliya va boshqa turdagi investitsyalar jalb qilishda ko'maklashish.</value>
     <comment>Tadbirkorlik bo'limi haqida ma'lumot berish uchun yuboriladigan xabar</comment>
   </data>
   <data name="txtInfoInvestment" xml:space="preserve">
-    <value>Investorlik bo'limi uchun ma'lumot // TO DO </value>
+    <value>Moliyaviy imkoni bor investorlar uchun sarmoyasini samarali yo'naltirishda ko'maklashish.</value>
     <comment>Investorlik bo'limi haqida ma'lumot berish uchun yuboriladigan xabar </comment>
   </data>
   <data name="txtInfoProjectManagement" xml:space="preserve">
-    <value>Loyiha boshqaruvi bo'limi uchun ma'lumot // TO DO</value>
+    <value>O‘zbekiston Iqtisodiyot Assambleyasi ko'magida amalga o'shirilayotkan loyihalarni boshqarish imkoniyati.</value>
     <comment>Loyiha boshqaruv bo'limi haqida ma'lumot berish uchun yuboriladigan xabar</comment>
   </data>
   <data name="txtInfoRepresentation" xml:space="preserve">
-    <value>Vakillik bo'limi uchun ma'lumot // TO DO</value>
+    <value>O‘zbekiston Iqtisodiyot Assambleyasining chet elda, O'zbekiston hududida vakil bolish imkoniyati.</value>
     <comment>Vakillik bo'limi haqida ma'lumot berish uchun yuboriladigan xabar</comment>
   </data>
   <data name="txtMainMenu" xml:space="preserve">
@@ -427,7 +427,15 @@ Dollardayozing: </value>
     <comment>Bo'limlar qismida vakil bo'lish tugmasi bosganda yuboriladigan xabar</comment>
   </data>
   <data name="txtOrganizationInfo" xml:space="preserve">
-    <value>Kompaniya haqida ma'lumot yozilishi kerak // TO DO text about organization </value>
+    <value>O‘zbekiston Iqtisodiyot Assambleyasi nodavlat tashkiloti O‘zbekiston iqtisodiyotini rivojlantirish, kichik va orta biznesni rivojlantirish, ishchi o'rinlari tashkil qilish maqsadida O‘zbekiston Respublikasi Adliya vazirligining 2021-yil 10-fevraldagi 970-sonli qarori bilan tashkil etilgan.
+
+ Assambleyaning asosiy funksiyalari:
+
+-HUKUMAT BILAN MUNOSABATLAR
+-BIZNES DIPLOMATIYA
+-MAHALLIY BIZNES
+-DAVLAT XUSUSIY SHERIKCHILIK
+-VA BOSHQA</value>
     <comment>Tashkilot haqida ma'lumot xabari</comment>
   </data>
   <data name="txtReadyApplication" xml:space="preserve">
