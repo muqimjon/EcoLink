@@ -13,13 +13,10 @@ public partial class BotUpdateHandler
 {
     private async Task HandleTextMessageAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var userState = State.WaitingForSubmitApplication;
-
-        if (message.Text is not "/start")
-            userState = await mediator.Send(new GetStateQuery(user.Id), cancellationToken);
-
+        var userState = await mediator.Send(new GetStateQuery(user.Id), cancellationToken);
         var handler = userState switch
         {
+            State.None => SendGreetingAsync(botClient, message, cancellationToken),
             State.WaitingForSubmitApplication => SendGreetingAsync(botClient, message, cancellationToken),
             State.WaitingForResendApplication => HandleResendApplicationAsync(botClient, message, cancellationToken),
             State.WaitingForSelectMainMenu => HandleMainMenuAsync(botClient, message, cancellationToken),

@@ -35,7 +35,7 @@ public partial class BotUpdateHandler
 
         handler = profession switch
         {
-            UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
+            UserProfession.None => SendMenuEditPersonalInfoAsync(botClient, message, cancellationToken),
             _ => SendRequestForEmailAsync(botClient, message, cancellationToken)
         };
 

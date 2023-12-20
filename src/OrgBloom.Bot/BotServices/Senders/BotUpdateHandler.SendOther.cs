@@ -1,6 +1,7 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Types;
 using OrgBloom.Domain.Enums;
+using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 using OrgBloom.Application.Users.Queries.GetUsers;
 using OrgBloom.Application.Users.Commands.UpdateUsers;
@@ -53,11 +54,18 @@ public partial class BotUpdateHandler
 
     private async Task SendInfoAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        await botClient.SendTextMessageAsync(
+        //await botClient.SendTextMessageAsync(
+        //    chatId: message.Chat.Id,
+        //    text: localizer["txtOrganizationInfo"],
+        //    cancellationToken: cancellationToken
+        //);
+
+        await botClient.SendPhotoAsync(
             chatId: message.Chat.Id,
-            text: localizer["txtOrganizationInfo"],
-            cancellationToken: cancellationToken
-        );
+            photo: InputFile.FromUri("https://media.licdn.com/dms/image/D4E16AQG21-Nxg6zYAg/profile-displaybackgroundimage-shrink_350_1400/0/1678436459958?e=1708560000&v=beta&t=tyv-TnDHrW5cK3Q7b7Uu8Ch4nRVNA0KdAAGCqrdoBZg"),
+            caption: $"<b>{localizer["txtOrganizationInfo"]}</b>",
+            parseMode: ParseMode.Html,
+            cancellationToken: cancellationToken);
     }
 
     private async Task SendMenuSettingsAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -142,6 +150,11 @@ public partial class BotUpdateHandler
             text: localizer["txtContactInfo"],
             cancellationToken: cancellationToken
         );
+
+        await botClient.SendLocationAsync(
+            chatId: message.Chat.Id,
+            latitude: 41.31255776545841,
+            longitude: 69.24048566441775);
     }
 
     private async Task SendRequestFeedbackForTelegramBotAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
