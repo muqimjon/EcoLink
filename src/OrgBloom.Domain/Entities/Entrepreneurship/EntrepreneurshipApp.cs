@@ -1,6 +1,6 @@
 ﻿namespace OrgBloom.Domain.Entities.Entrepreneurship;
 
-public class EntrepreneurshipApp
+public class EntrepreneurshipApp : Auditable
 {
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
