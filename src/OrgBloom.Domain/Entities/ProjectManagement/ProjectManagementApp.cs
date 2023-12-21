@@ -1,6 +1,6 @@
 ﻿namespace OrgBloom.Domain.Entities.ProjectManagement;
 
-public class ProjectManagementApp
+public class ProjectManagementApp : Auditable
 {
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;

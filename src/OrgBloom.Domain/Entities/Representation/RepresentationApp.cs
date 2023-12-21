@@ -1,6 +1,6 @@
 ﻿namespace OrgBloom.Domain.Entities.Representation;
 
-public class RepresentationApp
+public class RepresentationApp : Auditable
 {
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
