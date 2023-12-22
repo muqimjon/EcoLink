@@ -1,5 +1,4 @@
-﻿global using MediatR;
-using OrgBloom.Domain.Enums;
+﻿using OrgBloom.Domain.Enums;
 using OrgBloom.Application.Users.DTOs;
 using OrgBloom.Application.Investors.DTOs;
 using OrgBloom.Application.Commons.Mappers;

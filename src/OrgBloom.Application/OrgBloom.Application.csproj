@@ -16,11 +16,4 @@
     <ProjectReference Include="..\OrgBloom.Domain\OrgBloom.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="EntrepreneurshipApps\Queries\" />
-    <Folder Include="InvestmentApps\Queries\" />
-    <Folder Include="ProjectManagementApps\Queries\" />
-    <Folder Include="RepresentationApps\Queries\" />
-  </ItemGroup>
-
 </Project>

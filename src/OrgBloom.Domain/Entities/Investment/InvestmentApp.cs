@@ -10,4 +10,5 @@ public class InvestmentApp : Auditable
     public string InvestmentAmount { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+    public long UserId { get; set; }
 }
