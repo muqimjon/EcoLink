@@ -1,10 +1,4 @@
-﻿using Telegram.Bot;
-using Telegram.Bot.Types;
-using OrgBloom.Domain.Enums;
-using OrgBloom.Bot.BotServices.Helpers;
-using OrgBloom.Application.Users.Queries.GetUsers;
-using OrgBloom.Application.Users.Commands.UpdateUsers;
-using OrgBloom.Application.Entrepreneurs.Queries.GetEntrepreneurs;
+﻿using OrgBloom.Application.Entrepreneurs.Queries.GetEntrepreneurs;
 using OrgBloom.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
 using OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
 

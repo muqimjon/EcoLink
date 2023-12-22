@@ -1,9 +1,4 @@
-﻿using OrgBloom.Application.Users.Commands.UpdateUsers;
-using Telegram.Bot;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.ReplyMarkups;
-
-namespace OrgBloom.Bot.BotServices;
+﻿namespace OrgBloom.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {

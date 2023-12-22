@@ -1,10 +1,4 @@
-﻿using Telegram.Bot;
-using Telegram.Bot.Types;
-using OrgBloom.Domain.Enums;
-using OrgBloom.Application.Users.Queries.GetUsers;
-using OrgBloom.Application.Users.Commands.UpdateUsers;
-
-namespace OrgBloom.Bot.BotServices;
+﻿namespace OrgBloom.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {

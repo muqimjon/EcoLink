@@ -1,10 +1,4 @@
-﻿using Telegram.Bot;
-using Telegram.Bot.Types;
-using OrgBloom.Domain.Enums;
-using OrgBloom.Bot.BotServices.Helpers;
-using OrgBloom.Application.Users.Queries.GetUsers;
-using OrgBloom.Application.Users.Commands.UpdateUsers;
-using OrgBloom.Application.Representatives.Queries.GetRepresentatives;
+﻿using OrgBloom.Application.Representatives.Queries.GetRepresentatives;
 using OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
 using OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
 
