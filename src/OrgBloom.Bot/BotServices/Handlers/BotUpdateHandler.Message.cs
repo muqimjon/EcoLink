@@ -1,4 +1,6 @@
-﻿namespace OrgBloom.Bot.BotServices;
+﻿using Telegram.Bot.Types.Enums;
+
+namespace OrgBloom.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
