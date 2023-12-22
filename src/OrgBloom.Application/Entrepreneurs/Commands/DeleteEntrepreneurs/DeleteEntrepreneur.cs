@@ -1,8 +1,4 @@
-﻿using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Domain.Entities.Entrepreneurship;
-
-namespace OrgBloom.Application.Entrepreneurs.Commands.DeleteEntrepreneurs;
+﻿namespace OrgBloom.Application.Entrepreneurs.Commands.DeleteEntrepreneurs;
 
 public record DeleteEntrepreneurCommand : IRequest<bool>
 {
@@ -10,7 +6,8 @@ public record DeleteEntrepreneurCommand : IRequest<bool>
     public long Id { get; set; }
 }
 
-public class DeleteEntrepreneurCommandHandler(IRepository<Entrepreneur> repository) : IRequestHandler<DeleteEntrepreneurCommand, bool>
+public class DeleteEntrepreneurCommandHandler(IRepository<Entrepreneur> repository) : 
+    IRequestHandler<DeleteEntrepreneurCommand, bool>
 {
     public async Task<bool> Handle(DeleteEntrepreneurCommand request, CancellationToken cancellationToken)
     {

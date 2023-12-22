@@ -1,6 +1,4 @@
-﻿using OrgBloom.Application.Users.DTOs;
-
-namespace OrgBloom.Application.Investors.DTOs;
+﻿namespace OrgBloom.Application.Investors.DTOs;
 
 public class InvestorResultDto
 {

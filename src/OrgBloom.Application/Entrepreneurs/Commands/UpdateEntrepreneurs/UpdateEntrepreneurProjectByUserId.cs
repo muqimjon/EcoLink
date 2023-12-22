@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Domain.Entities.Entrepreneurship;
-using OrgBloom.Application.Commons.Helpers;
-
-namespace OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
+﻿namespace OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
 
 public record UpdateEntrepreneurProjectByUserIdCommand : IRequest<int>
 {
@@ -18,7 +12,8 @@ public record UpdateEntrepreneurProjectByUserIdCommand : IRequest<int>
     public string Project { get; set; } = string.Empty;
 }
 
-public class UpdateEntrepreneurProjectCommandHandler(IRepository<Entrepreneur> repository, IMapper mapper) : IRequestHandler<UpdateEntrepreneurProjectByUserIdCommand, int>
+public class UpdateEntrepreneurProjectCommandHandler(IRepository<Entrepreneur> repository, IMapper mapper) : 
+    IRequestHandler<UpdateEntrepreneurProjectByUserIdCommand, int>
 {
     public async Task<int> Handle(UpdateEntrepreneurProjectByUserIdCommand request, CancellationToken cancellationToken)
     {

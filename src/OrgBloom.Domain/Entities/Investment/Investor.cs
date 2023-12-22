@@ -1,6 +1,4 @@
-﻿using OrgBloom.Domain.Entities.Users;
-
-namespace OrgBloom.Domain.Entities.Investment;
+﻿namespace OrgBloom.Domain.Entities.Investment;
 
 public class Investor : Auditable
 {

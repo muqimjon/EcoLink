@@ -1,9 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Application.Investors.DTOs;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Domain.Entities.Investment;
-using OrgBloom.Application.Commons.Helpers;
+﻿using OrgBloom.Application.Investors.DTOs;
 
 namespace OrgBloom.Application.Investors.Commands.CreateInvestors;
 
@@ -23,7 +18,8 @@ public record CreateInvestorWithReturnCommand : IRequest<InvestorResultDto>
     public bool IsSubmitted { get; set; }
 }
 
-public class CreateInvestorWithReturnCommandHandler(IRepository<Investor> repository, IMapper mapper) : IRequestHandler<CreateInvestorWithReturnCommand, InvestorResultDto>
+public class CreateInvestorWithReturnCommandHandler(IRepository<Investor> repository, IMapper mapper) : 
+    IRequestHandler<CreateInvestorWithReturnCommand, InvestorResultDto>
 {
     public async Task<InvestorResultDto> Handle(CreateInvestorWithReturnCommand request, CancellationToken cancellationToken)
     {

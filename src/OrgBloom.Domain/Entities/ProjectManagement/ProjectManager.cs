@@ -1,6 +1,4 @@
-﻿using OrgBloom.Domain.Entities.Users;
-
-namespace OrgBloom.Domain.Entities.ProjectManagement;
+﻿namespace OrgBloom.Domain.Entities.ProjectManagement;
 
 public class ProjectManager : Auditable
 {

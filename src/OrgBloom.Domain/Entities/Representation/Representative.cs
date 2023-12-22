@@ -1,6 +1,4 @@
-﻿using OrgBloom.Domain.Entities.Users;
-
-namespace OrgBloom.Domain.Entities.Representation;
+﻿namespace OrgBloom.Domain.Entities.Representation;
 
 public class Representative : Auditable
 {

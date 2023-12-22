@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Application.Commons.Helpers;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Domain.Entities.ProjectManagement;
-
-namespace OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
+﻿namespace OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 
 public record UpdateProjectManagerPurposeVyUserIdCommand : IRequest<int>
 {
@@ -18,7 +12,8 @@ public record UpdateProjectManagerPurposeVyUserIdCommand : IRequest<int>
     public string Purpose { get; set; } = string.Empty;
 }
 
-public class UpdateProjectManagerPurposeByUserIdCommandHandler(IRepository<ProjectManager> repository, IMapper mapper) : IRequestHandler<UpdateProjectManagerPurposeVyUserIdCommand, int>
+public class UpdateProjectManagerPurposeByUserIdCommandHandler(IRepository<ProjectManager> repository, IMapper mapper) : 
+    IRequestHandler<UpdateProjectManagerPurposeVyUserIdCommand, int>
 {
     public async Task<int> Handle(UpdateProjectManagerPurposeVyUserIdCommand request, CancellationToken cancellationToken)
     {

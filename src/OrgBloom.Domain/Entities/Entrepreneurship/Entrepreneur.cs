@@ -1,6 +1,4 @@
-﻿using OrgBloom.Domain.Entities.Users;
-
-namespace OrgBloom.Domain.Entities.Entrepreneurship;
+﻿namespace OrgBloom.Domain.Entities.Entrepreneurship;
 
 public class Entrepreneur : Auditable
 {

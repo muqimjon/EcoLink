@@ -1,7 +1,4 @@
-﻿using OrgBloom.Domain.Entities.Investment;
-using OrgBloom.Application.Commons.Interfaces;
-
-namespace OrgBloom.Application.Investors.Queries.GetInvestors;
+﻿namespace OrgBloom.Application.Investors.Queries.GetInvestors;
 
 public record GetInvestmentAmountByUserIdQuery : IRequest<string>
 {
@@ -9,7 +6,8 @@ public record GetInvestmentAmountByUserIdQuery : IRequest<string>
     public long UserId { get; set; }
 }
 
-public class GetInvestmentAmountByUserIdQueryHendler(IRepository<Investor> repository) : IRequestHandler<GetInvestmentAmountByUserIdQuery, string>
+public class GetInvestmentAmountByUserIdQueryHendler(IRepository<Investor> repository) : 
+    IRequestHandler<GetInvestmentAmountByUserIdQuery, string>
 {
     public async Task<string> Handle(GetInvestmentAmountByUserIdQuery request, CancellationToken cancellationToken)
         => (await repository.SelectAsync(i => i.UserId.Equals(request.UserId)) ?? new()).InvestmentAmount!;

@@ -1,9 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Application.Commons.Helpers;
-using OrgBloom.Application.Entrepreneurs.DTOs;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Domain.Entities.Entrepreneurship;
+﻿using OrgBloom.Application.Entrepreneurs.DTOs;
 
 namespace OrgBloom.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
 
@@ -27,7 +22,8 @@ public record CreateEntrepreneurWithReturnCommand : IRequest<EntrepreneurResultD
     public long UserId { get; set; }
 }
 
-public class CreateEntrepreneurWithReturnCommandHandler(IRepository<Entrepreneur> repository, IMapper mapper) : IRequestHandler<CreateEntrepreneurWithReturnCommand, EntrepreneurResultDto>
+public class CreateEntrepreneurWithReturnCommandHandler(IRepository<Entrepreneur> repository, IMapper mapper) : 
+    IRequestHandler<CreateEntrepreneurWithReturnCommand, EntrepreneurResultDto>
 {
     public async Task<EntrepreneurResultDto> Handle(CreateEntrepreneurWithReturnCommand request, CancellationToken cancellationToken)
     {

@@ -1,13 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Domain.Enums;
-using OrgBloom.Application.Users.DTOs;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Domain.Entities.Users;
-using OrgBloom.Application.Commons.Helpers;
-using OrgBloom.Application.Commons.Constants;
-
-namespace OrgBloom.Application.Users.Commands.CreateUsers;
+﻿namespace OrgBloom.Application.Users.Commands.CreateUsers;
 
 public record class CreateUserWithReturnTgResultCommand : IRequest<UserTelegramResultDto>
 {
@@ -49,7 +40,8 @@ public record class CreateUserWithReturnTgResultCommand : IRequest<UserTelegramR
     public bool IsBot { get; set; }
 }
 
-public class CreateUserWithReturnTgResultCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<CreateUserWithReturnTgResultCommand, UserTelegramResultDto>
+public class CreateUserWithReturnTgResultCommandHandler(IRepository<User> repository, IMapper mapper) : 
+    IRequestHandler<CreateUserWithReturnTgResultCommand, UserTelegramResultDto>
 {
     public async Task<UserTelegramResultDto> Handle(CreateUserWithReturnTgResultCommand request, CancellationToken cancellationToken)
     {

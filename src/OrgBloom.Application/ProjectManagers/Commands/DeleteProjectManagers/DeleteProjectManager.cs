@@ -1,8 +1,4 @@
-﻿using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Domain.Entities.ProjectManagement;
-
-namespace OrgBloom.Application.ProjectManagers.Commands.DeleteProjectManagers;
+﻿namespace OrgBloom.Application.ProjectManagers.Commands.DeleteProjectManagers;
 
 public record DeleteProjectManagerCommand : IRequest<bool>
 {
@@ -10,7 +6,8 @@ public record DeleteProjectManagerCommand : IRequest<bool>
     public long Id { get; set; }
 }
 
-public class DeleteProjectManagerCommandHandler(IRepository<ProjectManager> repository) : IRequestHandler<DeleteProjectManagerCommand, bool>
+public class DeleteProjectManagerCommandHandler(IRepository<ProjectManager> repository) : 
+    IRequestHandler<DeleteProjectManagerCommand, bool>
 {
     public async Task<bool> Handle(DeleteProjectManagerCommand request, CancellationToken cancellationToken)
     {

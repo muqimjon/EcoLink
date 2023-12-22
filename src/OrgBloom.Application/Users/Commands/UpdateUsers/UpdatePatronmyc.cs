@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Domain.Entities.Users;
-using OrgBloom.Application.Commons.Helpers;
-
-namespace OrgBloom.Application.Users.Commands.UpdateUsers;
+﻿namespace OrgBloom.Application.Users.Commands.UpdateUsers;
 
 public record UpdatePatronomycCommand : IRequest<int>
 {
@@ -18,7 +12,8 @@ public record UpdatePatronomycCommand : IRequest<int>
     public string Patronomyc { get; set; } = string.Empty;
 }
 
-public class UpdatePatronomycCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<UpdatePatronomycCommand, int>
+public class UpdatePatronomycCommandHandler(IRepository<User> repository, IMapper mapper) : 
+    IRequestHandler<UpdatePatronomycCommand, int>
 {
     public async Task<int> Handle(UpdatePatronomycCommand request, CancellationToken cancellationToken)
     {

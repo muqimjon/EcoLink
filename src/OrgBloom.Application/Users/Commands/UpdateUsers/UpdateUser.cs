@@ -1,12 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Domain.Enums;
-using OrgBloom.Domain.Entities.Users;
-using OrgBloom.Application.Commons.Helpers;
-using OrgBloom.Application.Commons.Constants;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-
-namespace OrgBloom.Application.Users.Commands.UpdateUsers;
+﻿namespace OrgBloom.Application.Users.Commands.UpdateUsers;
 
 public record UpdateUserCommand : IRequest<int>
 {
@@ -44,7 +36,8 @@ public record UpdateUserCommand : IRequest<int>
     public bool IsBot { get; set; }
 }
 
-public class UpdateUserCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<UpdateUserCommand, int>
+public class UpdateUserCommandHandler(IRepository<User> repository, IMapper mapper) : 
+    IRequestHandler<UpdateUserCommand, int>
 {
     public async Task<int> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {

@@ -1,7 +1,4 @@
-﻿using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Domain.Entities.Entrepreneurship;
-
-namespace OrgBloom.Application.Entrepreneurs.Queries.GetEntrepreneurs;
+﻿namespace OrgBloom.Application.Entrepreneurs.Queries.GetEntrepreneurs;
 
 public record GetEntrepreneurRequiredFundingByUserIdQuery : IRequest<string>
 {
@@ -9,7 +6,8 @@ public record GetEntrepreneurRequiredFundingByUserIdQuery : IRequest<string>
     public long UserId { get; set; }
 }
 
-public class GetEntrepreneurRequiredFundingByUserIdQueryHendler(IRepository<Entrepreneur> repository) : IRequestHandler<GetEntrepreneurRequiredFundingByUserIdQuery, string>
+public class GetEntrepreneurRequiredFundingByUserIdQueryHendler(IRepository<Entrepreneur> repository) : 
+    IRequestHandler<GetEntrepreneurRequiredFundingByUserIdQuery, string>
 {
     public async Task<string> Handle(GetEntrepreneurRequiredFundingByUserIdQuery request, CancellationToken cancellationToken)
         => (await repository.SelectAsync(i => i.UserId.Equals(request.UserId)) ?? new()).RequiredFunding!;

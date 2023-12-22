@@ -1,6 +1,4 @@
-﻿using OrgBloom.Application.Users.DTOs;
-
-namespace OrgBloom.Application.ProjectManagers.DTOs;
+﻿namespace OrgBloom.Application.ProjectManagers.DTOs;
 
 public class ProjectManagerResultDto
 {

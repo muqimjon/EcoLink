@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Domain.Entities.Representation;
-using OrgBloom.Application.Commons.Helpers;
-using OrgBloom.Domain.Entities.Users;
-
-namespace OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
+﻿namespace OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
 
 public record CreateRepresentativeCommand : IRequest<int>
 {
@@ -31,7 +24,8 @@ public record CreateRepresentativeCommand : IRequest<int>
     public bool IsSubmitted { get; set; }
 }
 
-public class CreateRepresentativeCommandHandler(IRepository<Representative> repository, IMapper mapper) : IRequestHandler<CreateRepresentativeCommand, int>
+public class CreateRepresentativeCommandHandler(IRepository<Representative> repository, IMapper mapper) : 
+    IRequestHandler<CreateRepresentativeCommand, int>
 {
     public async Task<int> Handle(CreateRepresentativeCommand request, CancellationToken cancellationToken)
     {

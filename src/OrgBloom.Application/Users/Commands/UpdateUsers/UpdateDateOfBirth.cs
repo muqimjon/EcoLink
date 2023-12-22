@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Domain.Entities.Users;
-using OrgBloom.Application.Commons.Helpers;
-using OrgBloom.Application.Commons.Constants;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-
-namespace OrgBloom.Application.Users.Commands.UpdateUsers;
+﻿namespace OrgBloom.Application.Users.Commands.UpdateUsers;
 
 public record UpdateDateOfBirthCommand : IRequest<int>
 {
@@ -19,7 +12,8 @@ public record UpdateDateOfBirthCommand : IRequest<int>
     public DateTimeOffset DateOfBirth { get; set; }
 }
 
-public class UpdateDateOfBirthCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<UpdateDateOfBirthCommand, int>
+public class UpdateDateOfBirthCommandHandler(IRepository<User> repository, IMapper mapper) : 
+    IRequestHandler<UpdateDateOfBirthCommand, int>
 {
     public async Task<int> Handle(UpdateDateOfBirthCommand request, CancellationToken cancellationToken)
     {

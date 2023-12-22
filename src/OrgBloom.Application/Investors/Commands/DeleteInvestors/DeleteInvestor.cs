@@ -1,8 +1,4 @@
-﻿using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Domain.Entities.Investment;
-
-namespace OrgBloom.Application.Investors.Commands.DeleteInvestors;
+﻿namespace OrgBloom.Application.Investors.Commands.DeleteInvestors;
 
 public record DeleteInvestorCommand : IRequest<bool>
 {

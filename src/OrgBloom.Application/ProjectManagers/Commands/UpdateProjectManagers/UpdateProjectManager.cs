@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Domain.Entities.ProjectManagement;
-using OrgBloom.Application.Commons.Helpers;
-
-namespace OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
+﻿namespace OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 
 public record UpdateProjectManagerCommand : IRequest<int>
 {
@@ -32,7 +26,8 @@ public record UpdateProjectManagerCommand : IRequest<int>
     public bool IsSubmitted { get; set; }
 }
 
-public class UpdateProjectManagerCommandHandler(IRepository<ProjectManager> repository, IMapper mapper) : IRequestHandler<UpdateProjectManagerCommand, int>
+public class UpdateProjectManagerCommandHandler(IRepository<ProjectManager> repository, IMapper mapper) : 
+    IRequestHandler<UpdateProjectManagerCommand, int>
 {
     public async Task<int> Handle(UpdateProjectManagerCommand request, CancellationToken cancellationToken)
     {

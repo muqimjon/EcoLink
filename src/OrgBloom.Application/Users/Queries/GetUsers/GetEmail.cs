@@ -1,8 +1,4 @@
-﻿using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Domain.Entities.Users;
-
-namespace OrgBloom.Application.Users.Queries.GetUsers;
+﻿namespace OrgBloom.Application.Users.Queries.GetUsers;
 
 public record GetEmailQuery : IRequest<string>
 {

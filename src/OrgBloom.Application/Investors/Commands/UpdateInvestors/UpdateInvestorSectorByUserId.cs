@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Domain.Entities.Investment;
-using OrgBloom.Application.Commons.Helpers;
-
-namespace OrgBloom.Application.Investors.Commands.UpdateInvestors;
+﻿namespace OrgBloom.Application.Investors.Commands.UpdateInvestors;
 
 public record UpdateInvestorSectorByUserIdCommand : IRequest<int>
 {
@@ -18,7 +12,8 @@ public record UpdateInvestorSectorByUserIdCommand : IRequest<int>
     public string Sector { get; set; } = string.Empty;
 }
 
-public class UpdateInvestorSectorByUserIdCommandHandler(IRepository<Investor> repository, IMapper mapper) : IRequestHandler<UpdateInvestorSectorByUserIdCommand, int>
+public class UpdateInvestorSectorByUserIdCommandHandler(IRepository<Investor> repository, IMapper mapper) : 
+    IRequestHandler<UpdateInvestorSectorByUserIdCommand, int>
 {
     public async Task<int> Handle(UpdateInvestorSectorByUserIdCommand request, CancellationToken cancellationToken)
     {

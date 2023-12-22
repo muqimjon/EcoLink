@@ -1,9 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Application.Commons.Helpers;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Application.ProjectManagers.DTOs;
-using OrgBloom.Domain.Entities.ProjectManagement;
+﻿using OrgBloom.Application.ProjectManagers.DTOs;
 
 namespace OrgBloom.Application.ProjectManagers.Commands.CreateProjectManagers;
 
@@ -25,7 +20,8 @@ public record CreateProjectManagerWithReturnCommand : IRequest<ProjectManagerRes
     public bool IsSubmitted { get; set; }
 }
 
-public class CreateProjectManagerWithReturnCommandHandler(IRepository<ProjectManager> repository, IMapper mapper) : IRequestHandler<CreateProjectManagerWithReturnCommand, ProjectManagerResultDto>
+public class CreateProjectManagerWithReturnCommandHandler(IRepository<ProjectManager> repository, IMapper mapper) : 
+    IRequestHandler<CreateProjectManagerWithReturnCommand, ProjectManagerResultDto>
 {
     public async Task<ProjectManagerResultDto> Handle(CreateProjectManagerWithReturnCommand request, CancellationToken cancellationToken)
     {

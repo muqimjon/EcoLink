@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.ProjectManagers.DTOs;
-using OrgBloom.Domain.Entities.ProjectManagement;
+﻿using OrgBloom.Application.ProjectManagers.DTOs;
 
 namespace OrgBloom.Application.ProjectManagers.Queries.GetProjectManagers;
 
@@ -11,7 +8,8 @@ public record GetProjectManagerQuery : IRequest<ProjectManagerResultDto>
     public int Id { get; set; }
 }
 
-public class GetProjectManagerQueryHendler(IRepository<ProjectManager> repository, IMapper mapper) : IRequestHandler<GetProjectManagerQuery, ProjectManagerResultDto>
+public class GetProjectManagerQueryHendler(IRepository<ProjectManager> repository, IMapper mapper) : 
+    IRequestHandler<GetProjectManagerQuery, ProjectManagerResultDto>
 {
     public async Task<ProjectManagerResultDto> Handle(GetProjectManagerQuery request, CancellationToken cancellationToken)
         => mapper.Map<ProjectManagerResultDto>(await repository.SelectAsync(i => i.Id.Equals(request.Id)));
