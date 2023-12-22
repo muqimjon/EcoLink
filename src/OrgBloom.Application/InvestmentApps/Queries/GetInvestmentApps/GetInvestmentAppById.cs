@@ -1,20 +1,19 @@
-﻿using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Domain.Entities.ProjectManagement;
-using OrgBloom.Application.ProjectManagementApps.DTOs;
+﻿using OrgBloom.Application.InvestmentApps.DTOs;
 
 namespace OrgBloom.Application.InvestmentApps.Queries.GetInvestmentApp;
 
-public record GetInvestmentAppByIdCommand : IRequest<ProjectManagementAppResultDto>
+public record GetInvestmentAppByIdQuery : IRequest<InvestmentAppResultDto>
 {
-    public GetInvestmentAppByIdCommand(long id) { Id = id; }
+    public GetInvestmentAppByIdQuery(long id) { Id = id; }
     public long Id { get; set; }
 }
 
-public class GetInvestmentAppByIdCommandHendler(IRepository<ProjectManagementApp> repository, IMapper mapper) : IRequestHandler<GetInvestmentAppByIdCommand, ProjectManagementAppResultDto>
+public class GetInvestmentAppByIdQueryHendler(IRepository<InvestmentApp> repository, IMapper mapper) : 
+    IRequestHandler<GetInvestmentAppByIdQuery, InvestmentAppResultDto>
 {
-    public async Task<ProjectManagementAppResultDto> Handle(GetInvestmentAppByIdCommand request, CancellationToken cancellationToken)
+    public async Task<InvestmentAppResultDto> Handle(GetInvestmentAppByIdQuery request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id.Equals(request.Id));
-        return mapper.Map<ProjectManagementAppResultDto>(entity);
+        return mapper.Map<InvestmentAppResultDto>(entity);
     }
 }

@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Domain.Entities.Representation;
-using OrgBloom.Application.Commons.Helpers;
-
-namespace OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
+﻿namespace OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
 
 public record UpdateRepresentativeExpectationByUserIdCommand : IRequest<int>
 {
@@ -18,7 +12,8 @@ public record UpdateRepresentativeExpectationByUserIdCommand : IRequest<int>
     public string Expectation { get; set; } = string.Empty;
 }
 
-public class UpdateRepresentativeExpectationByUserIdCommandHandler(IRepository<Representative> repository, IMapper mapper) : IRequestHandler<UpdateRepresentativeExpectationByUserIdCommand, int>
+public class UpdateRepresentativeExpectationByUserIdCommandHandler(IRepository<Representative> repository, IMapper mapper) : 
+    IRequestHandler<UpdateRepresentativeExpectationByUserIdCommand, int>
 {
     public async Task<int> Handle(UpdateRepresentativeExpectationByUserIdCommand request, CancellationToken cancellationToken)
     {

@@ -1,17 +1,10 @@
-﻿using AutoMapper;
-using OrgBloom.Domain.Enums;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Domain.Entities.Users;
-using OrgBloom.Application.Commons.Helpers;
-
-namespace OrgBloom.Application.Users.Commands.UpdateUsers;
+﻿namespace OrgBloom.Application.Users.Commands.UpdateUsers;
 
 public record UpdateStateCommand : IRequest<int>
 {
     public UpdateStateCommand(long id, State state)
     {
-        Id = id;    
+        Id = id;
         State = state;
     }
 
@@ -19,7 +12,8 @@ public record UpdateStateCommand : IRequest<int>
     public State State { get; set; }
 }
 
-public class UpdateStateCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<UpdateStateCommand, int>
+public class UpdateStateCommandHandler(IRepository<User> repository, IMapper mapper) : 
+    IRequestHandler<UpdateStateCommand, int>
 {
     public async Task<int> Handle(UpdateStateCommand request, CancellationToken cancellationToken)
     {
@@ -27,8 +21,8 @@ public class UpdateStateCommandHandler(IRepository<User> repository, IMapper map
             ?? throw new NotFoundException($"This User is not found by id: {request.Id} | state update");
 
         mapper.Map(request, entity);
-        
-        if(request.State == State.WaitingForSelectProfession)
+
+        if (request.State == State.WaitingForSelectProfession)
             entity.Profession = UserProfession.None;
 
         entity.UpdatedAt = TimeHelper.GetDateTime();

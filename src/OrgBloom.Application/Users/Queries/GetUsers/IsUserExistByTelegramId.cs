@@ -1,8 +1,4 @@
-﻿using OrgBloom.Application.Commons.Constants;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Domain.Entities.Users;
-
-namespace OrgBloom.Application.Users.Queries.GetUsers;
+﻿namespace OrgBloom.Application.Users.Queries.GetUsers;
 
 public record IsUserNewQuery : IRequest<bool>
 {

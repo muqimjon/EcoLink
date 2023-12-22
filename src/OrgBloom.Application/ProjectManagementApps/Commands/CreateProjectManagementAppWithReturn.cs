@@ -1,8 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Application.Commons.Helpers;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Domain.Entities.ProjectManagement;
-using OrgBloom.Application.ProjectManagementApps.DTOs;
+﻿using OrgBloom.Application.ProjectManagementApps.DTOs;
 
 namespace OrgBloom.Application.ProjectManagementApps.Commands.CreateProjectManagementApps;
 
@@ -34,7 +30,8 @@ public record CreateProjectManagementAppWithReturnCommand : IRequest<ProjectMana
     public string Purpose { get; set; } = string.Empty;
 }
 
-public class CreateProjectManagementAppWithReturnCommandHandler(IRepository<ProjectManagementApp> repository, IMapper mapper) : IRequestHandler<CreateProjectManagementAppWithReturnCommand, ProjectManagementAppResultDto>
+public class CreateProjectManagementAppWithReturnCommandHandler(IRepository<ProjectManagementApp> repository, IMapper mapper) : 
+    IRequestHandler<CreateProjectManagementAppWithReturnCommand, ProjectManagementAppResultDto>
 {
     public async Task<ProjectManagementAppResultDto> Handle(CreateProjectManagementAppWithReturnCommand request, CancellationToken cancellationToken)
     {

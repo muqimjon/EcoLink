@@ -1,18 +1,18 @@
-﻿using OrgBloom.Domain.Entities.Investment;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.InvestmentApps.DTOs;
+﻿using OrgBloom.Application.InvestmentApps.DTOs;
 
 namespace OrgBloom.Application.InvestmentApps.Queries.GetInvestmentApp;
 
-public record GetAllInvestmentAppByUserIdQuery : IRequest<IEnumerable<InvestmentAppResultDto>>
+public record GetAllInvestmentAppsByUserIdQuery : IRequest<IEnumerable<InvestmentAppResultDto>>
 {
-    public GetAllInvestmentAppByUserIdQuery(long userId) { UserId = userId; }
+    public GetAllInvestmentAppsByUserIdQuery(long userId) { UserId = userId; }
     public long UserId { get; set; }
 }
 
-public class GetAllInvestmentAppByUserIdQueryHendler(IRepository<InvestmentApp> repository, IMapper mapper) : IRequestHandler<GetAllInvestmentAppByUserIdQuery, IEnumerable<InvestmentAppResultDto>>
+public class GetAllInvestmentAppsByUserIdQueryHendler(IRepository<InvestmentApp> repository, IMapper mapper) :
+    IRequestHandler<GetAllInvestmentAppsByUserIdQuery, IEnumerable<InvestmentAppResultDto>>
 {
-    public async Task<IEnumerable<InvestmentAppResultDto>> Handle(GetAllInvestmentAppByUserIdQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<InvestmentAppResultDto>> Handle(GetAllInvestmentAppsByUserIdQuery request,
+        CancellationToken cancellationToken)
     {
         var query = repository.SelectAll(entity => entity.UserId.Equals(request.UserId));
         var entities = await Task.Run(() => query.ToList());

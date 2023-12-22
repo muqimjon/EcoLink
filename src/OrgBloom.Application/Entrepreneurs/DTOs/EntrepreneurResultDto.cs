@@ -1,6 +1,4 @@
-﻿using OrgBloom.Application.Users.DTOs;
-
-namespace OrgBloom.Application.Entrepreneurs.DTOs;
+﻿namespace OrgBloom.Application.Entrepreneurs.DTOs;
 
 public class EntrepreneurResultDto
 {

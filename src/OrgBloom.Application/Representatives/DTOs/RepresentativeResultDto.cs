@@ -1,6 +1,4 @@
-﻿using OrgBloom.Application.Users.DTOs;
-
-namespace OrgBloom.Application.Representatives.DTOs;
+﻿namespace OrgBloom.Application.Representatives.DTOs;
 
 public class RepresentativeResultDto
 {

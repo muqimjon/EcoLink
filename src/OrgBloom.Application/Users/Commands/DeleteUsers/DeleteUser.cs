@@ -1,7 +1,4 @@
-﻿using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Domain.Entities.Users;
-
-namespace OrgBloom.Application.Users.Commands.DeleteUsers;
+﻿namespace OrgBloom.Application.Users.Commands.DeleteUsers;
 
 public record DeleteUserCommand : IRequest<bool>
 {

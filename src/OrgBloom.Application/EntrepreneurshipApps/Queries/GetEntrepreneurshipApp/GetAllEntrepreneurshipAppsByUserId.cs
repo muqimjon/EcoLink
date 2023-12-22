@@ -1,18 +1,17 @@
-﻿using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Domain.Entities.Entrepreneurship;
-using OrgBloom.Application.EntrepreneurshipApps.DTOs;
+﻿using OrgBloom.Application.EntrepreneurshipApps.DTOs;
 
 namespace OrgBloom.Application.EntrepreneurshipApps.Queries.GetEntrepreneurshipApp;
 
-public record GetAllEntrepreneurshipAppByUserIdQuery : IRequest<IEnumerable<EntrepreneurshipAppResultDto>>
+public record GetAllEntrepreneurshipAppsByUserIdQuery : IRequest<IEnumerable<EntrepreneurshipAppResultDto>>
 {
-    public GetAllEntrepreneurshipAppByUserIdQuery(long userId) { UserId = userId; }
+    public GetAllEntrepreneurshipAppsByUserIdQuery(long userId) { UserId = userId; }
     public long UserId { get; set; }
 }
 
-public class GetAllEntrepreneurshipAppByUserIdQueryHendler(IRepository<EntrepreneurshipApp> repository, IMapper mapper) : IRequestHandler<GetAllEntrepreneurshipAppByUserIdQuery, IEnumerable<EntrepreneurshipAppResultDto>>
+public class GetAllEntrepreneurshipAppsByUserIdQueryHendler(IRepository<EntrepreneurshipApp> repository, IMapper mapper) : 
+    IRequestHandler<GetAllEntrepreneurshipAppsByUserIdQuery, IEnumerable<EntrepreneurshipAppResultDto>>
 {
-    public async Task<IEnumerable<EntrepreneurshipAppResultDto>> Handle(GetAllEntrepreneurshipAppByUserIdQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<EntrepreneurshipAppResultDto>> Handle(GetAllEntrepreneurshipAppsByUserIdQuery request, CancellationToken cancellationToken)
     {
         var query = repository.SelectAll(entity => entity.UserId.Equals(request.UserId));
         var entities = await Task.Run(() => query.ToList());

@@ -1,8 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Application.Commons.Helpers;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Domain.Entities.Representation;
-using OrgBloom.Application.RepresentationApps.DTOs;
+﻿using OrgBloom.Application.RepresentationApps.DTOs;
 
 namespace OrgBloom.Application.RepresentationApps.Commands.CreateRepresentationApps;
 
@@ -34,7 +30,8 @@ public record CreateRepresentationAppWithReturnCommand : IRequest<Representation
     public string Purpose { get; set; } = string.Empty;
 }
 
-public class CreateRepresentationAppWithReturnCommandHandler(IRepository<RepresentationApp> repository, IMapper mapper) : IRequestHandler<CreateRepresentationAppWithReturnCommand, RepresentationAppResultDto>
+public class CreateRepresentationAppWithReturnCommandHandler(IRepository<RepresentationApp> repository, IMapper mapper) : 
+    IRequestHandler<CreateRepresentationAppWithReturnCommand, RepresentationAppResultDto>
 {
     public async Task<RepresentationAppResultDto> Handle(CreateRepresentationAppWithReturnCommand request, CancellationToken cancellationToken)
     {

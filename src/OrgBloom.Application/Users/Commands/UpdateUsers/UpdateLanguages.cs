@@ -1,16 +1,10 @@
-﻿using AutoMapper;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Domain.Entities.Users;
-using OrgBloom.Application.Commons.Helpers;
-
-namespace OrgBloom.Application.Users.Commands.UpdateUsers;
+﻿namespace OrgBloom.Application.Users.Commands.UpdateUsers;
 
 public record UpdateLanguagesCommand : IRequest<int>
 {
     public UpdateLanguagesCommand(UpdateLanguagesCommand command)
     {
-        Id = command.Id;    
+        Id = command.Id;
         Languages = command.Languages;
     }
 
@@ -18,7 +12,8 @@ public record UpdateLanguagesCommand : IRequest<int>
     public string Languages { get; set; } = string.Empty;
 }
 
-public class UpdateLanguagesCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<UpdateLanguagesCommand, int>
+public class UpdateLanguagesCommandHandler(IRepository<User> repository, IMapper mapper) : 
+    IRequestHandler<UpdateLanguagesCommand, int>
 {
     public async Task<int> Handle(UpdateLanguagesCommand request, CancellationToken cancellationToken)
     {

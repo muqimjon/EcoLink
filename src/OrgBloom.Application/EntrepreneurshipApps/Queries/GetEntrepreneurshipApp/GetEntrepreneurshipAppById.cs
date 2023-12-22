@@ -1,21 +1,20 @@
-﻿using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Domain.Entities.ProjectManagement;
-using OrgBloom.Application.ProjectManagementApps.DTOs;
+﻿using OrgBloom.Application.EntrepreneurshipApps.DTOs;
 
 namespace OrgBloom.Application.EntrepreneurshipApps.Queries.GetEntrepreneurshipApp;
 
-public record GetEntrepreneurshipAppByIdCommand : IRequest<ProjectManagementAppResultDto>
+public record GetEntrepreneurshipAppByIdCommand : IRequest<EntrepreneurshipAppResultDto>
 {
     public GetEntrepreneurshipAppByIdCommand(long id) { Id = id; }
     public long Id { get; set; }
 }
 
-public class GetEntrepreneurshipAppByIdCommandHendler(IRepository<ProjectManagementApp> repository, IMapper mapper) : IRequestHandler<GetEntrepreneurshipAppByIdCommand, ProjectManagementAppResultDto>
+public class GetEntrepreneurshipAppByIdCommandHendler(IRepository<EntrepreneurshipApp> repository, IMapper mapper) : 
+    IRequestHandler<GetEntrepreneurshipAppByIdCommand, EntrepreneurshipAppResultDto>
 {
-    public async Task<ProjectManagementAppResultDto> Handle(GetEntrepreneurshipAppByIdCommand request, CancellationToken cancellationToken)
+    public async Task<EntrepreneurshipAppResultDto> Handle(GetEntrepreneurshipAppByIdCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id.Equals(request.Id));
 
-        return mapper.Map<ProjectManagementAppResultDto>(entity);
+        return mapper.Map<EntrepreneurshipAppResultDto>(entity);
     }
 }

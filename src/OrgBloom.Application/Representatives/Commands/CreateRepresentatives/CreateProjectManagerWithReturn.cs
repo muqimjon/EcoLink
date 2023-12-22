@@ -1,9 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Application.Representatives.DTOs;
-using OrgBloom.Domain.Entities.Representation;
-using OrgBloom.Application.Commons.Helpers;
+﻿using OrgBloom.Application.Representatives.DTOs;
 
 namespace OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
 
@@ -25,7 +20,8 @@ public record CreateRepresentativeWithReturnCommand : IRequest<RepresentativeRes
     public bool IsSubmitted { get; set; }
 }
 
-public class CreateRepresentativeWithReturnCommandHandler(IRepository<Representative> repository, IMapper mapper) : IRequestHandler<CreateRepresentativeWithReturnCommand, RepresentativeResultDto>
+public class CreateRepresentativeWithReturnCommandHandler(IRepository<Representative> repository, IMapper mapper) : 
+    IRequestHandler<CreateRepresentativeWithReturnCommand, RepresentativeResultDto>
 {
     public async Task<RepresentativeResultDto> Handle(CreateRepresentativeWithReturnCommand request, CancellationToken cancellationToken)
     {

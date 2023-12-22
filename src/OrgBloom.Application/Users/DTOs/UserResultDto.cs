@@ -1,6 +1,4 @@
-﻿using OrgBloom.Domain.Enums;
-
-namespace OrgBloom.Application.Users.DTOs;
+﻿namespace OrgBloom.Application.Users.DTOs;
 
 public class UserResultDto
 {

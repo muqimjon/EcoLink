@@ -1,8 +1,4 @@
-﻿using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Domain.Entities.Representation;
-
-namespace OrgBloom.Application.Representatives.Commands.DeleteRepresentatives;
+﻿namespace OrgBloom.Application.Representatives.Commands.DeleteRepresentatives;
 
 public record DeleteRepresentativeCommand : IRequest<bool>
 {
@@ -10,7 +6,8 @@ public record DeleteRepresentativeCommand : IRequest<bool>
     public long Id { get; set; }
 }
 
-public class DeleteRepresentativeCommandHandler(IRepository<Representative> repository) : IRequestHandler<DeleteRepresentativeCommand, bool>
+public class DeleteRepresentativeCommandHandler(IRepository<Representative> repository) : 
+    IRequestHandler<DeleteRepresentativeCommand, bool>
 {
     public async Task<bool> Handle(DeleteRepresentativeCommand request, CancellationToken cancellationToken)
     {

@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Domain.Entities.Entrepreneurship;
-using OrgBloom.Application.Commons.Helpers;
-
-namespace OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
+﻿namespace OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
 
 public record UpdateEntrepreneurIsSubmittedByUserIdCommand : IRequest<int>
 {
@@ -18,7 +12,8 @@ public record UpdateEntrepreneurIsSubmittedByUserIdCommand : IRequest<int>
     public bool IsSubmitted { get; set; }
 }
 
-public class UpdateEntrepreneurIsSubmittedByUserIdCommandHandler(IRepository<Entrepreneur> repository, IMapper mapper) : IRequestHandler<UpdateEntrepreneurIsSubmittedByUserIdCommand, int>
+public class UpdateEntrepreneurIsSubmittedByUserIdCommandHandler(IRepository<Entrepreneur> repository, IMapper mapper) : 
+    IRequestHandler<UpdateEntrepreneurIsSubmittedByUserIdCommand, int>
 {
     public async Task<int> Handle(UpdateEntrepreneurIsSubmittedByUserIdCommand request, CancellationToken cancellationToken)
     {

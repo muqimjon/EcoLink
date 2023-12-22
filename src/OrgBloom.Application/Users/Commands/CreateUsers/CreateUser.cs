@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Domain.Enums;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Domain.Entities.Users;
-using OrgBloom.Application.Commons.Helpers;
-using OrgBloom.Application.Commons.Constants;
-
-namespace OrgBloom.Application.Users.Commands.CreateUsers;
+﻿namespace OrgBloom.Application.Users.Commands.CreateUsers;
 
 public record class CreateUserCommand : IRequest<int>
 {

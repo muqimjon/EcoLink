@@ -1,8 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Application.Commons.Helpers;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.Commons.Exceptions;
-using OrgBloom.Domain.Entities.ProjectManagement;
+﻿
 
 namespace OrgBloom.Application.ProjectManagers.Commands.CreateProjectManagers;
 
@@ -24,7 +20,8 @@ public record CreateProjectManagerCommand : IRequest<int>
     public bool IsSubmitted { get; set; }
 }
 
-public class CreateProjectManagerCommandHandler(IRepository<ProjectManager> repository, IMapper mapper) : IRequestHandler<CreateProjectManagerCommand, int>
+public class CreateProjectManagerCommandHandler(IRepository<ProjectManager> repository, IMapper mapper) : 
+    IRequestHandler<CreateProjectManagerCommand, int>
 {
     public async Task<int> Handle(CreateProjectManagerCommand request, CancellationToken cancellationToken)
     {

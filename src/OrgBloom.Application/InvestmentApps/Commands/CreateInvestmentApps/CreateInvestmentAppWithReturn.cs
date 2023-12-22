@@ -1,8 +1,4 @@
-﻿using AutoMapper;
-using OrgBloom.Domain.Entities.Investment;
-using OrgBloom.Application.Commons.Helpers;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Application.InvestmentApps.DTOs;
+﻿using OrgBloom.Application.InvestmentApps.DTOs;
 
 namespace OrgBloom.Application.InvestmentApps.Commands.CreateInvestmentApps;
 
@@ -30,7 +26,8 @@ public record CreateInvestmentAppWithReturnCommand : IRequest<InvestmentAppResul
     public string Email { get; set; } = string.Empty;
 }
 
-public class CreateInvestmentAppWithReturnCommandHandler(IRepository<InvestmentApp> repository, IMapper mapper) : IRequestHandler<CreateInvestmentAppWithReturnCommand, InvestmentAppResultDto>
+public class CreateInvestmentAppWithReturnCommandHandler(IRepository<InvestmentApp> repository, IMapper mapper) : 
+    IRequestHandler<CreateInvestmentAppWithReturnCommand, InvestmentAppResultDto>
 {
     public async Task<InvestmentAppResultDto> Handle(CreateInvestmentAppWithReturnCommand request, CancellationToken cancellationToken)
     {

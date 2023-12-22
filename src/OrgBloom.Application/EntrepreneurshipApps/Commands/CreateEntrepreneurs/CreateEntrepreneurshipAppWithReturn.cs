@@ -1,8 +1,5 @@
-﻿using AutoMapper;
-using OrgBloom.Application.Commons.Helpers;
-using OrgBloom.Application.Commons.Interfaces;
-using OrgBloom.Domain.Entities.Entrepreneurship;
-using OrgBloom.Application.EntrepreneurshipApps.DTOs;
+﻿using OrgBloom.Application.EntrepreneurshipApps.DTOs;
+
 
 namespace OrgBloom.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
 
@@ -36,7 +33,8 @@ public record CreateEntrepreneurshipAppWithReturnCommand : IRequest<Entrepreneur
     public string Email { get; set; } = string.Empty;
 }
 
-public class CreateEntrepreneurshipAppWithReturnCommandHandler(IRepository<EntrepreneurshipApp> repository, IMapper mapper) : IRequestHandler<CreateEntrepreneurshipAppWithReturnCommand, EntrepreneurshipAppResultDto>
+public class CreateEntrepreneurshipAppWithReturnCommandHandler(IRepository<EntrepreneurshipApp> repository, IMapper mapper) : 
+    IRequestHandler<CreateEntrepreneurshipAppWithReturnCommand, EntrepreneurshipAppResultDto>
 {
     public async Task<EntrepreneurshipAppResultDto> Handle(CreateEntrepreneurshipAppWithReturnCommand request, CancellationToken cancellationToken)
     {
