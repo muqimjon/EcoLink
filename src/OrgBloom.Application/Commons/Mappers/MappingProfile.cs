@@ -1,24 +1,31 @@
 ﻿using AutoMapper;
+using OrgBloom.Domain.Entities.Users;
 using OrgBloom.Application.Users.DTOs;
 using OrgBloom.Application.Investors.DTOs;
+using OrgBloom.Domain.Entities.Investment;
 using OrgBloom.Application.Entrepreneurs.DTOs;
+using OrgBloom.Domain.Entities.Representation;
+using OrgBloom.Application.InvestmentApps.DTOs;
 using OrgBloom.Application.ProjectManagers.DTOs;
 using OrgBloom.Application.Representatives.DTOs;
+using OrgBloom.Domain.Entities.Entrepreneurship;
+using OrgBloom.Domain.Entities.ProjectManagement;
+using OrgBloom.Application.RepresentationApps.DTOs;
+using OrgBloom.Application.EntrepreneurshipApps.DTOs;
+using OrgBloom.Application.ProjectManagementApps.DTOs;
 using OrgBloom.Application.Users.Commands.CreateUsers;
 using OrgBloom.Application.Users.Commands.UpdateUsers;
 using OrgBloom.Application.Investors.Commands.CreateInvestors;
 using OrgBloom.Application.Investors.Commands.UpdateInvestors;
 using OrgBloom.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
 using OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
+using OrgBloom.Application.InvestmentApps.Commands.CreateInvestmentApps;
 using OrgBloom.Application.ProjectManagers.Commands.CreateProjectManagers;
 using OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 using OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
 using OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
-using OrgBloom.Domain.Entities.Representation;
-using OrgBloom.Domain.Entities.Entrepreneurship;
-using OrgBloom.Domain.Entities.ProjectManagement;
-using OrgBloom.Domain.Entities.Investment;
-using OrgBloom.Domain.Entities.Users;
+using OrgBloom.Application.RepresentationApps.Commands.CreateRepresentationApps;
+using OrgBloom.Application.ProjectManagementApps.Commands.CreateProjectManagementApps;
 
 namespace OrgBloom.Application.Commons.Mappers;
 
@@ -101,5 +108,29 @@ public class MappingProfile : Profile
 
         CreateMap<CreateUserCommand, User>();
         CreateMap<CreateUserWithReturnTgResultCommand, User>();
+
+
+        // Investment Application
+        CreateMap<InvestmentApp, InvestmentAppResultDto>();
+
+        CreateMap<CreateInvestmentAppWithReturnCommand, InvestmentApp>();
+
+
+        // Entrepreneurship Application
+        CreateMap<EntrepreneurshipApp, EntrepreneurshipAppResultDto>();
+
+        CreateMap<CreateEntrepreneurshipAppWithReturnCommand, EntrepreneurshipApp>();
+
+
+        // Project Management Application
+        CreateMap<ProjectManagementApp, ProjectManagementAppResultDto>();
+
+        CreateMap<CreateProjectManagementAppWithReturnCommand, ProjectManagementApp>();
+
+
+        // Representation Application
+        CreateMap<RepresentationApp, RepresentationAppResultDto>();
+
+        CreateMap<CreateRepresentationAppWithReturnCommand, RepresentationApp>();
     }
 }
