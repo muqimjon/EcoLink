@@ -4,10 +4,14 @@ using OrgBloom.Application.Users.DTOs;
 using OrgBloom.Application.Investors.DTOs;
 using OrgBloom.Application.Commons.Mappers;
 using OrgBloom.Application.Entrepreneurs.DTOs;
+using OrgBloom.Application.InvestmentApps.DTOs;
 using Microsoft.Extensions.DependencyInjection;
 using OrgBloom.Application.ProjectManagers.DTOs;
 using OrgBloom.Application.Representatives.DTOs;
 using OrgBloom.Application.Users.Queries.GetUsers;
+using OrgBloom.Application.RepresentationApps.DTOs;
+using OrgBloom.Application.EntrepreneurshipApps.DTOs;
+using OrgBloom.Application.ProjectManagementApps.DTOs;
 using OrgBloom.Application.Users.Commands.CreateUsers;
 using OrgBloom.Application.Users.Commands.UpdateUsers;
 using OrgBloom.Application.Users.Commands.DeleteUsers;
@@ -21,12 +25,15 @@ using OrgBloom.Application.Representatives.Queries.GetRepresentatives;
 using OrgBloom.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
 using OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
 using OrgBloom.Application.Entrepreneurs.Commands.DeleteEntrepreneurs;
+using OrgBloom.Application.InvestmentApps.Commands.CreateInvestmentApps;
 using OrgBloom.Application.ProjectManagers.Commands.CreateProjectManagers;
 using OrgBloom.Application.ProjectManagers.Commands.DeleteProjectManagers;
 using OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 using OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
 using OrgBloom.Application.Representatives.Commands.DeleteRepresentatives;
 using OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
+using OrgBloom.Application.RepresentationApps.Commands.CreateRepresentationApps;
+using OrgBloom.Application.ProjectManagementApps.Commands.CreateProjectManagementApps;
 
 namespace OrgBloom.Application;
 
@@ -151,6 +158,22 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<GetEntrepreneurAssetsInvestedByUserIdQuery, string>, GetEntrepreneurAssetsInvestedByUserIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetEntrepreneurHelpTypeByUserIdQuery, string>, GetEntrepreneurHelpTypeByUserIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetAllEntrepreneursQuery, IEnumerable<EntrepreneurResultDto>>, GetAllEntrepreneursQueryHandler>();
+
+
+        // Investment Application
+        services.AddScoped<IRequestHandler<CreateInvestmentAppWithReturnCommand, InvestmentAppResultDto>, CreateInvestmentAppWithReturnCommandHandler>();
+
+
+        // Entrepreneurship Application
+        services.AddScoped<IRequestHandler<CreateEntrepreneurshipAppWithReturnCommand, EntrepreneurshipAppResultDto>, CreateEntrepreneurshipAppWithReturnCommandHandler>();
+
+
+        // Project Management Application
+        services.AddScoped<IRequestHandler<CreateProjectManagementAppWithReturnCommand, ProjectManagementAppResultDto>, CreateProjectManagementAppWithReturnCommandHandler>();
+
+
+        // Representation Application
+        services.AddScoped<IRequestHandler<CreateRepresentationAppWithReturnCommand, RepresentationAppResultDto>, CreateRepresentationAppWithReturnCommandHandler>();
 
         return services;
     }
