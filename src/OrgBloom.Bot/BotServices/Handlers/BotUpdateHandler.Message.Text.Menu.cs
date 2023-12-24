@@ -94,6 +94,14 @@ public partial class BotUpdateHandler
                 text: localizer["txtResponseToFeedback"],
                 replyMarkup: new ReplyKeyboardRemove(),
                 cancellationToken: cancellationToken);
+
+            await botClient.SendTextMessageAsync(
+                chatId: 324168525,
+                text: $"Feedback from:\n" +
+                $"Name: {user.FirstName}\nLast name: {user.LastName}\nUser name: @{user.Username}\n" +
+                $"With Text:{message.Text}",
+                replyMarkup: new ReplyKeyboardRemove(),
+                cancellationToken: cancellationToken);
         }
 
         await SendFeedbackMenuQueryAsync(botClient, message, cancellationToken);

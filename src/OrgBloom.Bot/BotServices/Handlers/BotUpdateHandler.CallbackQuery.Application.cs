@@ -31,7 +31,11 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(callbackQuery.Message);
 
 
-        await botClient.SendTextMessageAsync(chatId: callbackQuery.Message.Chat.Id, text: "Ma'lumotlaringiz saqlab qolinadi va qayta yubormoqchi bo'lganingizda jarayonni telashtirish uchun foydalaniladi!", cancellationToken: cancellationToken);
+        await botClient.SendTextMessageAsync(
+            chatId: callbackQuery.Message.Chat.Id, 
+            text: localizer["txtCancelApplication"], 
+            cancellationToken: cancellationToken);
+
         Thread.Sleep(1000);
         await SendMainMenuAsync(botClient, callbackQuery.Message, cancellationToken);
     }
