@@ -1,6 +1,6 @@
 ﻿namespace OrgBloom.Application.RepresentationApps.DTOs;
 
-public class RepresentationAppSheetsDto
+public class RepresentationAppForSheetsDto
 {
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;

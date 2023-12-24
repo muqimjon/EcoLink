@@ -1,11 +1,12 @@
 ﻿using OrgBloom.Application.Investors.DTOs;
+using OrgBloom.Application.Commons.Helpers;
 using OrgBloom.Application.Entrepreneurs.DTOs;
 using OrgBloom.Application.ProjectManagers.DTOs;
 using OrgBloom.Application.Representatives.DTOs;
 
-namespace OrgBloom.Bot.BotServices.Helpers;
+namespace OrgBloom.Bot.BotServices;
 
-public static class StringHelper
+public partial class BotUpdateHandler
 {
     public static string GetApplicationInfoForm(EntrepreneurResultDto dto)
         => $"Ism: {dto.User.FirstName}\n" +

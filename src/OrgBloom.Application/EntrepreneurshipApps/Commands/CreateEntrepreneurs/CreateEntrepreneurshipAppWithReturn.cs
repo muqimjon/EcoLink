@@ -1,4 +1,5 @@
 ﻿using OrgBloom.Application.EntrepreneurshipApps.DTOs;
+using OrgBloom.Application.InvestmentApps.DTOs;
 
 
 namespace OrgBloom.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
@@ -33,7 +34,9 @@ public record CreateEntrepreneurshipAppWithReturnCommand : IRequest<Entrepreneur
     public string Email { get; set; } = string.Empty;
 }
 
-public class CreateEntrepreneurshipAppWithReturnCommandHandler(IRepository<EntrepreneurshipApp> repository, IMapper mapper) : 
+public class CreateEntrepreneurshipAppWithReturnCommandHandler(IMapper mapper,
+    IRepository<EntrepreneurshipApp> repository, 
+    ISheetsRepository<EntrepreneurshipAppForSheetsDto> sheetsRepository) : 
     IRequestHandler<CreateEntrepreneurshipAppWithReturnCommand, EntrepreneurshipAppResultDto>
 {
     public async Task<EntrepreneurshipAppResultDto> Handle(CreateEntrepreneurshipAppWithReturnCommand request, CancellationToken cancellationToken)
@@ -42,6 +45,11 @@ public class CreateEntrepreneurshipAppWithReturnCommandHandler(IRepository<Entre
         entity.CreatedAt = TimeHelper.GetDateTime();
         await repository.InsertAsync(entity);
         await repository.SaveAsync();
+
+        var SheetsDto = mapper.Map<EntrepreneurshipAppForSheetsDto>(entity);
+        SheetsDto.Age = TimeHelper.GetAge(entity.DateOfBirth);
+        SheetsDto.WasCreated = TimeHelper.GetDate(entity.UpdatedAt);
+        await sheetsRepository.InsertAsync(SheetsDto);
 
         return mapper.Map<EntrepreneurshipAppResultDto>(entity);
     }

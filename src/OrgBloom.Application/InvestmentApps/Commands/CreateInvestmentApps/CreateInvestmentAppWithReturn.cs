@@ -30,7 +30,7 @@ public record CreateInvestmentAppWithReturnCommand : IRequest<InvestmentAppResul
 
 public class CreateInvestmentAppWithReturnCommandHandler(IMapper mapper, 
     IRepository<InvestmentApp> repository,
-    ISheetsRepository<InvestmentAppResultDto> sheetsRepository) : 
+    ISheetsRepository<InvestmentAppForSheetsDto> sheetsRepository) : 
     IRequestHandler<CreateInvestmentAppWithReturnCommand, InvestmentAppResultDto>
 {
     public async Task<InvestmentAppResultDto> Handle(CreateInvestmentAppWithReturnCommand request, CancellationToken cancellationToken)
@@ -39,9 +39,12 @@ public class CreateInvestmentAppWithReturnCommandHandler(IMapper mapper,
         entity.CreatedAt = TimeHelper.GetDateTime();
         await repository.InsertAsync(entity);
         await repository.SaveAsync();
-        var mapped = mapper.Map<InvestmentAppResultDto>(entity);
-        await sheetsRepository.InsertAsync(mapped);
 
-        return mapped;
+        var SheetsDto = mapper.Map<InvestmentAppForSheetsDto>(entity);
+        SheetsDto.Age = TimeHelper.GetAge(entity.DateOfBirth);
+        SheetsDto.WasCreated = TimeHelper.GetDate(entity.UpdatedAt);
+        await sheetsRepository.InsertAsync(SheetsDto);
+
+        return mapper.Map<InvestmentAppResultDto>(entity);
     }
 }

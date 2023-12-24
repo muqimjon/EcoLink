@@ -1,6 +1,6 @@
 ﻿namespace OrgBloom.Application.ProjectManagementApps.DTOs;
 
-public class ProjectManagedmentAppSheetsDto
+public class ProjectManagementAppForSheetsDto
 {
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
