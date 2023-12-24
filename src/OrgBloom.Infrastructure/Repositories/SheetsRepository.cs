@@ -19,7 +19,7 @@ public partial class SheetsRepository<T>(SheetsConfigure config) : ISheetsReposi
         {
             InvestmentAppResultDto => "Investment!A:I",
             EntrepreneurshipAppResultDto => "Entrepreneurship!A:L",
-            RepresentationAppResultDto => "Representation!A:",
+            RepresentationAppResultDto => "Representation!A:L",
             ProjectManagementAppResultDto => "ProjectManagement!A:",
             _ => throw new InvalidOperationException($"Unsupported entity type: {entity.GetType()}")
         };

@@ -35,7 +35,8 @@ public class CreateProjectManagementAppWithReturnCommandHandler(IMapper mapper,
     ISheetsRepository<ProjectManagementAppForSheetsDto> sheetsRepository) : 
     IRequestHandler<CreateProjectManagementAppWithReturnCommand, ProjectManagementAppResultDto>
 {
-    public async Task<ProjectManagementAppResultDto> Handle(CreateProjectManagementAppWithReturnCommand request, CancellationToken cancellationToken)
+    public async Task<ProjectManagementAppResultDto> Handle(
+        CreateProjectManagementAppWithReturnCommand request, CancellationToken cancellationToken)
     {
         var entity = mapper.Map<ProjectManagementApp>(request);
         entity.CreatedAt = TimeHelper.GetDateTime();
