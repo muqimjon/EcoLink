@@ -1,6 +1,4 @@
 ﻿using OrgBloom.Application.EntrepreneurshipApps.DTOs;
-using OrgBloom.Application.InvestmentApps.DTOs;
-
 
 namespace OrgBloom.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
 

@@ -30,7 +30,9 @@ public record CreateProjectManagementAppWithReturnCommand : IRequest<ProjectMana
     public string Purpose { get; set; } = string.Empty;
 }
 
-public class CreateProjectManagementAppWithReturnCommandHandler(IRepository<ProjectManagementApp> repository, IMapper mapper) : 
+public class CreateProjectManagementAppWithReturnCommandHandler(IMapper mapper,
+    IRepository<ProjectManagementApp> repository, 
+    ISheetsRepository<ProjectManagementAppForSheetsDto> sheetsRepository) : 
     IRequestHandler<CreateProjectManagementAppWithReturnCommand, ProjectManagementAppResultDto>
 {
     public async Task<ProjectManagementAppResultDto> Handle(CreateProjectManagementAppWithReturnCommand request, CancellationToken cancellationToken)
@@ -39,6 +41,11 @@ public class CreateProjectManagementAppWithReturnCommandHandler(IRepository<Proj
         entity.CreatedAt = TimeHelper.GetDateTime();
         await repository.InsertAsync(entity);
         await repository.SaveAsync();
+
+        var SheetsDto = mapper.Map<ProjectManagementAppForSheetsDto>(entity);
+        SheetsDto.Age = TimeHelper.GetAge(entity.DateOfBirth);
+        SheetsDto.WasCreated = TimeHelper.GetDate(entity.UpdatedAt);
+        await sheetsRepository.InsertAsync(SheetsDto);
 
         return mapper.Map<ProjectManagementAppResultDto>(entity);
     }

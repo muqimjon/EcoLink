@@ -30,7 +30,9 @@ public record CreateRepresentationAppWithReturnCommand : IRequest<Representation
     public string Purpose { get; set; } = string.Empty;
 }
 
-public class CreateRepresentationAppWithReturnCommandHandler(IRepository<RepresentationApp> repository, IMapper mapper) : 
+public class CreateRepresentationAppWithReturnCommandHandler(IMapper mapper,
+    IRepository<RepresentationApp> repository, 
+    ISheetsRepository<RepresentationAppForSheetsDto> sheetsRepository) : 
     IRequestHandler<CreateRepresentationAppWithReturnCommand, RepresentationAppResultDto>
 {
     public async Task<RepresentationAppResultDto> Handle(CreateRepresentationAppWithReturnCommand request, CancellationToken cancellationToken)
@@ -39,6 +41,11 @@ public class CreateRepresentationAppWithReturnCommandHandler(IRepository<Represe
         entity.CreatedAt = TimeHelper.GetDateTime();
         await repository.InsertAsync(entity);
         await repository.SaveAsync();
+
+        var SheetsDto = mapper.Map<RepresentationAppForSheetsDto>(entity);
+        SheetsDto.Age = TimeHelper.GetAge(entity.DateOfBirth);
+        SheetsDto.WasCreated = TimeHelper.GetDate(entity.UpdatedAt);
+        await sheetsRepository.InsertAsync(SheetsDto);
 
         return mapper.Map<RepresentationAppResultDto>(entity);
     }
