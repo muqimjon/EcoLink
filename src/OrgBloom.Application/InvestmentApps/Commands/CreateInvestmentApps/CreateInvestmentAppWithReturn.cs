@@ -42,7 +42,7 @@ public class CreateInvestmentAppWithReturnCommandHandler(IMapper mapper,
 
         var SheetsDto = mapper.Map<InvestmentAppForSheetsDto>(entity);
         SheetsDto.Age = TimeHelper.GetAge(entity.DateOfBirth);
-        SheetsDto.WasCreated = TimeHelper.GetDate(entity.CreatedAt);
+        SheetsDto.WasCreated = entity.CreatedAt.ToString("dd.MM.yyyy");
         await sheetsRepository.InsertAsync(SheetsDto);
 
         return mapper.Map<InvestmentAppResultDto>(entity);

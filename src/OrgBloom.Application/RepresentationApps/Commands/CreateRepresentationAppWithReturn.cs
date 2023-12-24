@@ -8,6 +8,7 @@ public record CreateRepresentationAppWithReturnCommand : IRequest<Representation
     {
         Area = command.Area;
         Degree = command.Degree;
+        UserId = command.UserId;
         Purpose = command.Purpose;
         Address = command.Address;
         LastName = command.LastName;
@@ -28,6 +29,7 @@ public record CreateRepresentationAppWithReturnCommand : IRequest<Representation
     public string Area { get; set; } = string.Empty;
     public string Expectation { get; set; } = string.Empty;
     public string Purpose { get; set; } = string.Empty;
+    public long UserId { get; set; }
 }
 
 public class CreateRepresentationAppWithReturnCommandHandler(IMapper mapper,
@@ -44,7 +46,7 @@ public class CreateRepresentationAppWithReturnCommandHandler(IMapper mapper,
 
         var SheetsDto = mapper.Map<RepresentationAppForSheetsDto>(entity);
         SheetsDto.Age = TimeHelper.GetAge(entity.DateOfBirth);
-        SheetsDto.WasCreated = TimeHelper.GetDate(entity.CreatedAt);
+        SheetsDto.WasCreated = entity.CreatedAt.ToString("dd.MM.yyyy");
         await sheetsRepository.InsertAsync(SheetsDto);
 
         return mapper.Map<RepresentationAppResultDto>(entity);

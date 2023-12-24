@@ -21,6 +21,8 @@ public partial class BotUpdateHandler
 
         try { await profession; }
         catch (Exception ex) { logger.LogError(ex, "Error handling callback query: {callbackQuery.Data}", callbackQuery.Data); }
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.None), cancellationToken);
     }
 
     private async Task HandleCancelApplication(ITelegramBotClient botClient, CallbackQuery callbackQuery, CancellationToken cancellationToken)

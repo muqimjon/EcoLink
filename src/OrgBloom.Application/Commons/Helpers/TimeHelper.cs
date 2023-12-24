@@ -8,7 +8,4 @@ public class TimeHelper
     public static int GetAge(DateTimeOffset dateOfBirth)
         => DateTimeOffset.UtcNow.Year - dateOfBirth.Year - (DateTimeOffset.UtcNow < dateOfBirth.AddYears(
             DateTimeOffset.UtcNow.Year - dateOfBirth.Year) ? 1 : 0);
-
-    public static string GetDate(DateTimeOffset dateOfBirth)
-        => dateOfBirth.ToString().Split().First();
 }

@@ -136,7 +136,7 @@ public partial class BotUpdateHandler
     private async Task SendRequestForDateOfBirthAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var dateOfBirth = await mediator.Send(new GetDateOfBirthQuery(user.Id), cancellationToken);
-        var formattedDate = dateOfBirth.ToString().Split().First();
+        var formattedDate = dateOfBirth.ToString("dd.MM.yyyy");
         var @default = DateTimeOffset.MinValue.AddHours(TimeConstants.UTC);
 
         var args = (dateOfBirth == @default) switch

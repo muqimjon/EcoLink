@@ -8,6 +8,7 @@ public record CreateEntrepreneurshipAppWithReturnCommand : IRequest<Entrepreneur
     {
         Phone = command.Phone;
         Email = command.Email;
+        UserId = command.UserId;
         Degree = command.Degree;
         Project = command.Project;
         LastName = command.LastName;
@@ -30,6 +31,7 @@ public record CreateEntrepreneurshipAppWithReturnCommand : IRequest<Entrepreneur
     public string AssetsInvested { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+    public long UserId { get; set; }
 }
 
 public class CreateEntrepreneurshipAppWithReturnCommandHandler(IMapper mapper,
@@ -46,7 +48,7 @@ public class CreateEntrepreneurshipAppWithReturnCommandHandler(IMapper mapper,
 
         var SheetsDto = mapper.Map<EntrepreneurshipAppForSheetsDto>(entity);
         SheetsDto.Age = TimeHelper.GetAge(entity.DateOfBirth);
-        SheetsDto.WasCreated = TimeHelper.GetDate(entity.CreatedAt);
+        SheetsDto.WasCreated = entity.CreatedAt.ToString("dd.MM.yyyy");
         await sheetsRepository.InsertAsync(SheetsDto);
 
         return mapper.Map<EntrepreneurshipAppResultDto>(entity);

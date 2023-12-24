@@ -53,7 +53,7 @@ public partial class BotUpdateHandler
             await mediator.Send(new UpdateRepresentativeAreaByUserIdCommand() { UserId = user.Id, Area = message.Text }, cancellationToken); // TODO: need validation
             handler = profession switch
             {
-                UserProfession.None => SendRequestForExpectationAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendRequestForExpectationAsync(botClient, message, cancellationToken),
                 _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
         }
