@@ -46,7 +46,7 @@ public class CreateEntrepreneurshipAppWithReturnCommandHandler(IMapper mapper,
 
         var SheetsDto = mapper.Map<EntrepreneurshipAppForSheetsDto>(entity);
         SheetsDto.Age = TimeHelper.GetAge(entity.DateOfBirth);
-        SheetsDto.WasCreated = TimeHelper.GetDate(entity.UpdatedAt);
+        SheetsDto.WasCreated = TimeHelper.GetDate(entity.CreatedAt);
         await sheetsRepository.InsertAsync(SheetsDto);
 
         return mapper.Map<EntrepreneurshipAppResultDto>(entity);

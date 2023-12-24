@@ -44,7 +44,7 @@ public class CreateRepresentationAppWithReturnCommandHandler(IMapper mapper,
 
         var SheetsDto = mapper.Map<RepresentationAppForSheetsDto>(entity);
         SheetsDto.Age = TimeHelper.GetAge(entity.DateOfBirth);
-        SheetsDto.WasCreated = TimeHelper.GetDate(entity.UpdatedAt);
+        SheetsDto.WasCreated = TimeHelper.GetDate(entity.CreatedAt);
         await sheetsRepository.InsertAsync(SheetsDto);
 
         return mapper.Map<RepresentationAppResultDto>(entity);

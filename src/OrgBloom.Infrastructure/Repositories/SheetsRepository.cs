@@ -17,11 +17,11 @@ public partial class SheetsRepository<T>(SheetsConfigure config) : ISheetsReposi
 
         var sheet = entity switch
         {
-            InvestmentAppResultDto => "Investment!A:I",
-            EntrepreneurshipAppResultDto => "Entrepreneurship!A:L",
-            RepresentationAppResultDto => "Representation!A:L",
-            ProjectManagementAppResultDto => "ProjectManagement!A:",
-            _ => throw new InvalidOperationException($"Unsupported entity type: {entity.GetType()}")
+            InvestmentAppForSheetsDto => "Investment!A:I",
+            EntrepreneurshipAppForSheetsDto => "Entrepreneurship!A:L",
+            RepresentationAppForSheetsDto => "Representation!A:L",
+            ProjectManagementAppForSheetsDto => "ProjectManagement!A:K",
+            _ => throw new InvalidOperationException($"Unsupported entity type For send Google Sheets: {entity.GetType()}")
         };
 
         var properties = typeof(T).GetProperties();
