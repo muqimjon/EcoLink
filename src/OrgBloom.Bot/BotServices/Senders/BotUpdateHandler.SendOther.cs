@@ -148,7 +148,8 @@ public partial class BotUpdateHandler
         await botClient.SendLocationAsync(
             chatId: message.Chat.Id,
             latitude: 41.31255776545841,
-            longitude: 69.24048566441775);
+            longitude: 69.24048566441775,
+            cancellationToken: cancellationToken);
     }
 
     private async Task SendRequestFeedbackForTelegramBotAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)

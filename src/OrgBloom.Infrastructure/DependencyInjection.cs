@@ -1,7 +1,7 @@
 ﻿using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
-using Google.Apis.Auth.OAuth2;
 using Microsoft.EntityFrameworkCore;
+using OrgBloom.Infrastructure.Models;
 using OrgBloom.Infrastructure.Contexts;
 using Microsoft.Extensions.Configuration;
 using OrgBloom.Infrastructure.Repositories;
@@ -20,20 +20,20 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Scoped);
 
-        var path = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "client_secrets.json"));
-
-        GoogleCredential credential = GoogleCredential.FromStream(
-            new FileStream("../../../client_secret.json", FileMode.Open, FileAccess.Read)).
-            CreateScoped(SheetsService.Scope.Spreadsheets);
-
-        services.AddSingleton(new SheetsService(new BaseClientService.Initializer()
-        {
-            HttpClientInitializer = credential,
-            ApplicationName = configuration.GetConnectionString("ApplicationName"),
-        }));
-            
-
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+        var configur = new SheetsConfigure()
+        {
+            SpreadsheetId = configuration["SpreadsheetId"]!,
+            Service = new SheetsService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = GoogleContext.GetCredential(),
+                ApplicationName = configuration["ApplicationName"],
+            }),
+        };
+        services.AddSingleton(configur);
+
+        services.AddScoped(typeof(ISheetsRepository<>), typeof(SheetsRepository<>));
 
         return services;
     }

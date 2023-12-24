@@ -1,4 +1,3 @@
-using Telegram.Bot;
 using Telegram.Bot.Polling;
 using OrgBloom.Application;
 using OrgBloom.Infrastructure;

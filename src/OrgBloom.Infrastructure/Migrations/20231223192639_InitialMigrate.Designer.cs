@@ -12,7 +12,7 @@ using OrgBloom.Infrastructure.Contexts;
 namespace OrgBloom.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231221175732_InitialMigrate")]
+    [Migration("20231223192639_InitialMigrate")]
     partial class InitialMigrate
     {
         /// <inheritdoc />
@@ -130,6 +130,9 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
                     b.ToTable("EntrepreneurshipApps");
@@ -182,6 +185,9 @@ namespace OrgBloom.Infrastructure.Migrations
 
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -280,6 +286,9 @@ namespace OrgBloom.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
                     b.ToTable("ProjectManagementApps");
@@ -369,16 +378,15 @@ namespace OrgBloom.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Patronomyc")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Purpose")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 

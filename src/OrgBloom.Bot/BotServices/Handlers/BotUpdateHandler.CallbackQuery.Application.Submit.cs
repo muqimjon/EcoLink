@@ -2,6 +2,8 @@
 using OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
 using OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
 using OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
+using OrgBloom.Application.InvestmentApps.Commands.CreateInvestmentApps;
+using OrgBloom.Application.Investors.Queries.GetInvestors;
 
 namespace OrgBloom.Bot.BotServices;
 
@@ -78,6 +80,21 @@ public partial class BotUpdateHandler
             chatId: callbackQuery.Message.Chat.Id,
             text: "Tabriklaymiz!\nInvestorlik uchun murojaatingiz qabul qilindi va tez orada siz bilan bog'lanamiz!",
             cancellationToken: cancellationToken);
+
+        var application = await mediator.Send(new GetInvestorByUserIdQuery(user.Id), cancellationToken);
+        
+        await mediator.Send(new CreateInvestmentAppWithReturnCommand()
+        {
+            UserId = user.Id,
+            Sector = application.Sector,
+            Phone = application.User.Phone,
+            Email = application.User.Email,
+            Degree = application.User.Degree,
+            LastName = application.User.LastName,
+            FirstName = application.User.FirstName,
+            DateOfBirth = application.User.DateOfBirth,
+            InvestmentAmount = application.InvestmentAmount
+        }, cancellationToken);
 
         await mediator.Send(new UpdateInvestorIsSubmittedByUserIdCommand() { UserId = user.Id, IsSubmitted = true }, cancellationToken);
         Thread.Sleep(1000);
