@@ -1,6 +1,5 @@
 ﻿using OrgBloom.Application.EntrepreneurshipApps.DTOs;
 
-
 namespace OrgBloom.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
 
 public record CreateEntrepreneurshipAppWithReturnCommand : IRequest<EntrepreneurshipAppResultDto>
@@ -9,6 +8,7 @@ public record CreateEntrepreneurshipAppWithReturnCommand : IRequest<Entrepreneur
     {
         Phone = command.Phone;
         Email = command.Email;
+        UserId = command.UserId;
         Degree = command.Degree;
         Project = command.Project;
         LastName = command.LastName;
@@ -31,9 +31,12 @@ public record CreateEntrepreneurshipAppWithReturnCommand : IRequest<Entrepreneur
     public string AssetsInvested { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+    public long UserId { get; set; }
 }
 
-public class CreateEntrepreneurshipAppWithReturnCommandHandler(IRepository<EntrepreneurshipApp> repository, IMapper mapper) : 
+public class CreateEntrepreneurshipAppWithReturnCommandHandler(IMapper mapper,
+    IRepository<EntrepreneurshipApp> repository, 
+    ISheetsRepository<EntrepreneurshipAppForSheetsDto> sheetsRepository) : 
     IRequestHandler<CreateEntrepreneurshipAppWithReturnCommand, EntrepreneurshipAppResultDto>
 {
     public async Task<EntrepreneurshipAppResultDto> Handle(CreateEntrepreneurshipAppWithReturnCommand request, CancellationToken cancellationToken)
@@ -42,6 +45,11 @@ public class CreateEntrepreneurshipAppWithReturnCommandHandler(IRepository<Entre
         entity.CreatedAt = TimeHelper.GetDateTime();
         await repository.InsertAsync(entity);
         await repository.SaveAsync();
+
+        var SheetsDto = mapper.Map<EntrepreneurshipAppForSheetsDto>(entity);
+        SheetsDto.Age = TimeHelper.GetAge(entity.DateOfBirth);
+        SheetsDto.WasCreated = entity.CreatedAt.ToString("dd.MM.yyyy");
+        await sheetsRepository.InsertAsync(SheetsDto);
 
         return mapper.Map<EntrepreneurshipAppResultDto>(entity);
     }

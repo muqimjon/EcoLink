@@ -1,8 +1,4 @@
-﻿using Telegram.Bot;
-using Telegram.Bot.Types;
-using OrgBloom.Domain.Enums;
-using OrgBloom.Application.Users.Queries.GetUsers;
-using OrgBloom.Application.Investors.Commands.UpdateInvestors;
+﻿using OrgBloom.Application.Investors.Commands.UpdateInvestors;
 using OrgBloom.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
 using OrgBloom.Application.ProjectManagers.Commands.UpdateProjectManagers;
 
@@ -25,6 +21,8 @@ public partial class BotUpdateHandler
 
         try { await profession; }
         catch (Exception ex) { logger.LogError(ex, "Error handling callback query: {callbackQuery.Data}", callbackQuery.Data); }
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.None), cancellationToken);
     }
 
     private async Task HandleCancelApplication(ITelegramBotClient botClient, CallbackQuery callbackQuery, CancellationToken cancellationToken)
@@ -33,7 +31,11 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(callbackQuery.Message);
 
 
-        await botClient.SendTextMessageAsync(chatId: callbackQuery.Message.Chat.Id, text: "Ma'lumotlaringiz saqlab qolinadi va qayta yubormoqchi bo'lganingizda jarayonni telashtirish uchun foydalaniladi!", cancellationToken: cancellationToken);
+        await botClient.SendTextMessageAsync(
+            chatId: callbackQuery.Message.Chat.Id, 
+            text: localizer["txtCancelApplication"], 
+            cancellationToken: cancellationToken);
+
         Thread.Sleep(1000);
         await SendMainMenuAsync(botClient, callbackQuery.Message, cancellationToken);
     }

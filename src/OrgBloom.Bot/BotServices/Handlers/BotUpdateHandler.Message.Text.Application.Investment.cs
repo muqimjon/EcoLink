@@ -1,10 +1,4 @@
-﻿using Telegram.Bot;
-using Telegram.Bot.Types;
-using OrgBloom.Domain.Enums;
-using OrgBloom.Bot.BotServices.Helpers;
-using OrgBloom.Application.Users.Queries.GetUsers;
-using OrgBloom.Application.Users.Commands.UpdateUsers;
-using OrgBloom.Application.Investors.Queries.GetInvestors;
+﻿using OrgBloom.Application.Investors.Queries.GetInvestors;
 using OrgBloom.Application.Investors.Commands.UpdateInvestors;
 using OrgBloom.Application.Investors.Commands.CreateInvestors;
 
@@ -33,7 +27,7 @@ public partial class BotUpdateHandler
             ?? await mediator.Send(new CreateInvestorWithReturnCommand() { UserId = user.Id }, cancellationToken);
 
         if (application.IsSubmitted)
-            await SendAlreadyExistApplicationAsync(StringHelper.GetApplicationInfoForm(application), botClient, message, cancellationToken);
+            await SendAlreadyExistApplicationAsync(GetApplicationInfoForm(application), botClient, message, cancellationToken);
         else
             await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
     }

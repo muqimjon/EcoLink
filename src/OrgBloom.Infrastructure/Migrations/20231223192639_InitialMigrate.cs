@@ -29,6 +29,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     AssetsInvested = table.Column<string>(type: "text", nullable: false),
                     Phone = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
@@ -52,6 +53,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     InvestmentAmount = table.Column<string>(type: "text", nullable: false),
                     Phone = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
@@ -77,6 +79,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     ProjectDirection = table.Column<string>(type: "text", nullable: false),
                     Expectation = table.Column<string>(type: "text", nullable: false),
                     Purpose = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
@@ -94,7 +97,6 @@ namespace OrgBloom.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
-                    Patronomyc = table.Column<string>(type: "text", nullable: false),
                     DateOfBirth = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     Degree = table.Column<string>(type: "text", nullable: false),
                     Languages = table.Column<string>(type: "text", nullable: false),
@@ -102,6 +104,7 @@ namespace OrgBloom.Infrastructure.Migrations
                     Address = table.Column<string>(type: "text", nullable: false),
                     Expectation = table.Column<string>(type: "text", nullable: false),
                     Purpose = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)

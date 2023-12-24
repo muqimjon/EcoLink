@@ -1,9 +1,4 @@
-﻿using OrgBloom.Application.Users.Commands.UpdateUsers;
-using Telegram.Bot;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.ReplyMarkups;
-
-namespace OrgBloom.Bot.BotServices;
+﻿namespace OrgBloom.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
@@ -97,6 +92,14 @@ public partial class BotUpdateHandler
             await botClient.SendTextMessageAsync(
                 chatId: message.Chat.Id,
                 text: localizer["txtResponseToFeedback"],
+                replyMarkup: new ReplyKeyboardRemove(),
+                cancellationToken: cancellationToken);
+
+            await botClient.SendTextMessageAsync(
+                chatId: 324168525,
+                text: $"Feedback from:\n" +
+                $"Name: {user.FirstName}\nLast name: {user.LastName}\nUser name: @{user.Username}\n" +
+                $"With Text:{message.Text}",
                 replyMarkup: new ReplyKeyboardRemove(),
                 cancellationToken: cancellationToken);
         }

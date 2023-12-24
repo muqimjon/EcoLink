@@ -6,6 +6,7 @@ public record CreateProjectManagementAppWithReturnCommand : IRequest<ProjectMana
 {
     public CreateProjectManagementAppWithReturnCommand(CreateProjectManagementAppWithReturnCommand command)
     {
+        UserId = command.UserId;
         Degree = command.Degree;
         Purpose = command.Purpose;
         Address = command.Address;
@@ -28,17 +29,26 @@ public record CreateProjectManagementAppWithReturnCommand : IRequest<ProjectMana
     public string ProjectDirection { get; set; } = string.Empty;
     public string Expectation { get; set; } = string.Empty;
     public string Purpose { get; set; } = string.Empty;
+    public long UserId { get; set; }
 }
 
-public class CreateProjectManagementAppWithReturnCommandHandler(IRepository<ProjectManagementApp> repository, IMapper mapper) : 
+public class CreateProjectManagementAppWithReturnCommandHandler(IMapper mapper,
+    IRepository<ProjectManagementApp> repository, 
+    ISheetsRepository<ProjectManagementAppForSheetsDto> sheetsRepository) : 
     IRequestHandler<CreateProjectManagementAppWithReturnCommand, ProjectManagementAppResultDto>
 {
-    public async Task<ProjectManagementAppResultDto> Handle(CreateProjectManagementAppWithReturnCommand request, CancellationToken cancellationToken)
+    public async Task<ProjectManagementAppResultDto> Handle(
+        CreateProjectManagementAppWithReturnCommand request, CancellationToken cancellationToken)
     {
         var entity = mapper.Map<ProjectManagementApp>(request);
         entity.CreatedAt = TimeHelper.GetDateTime();
         await repository.InsertAsync(entity);
         await repository.SaveAsync();
+
+        var SheetsDto = mapper.Map<ProjectManagementAppForSheetsDto>(entity);
+        SheetsDto.Age = TimeHelper.GetAge(entity.DateOfBirth);
+        SheetsDto.WasCreated = entity.CreatedAt.ToString("dd.MM.yyyy");
+        await sheetsRepository.InsertAsync(SheetsDto);
 
         return mapper.Map<ProjectManagementAppResultDto>(entity);
     }

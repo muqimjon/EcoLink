@@ -1,11 +1,4 @@
-﻿using Telegram.Bot;
-using Telegram.Bot.Types;
-using OrgBloom.Domain.Enums;
-using Telegram.Bot.Types.ReplyMarkups;
-using OrgBloom.Bot.BotServices.Helpers;
-using OrgBloom.Application.Commons.Constants;
-using OrgBloom.Application.Users.Queries.GetUsers;
-using OrgBloom.Application.Users.Commands.UpdateUsers;
+﻿using OrgBloom.Application.Commons.Constants;
 using OrgBloom.Application.Investors.Queries.GetInvestors;
 using OrgBloom.Application.Entrepreneurs.Queries.GetEntrepreneurs;
 using OrgBloom.Application.ProjectManagers.Queries.GetProjectManagers;
@@ -56,10 +49,10 @@ public partial class BotUpdateHandler
         var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         var applicationText = profession switch
         {
-            UserProfession.ProjectManager => StringHelper.GetApplicationInfoForm(await mediator.Send(new GetProjectManagerByUserIdQuery(user.Id), cancellationToken)),
-            UserProfession.Investor => StringHelper.GetApplicationInfoForm(await mediator.Send(new GetInvestorByUserIdQuery(user.Id), cancellationToken)),
-            UserProfession.Entrepreneur => StringHelper.GetApplicationInfoForm(await mediator.Send(new GetEntrepreneurByUserIdQuery(user.Id), cancellationToken)),
-            UserProfession.Representative => StringHelper.GetApplicationInfoForm(await mediator.Send(new GetRepresentativeByUserIdQuery(user.Id), cancellationToken)),
+            UserProfession.ProjectManager => GetApplicationInfoForm(await mediator.Send(new GetProjectManagerByUserIdQuery(user.Id), cancellationToken)),
+            UserProfession.Investor => GetApplicationInfoForm(await mediator.Send(new GetInvestorByUserIdQuery(user.Id), cancellationToken)),
+            UserProfession.Entrepreneur => GetApplicationInfoForm(await mediator.Send(new GetEntrepreneurByUserIdQuery(user.Id), cancellationToken)),
+            UserProfession.Representative => GetApplicationInfoForm(await mediator.Send(new GetRepresentativeByUserIdQuery(user.Id), cancellationToken)),
             _ => string.Empty,
         };
 
@@ -143,7 +136,7 @@ public partial class BotUpdateHandler
     private async Task SendRequestForDateOfBirthAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var dateOfBirth = await mediator.Send(new GetDateOfBirthQuery(user.Id), cancellationToken);
-        var formattedDate = dateOfBirth.ToString().Split().First();
+        var formattedDate = dateOfBirth.ToString("dd.MM.yyyy");
         var @default = DateTimeOffset.MinValue.AddHours(TimeConstants.UTC);
 
         var args = (dateOfBirth == @default) switch

@@ -1,10 +1,4 @@
-﻿using Telegram.Bot;
-using Telegram.Bot.Types;
-using OrgBloom.Domain.Enums;
-using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types.ReplyMarkups;
-using OrgBloom.Application.Users.Queries.GetUsers;
-using OrgBloom.Application.Users.Commands.UpdateUsers;
+﻿using Telegram.Bot.Types.Enums;
 
 namespace OrgBloom.Bot.BotServices;
 
@@ -154,7 +148,8 @@ public partial class BotUpdateHandler
         await botClient.SendLocationAsync(
             chatId: message.Chat.Id,
             latitude: 41.31255776545841,
-            longitude: 69.24048566441775);
+            longitude: 69.24048566441775,
+            cancellationToken: cancellationToken);
     }
 
     private async Task SendRequestFeedbackForTelegramBotAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)

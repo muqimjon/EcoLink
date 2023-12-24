@@ -1,10 +1,4 @@
-﻿using Telegram.Bot;
-using Telegram.Bot.Types;
-using OrgBloom.Domain.Enums;
-using OrgBloom.Bot.BotServices.Helpers;
-using OrgBloom.Application.Users.Queries.GetUsers;
-using OrgBloom.Application.Users.Commands.UpdateUsers;
-using OrgBloom.Application.Representatives.Queries.GetRepresentatives;
+﻿using OrgBloom.Application.Representatives.Queries.GetRepresentatives;
 using OrgBloom.Application.Representatives.Commands.CreateRepresentatives;
 using OrgBloom.Application.Representatives.Commands.UpdateRepresentatives;
 
@@ -33,7 +27,7 @@ public partial class BotUpdateHandler
             ?? await mediator.Send(new CreateRepresentativeWithReturnCommand() { UserId = user.Id }, cancellationToken);
 
         if (application.IsSubmitted)
-            await SendAlreadyExistApplicationAsync(StringHelper.GetApplicationInfoForm(application), botClient, message, cancellationToken);
+            await SendAlreadyExistApplicationAsync(GetApplicationInfoForm(application), botClient, message, cancellationToken);
         else
             await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
     }
@@ -59,7 +53,7 @@ public partial class BotUpdateHandler
             await mediator.Send(new UpdateRepresentativeAreaByUserIdCommand() { UserId = user.Id, Area = message.Text }, cancellationToken); // TODO: need validation
             handler = profession switch
             {
-                UserProfession.None => SendRequestForExpectationAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendRequestForExpectationAsync(botClient, message, cancellationToken),
                 _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
         }

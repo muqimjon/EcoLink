@@ -1,5 +1,4 @@
-﻿using Telegram.Bot;
-using Telegram.Bot.Polling;
+﻿using Telegram.Bot.Polling;
 
 namespace OrgBloom.Bot.BotServices.Commons;
 

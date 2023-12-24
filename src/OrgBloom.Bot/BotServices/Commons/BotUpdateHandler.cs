@@ -1,13 +1,9 @@
-﻿using MediatR;
-using Telegram.Bot;
-using Telegram.Bot.Types;
-using System.Globalization;
+﻿using System.Globalization;
 using Telegram.Bot.Polling;
 using OrgBloom.Bot.Resources;
 using Telegram.Bot.Types.Enums;
 using OrgBloom.Application.Users.DTOs;
 using Microsoft.Extensions.Localization;
-using OrgBloom.Application.Users.Queries.GetUsers;
 using OrgBloom.Application.Users.Commands.CreateUsers;
 
 namespace OrgBloom.Bot.BotServices;

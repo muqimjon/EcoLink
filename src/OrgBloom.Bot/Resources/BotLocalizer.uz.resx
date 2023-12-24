@@ -283,11 +283,11 @@ O'zingiz uchun qulay tilni tanlang: </value>
     <comment>Foydalanuvchidan loyiha haqida so'raladi</comment>
   </data>
   <data name="txtAskForAddress" xml:space="preserve">
-    <value>Hozir qayerda yashaysiz? </value>
+    <value>Ayni vaqtdagi manzilingizni kiriting  </value>
     <comment>Foydalanuvchidan manzilini so'rash</comment>
   </data>
   <data name="txtAskForArea" xml:space="preserve">
-    <value>Qayerda vakil bo'lmoqchisiz? </value>
+    <value>Qayerda vakil bo'lmoqchi ekaningizni kiriting </value>
     <comment>Foydalanuvchidan qayerda vakil bo'lishni istayotgani so'raladi.</comment>
   </data>
   <data name="txtAskForAssetInvested" xml:space="preserve">
@@ -308,11 +308,11 @@ O'zingiz uchun qulay tilni tanlang: </value>
     <comment>Foydalanuvchidan emailini so'rash</comment>
   </data>
   <data name="txtAskForExpectation" xml:space="preserve">
-    <value>Iqtisodiyot Assambleyadan nima kutasiz? </value>
+    <value>Iqtisodiyot Assambleyadan nima kutayotganingizni kiriting </value>
     <comment>Foydalanuvchidan ushbu tashkilotdan nima kutayotgani so'raladi</comment>
   </data>
   <data name="txtAskForExperience" xml:space="preserve">
-    <value>Qaysi sohada necha yillik tajribagiz bor?</value>
+    <value>Qaysi sohada necha yillik tajribagiz borligi haqida yozing </value>
     <comment>Foydalanuvchidan ish tajribasini so'rash</comment>
   </data>
   <data name="txtAskForFirstName" xml:space="preserve">
@@ -345,11 +345,11 @@ Dollardayozing: </value>
     <comment>Foydalanuvchidan loyiha boshqarishdan maqsadi so'raladi</comment>
   </data>
   <data name="txtAskForProjectManagmentSector" xml:space="preserve">
-    <value>Qaysi sohada loyiha boshqarmoqchisiz? </value>
+    <value>Qaysi sohada loyiha boshqarmoqchi ekaningizni kiriting </value>
     <comment>Foydalanuvchidan qaysi sohada loyiha boshqarishni istayotgani so'raladi.</comment>
   </data>
   <data name="txtAskForRepresentativePurpose" xml:space="preserve">
-    <value>Vakil bo'lishdan maqsadingiz </value>
+    <value>Vakil bo'lishdan maqsadingizni kiriting </value>
     <comment>Foydalanuvchidan vakil bo'lishdan maqsadi so'raladi</comment>
   </data>
   <data name="txtAskForRequiredFunding" xml:space="preserve">
@@ -357,7 +357,7 @@ Dollardayozing: </value>
     <comment>Foydalanuvchidan loyha amalga oshishi uchunkerakli summa kerakligi so'raladi</comment>
   </data>
   <data name="txtAskForSector" xml:space="preserve">
-    <value>Qaysi sohada investorlik qilmoqchisiz? </value>
+    <value>Qaysi sohada investorlik qilmoqchi ekanligingizni kiriting </value>
     <comment>Foydalanuvchidan qaysi sohaga sarmoya kiritishi so'raladi.</comment>
   </data>
   <data name="txtAskForSelectOrWrite" xml:space="preserve">
@@ -369,6 +369,9 @@ Dollardayozing: </value>
   </data>
   <data name="txtAskWithButton" xml:space="preserve">
     <value>yoki tugmani bosish orqali yuboring </value>
+  </data>
+  <data name="txtCancelApplication" xml:space="preserve">
+    <value>Ma'lumotlaringiz saqlab qolinadi va qayta yubormoqchi bo'lganingizda jarayonni telashtirish uchun foydalaniladi!</value>
   </data>
   <data name="txtContactInfo" xml:space="preserve">
     <value>+998 91 774 14 16
@@ -445,8 +448,13 @@ Toshkent shahri, O'zbekiston</value>
     <value>Murojaatnoma tayyor tasdiqlash qoldi xolos! </value>
     <comment>Murojaatnoma tayyorligi haqida xabar berish va bir vaqtning o'zida joriy tugmalarni o'chirib yuborish uchun</comment>
   </data>
+  <data name="txtResponseSubmittedApp" xml:space="preserve">
+    <value>Tabriklaymiz! Murojaatingiz qabul qilindi va tez orada siz bilan bog'lanamiz!</value>
+    <comment>Arizani tasdiqlagandan so'ng</comment>
+  </data>
   <data name="txtResponseToFeedback" xml:space="preserve">
     <value>Fikringizni bildirganingiz uchun katta rahmat! </value>
+    <comment>Foydalanuvchi fikr bildirgani uchun rahmatnoma xabari</comment>
   </data>
   <data name="txtSettings" xml:space="preserve">
     <value>Sozlamalar </value>
