@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BDD32F9C-90D0-4212-BD96-4F9233BA84CB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcoLink.Application", "src\EcoLink.Application\EcoLink.Application.csproj", "{744701B4-EE58-4E59-A934-8810367A122E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcoLink.Domain", "src\EcoLink.Domain\EcoLink.Domain.csproj", "{07DF4930-CE3D-4F8E-8AE6-C5ECEE9EADF5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcoLink.Infrastructure", "src\EcoLink.Infrastructure\EcoLink.Infrastructure.csproj", "{10B2A08C-B54D-44F0-B3B0-56088BE437BC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcoLink.WebApi", "src\EcoLink.WebApi\EcoLink.WebApi.csproj", "{4FFD6F2C-D05E-433D-8EE8-4C0BBACE63DE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcoLink.Bot", "src\EcoLink.Bot\EcoLink.Bot.csproj", "{B6FCDEBE-C23C-4CED-82C6-7CD6E78C819E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{744701B4-EE58-4E59-A934-8810367A122E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{744701B4-EE58-4E59-A934-8810367A122E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{744701B4-EE58-4E59-A934-8810367A122E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{744701B4-EE58-4E59-A934-8810367A122E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07DF4930-CE3D-4F8E-8AE6-C5ECEE9EADF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07DF4930-CE3D-4F8E-8AE6-C5ECEE9EADF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07DF4930-CE3D-4F8E-8AE6-C5ECEE9EADF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07DF4930-CE3D-4F8E-8AE6-C5ECEE9EADF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10B2A08C-B54D-44F0-B3B0-56088BE437BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10B2A08C-B54D-44F0-B3B0-56088BE437BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10B2A08C-B54D-44F0-B3B0-56088BE437BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10B2A08C-B54D-44F0-B3B0-56088BE437BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FFD6F2C-D05E-433D-8EE8-4C0BBACE63DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FFD6F2C-D05E-433D-8EE8-4C0BBACE63DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FFD6F2C-D05E-433D-8EE8-4C0BBACE63DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FFD6F2C-D05E-433D-8EE8-4C0BBACE63DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6FCDEBE-C23C-4CED-82C6-7CD6E78C819E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6FCDEBE-C23C-4CED-82C6-7CD6E78C819E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6FCDEBE-C23C-4CED-82C6-7CD6E78C819E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6FCDEBE-C23C-4CED-82C6-7CD6E78C819E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{744701B4-EE58-4E59-A934-8810367A122E} = {BDD32F9C-90D0-4212-BD96-4F9233BA84CB}
+		{07DF4930-CE3D-4F8E-8AE6-C5ECEE9EADF5} = {BDD32F9C-90D0-4212-BD96-4F9233BA84CB}
+		{10B2A08C-B54D-44F0-B3B0-56088BE437BC} = {BDD32F9C-90D0-4212-BD96-4F9233BA84CB}
+		{4FFD6F2C-D05E-433D-8EE8-4C0BBACE63DE} = {BDD32F9C-90D0-4212-BD96-4F9233BA84CB}
+		{B6FCDEBE-C23C-4CED-82C6-7CD6E78C819E} = {BDD32F9C-90D0-4212-BD96-4F9233BA84CB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9BA31350-68E3-4B4D-88F6-3A089D09BE9B}
+	EndGlobalSection
+EndGlobal

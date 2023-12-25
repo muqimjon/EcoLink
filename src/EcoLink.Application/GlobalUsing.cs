@@ -1,0 +1,13 @@
+﻿global using MediatR;
+global using AutoMapper;
+global using EcoLink.Domain.Enums;
+global using EcoLink.Domain.Entities.Users;
+global using EcoLink.Application.Users.DTOs;
+global using EcoLink.Domain.Entities.Investment;
+global using EcoLink.Application.Commons.Helpers;
+global using EcoLink.Application.Commons.Constants;
+global using EcoLink.Domain.Entities.Representation;
+global using EcoLink.Application.Commons.Exceptions;
+global using EcoLink.Application.Commons.Interfaces;
+global using EcoLink.Domain.Entities.Entrepreneurship;
+global using EcoLink.Domain.Entities.ProjectManagement;
