@@ -59,6 +59,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<UpdateDateOfBirthCommand, int>, UpdateDateOfBirthCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateLanguageCodeCommand, int>, UpdateLanguageCodeCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateStateCommand, int>, UpdateStateCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateStateAndProfessionCommand, int>, UpdateStateAndProfessionCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateProfessionCommand, int>, UpdateProfessionCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateAddressCommand, int>, UpdateAddressCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateLanguagesCommand, int>, UpdateLanguagesCommandHandler>();

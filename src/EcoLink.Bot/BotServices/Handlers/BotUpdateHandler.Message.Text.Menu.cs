@@ -91,6 +91,7 @@ public partial class BotUpdateHandler
             // TO DO Send message to developer with email or telegram bot
             await botClient.SendTextMessageAsync(
                 chatId: message.Chat.Id,
+                replyToMessageId: message.MessageId,
                 text: localizer["txtResponseToFeedback"],
                 replyMarkup: new ReplyKeyboardRemove(),
                 cancellationToken: cancellationToken);
@@ -100,7 +101,6 @@ public partial class BotUpdateHandler
                 text: $"Feedback from:\n" +
                 $"Name: {user.FirstName}\nLast name: {user.LastName}\nUser name: @{user.Username}\n" +
                 $"With Text:{message.Text}",
-                replyMarkup: new ReplyKeyboardRemove(),
                 cancellationToken: cancellationToken);
         }
 
