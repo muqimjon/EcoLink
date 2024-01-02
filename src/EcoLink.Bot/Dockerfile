@@ -5,8 +5,8 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /App
 
 # Copy the project file and restore dependencies
-COPY ./src/OrgBloom.Bot/OrgBloom.Bot.csproj ./src/OrgBloom.Bot/
-RUN dotnet restore ./src/OrgBloom.Bot/OrgBloom.Bot.csproj
+COPY ./src/EcoLink.Bot/EcoLink.Bot.csproj ./src/EcoLink.Bot/
+RUN dotnet restore ./src/EcoLink.Bot/EcoLink.Bot.csproj
 
 # Copy the remaining files
 COPY . .
@@ -20,4 +20,4 @@ WORKDIR /App
 COPY --from=build-env /App/out .
 EXPOSE 5000
 ENV ASPNETCORE_URLS=http://+:5000
-ENTRYPOINT ["dotnet", "OrgBloom.Bot.dll"]
+ENTRYPOINT ["dotnet", "EcoLink.Bot.dll"]

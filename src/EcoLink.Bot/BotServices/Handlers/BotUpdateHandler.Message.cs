@@ -10,7 +10,7 @@ public partial class BotUpdateHandler
 
         logger.LogInformation("Received message from {from.FirstName}", user.FirstName);
 
-        var handler = message.Type switch
+            var handler = message.Type switch
         {
             MessageType.Text => HandleTextMessageAsync(botClient, message, cancellationToken),
             MessageType.Contact => HandleContactMessageAsync(botClient, message, cancellationToken),

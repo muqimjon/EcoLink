@@ -27,7 +27,7 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken
         );
 
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectProfession), cancellationToken);
+        await mediator.Send(new UpdateStateAndProfessionCommand() { Id = user.Id, State = State.WaitingForSelectProfession }, cancellationToken);
     }
 
     private async Task SendAlreadyExistApplicationAsync(string text, ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)

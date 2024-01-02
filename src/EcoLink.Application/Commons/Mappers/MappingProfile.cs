@@ -93,6 +93,7 @@ public class MappingProfile : Profile
         CreateMap<UpdatePatronomycCommand, User>();
         CreateMap<UpdatePhoneCommand, User>();
         CreateMap<UpdateStateCommand, User>();
+        CreateMap<UpdateStateAndProfessionCommand, User>();
         CreateMap<UpdateLanguageCodeCommand, User>();
         CreateMap<UpdateProfessionCommand, User>();
         CreateMap<UpdateAddressCommand, User>();

@@ -8,44 +8,46 @@ public partial class BotUpdateHandler
 {
     private async Task HandleTextMessageAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var userState = await mediator.Send(new GetStateQuery(user.Id), cancellationToken);
+        ArgumentNullException.ThrowIfNull(message.Text);
+
+        var userState = message.Text.Equals("/start") ? State.None : await mediator.Send(new GetStateQuery(user.Id), cancellationToken);
         var handler = userState switch
         {
             State.None => SendGreetingAsync(botClient, message, cancellationToken),
-            State.WaitingForSubmitApplication => SendGreetingAsync(botClient, message, cancellationToken),
             State.WaitingForSelectMainMenu => HandleMainMenuAsync(botClient, message, cancellationToken),  
-            State.WaitingForResendApplication => HandleResendApplicationAsync(botClient, message, cancellationToken),
+            State.WaitingForSelectForFeedback => HandleSelectedFeedbackAsync(botClient, message, cancellationToken),
             State.WaitingForSelectProfession => HandleProfessionAsync(botClient, message, cancellationToken),
             State.WaitingForSelectSettings => HandleSelectedSettingsAsync(botClient, message, cancellationToken),
-            State.WaitingForSelectLanguage => HandleSentLanguageAsync(botClient, message, cancellationToken),
-            State.WaitingForSelectForFeedback => HandleSelectedFeedbackAsync(botClient, message, cancellationToken),
-            State.WaitingForSelectPersonalInfo => HandleSelectedPersonalInfoAsync(botClient, message, cancellationToken),
+            State.WaitingForSelectInvestmentMenu => HandleSelectedInvestmentMenuAsync(botClient, message, cancellationToken),
+            State.WaitingForSelectEntrepreneurshipMenu => HandleSelectedEntrepreneurshipMenuAsync(botClient, message, cancellationToken),
+            State.WaitingForSelectProjectManagementMenu => HandleSelectedProjectManagementMenuAsync(botClient, message, cancellationToken),
+            State.WaitingForSelectRepresentationMenu => HandleSelectedRepresentationMenuAsync(botClient, message, cancellationToken),
             State.WaitingForFeedbackForOrganization => HandleFeedbackForOrganizationAsync(botClient, message, cancellationToken),
             State.WaitingForFeedbackForTelegramBot => HandleFeedbackForTelegramBotAsync(botClient, message, cancellationToken),
+            State.WaitingForSelectPersonalInfo => HandleSelectedPersonalInfoAsync(botClient, message, cancellationToken),
+            State.WaitingForSubmitApplication => SendGreetingAsync(botClient, message, cancellationToken),
+            State.WaitingForResendApplication => HandleResendApplicationAsync(botClient, message, cancellationToken),
             State.WaitingForEnterFirstName => HandleFirstNameAsync(botClient, message, cancellationToken),
             State.WaitingForEnterLastName => HandleLastNameAsync(botClient, message, cancellationToken),
             State.WaitingForEnterPatronomyc => HandlePatronomycAsync(botClient, message, cancellationToken),
             State.WaitingForEnterDateOfBirth => HandleDateOfBirthAsync(botClient, message, cancellationToken),
             State.WaitingForEnterDegree => HandleDegreeAsync(botClient, message, cancellationToken),
-            State.WaitingForEnterInvestmentAmount => HandleInvestmentAmountAsync(botClient, message, cancellationToken),
             State.WaitingForEnterEmail => HandleEmailAsync(botClient, message, cancellationToken),
             State.WaitingForEnterPhoneNumber => HandlePhoneNumbeFromTextAsync(botClient, message, cancellationToken),
+            State.WaitingForSelectLanguage => HandleSentLanguageAsync(botClient, message, cancellationToken),
             State.WaitingForEnterLanguages => HandleLanguagesAsync(botClient, message, cancellationToken),
             State.WaitingForEnterExperience => HandleExperienceAsync(botClient, message, cancellationToken),
             State.WaitingForEnterAddress => HandleAddressAsync(botClient, message, cancellationToken),
             State.WaitingForEnterArea => HandleAreaAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterInvestmentAmount => HandleInvestmentAmountAsync(botClient, message, cancellationToken),
             State.WaitingForEnterExpectation => HandleExpectationAsync(botClient, message, cancellationToken),
-            State.WaitingForEnterPurpose => HandlePurposeAsync(botClient, message, cancellationToken),
             State.WaitingForEnterAboutProject => HandleAboutProjectForEntrepreneurshipAsync(botClient, message, cancellationToken),
             State.WaitingForEnterHelpType => HandleAboutHelpTypeForEntrepreneurshipAsync(botClient, message, cancellationToken),
             State.WaitingForEnterRequiredFunding => HandleRequiredFundingForEntrepreneurshipAsync(botClient, message, cancellationToken),
             State.WaitingForAssetInvested => HandleAssetsInvestedForEntrepreneurshipAsync(botClient, message, cancellationToken),
             State.WaitingForEnterProjectDirection => HandleProjectDirectionForProjectManagementAsync(botClient, message, cancellationToken),
             State.WaitingForEnterSector => HandleSectorFromTextAsync(botClient, message, cancellationToken),
-            State.WaitingForSelectEntrepreneurshipMenu => HandleSelectedEntrepreneurshipMenuAsync(botClient, message, cancellationToken),
-            State.WaitingForSelectProjectManagementMenu => HandleSelectedProjectManagementMenuAsync(botClient, message, cancellationToken),
-            State.WaitingForSelectInvestmentMenu => HandleSelectedInvestmentMenuAsync(botClient, message, cancellationToken),
-            State.WaitingForSelectRepresentationMenu => HandleSelectedRepresentationMenuAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterPurpose => HandlePurposeAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 
