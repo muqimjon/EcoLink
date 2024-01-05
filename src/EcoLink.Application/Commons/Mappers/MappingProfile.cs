@@ -87,6 +87,7 @@ public class MappingProfile : Profile
         CreateMap<UpdateUserCommand, User>();
         CreateMap<UpdateDateOfBirthCommand, User>();
         CreateMap<UpdateDegreeCommand, User>();
+        CreateMap<UpdateAgeCommand, User>();
         CreateMap<UpdateEmailCommand, User>();
         CreateMap<UpdateFirstNameCommand, User>();
         CreateMap<UpdateLastNameCommand, User>();

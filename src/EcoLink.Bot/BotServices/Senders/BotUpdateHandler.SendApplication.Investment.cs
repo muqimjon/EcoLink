@@ -20,7 +20,12 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken
         );
 
-        await mediator.Send(new UpdateStateAndProfessionCommand() { Id = user.Id, Profession = UserProfession.Investor, State = State.WaitingForSelectInvestmentMenu}, cancellationToken);
+        await mediator.Send(new UpdateStateAndProfessionCommand()
+        {
+            Id = user.Id,
+            Profession = UserProfession.Investor,
+            State = State.WaitingForSelectInvestmentMenu,
+        }, cancellationToken);
     }
 
     private async Task SendRequestForInvestmentAmountForInvestmentAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)

@@ -20,7 +20,12 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken
         );
 
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectRepresentationMenu), cancellationToken);
+        await mediator.Send(new UpdateStateAndProfessionCommand() 
+        { 
+            Id = user.Id, 
+            Profession = UserProfession.Representative,
+            State = State.WaitingForSelectRepresentationMenu, 
+        }, cancellationToken);
     }
 
     private async Task SendRequestForAreaAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
