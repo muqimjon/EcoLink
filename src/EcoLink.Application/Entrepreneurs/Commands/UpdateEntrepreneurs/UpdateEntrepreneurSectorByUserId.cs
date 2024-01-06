@@ -21,7 +21,6 @@ public class UpdateEntrepreneurSectorByUserIdCommandHandler(IRepository<Entrepre
             ?? throw new NotFoundException($"Entrepreneur is not found with id: {request.UserId} | Update Entrepreneur Sector");
 
         mapper.Map(request, entity);
-        entity.UpdatedAt = TimeHelper.GetDateTime();
         repository.Update(entity);
         return await repository.SaveAsync();
     }

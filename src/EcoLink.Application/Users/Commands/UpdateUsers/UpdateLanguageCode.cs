@@ -21,7 +21,6 @@ public class UpdateLanguageCodeCommandHandler(IRepository<User> repository, IMap
             ?? throw new NotFoundException($"This User is not found by id: {request.Id} | update language code");
 
         mapper.Map(request, entity);
-        entity.UpdatedAt = TimeHelper.GetDateTime();
         repository.Update(entity);
         return await repository.SaveAsync();
     }

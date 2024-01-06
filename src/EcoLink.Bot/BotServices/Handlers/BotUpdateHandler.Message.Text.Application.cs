@@ -19,17 +19,6 @@ public partial class BotUpdateHandler
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
 
-
-        /*        var handle = message.Text switch
-                {
-                    { } text when text == localizer["rbtnEntrepreneurship"] => EntrepreneurshipQueryAsync(botClient, message, cancellationToken),
-                    { } text when text == localizer["rbtnInvestment"] => InvestmentQueryAsync(botClient, message, cancellationToken),
-                    { } text when text == localizer["rbtnRepresentation"] => RepresentationQueryAsync(botClient, message, cancellationToken),
-                    { } text when text == localizer["rbtnProjectManagement"] => ProjectManagementQueryAsync(botClient, message, cancellationToken),
-                    _ when message.Text == localizer["rbtnBack"] => SendMainMenuAsync(botClient, message, cancellationToken),
-                    _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
-                };*/
-
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {from.FirstName}", user.FirstName); }
     }

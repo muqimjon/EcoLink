@@ -21,7 +21,6 @@ public class UpdateAddressCommandHandler(IRepository<User> repository, IMapper m
             ?? throw new NotFoundException($"This User is not found by id: {request.Id} | Address update");
 
         mapper.Map(request, entity);
-        entity.UpdatedAt = TimeHelper.GetDateTime();
         repository.Update(entity);
         return await repository.SaveAsync();
     }

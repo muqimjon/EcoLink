@@ -9,7 +9,7 @@ public record UpdateAgeCommand : IRequest<int>
     }
 
     public long Id { get; set; }
-    public int Age { get; set; }
+    public string Age { get; set; } = string.Empty;
 }
 
 public class UpdateAgeCommandHandler(IRepository<User> repository, IMapper mapper) : 
@@ -21,7 +21,6 @@ public class UpdateAgeCommandHandler(IRepository<User> repository, IMapper mappe
             ?? throw new NotFoundException($"This User is not found by id: {request.Id} | update Age");
 
         mapper.Map(request, entity);
-        entity.UpdatedAt = TimeHelper.GetDateTime();
         repository.Update(entity);
         return await repository.SaveAsync();
     }

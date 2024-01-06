@@ -1,6 +1,4 @@
-﻿using Telegram.Bot.Types.Enums;
-
-namespace EcoLink.Bot.BotServices;
+﻿namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
@@ -48,17 +46,10 @@ public partial class BotUpdateHandler
 
     private async Task SendInfoAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        //await botClient.SendTextMessageAsync(
-        //    chatId: message.Chat.Id,
-        //    text: localizer["txtOrganizationInfo"],
-        //    cancellationToken: cancellationToken
-        //);
-
         await botClient.SendPhotoAsync(
             chatId: message.Chat.Id,
             photo: InputFile.FromUri("https://media.licdn.com/dms/image/D4E16AQG21-Nxg6zYAg/profile-displaybackgroundimage-shrink_350_1400/0/1678436459958?e=1708560000&v=beta&t=tyv-TnDHrW5cK3Q7b7Uu8Ch4nRVNA0KdAAGCqrdoBZg"),
-            caption: $"<b>{localizer["txtOrganizationInfo"]}</b>",
-            parseMode: ParseMode.Html,
+            caption: localizer["txtOrganizationInfo"],
             cancellationToken: cancellationToken);
     }
 

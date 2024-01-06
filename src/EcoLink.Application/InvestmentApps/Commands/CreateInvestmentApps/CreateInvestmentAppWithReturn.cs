@@ -6,6 +6,7 @@ public record CreateInvestmentAppWithReturnCommand : IRequest<InvestmentAppResul
 {
     public CreateInvestmentAppWithReturnCommand(CreateInvestmentAppWithReturnCommand command)
     {
+        Age = command.Age;
         UserId = command.UserId;
         Phone = command.Phone;
         Email = command.Email;
@@ -13,13 +14,12 @@ public record CreateInvestmentAppWithReturnCommand : IRequest<InvestmentAppResul
         Sector = command.Sector;
         LastName = command.LastName;
         FirstName = command.FirstName;
-        DateOfBirth = command.DateOfBirth;
         InvestmentAmount = command.InvestmentAmount;
     }
 
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
-    public DateTimeOffset DateOfBirth { get; set; }
+    public string Age { get; set; } = string.Empty;
     public string Degree { get; set; } = string.Empty;
     public string Sector { get; set; } = string.Empty;
     public string InvestmentAmount { get; set; } = string.Empty;
@@ -41,7 +41,6 @@ public class CreateInvestmentAppWithReturnCommandHandler(IMapper mapper,
         await repository.SaveAsync();
 
         var SheetsDto = mapper.Map<InvestmentAppForSheetsDto>(entity);
-        SheetsDto.Age = TimeHelper.GetAge(entity.DateOfBirth);
         SheetsDto.WasCreated = entity.CreatedAt.ToString("dd.MM.yyyy");
         await sheetsRepository.InsertAsync(SheetsDto);
 

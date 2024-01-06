@@ -33,7 +33,6 @@ public class UpdateEntrepreneurCommandHandler(IRepository<Entrepreneur> reposito
             ?? throw new NotFoundException($"Entrepreneur is not found with id: {request.Id} | Update Entrepreneur");
 
         mapper.Map(request, entity);
-        entity.UpdatedAt = TimeHelper.GetDateTime();
         repository.Update(entity);
         return await repository.SaveAsync();
     }

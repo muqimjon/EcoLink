@@ -21,7 +21,6 @@ public class UpdateRepresentativeIsSubmittedCommandByUserHandler(IRepository<Rep
             ?? throw new NotFoundException($"Representative is not found with id: {request.UserId} | update representative IsSubmitted");
 
         mapper.Map(request, entity);
-        entity.UpdatedAt = TimeHelper.GetDateTime();
         repository.Update(entity);
         return await repository.SaveAsync();
     }

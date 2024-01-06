@@ -74,6 +74,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<GetLanguageCodeByIdQuery, string>, GetLanguageCodeByIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetStateQuery, State>, GetStateQueryHendler>();
         services.AddScoped<IRequestHandler<GetProfessionQuery, UserProfession>, GetProfessionQueryHendler>();
+        services.AddScoped<IRequestHandler<GetAgeQuery, string>, GetAgeQueryHendler>();
         services.AddScoped<IRequestHandler<GetEmailQuery, string>, GetEmailQueryHendler>();
         services.AddScoped<IRequestHandler<GetAddressQuery, string>, GetAddressQueryHendler>();
         services.AddScoped<IRequestHandler<GetLanguagesQuery, string>, GetLanguagesQueryHendler>();

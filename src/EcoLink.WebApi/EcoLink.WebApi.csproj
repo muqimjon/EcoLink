@@ -12,11 +12,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\EcoLink.Application\EcoLink.Application.csproj" />
+    <ProjectReference Include="..\EcoLink.Domain\EcoLink.Domain.csproj" />
     <ProjectReference Include="..\EcoLink.Infrastructure\EcoLink.Infrastructure.csproj" />
   </ItemGroup>
 

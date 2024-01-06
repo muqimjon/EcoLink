@@ -21,7 +21,6 @@ public class UpdateDateOfBirthCommandHandler(IRepository<User> repository, IMapp
             ?? throw new NotFoundException($"This User is not found by id: {request.Id} | update date of birth");
 
         mapper.Map(request, entity);
-        entity.UpdatedAt = TimeHelper.GetDateTime();
         entity.DateOfBirth = request.DateOfBirth.AddHours(TimeConstants.UTC);
         repository.Update(entity);
         return await repository.SaveAsync();

@@ -21,7 +21,6 @@ public class UpdateEmailCommandHandler(IRepository<User> repository, IMapper map
             ?? throw new NotFoundException($"This User is not found by id: {request.Id} | update email");
 
         mapper.Map(request, entity);
-        entity.UpdatedAt = TimeHelper.GetDateTime();
         repository.Update(entity);
         return await repository.SaveAsync();
     }

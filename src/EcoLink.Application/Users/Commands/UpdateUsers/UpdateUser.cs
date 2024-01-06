@@ -5,6 +5,7 @@ public record UpdateUserCommand : IRequest<int>
     public UpdateUserCommand(UpdateUserCommand command)
     {
         Id = command.Id;
+        Age = command.Age;
         Phone = command.Phone;
         Email = command.Email;
         IsBot = command.IsBot;
@@ -24,6 +25,7 @@ public record UpdateUserCommand : IRequest<int>
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string Patronomyc { get; set; } = string.Empty;
+    public string Age { get; set; } = string.Empty;
     public DateTime DateOfBirth { get; set; }
     public string Degree { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
@@ -45,7 +47,6 @@ public class UpdateUserCommandHandler(IRepository<User> repository, IMapper mapp
             ?? throw new NotFoundException($"This User is not found by id: {request.Id} | User update");
 
         mapper.Map(request, entity);
-        entity.UpdatedAt = TimeHelper.GetDateTime();
         entity.DateOfBirth = request.DateOfBirth.AddHours(TimeConstants.UTC);
         repository.Update(entity);
         return await repository.SaveAsync();

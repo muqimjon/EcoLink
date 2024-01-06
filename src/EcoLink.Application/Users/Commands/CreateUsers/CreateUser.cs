@@ -4,6 +4,7 @@ public record class CreateUserCommand : IRequest<int>
 {
     public CreateUserCommand(CreateUserCommand command)
     {
+        Age = command.Age;
         State = command.State;
         Phone = command.Phone;
         Email = command.Email;
@@ -26,6 +27,7 @@ public record class CreateUserCommand : IRequest<int>
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string Patronomyc { get; set; } = string.Empty;
+    public string Age { get; set; } = string.Empty;
     public DateTimeOffset DateOfBirth { get; set; }
     public string Degree { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;

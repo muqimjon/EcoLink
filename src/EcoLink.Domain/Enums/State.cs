@@ -37,4 +37,5 @@ public enum State
     WaitingForSelectInvestmentMenu,
     WaitingForSelectProjectManagementMenu,
     WaitingForSelectRepresentationMenu,
+    WaitingForEnterAge,
 }

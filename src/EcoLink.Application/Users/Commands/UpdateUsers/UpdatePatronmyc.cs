@@ -21,7 +21,6 @@ public class UpdatePatronomycCommandHandler(IRepository<User> repository, IMappe
             ?? throw new NotFoundException($"This User is not found by id: {request.Id} | update ptronmyc");
 
         mapper.Map(request, entity);
-        entity.UpdatedAt = TimeHelper.GetDateTime();
         repository.Update(entity);
         return await repository.SaveAsync();
     }
