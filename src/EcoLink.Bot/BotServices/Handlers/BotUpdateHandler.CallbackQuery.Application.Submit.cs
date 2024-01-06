@@ -40,9 +40,10 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(callbackQuery);
         ArgumentNullException.ThrowIfNull(callbackQuery.Message);
 
-        await botClient.SendTextMessageAsync(
+        await botClient.EditMessageTextAsync(
             chatId: callbackQuery.Message.Chat.Id,
-            text: localizer["txtResponseSubmittedApp"],
+            messageId: callbackQuery.Message.MessageId,
+            text: $"{callbackQuery.Message.Text}\n\n{localizer["txtResponseSubmittedApp"]}",
             cancellationToken: cancellationToken);
 
         var application = await mediator.Send(new GetRepresentativeByUserIdQuery(user.Id), cancellationToken);
@@ -51,6 +52,7 @@ public partial class BotUpdateHandler
         {
             UserId = user.Id,
             Area = application.Area,
+            Age = application.User.Age,
             Purpose = application.Purpose,
             Degree = application.User.Degree,
             Address = application.User.Address,
@@ -59,7 +61,6 @@ public partial class BotUpdateHandler
             FirstName = application.User.FirstName,
             Languages = application.User.Languages,
             Experience = application.User.Experience,
-            DateOfBirth = application.User.DateOfBirth,
         }, cancellationToken);
 
         await mediator.Send(new UpdateRepresentativeIsSubmittedByUserCommand() { UserId = user.Id, IsSubmitted = true }, cancellationToken);
@@ -70,9 +71,10 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(callbackQuery);
         ArgumentNullException.ThrowIfNull(callbackQuery.Message);
 
-        await botClient.SendTextMessageAsync(
+        await botClient.EditMessageTextAsync(
             chatId: callbackQuery.Message.Chat.Id,
-            text: localizer["txtResponseSubmittedApp"],
+            messageId: callbackQuery.Message.MessageId,
+            text: $"{callbackQuery.Message.Text}\n\n{localizer["txtResponseSubmittedApp"]}",
             cancellationToken: cancellationToken);
 
         var application = await mediator.Send(new GetProjectManagerByUserIdQuery(user.Id), cancellationToken);
@@ -80,6 +82,7 @@ public partial class BotUpdateHandler
         await mediator.Send(new CreateProjectManagementAppWithReturnCommand()
         {
             UserId = user.Id,
+            Age = application.User.Age,
             Purpose = application.Purpose,
             Degree = application.User.Degree,
             Address = application.User.Address,
@@ -88,7 +91,6 @@ public partial class BotUpdateHandler
             FirstName = application.User.FirstName,
             Languages = application.User.Languages,
             Experience = application.User.Experience,
-            DateOfBirth = application.User.DateOfBirth,
             ProjectDirection = application.ProjectDirection,
         }, cancellationToken);
 
@@ -100,9 +102,10 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(callbackQuery);
         ArgumentNullException.ThrowIfNull(callbackQuery.Message);
 
-        await botClient.SendTextMessageAsync(
+        await botClient.EditMessageTextAsync(
             chatId: callbackQuery.Message.Chat.Id,
-            text: localizer["txtResponseSubmittedApp"],
+            messageId: callbackQuery.Message.MessageId,
+            text: $"{callbackQuery.Message.Text}\n\n{localizer["txtResponseSubmittedApp"]}",
             cancellationToken: cancellationToken);
 
         var application = await mediator.Send(new GetEntrepreneurByUserIdQuery(user.Id), cancellationToken);
@@ -110,6 +113,7 @@ public partial class BotUpdateHandler
         await mediator.Send(new CreateEntrepreneurshipAppWithReturnCommand()
             {
                 UserId = user.Id,
+                Age = application.User.Age,
                 Project = application.Project,
                 Phone = application.User.Phone,
                 Email = application.User.Email,
@@ -118,7 +122,6 @@ public partial class BotUpdateHandler
                 LastName = application.User.LastName,
                 FirstName = application.User.FirstName,
                 Experience = application.User.Experience,
-                DateOfBirth = application.User.DateOfBirth,
                 AssetsInvested = application.AssetsInvested,
                 RequiredFunding = application.RequiredFunding,
             }, cancellationToken);
@@ -142,13 +145,13 @@ public partial class BotUpdateHandler
         await mediator.Send(new CreateInvestmentAppWithReturnCommand()
         {
             UserId = user.Id,
+            Age = application.User.Age,
             Sector = application.Sector,
             Phone = application.User.Phone,
             Email = application.User.Email,
             Degree = application.User.Degree,
             LastName = application.User.LastName,
             FirstName = application.User.FirstName,
-            DateOfBirth = application.User.DateOfBirth,
             InvestmentAmount = application.InvestmentAmount
         }, cancellationToken);
 

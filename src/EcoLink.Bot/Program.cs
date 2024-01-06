@@ -11,6 +11,8 @@ using EcoLink.Infrastructure.Models;
 using EcoLink.Bot.BotServices.Commons;
 using EcoLink.Infrastructure.Repositories;
 using EcoLink.Application.Commons.Interfaces;
+using EcoLink.Infrastructure.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMediatR(cf => cf.RegisterServicesFromAssemblies(typeof(Program).Assembly));
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
+
 
 // Get bot token
 var token = builder.Configuration.GetValue("BotToken", string.Empty);

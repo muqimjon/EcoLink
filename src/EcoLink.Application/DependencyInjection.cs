@@ -55,6 +55,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<UpdateLastNameCommand, int>, UpdateLastNameCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateFirstNameCommand, int>, UpdateFirstNameCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateEmailCommand, int>, UpdateEmailCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateAgeCommand, int>, UpdateAgeCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateDegreeCommand, int>, UpdateDegreeCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateDateOfBirthCommand, int>, UpdateDateOfBirthCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateLanguageCodeCommand, int>, UpdateLanguageCodeCommandHandler>();
@@ -73,6 +74,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<GetLanguageCodeByIdQuery, string>, GetLanguageCodeByIdQueryHendler>();
         services.AddScoped<IRequestHandler<GetStateQuery, State>, GetStateQueryHendler>();
         services.AddScoped<IRequestHandler<GetProfessionQuery, UserProfession>, GetProfessionQueryHendler>();
+        services.AddScoped<IRequestHandler<GetAgeQuery, string>, GetAgeQueryHendler>();
         services.AddScoped<IRequestHandler<GetEmailQuery, string>, GetEmailQueryHendler>();
         services.AddScoped<IRequestHandler<GetAddressQuery, string>, GetAddressQueryHendler>();
         services.AddScoped<IRequestHandler<GetLanguagesQuery, string>, GetLanguagesQueryHendler>();

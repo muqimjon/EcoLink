@@ -23,7 +23,6 @@ public class UpdateStateAndProfessionCommandHandler(IRepository<User> repository
             ?? throw new NotFoundException($"This User is not found by id: {request.Id} | State and Profession update");
 
         mapper.Map(request, entity);
-        entity.UpdatedAt = TimeHelper.GetDateTime();
         repository.Update(entity);
         return await repository.SaveAsync();
     }

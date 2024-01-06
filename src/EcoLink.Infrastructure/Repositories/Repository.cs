@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using EcoLink.Infrastructure.Contexts;
+using EcoLink.Application.Commons.Helpers;
 using EcoLink.Application.Commons.Interfaces;
 
 namespace EcoLink.Infrastructure.Repositories;
@@ -23,6 +24,7 @@ public class Repository<T>(AppDbContext dbContext) : IRepository<T> where T : Au
 
     public void Update(T entity)
     {
+        entity.UpdatedAt = TimeHelper.GetDateTime();
         Table.Entry(entity).State = EntityState.Modified;
     }
 

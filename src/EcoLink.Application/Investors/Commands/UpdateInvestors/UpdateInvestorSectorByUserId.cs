@@ -21,7 +21,6 @@ public class UpdateInvestorSectorByUserIdCommandHandler(IRepository<Investor> re
             ?? throw new NotFoundException($"Investor is not found with UserId: {request.UserId} | Update Investor Sector");
 
         mapper.Map(request, entity);
-        entity.UpdatedAt = TimeHelper.GetDateTime();
         repository.Update(entity);
         return await repository.SaveAsync();
     }

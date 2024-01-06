@@ -21,7 +21,6 @@ public class UpdateRepresentativePurposeByUserIdCommandHandler(IRepository<Repre
             ?? throw new NotFoundException($"Representative is not found with id: {request.UserId} | update representative Purpose");
 
         mapper.Map(request, entity);
-        entity.UpdatedAt = TimeHelper.GetDateTime();
         repository.Update(entity);
         return await repository.SaveAsync();
     }

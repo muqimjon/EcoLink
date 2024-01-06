@@ -4,7 +4,7 @@ public class InvestmentAppResultDto
 {
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
-    public DateTimeOffset DateOfBirth { get; set; }
+    public string Age { get; set; } = string.Empty;
     public string Degree { get; set; } = string.Empty;
     public string Sector { get; set; } = string.Empty;
     public string InvestmentAmount { get; set; } = string.Empty;

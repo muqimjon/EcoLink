@@ -133,6 +133,24 @@ public partial class BotUpdateHandler
         await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterPatronomyc), cancellationToken);
     }
 
+    private async Task SendRequestForAgeAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        var age = await mediator.Send(new GetAgeQuery(user.Id), cancellationToken);
+        var args = string.IsNullOrEmpty(age) switch
+        {
+            true => (localizer["txtAskForAge"], new ReplyKeyboardMarkup(new[] { new KeyboardButton(localizer["rbtnCancel"]) }) { ResizeKeyboard = true }),
+            false => (localizer["txtAskForAge"] + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(age)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
+        };
+
+        await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
+            text: args.Item1,
+            replyMarkup: args.Item2,
+            cancellationToken: cancellationToken);
+
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterAge), cancellationToken);
+    }
+
     private async Task SendRequestForDateOfBirthAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         var dateOfBirth = await mediator.Send(new GetDateOfBirthQuery(user.Id), cancellationToken);

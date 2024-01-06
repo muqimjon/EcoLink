@@ -12,6 +12,7 @@ public class User : Auditable
     public string? LastName { get; set; }
     public string? Patronomyc { get; set; }
     public DateTimeOffset? DateOfBirth { get; set; }
+    public string? Age { get; set; }
     public string? Degree { get; set; }
     public string? Phone { get; set; }
     public string? Email { get; set; }

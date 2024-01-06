@@ -21,7 +21,6 @@ public class UpdateRepresentativeExpectationByUserIdCommandHandler(IRepository<R
             ?? throw new NotFoundException($"Representative is not found with id: {request.UserId} | update representative Expectation");
 
         mapper.Map(request, entity);
-        entity.UpdatedAt = TimeHelper.GetDateTime();
         repository.Update(entity);
         return await repository.SaveAsync();
     }

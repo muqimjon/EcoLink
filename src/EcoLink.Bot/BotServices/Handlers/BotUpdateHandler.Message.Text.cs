@@ -30,6 +30,7 @@ public partial class BotUpdateHandler
             State.WaitingForEnterFirstName => HandleFirstNameAsync(botClient, message, cancellationToken),
             State.WaitingForEnterLastName => HandleLastNameAsync(botClient, message, cancellationToken),
             State.WaitingForEnterPatronomyc => HandlePatronomycAsync(botClient, message, cancellationToken),
+            State.WaitingForEnterAge => HandleAgeAsync(botClient, message, cancellationToken),
             State.WaitingForEnterDateOfBirth => HandleDateOfBirthAsync(botClient, message, cancellationToken),
             State.WaitingForEnterDegree => HandleDegreeAsync(botClient, message, cancellationToken),
             State.WaitingForEnterEmail => HandleEmailAsync(botClient, message, cancellationToken),
@@ -111,7 +112,7 @@ public partial class BotUpdateHandler
             handler = profession switch
             {
                 UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
-                _ => SendRequestForDateOfBirthAsync(botClient, message, cancellationToken)
+                _ => SendRequestForAgeAsync(botClient, message, cancellationToken)
             };
         }
 
@@ -141,6 +142,38 @@ public partial class BotUpdateHandler
             {
                 UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 _ => SendRequestForDateOfBirthAsync(botClient, message, cancellationToken)
+            };
+        }
+
+        try { await handler; }
+        catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+    }
+
+    private async Task HandleAgeAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(message);
+        ArgumentNullException.ThrowIfNull(message.Text);
+
+        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
+        Task handler;
+        if (message.Text.Equals(localizer["rbtnCancel"]))
+        {
+            handler = profession switch
+            {
+                UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
+                UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
+                _ => SendMenuEditPersonalInfoAsync(botClient, message, cancellationToken),
+            };
+        }
+        else
+        {
+            await mediator.Send(new UpdateAgeCommand() { Id = user.Id, Age = message.Text }, cancellationToken); // TODO: need validation
+            handler = profession switch
+            {
+                UserProfession.None => SendMenuEditPersonalInfoAsync(botClient, message, cancellationToken),
+                _ => SendRequestForDegreeAsync(botClient, message, cancellationToken)
             };
         }
 

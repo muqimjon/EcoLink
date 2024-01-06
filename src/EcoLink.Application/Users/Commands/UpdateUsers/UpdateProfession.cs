@@ -21,7 +21,6 @@ public class UpdateProfessionCommandHandler(IRepository<User> repository, IMappe
             ?? throw new NotFoundException($"This User is not found by id: {request.Id} | update profession");
 
         mapper.Map(request, entity);
-        entity.UpdatedAt = TimeHelper.GetDateTime();
         repository.Update(entity);
         return await repository.SaveAsync();
     }

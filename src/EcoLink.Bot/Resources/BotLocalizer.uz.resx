@@ -286,6 +286,10 @@ O'zingiz uchun qulay tilni tanlang: </value>
     <value>Ayni vaqtdagi manzilingizni kiriting  </value>
     <comment>Foydalanuvchidan manzilini so'rash</comment>
   </data>
+  <data name="txtAskForAge" xml:space="preserve">
+    <value>Yoshingizni kiriting </value>
+    <comment>Foydalanuvchidan yoshini so'rash</comment>
+  </data>
   <data name="txtAskForArea" xml:space="preserve">
     <value>Qayerda vakil bo'lmoqchi ekaningizni kiriting </value>
     <comment>Foydalanuvchidan qayerda vakil bo'lishni istayotgani so'raladi.</comment>

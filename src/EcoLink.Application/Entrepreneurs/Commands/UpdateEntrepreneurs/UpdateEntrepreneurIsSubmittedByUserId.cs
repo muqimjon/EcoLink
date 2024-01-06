@@ -21,7 +21,6 @@ public class UpdateEntrepreneurIsSubmittedByUserIdCommandHandler(IRepository<Ent
             ?? throw new NotFoundException($"Entrepreneur is not found with id: {request.UserId} | Update Entrepreneur IsSubmitted");
 
         mapper.Map(request, entity);
-        entity.UpdatedAt = TimeHelper.GetDateTime();
         repository.Update(entity);
         return await repository.SaveAsync();
     }

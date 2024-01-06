@@ -6,6 +6,7 @@ public record CreateProjectManagementAppWithReturnCommand : IRequest<ProjectMana
 {
     public CreateProjectManagementAppWithReturnCommand(CreateProjectManagementAppWithReturnCommand command)
     {
+        Age = command.Age;
         UserId = command.UserId;
         Degree = command.Degree;
         Purpose = command.Purpose;
@@ -14,14 +15,13 @@ public record CreateProjectManagementAppWithReturnCommand : IRequest<ProjectMana
         FirstName = command.FirstName;
         Languages = command.Languages;
         Experience = command.Experience;
-        DateOfBirth = command.DateOfBirth;
         Expectation = command.Expectation;
         ProjectDirection = command.ProjectDirection;
     }
 
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
-    public DateTimeOffset DateOfBirth { get; set; }
+    public string Age { get; set; } = string.Empty;
     public string Degree { get; set; } = string.Empty;
     public string Languages { get; set; } = string.Empty;
     public string Experience { get; set; } = string.Empty;
@@ -46,7 +46,6 @@ public class CreateProjectManagementAppWithReturnCommandHandler(IMapper mapper,
         await repository.SaveAsync();
 
         var SheetsDto = mapper.Map<ProjectManagementAppForSheetsDto>(entity);
-        SheetsDto.Age = TimeHelper.GetAge(entity.DateOfBirth);
         SheetsDto.WasCreated = entity.CreatedAt.ToString("dd.MM.yyyy");
         await sheetsRepository.InsertAsync(SheetsDto);
 

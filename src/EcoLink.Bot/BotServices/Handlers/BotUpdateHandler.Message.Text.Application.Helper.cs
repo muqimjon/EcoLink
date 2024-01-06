@@ -1,5 +1,4 @@
 ﻿using EcoLink.Application.Investors.DTOs;
-using EcoLink.Application.Commons.Helpers;
 using EcoLink.Application.Entrepreneurs.DTOs;
 using EcoLink.Application.ProjectManagers.DTOs;
 using EcoLink.Application.Representatives.DTOs;
@@ -11,7 +10,7 @@ public partial class BotUpdateHandler
     public static string GetApplicationInfoForm(EntrepreneurResultDto dto)
         => $"Ism: {dto.User.FirstName}\n" +
         $"Familiya: {dto.User.LastName}\n" +
-        $"Yoshi: {TimeHelper.GetAge(dto.User.DateOfBirth)}\n" +
+        $"Yoshi: {dto.User.Age}\n" +
         $"Rol: {Enum.GetName(dto.User.Profession)}\n" +
         $"Sektor: {dto.User.Experience}\n" +
         $"Loyiha: {dto.Project}\n" +
@@ -24,7 +23,7 @@ public partial class BotUpdateHandler
     public static string GetApplicationInfoForm(InvestorResultDto dto)
         => $"Ism: {dto.User.FirstName}\n" +
         $"Familiya: {dto.User.LastName}\n" +
-        $"Yoshi: {TimeHelper.GetAge(dto.User.DateOfBirth)}\n" +
+        $"Yoshi: {dto.User.Age}\n" +
         $"Rol: {Enum.GetName(dto.User.Profession)}\n" +
         $"Sektor: {dto.Sector}\n" +
         $"Ma'lumoti: {dto.User.Degree}\n" +
@@ -35,7 +34,7 @@ public partial class BotUpdateHandler
     public static string GetApplicationInfoForm(RepresentativeResultDto dto)
         => $"Ism: {dto.User.FirstName}\n" +
         $"Familiya: {dto.User.LastName}\n" +
-        $"Yoshi: {TimeHelper.GetAge(dto.User.DateOfBirth)}\n" +
+        $"Yoshi: {dto.User.Age}\n" +
         $"Rol: {Enum.GetName(dto.User.Profession)}\n" +
         $"Loyiha: {dto.User.Languages}\n" +
         $"Sektor: {dto.User.Experience}\n" +
@@ -47,7 +46,7 @@ public partial class BotUpdateHandler
     public static string GetApplicationInfoForm(ProjectManagerResultDto dto)
         => $"Ism: {dto.User.FirstName}\n" +
         $"Familiya: {dto.User.LastName}\n" +
-        $"Yoshi: {TimeHelper.GetAge(dto.User.DateOfBirth)}\n" +
+        $"Yoshi: {dto.User.Age}\n" +
         $"Rol: {Enum.GetName(dto.User.Profession)}\n" +
         $"Loyiha: {dto.User.Languages}\n" +
         $"Sektor: {dto.User.Experience}\n" +

@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EcoLink.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigrate : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +20,7 @@ namespace EcoLink.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
-                    DateOfBirth = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    Age = table.Column<string>(type: "text", nullable: false),
                     Degree = table.Column<string>(type: "text", nullable: false),
                     Experience = table.Column<string>(type: "text", nullable: false),
                     Project = table.Column<string>(type: "text", nullable: false),
@@ -47,7 +47,7 @@ namespace EcoLink.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
-                    DateOfBirth = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    Age = table.Column<string>(type: "text", nullable: false),
                     Degree = table.Column<string>(type: "text", nullable: false),
                     Sector = table.Column<string>(type: "text", nullable: false),
                     InvestmentAmount = table.Column<string>(type: "text", nullable: false),
@@ -71,7 +71,7 @@ namespace EcoLink.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
-                    DateOfBirth = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    Age = table.Column<string>(type: "text", nullable: false),
                     Degree = table.Column<string>(type: "text", nullable: false),
                     Languages = table.Column<string>(type: "text", nullable: false),
                     Experience = table.Column<string>(type: "text", nullable: false),
@@ -97,11 +97,12 @@ namespace EcoLink.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
-                    DateOfBirth = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    Age = table.Column<string>(type: "text", nullable: false),
                     Degree = table.Column<string>(type: "text", nullable: false),
                     Languages = table.Column<string>(type: "text", nullable: false),
                     Experience = table.Column<string>(type: "text", nullable: false),
                     Address = table.Column<string>(type: "text", nullable: false),
+                    Area = table.Column<string>(type: "text", nullable: false),
                     Expectation = table.Column<string>(type: "text", nullable: false),
                     Purpose = table.Column<string>(type: "text", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
@@ -130,6 +131,7 @@ namespace EcoLink.Infrastructure.Migrations
                     LastName = table.Column<string>(type: "text", nullable: true),
                     Patronomyc = table.Column<string>(type: "text", nullable: true),
                     DateOfBirth = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    Age = table.Column<string>(type: "text", nullable: true),
                     Degree = table.Column<string>(type: "text", nullable: true),
                     Phone = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
