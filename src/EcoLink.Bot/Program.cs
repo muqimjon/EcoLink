@@ -15,9 +15,11 @@ builder.Services.AddApplicationServices();
 var googleAuthSettings = new GoogleAuthSettings();
 builder.Configuration.GetSection("GoogleAuth").Bind(instance: googleAuthSettings);
 builder.Services.AddThis(googleAuthSettings: googleAuthSettings, configuration: builder.Configuration);
+
 // Build
 var app = builder.Build();
 
+// Automigrate
 app.MigrateDatabase();
     
 var supportedCultures = new[] { "uz", "ru", "en" };

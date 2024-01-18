@@ -1,4 +1,4 @@
-name: Pre-production
+name: Production
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-
+    name: Build
     runs-on: ubuntu-latest
 
     steps:
@@ -21,12 +21,14 @@ jobs:
       run: dotnet build --no-restore
     
   dockerize:
+    name: Dockerize
     needs: build
     runs-on: ubuntu-latest
 
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      PROJECT: ${{ secrets.PROJECT }}
 
     steps:
     - uses: actions/checkout@v3
@@ -39,5 +41,23 @@ jobs:
         echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
     - name: Build and push
       run: |
-        docker build -t $DOCKER_USERNAME/ecolink -f src/EcoLink.Bot/Dockerfile .
-        docker push $DOCKER_USERNAME/ecolink
+        docker build -t $DOCKER_USERNAME/$PROJECT -f src/EcoLink.Bot/Dockerfile .
+        docker push $DOCKER_USERNAME/$PROJECT
+        
+  publish:
+    name: Dockerize
+    needs: build
+    runs-on: ubuntu-latest
+
+    env:
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      USERNAME: ${{ secrets.USERNAME }}
+      HOST: ${{ secrets.HOST }}
+      PORT: ${{ secrets.PORT }}
+      PROJECT: ${{ secrets.PROJECT }}
+      script: |
+          ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY $USERNAME@$HOST -p $PORT << EOF
+          cd /$PROJECT
+          docker-compose pull
+          docker-compose up -d
+          EOF
