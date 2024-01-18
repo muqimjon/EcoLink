@@ -1,7 +1,7 @@
 name: Pre-production
 
 on:
-  pull_request:
+  push:
     branches: [ "unidevs" ]
 
 jobs:
