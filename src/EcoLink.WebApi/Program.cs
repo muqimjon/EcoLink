@@ -1,19 +1,14 @@
+using EcoLink.WebApi;
 using EcoLink.Application;
-using EcoLink.Application.Commons.Interfaces;
 using EcoLink.Bot.Extensions;
 using EcoLink.Infrastructure;
 using EcoLink.Infrastructure.Models;
-using EcoLink.Infrastructure.Repositories;
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.Services;
-using Google.Apis.Sheets.v4;
-using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
-builder.Environment.ApplicationName = builder.Configuration.GetValue("ApplicationName", string.Empty)!;
+//builder.Environment.ApplicationName = builder.Configuration.GetValue("ApplicationName", string.Empty)!;
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -24,25 +19,15 @@ builder.Services.AddMediatR(cf => cf.RegisterServicesFromAssemblies(typeof(Progr
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
 
+// Get google auth
 var googleAuthSettings = new GoogleAuthSettings();
-builder.Configuration.Bind("GoogleAuth", googleAuthSettings);
-var g = JsonConvert.SerializeObject(googleAuthSettings);
+builder.Configuration.GetSection("GoogleAuth").Bind(instance: googleAuthSettings);
+builder.Services.AddThis(googleAuthSettings: googleAuthSettings, configuration: builder.Configuration);
 
-// Add sheets
-var configur = new SheetsConfigure()
-{
-    SpreadsheetId = builder.Configuration.GetValue("SpreadsheetId", string.Empty)!,
-    Service = new SheetsService(new BaseClientService.Initializer()
-    {
-        HttpClientInitializer = GoogleCredential.FromJson(g),
-        ApplicationName = googleAuthSettings.project_id,
-    }),
-};
-builder.Services.AddSingleton(configur);
-builder.Services.AddScoped(typeof(ISheetsRepository<>), typeof(SheetsRepository<>));
-
+// Build
 var app = builder.Build();
 
+// Automigrate
 app.MigrateDatabase();
 
 // Configure the HTTP request pipeline.
