@@ -41,21 +41,23 @@ jobs:
         echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
     - name: Build and push
       run: |
-        docker build -t $DOCKER_USERNAME/$PROJECT -f src/EcoLink.Bot/Dockerfile .
-        docker push $DOCKER_USERNAME/$PROJECT
-        
-  publish:
-    name: Dockerize
-    needs: build
+        docker build -t $DOCKER_USERNAME/ecolink -f src/EcoLink.Bot/Dockerfile .
+        docker push $DOCKER_USERNAME/ecolink
+
+  deploy:
+    name: Deploy
+    needs: dockerize
     runs-on: ubuntu-latest
 
-    env:
-      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      USERNAME: ${{ secrets.USERNAME }}
-      HOST: ${{ secrets.HOST }}
-      PORT: ${{ secrets.PORT }}
-      PROJECT: ${{ secrets.PROJECT }}
-      script: |
-          cd /$PROJECT
-          docker-compose pull
-          docker-compose up -d
+    steps:
+      - name: SSH into AWS Ubuntu Server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /$PROJECT
+            docker-compose pull
+            docker-compose up -d
