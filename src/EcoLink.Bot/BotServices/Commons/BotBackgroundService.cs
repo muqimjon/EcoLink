@@ -14,6 +14,8 @@ public class BotBackgroundService(TelegramBotClient client,
 
         client.StartReceiving(
             handler.HandleUpdateAsync,
-            handler.HandlePollingErrorAsync, null, stoppingToken);
+            handler.HandlePollingErrorAsync,
+            null, 
+            stoppingToken);
     }
 }

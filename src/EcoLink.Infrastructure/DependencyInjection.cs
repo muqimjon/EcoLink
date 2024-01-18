@@ -15,13 +15,10 @@ public static class DependencyInjection
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-        // Use the factory to create DbContext
-        var dbContextFactory = new AppDbContextFactory();
-        var appDbContext = dbContextFactory.CreateDbContext(new[] { connectionString }!);
-
         services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+        services.AddScoped(typeof(ISheetsRepository<>), typeof(SheetsRepository<>));
 
         return services;
     } 
