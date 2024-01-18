@@ -56,8 +56,6 @@ jobs:
       PORT: ${{ secrets.PORT }}
       PROJECT: ${{ secrets.PROJECT }}
       script: |
-          ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY $USERNAME@$HOST -p $PORT << EOF
           cd /$PROJECT
           docker-compose pull
           docker-compose up -d
-          EOF
