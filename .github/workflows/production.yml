@@ -3,6 +3,8 @@ name: Production
 on:
   pull_request:
     branches: [ "production" ]
+  push:
+    branches: [ "production" ]
 
 jobs:
   build:
@@ -41,8 +43,8 @@ jobs:
         echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
     - name: Build and push
       run: |
-        docker build -t $DOCKER_USERNAME/ecolink -f src/EcoLink.Bot/Dockerfile .
-        docker push $DOCKER_USERNAME/ecolink
+        docker build -t $DOCKER_USERNAME/$PROJECT -f src/EcoLink.Bot/Dockerfile .
+        docker push $DOCKER_USERNAME/$PROJECT
 
   deploy:
     name: Deploy
@@ -55,9 +57,10 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /$PROJECT
+            cd /eco-link
+            mkdir test
             docker-compose pull
             docker-compose up -d
