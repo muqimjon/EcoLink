@@ -361,3 +361,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+
+# C# / .NET
+/src/EcoLink.Bot/appsettings.Development.json
+/src/EcoLink.WebApi/appsettings.Development.json
+/appsettings.Development.json
