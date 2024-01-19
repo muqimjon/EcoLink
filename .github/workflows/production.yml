@@ -60,7 +60,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /eco-link
+            cd ~/eco-link
             mkdir test
             docker-compose pull
             docker-compose up -d
