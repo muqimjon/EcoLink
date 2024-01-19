@@ -2,7 +2,6 @@ using EcoLink.Bot;
 using EcoLink.Application;
 using EcoLink.Bot.Extensions;
 using EcoLink.Infrastructure;
-using EcoLink.Infrastructure.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,9 +11,7 @@ builder.Services.AddInfrastructureServices(configuration: builder.Configuration)
 builder.Services.AddApplicationServices();
 
 // Get google auth
-var googleAuthSettings = new GoogleAuthSettings();
-builder.Configuration.GetSection("GoogleAuth").Bind(instance: googleAuthSettings);
-builder.Services.AddThis(googleAuthSettings: googleAuthSettings, configuration: builder.Configuration);
+builder.Services.AddThis(configuration: builder.Configuration);
 
 // Build
 var app = builder.Build();

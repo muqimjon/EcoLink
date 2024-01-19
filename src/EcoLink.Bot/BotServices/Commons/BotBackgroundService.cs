@@ -13,9 +13,9 @@ public class BotBackgroundService(TelegramBotClient client,
         logger.LogInformation("Bot {BotName} started successfully", bot.Username);
 
         client.StartReceiving(
-            handler.HandleUpdateAsync,
-            handler.HandlePollingErrorAsync,
-            null, 
-            stoppingToken);
+            updateHandler: handler.HandleUpdateAsync,
+            pollingErrorHandler: handler.HandlePollingErrorAsync,
+            receiverOptions: null, 
+            cancellationToken: stoppingToken);
     }
 }
