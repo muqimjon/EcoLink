@@ -364,5 +364,6 @@ FodyWeavers.xsd
 
 
 # C# / .NET
-/src/OrgBloom.Bot/appsettings.json
-/src/OrgBloom.WebApi/appsettings.json
+/src/EcoLink.Bot/appsettings.Development.json
+/src/EcoLink.WebApi/appsettings.Development.json
+/appsettings.Development.json
