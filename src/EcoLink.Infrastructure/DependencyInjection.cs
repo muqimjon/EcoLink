@@ -30,7 +30,7 @@ public static class DependencyInjection
 
         var properties = typeof(GoogleAuthSettings).GetProperties();
         foreach (var property in properties)
-            property.SetValue(googleAuth, configuration[property.Name]);
+            property.SetValue(googleAuth, configuration[property.Name] ?? string.Empty);
 
         var googleAuthJson = JsonConvert.SerializeObject(googleAuth);
         #endregion
@@ -41,7 +41,7 @@ public static class DependencyInjection
             Service = new SheetsService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = GoogleCredential.FromJson(json: googleAuthJson),
-                ApplicationName = configuration["ApplicationName"],
+                ApplicationName = configuration["ApplicationName"] ?? string.Empty,
             }),
         });
         #endregion
