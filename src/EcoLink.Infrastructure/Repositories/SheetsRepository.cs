@@ -21,7 +21,7 @@ public partial class SheetsRepository<T>(SheetsConfigure config) : ISheetsReposi
             EntrepreneurshipAppForSheetsDto => "Entrepreneurship!A:L",
             RepresentationAppForSheetsDto => "Representation!A:L",
             ProjectManagementAppForSheetsDto => "ProjectManagement!A:K",
-            _ => throw new InvalidOperationException($"Unsupported entity type For send Google Sheets: {entity.GetType()}")
+            _ => throw new InvalidOperationException($"Unsupported entity type for send Google Sheets: {entity.GetType()}")
         };
 
         var properties = typeof(T).GetProperties();
