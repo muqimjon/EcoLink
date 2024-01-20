@@ -5,12 +5,12 @@ using EcoLink.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services
+// Add layers
 builder.Services.AddMediatR(cf => cf.RegisterServicesFromAssemblies(assemblies: typeof(Program).Assembly));
 builder.Services.AddInfrastructureServices(configuration: builder.Configuration);
 builder.Services.AddApplicationServices();
 
-// Get google auth
+// Add services
 builder.Services.AddThis(configuration: builder.Configuration);
 
 // Build
@@ -18,12 +18,13 @@ var app = builder.Build();
 
 // Automigrate
 app.MigrateDatabase();
-    
+
+// Localization
 var supportedCultures = new[] { "uz", "ru", "en" };
 var localizationOptions = new RequestLocalizationOptions()
-  .SetDefaultCulture(supportedCultures[0])
-  .AddSupportedCultures(supportedCultures)
-  .AddSupportedUICultures(supportedCultures);
-app.UseRequestLocalization(localizationOptions);
+  .SetDefaultCulture(defaultCulture: supportedCultures[0])
+  .AddSupportedCultures(cultures: supportedCultures)
+  .AddSupportedUICultures(uiCultures: supportedCultures);
+app.UseRequestLocalization(options: localizationOptions);
 
 app.Run();

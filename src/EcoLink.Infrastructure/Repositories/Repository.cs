@@ -11,14 +11,12 @@ public class Repository<T>(AppDbContext dbContext) : IRepository<T> where T : Au
 {
     public DbSet<T> Table
     {
-        get
-        {
-            return dbContext.Set<T>();
-        }
+        get => dbContext.Set<T>();
     }
 
     public async Task InsertAsync(T entity)
     {
+        entity.CreatedAt = TimeHelper.GetDateTime();
         await Table.AddAsync(entity);
     }
 
