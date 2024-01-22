@@ -1,8 +1,6 @@
-using EcoLink.WebApi;
 using EcoLink.Application;
-using EcoLink.Bot.Extensions;
 using EcoLink.Infrastructure;
-using EcoLink.Infrastructure.Models;
+using EcoLink.WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -18,11 +16,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(cf => cf.RegisterServicesFromAssemblies(typeof(Program).Assembly));
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
-
-// Get google auth
-var googleAuthSettings = new GoogleAuthSettings();
-builder.Configuration.GetSection("GoogleAuth").Bind(instance: googleAuthSettings);
-builder.Services.AddThis(googleAuthSettings: googleAuthSettings, configuration: builder.Configuration);
 
 // Build
 var app = builder.Build();

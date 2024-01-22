@@ -3,7 +3,7 @@ using EcoLink.Application.ProjectManagers.Commands.DeleteProjectManagers;
 using EcoLink.Application.ProjectManagers.Commands.UpdateProjectManagers;
 using EcoLink.Application.ProjectManagers.Queries.GetProjectManagers;
 
-namespace EcoLink.WebApi.Controllers;
+namespace EcoLink.WebApi.Controllers.ProjectManagement;
 
 public class ProjectManagersController(IMediator mediator) : BaseController
 {

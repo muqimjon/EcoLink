@@ -3,7 +3,7 @@ using EcoLink.Application.Representatives.Commands.CreateRepresentatives;
 using EcoLink.Application.Representatives.Commands.DeleteRepresentatives;
 using EcoLink.Application.Representatives.Commands.UpdateRepresentatives;
 
-namespace EcoLink.WebApi.Controllers;
+namespace EcoLink.WebApi.Controllers.Representative;
 
 public class RepresentativesController(IMediator mediator) : BaseController
 {

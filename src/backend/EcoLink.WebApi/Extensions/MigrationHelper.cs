@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using EcoLink.Infrastructure.Contexts;
 
-namespace EcoLink.Bot.Extensions;
+namespace EcoLink.WebApi.Extensions;
 
 public static class MigrationHelper
 {

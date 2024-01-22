@@ -3,7 +3,7 @@ using EcoLink.Application.Investors.Commands.DeleteInvestors;
 using EcoLink.Application.Investors.Commands.UpdateInvestors;
 using EcoLink.Application.Investors.Queries.GetInvestors;
 
-namespace EcoLink.WebApi.Controllers;
+namespace EcoLink.WebApi.Controllers.Investment;
 
 public class InvestorsController(IMediator mediator) : BaseController
 {
