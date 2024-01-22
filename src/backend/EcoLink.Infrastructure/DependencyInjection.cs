@@ -9,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using EcoLink.Infrastructure.Repositories;
 using EcoLink.Application.Commons.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
-using Npgsql;
 
 namespace EcoLink.Infrastructure;
 

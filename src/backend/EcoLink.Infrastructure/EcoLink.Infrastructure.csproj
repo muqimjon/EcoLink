@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EcoLink.Application\EcoLink.Application.csproj" />
+    <ProjectReference Include="..\EcoLink.Domain\EcoLink.Domain.csproj" />
   </ItemGroup>
 
 </Project>
