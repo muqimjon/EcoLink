@@ -1,4 +1,8 @@
-﻿namespace EcoLink.Bot.BotServices;
+﻿using EcoLink.Application.Investors.Commands.UpdateInvestors;
+using EcoLink.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
+using EcoLink.Application.ProjectManagers.Commands.UpdateProjectManagers;
+
+namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
@@ -23,6 +27,7 @@ public partial class BotUpdateHandler
     {
         ArgumentNullException.ThrowIfNull(callbackQuery);
         ArgumentNullException.ThrowIfNull(callbackQuery.Message);
+
 
         await botClient.EditMessageTextAsync(
             chatId: callbackQuery.Message.Chat.Id,
@@ -59,10 +64,11 @@ public partial class BotUpdateHandler
             text: localizer["txtSelected", sector],
             cancellationToken: cancellationToken);
 
-        switch (user.Profession)
+        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
+        switch (profession)
         {
             case UserProfession.Investor:
-                user.Application.Sector = sector;
+                await mediator.Send(new UpdateInvestorSectorByUserIdCommand { UserId = user.Id, Sector = sector }, cancellationToken);
                 await SendRequestForInvestmentAmountForInvestmentAsync(botClient, callbackQuery.Message, cancellationToken);
                 break;
             case UserProfession.ProjectManager:
