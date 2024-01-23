@@ -1,25 +1,24 @@
 ﻿using System.Globalization;
-using Telegram.Bot.Polling;
 using EcoLink.Bot.Resources;
 using Telegram.Bot.Types.Enums;
-using EcoLink.Application.Users.DTOs;
+using EcoLink.ApiService.Interfaces;
+using EcoLink.ApiService.Models.Users;
 using Microsoft.Extensions.Localization;
-using EcoLink.Application.Users.Commands.CreateUsers;
 
 namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler(
     ILogger<BotUpdateHandler> logger,
     IServiceScopeFactory serviceScopeFactory,
-    IMediator mediator) : IUpdateHandler
+    IUserService service
+    ) : IUpdateHandler
 {
     private IStringLocalizer localizer  = default!;
-    private UserTelegramResultDto user = default!;
+    private UserDto user = default!;
 
     public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
         localizer = scope.ServiceProvider.GetRequiredService<IStringLocalizer<BotLocalizer>>();
 
         user = await GetUserAsync(update);
@@ -49,14 +48,14 @@ public partial class BotUpdateHandler(
         }
     }
 
-    private async Task<UserTelegramResultDto> GetUserAsync(Update update)
+    private async Task<UserDto> GetUserAsync(Update update)
     {
         var updateContent = BotUpdateHandler.GetUpdateType(update);
         var from = updateContent.From;
 
-        return await mediator.Send(new GetUserByTelegramIdQuery(from.Id))
-            ?? await mediator.Send(new CreateUserWithReturnCommand()
-                {
+        return (await service.GetAsync(from.Id, default)).Data
+            ?? await service.AddAsync(new UserDto
+            {
                     IsBot = from.IsBot,
                     TelegramId = from.Id,
                     LastName = from.LastName,

@@ -1,9 +1,4 @@
-﻿using EcoLink.Application.Investors.DTOs;
-using EcoLink.Application.Entrepreneurs.DTOs;
-using EcoLink.Application.ProjectManagers.DTOs;
-using EcoLink.Application.Representatives.DTOs;
-
-namespace EcoLink.Bot.BotServices;
+﻿namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {

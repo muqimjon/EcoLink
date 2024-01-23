@@ -10,36 +10,36 @@ public class UsersController(IMediator mediator) : BaseController
 {
     [HttpPost("create")]
     [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Create(CreateUserCommand command)
-        => Ok(await mediator.Send(new CreateUserCommand(command)));
+    public async Task<IActionResult> Create(CreateUserCommand command, CancellationToken cancellationToken)
+        => Ok(await mediator.Send(new CreateUserCommand(command), cancellationToken));
 
     [HttpPost("create-with-return")]
     [ProducesResponseType(typeof(UserResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Create(CreateUserWithReturnCommand command)
-        => Ok(await mediator.Send(new CreateUserWithReturnCommand(command)));
+    public async Task<IActionResult> Create(CreateUserWithReturnCommand command, CancellationToken cancellationToken)
+        => Ok(await mediator.Send(new CreateUserWithReturnCommand(command), cancellationToken));
 
     [HttpPut("update")]
     [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Update(UpdateUserCommand command)
-        => Ok(await mediator.Send(new UpdateUserCommand(command)));
+    public async Task<IActionResult> Update(UpdateUserCommand command, CancellationToken cancellationToken)
+        => Ok(await mediator.Send(new UpdateUserCommand(command), cancellationToken));
 
     [HttpDelete("delete/{id:long}")]
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Delete(long id)
-        => Ok(await mediator.Send(new DeleteUserCommand(id)));
+    public async Task<IActionResult> Delete(long id, CancellationToken cancellationToken)
+        => Ok(await mediator.Send(new DeleteUserCommand(id), cancellationToken));
 
     [HttpGet("get/{userId:long}")]
     [ProducesResponseType(typeof(UserResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Get(long userId)
-        => Ok(await mediator.Send(new GetUserQuery(userId)));
+    public async Task<IActionResult> Get(long userId, CancellationToken cancellationToken)
+        => Ok(await mediator.Send(new GetUserQuery(userId), cancellationToken));
 
     [HttpGet("get-by-telegram-id/{telegramId:long}")]
     [ProducesResponseType(typeof(UserResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetByTelegramId(long telegramId)
-        => Ok(await mediator.Send(new GetUserByTelegramIdQuery(telegramId)));
+    public async Task<IActionResult> GetByTelegramId(long telegramId, CancellationToken cancellationToken)
+        => Ok(await mediator.Send(new GetUserByTelegramIdQuery(telegramId), cancellationToken));
 
     [HttpGet("get-all")]
     [ProducesResponseType(typeof(IEnumerable<UserResultDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetForApplication()
-        => Ok(await mediator.Send(new GetAllUsersQuery()));
+    public async Task<IActionResult> GetForApplication(CancellationToken cancellationToken)
+        => Ok(await mediator.Send(new GetAllUsersQuery(), cancellationToken));
 }

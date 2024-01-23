@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Commons\" />
+    <Compile Remove="Models\Commons\**" />
+    <EmbeddedResource Remove="Models\Commons\**" />
+    <None Remove="Models\Commons\**" />
   </ItemGroup>
 
   <ItemGroup>

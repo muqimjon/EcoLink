@@ -1,6 +1,4 @@
-﻿using Telegram.Bot.Polling;
-
-namespace EcoLink.Bot.BotServices.Commons;
+﻿namespace EcoLink.Bot.BotServices.Commons;
 
 public class BotBackgroundService(TelegramBotClient client,
     ILogger<BotBackgroundService> logger,
