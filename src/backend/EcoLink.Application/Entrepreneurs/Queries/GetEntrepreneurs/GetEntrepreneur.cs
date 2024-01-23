@@ -4,8 +4,8 @@ namespace EcoLink.Application.Entrepreneurs.Queries.GetEntrepreneurs;
 
 public record GetEntrepreneurQuery : IRequest<EntrepreneurResultDto>
 {
-    public GetEntrepreneurQuery(GetEntrepreneurQuery command) { Id = command.Id; }
-    public int Id { get; set; }
+    public GetEntrepreneurQuery(long id) { Id = id; }
+    public long Id { get; set; }
 }
 
 public class GetEntrepreneurQueryHandler(IRepository<Entrepreneur> repository, IMapper mapper) : 

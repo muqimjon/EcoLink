@@ -2,7 +2,7 @@
 
 public record DeleteProjectManagerCommand : IRequest<bool>
 {
-    public DeleteProjectManagerCommand(DeleteProjectManagerCommand command) { Id = command.Id; }
+    public DeleteProjectManagerCommand(long id) { Id = id; }
     public long Id { get; set; }
 }
 

@@ -24,18 +24,18 @@ public class RepresentativesController(IMediator mediator) : BaseController
         => Ok(await mediator.Send(new UpdateRepresentativeCommand(command)));
 
     [HttpDelete("delete/{id:long}")]
-    public async Task<IActionResult> Delete([FromQuery] DeleteRepresentativeCommand command)
-        => Ok(await mediator.Send(new DeleteRepresentativeCommand(command)));
+    public async Task<IActionResult> Delete(long id)
+        => Ok(await mediator.Send(new DeleteRepresentativeCommand(id)));
 
     [HttpGet("get/{id:long}")]
     [ProducesResponseType(typeof(RepresentativeResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Get([FromQuery] GetRepresentativeQuery command)
-        => Ok(await mediator.Send(new GetRepresentativeQuery(command)));
+    public async Task<IActionResult> Get(long id)
+        => Ok(await mediator.Send(new GetRepresentativeQuery(id)));
 
-    [HttpGet("get-by-user-id/{user-id:long}")]
-    [ProducesResponseType(typeof(IEnumerable<RepresentativeResultDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetByUserId([FromQuery] GetRepresentativeQuery command)
-        => Ok(await mediator.Send(new GetRepresentativeQuery(command)));
+    [HttpGet("get-by-user-id/{userId:long}")]
+    [ProducesResponseType(typeof(RepresentativeResultDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetByUserId(long userId)
+        => Ok(await mediator.Send(new GetRepresentativeByUserIdQuery(userId)));
 
     [HttpGet("get-all")]
     [ProducesResponseType(typeof(IEnumerable<RepresentativeResultDto>), StatusCodes.Status200OK)]

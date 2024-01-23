@@ -15,31 +15,31 @@ public class UsersController(IMediator mediator) : BaseController
 
     [HttpPost("create-with-return")]
     [ProducesResponseType(typeof(UserResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Create(CreateUserWithReturnTgResultCommand command)
-        => Ok(await mediator.Send(new CreateUserWithReturnTgResultCommand(command)));
+    public async Task<IActionResult> Create(CreateUserWithReturnCommand command)
+        => Ok(await mediator.Send(new CreateUserWithReturnCommand(command)));
 
     [HttpPut("update")]
     [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
     public async Task<IActionResult> Update(UpdateUserCommand command)
         => Ok(await mediator.Send(new UpdateUserCommand(command)));
 
-    [HttpDelete("delete")]
+    [HttpDelete("delete/{id:long}")]
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Delete([FromQuery] DeleteUserCommand command)
-        => Ok(await mediator.Send(new DeleteUserCommand(command)));
+    public async Task<IActionResult> Delete(long id)
+        => Ok(await mediator.Send(new DeleteUserCommand(id)));
 
-    [HttpGet("get/{id:long}")]
+    [HttpGet("get/{userId:long}")]
     [ProducesResponseType(typeof(UserResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Get([FromQuery] GetUserByIdQuery query)
-        => Ok(await mediator.Send(new GetUserByIdQuery(query)));
+    public async Task<IActionResult> Get(long userId)
+        => Ok(await mediator.Send(new GetUserQuery(userId)));
 
-    [HttpGet("get-by-telegram-id/{telegram-id:long}")]
-    [ProducesResponseType(typeof(UserTelegramResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetByTelegramId([FromRoute] GetUserByTelegramIdQuery query)
-        => Ok(await mediator.Send(new GetUserByTelegramIdQuery(query.TelegramId)));
+    [HttpGet("get-by-telegram-id/{telegramId:long}")]
+    [ProducesResponseType(typeof(UserResultDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetByTelegramId(long telegramId)
+        => Ok(await mediator.Send(new GetUserByTelegramIdQuery(telegramId)));
 
-    [HttpGet("get-for-application/{id:long}")]
-    [ProducesResponseType(typeof(UserApplyResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetForApplication([FromRoute] GetUserForApplicationQuery query)
-        => Ok(await mediator.Send(new GetUserForApplicationQuery(query.Id)));
+    [HttpGet("get-all")]
+    [ProducesResponseType(typeof(IEnumerable<UserResultDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetForApplication()
+        => Ok(await mediator.Send(new GetAllUsersQuery()));
 }

@@ -4,8 +4,8 @@ namespace EcoLink.Application.Investors.Queries.GetInvestors;
 
 public record GetInvestorQuery : IRequest<InvestorResultDto>
 {
-    public GetInvestorQuery(GetInvestorQuery command) { Id = command.Id; }
-    public int Id { get; set; }
+    public GetInvestorQuery(long id) { Id = id; }
+    public long Id { get; set; }
 }
 
 public class GetInvestorQueryHandler(IRepository<Investor> repository, IMapper mapper) : 

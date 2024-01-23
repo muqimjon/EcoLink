@@ -11,9 +11,12 @@ public record UpdateUserCommand : IRequest<int>
         IsBot = command.IsBot;
         Degree = command.Degree;
         ChatId = command.ChatId;
+        Address = command.Address;
         UserName = command.UserName;
         LastName = command.LastName;
+        Languages = command.Languages;
         FirstName = command.FirstName;
+        Experience = command.Experience;
         TelegramId = command.TelegramId;
         Patronomyc = command.Patronomyc;
         Profession = command.Profession;
@@ -31,6 +34,9 @@ public record UpdateUserCommand : IRequest<int>
     public string Degree { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+    public string Address { get; set; } = string.Empty;
+    public string Languages { get; set; } = string.Empty;
+    public string Experience { get; set; } = string.Empty;
     public UserProfession Profession { get; set; }
     public long TelegramId { get; set; }
     public string UserName { get; set; } = string.Empty;

@@ -55,7 +55,7 @@ public partial class BotUpdateHandler(
         var from = updateContent.From;
 
         return await mediator.Send(new GetUserByTelegramIdQuery(from.Id))
-            ?? await mediator.Send(new CreateUserWithReturnTgResultCommand()
+            ?? await mediator.Send(new CreateUserWithReturnCommand()
                 {
                     IsBot = from.IsBot,
                     TelegramId = from.Id,

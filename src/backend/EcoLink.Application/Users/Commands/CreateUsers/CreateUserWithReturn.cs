@@ -1,8 +1,8 @@
 ﻿namespace EcoLink.Application.Users.Commands.CreateUsers;
 
-public record class CreateUserWithReturnTgResultCommand : IRequest<UserTelegramResultDto>
+public record class CreateUserWithReturnCommand : IRequest<UserResultDto>
 {
-    public CreateUserWithReturnTgResultCommand(CreateUserWithReturnTgResultCommand command)
+    public CreateUserWithReturnCommand(CreateUserWithReturnCommand command)
     {
         Age = command.Age;
         Phone = command.Phone;
@@ -42,10 +42,10 @@ public record class CreateUserWithReturnTgResultCommand : IRequest<UserTelegramR
     public bool IsBot { get; set; }
 }
 
-public class CreateUserWithReturnTgResultCommandHandler(IRepository<User> repository, IMapper mapper) : 
-    IRequestHandler<CreateUserWithReturnTgResultCommand, UserTelegramResultDto>
+public class CreateUserWithReturnCommandHandler(IRepository<User> repository, IMapper mapper) : 
+    IRequestHandler<CreateUserWithReturnCommand, UserResultDto>
 {
-    public async Task<UserTelegramResultDto> Handle(CreateUserWithReturnTgResultCommand request, CancellationToken cancellationToken)
+    public async Task<UserResultDto> Handle(CreateUserWithReturnCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.TelegramId == request.TelegramId);
         if (entity is not null)
@@ -57,6 +57,6 @@ public class CreateUserWithReturnTgResultCommandHandler(IRepository<User> reposi
         await repository.InsertAsync(entity);
         await repository.SaveAsync();
 
-        return mapper.Map<UserTelegramResultDto>(entity);
+        return mapper.Map<UserResultDto>(entity);
     }
 }

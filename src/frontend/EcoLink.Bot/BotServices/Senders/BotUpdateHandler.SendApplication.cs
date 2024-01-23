@@ -26,8 +26,6 @@ public partial class BotUpdateHandler
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
-
-        await mediator.Send(new UpdateStateAndProfessionCommand() { Id = user.Id, State = State.WaitingForSelectProfession }, cancellationToken);
     }
 
     private async Task SendAlreadyExistApplicationAsync(string text, ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -40,8 +38,6 @@ public partial class BotUpdateHandler
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
-
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForResendApplication), cancellationToken);
     }
 
     private async Task SendForSubmitApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -117,7 +113,7 @@ public partial class BotUpdateHandler
 
     private async Task SendRequestForPatronomycAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var exist = await mediator.Send(new GetUserByIdQuery() { Id = user.Id }, cancellationToken);
+        var exist = await mediator.Send(new GetUserQuery() { Id = user.Id }, cancellationToken);
         var args = string.IsNullOrEmpty(exist.Patronomyc) switch
         {
             true => (localizer["txtAskForPatronomyc"], new ReplyKeyboardMarkup(new[] { new KeyboardButton(localizer["rbtnCancel"]) }) { ResizeKeyboard = true }),

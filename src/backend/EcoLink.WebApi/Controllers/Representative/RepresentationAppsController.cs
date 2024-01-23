@@ -1,6 +1,7 @@
 ﻿using EcoLink.Domain.Entities.Representation;
 using EcoLink.Application.Representatives.Queries.GetRepresentatives;
 using EcoLink.Application.RepresentationApps.Commands.CreateRepresentationApps;
+using EcoLink.Application.RepresentationApps.Queries.GetRepresentationApp;
 
 namespace EcoLink.WebApi.Controllers.Representative;
 
@@ -13,11 +14,11 @@ public class RepresentationAppsController(IMediator mediator) : BaseController
 
     [HttpGet("get/{id:long}")]
     [ProducesResponseType(typeof(RepresentationApp), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Get([FromQuery] GetRepresentativeQuery query)
-        => Ok(await mediator.Send(new GetRepresentativeQuery(query)));
+    public async Task<IActionResult> Get(long id)
+        => Ok(await mediator.Send(new GetRepresentationAppByIdQuery(id)));
 
-    [HttpGet("get-all-by-user-id")]
+    [HttpGet("get-all-by-user-id/{userId:long}")]
     [ProducesResponseType(typeof(IEnumerable<RepresentationApp>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetAllByUserId([FromQuery] GetRepresentativeQuery query)
-        => Ok(await mediator.Send(new GetRepresentativeQuery(query)));
+    public async Task<IActionResult> GetAllByUserId(long userId)
+        => Ok(await mediator.Send(new GetRepresentationAppByIdQuery(userId)));
 }

@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcoLink.Application", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcoLink.WebApi", "src\backend\EcoLink.WebApi\EcoLink.WebApi.csproj", "{1549BAC2-05E6-4C12-9EF3-3F6D06FE1AA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcoLink.Bot", "src\frontend\EcoLink.Bot\EcoLink.Bot.csproj", "{CCE97AFF-0E27-480E-96AA-2A730A9EF8B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcoLink.Bot", "src\frontend\EcoLink.Bot\EcoLink.Bot.csproj", "{CCE97AFF-0E27-480E-96AA-2A730A9EF8B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcoLink.ApiService", "src\frontend\EcoLink.ApiService\EcoLink.ApiService.csproj", "{EA231784-B9EC-44A1-87BF-7D2107149AC6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{CCE97AFF-0E27-480E-96AA-2A730A9EF8B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCE97AFF-0E27-480E-96AA-2A730A9EF8B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCE97AFF-0E27-480E-96AA-2A730A9EF8B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA231784-B9EC-44A1-87BF-7D2107149AC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA231784-B9EC-44A1-87BF-7D2107149AC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA231784-B9EC-44A1-87BF-7D2107149AC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA231784-B9EC-44A1-87BF-7D2107149AC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{1FA29D86-E18C-4B6C-97FD-E47D6EA5C58D} = {4773B94D-E426-4D3C-93DA-79D551687068}
 		{1549BAC2-05E6-4C12-9EF3-3F6D06FE1AA7} = {4773B94D-E426-4D3C-93DA-79D551687068}
 		{CCE97AFF-0E27-480E-96AA-2A730A9EF8B7} = {A2E7D915-D15D-4AC8-948F-1CAC35319DE8}
+		{EA231784-B9EC-44A1-87BF-7D2107149AC6} = {A2E7D915-D15D-4AC8-948F-1CAC35319DE8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9BA31350-68E3-4B4D-88F6-3A089D09BE9B}

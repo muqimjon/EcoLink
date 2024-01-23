@@ -1,13 +1,13 @@
 ﻿namespace EcoLink.Application.Users.Queries.GetUsers;
 
-public record GetUserByTelegramIdQuery : IRequest<UserTelegramResultDto>
+public record GetUserByTelegramIdQuery : IRequest<UserResultDto>
 {
     public GetUserByTelegramIdQuery(long telegramId) { TelegramId = telegramId; }
     public long TelegramId { get; set; }
 }
 
-public class GetUserByTelegramIdQueryHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<GetUserByTelegramIdQuery, UserTelegramResultDto>
+public class GetUserByTelegramIdQueryHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<GetUserByTelegramIdQuery, UserResultDto>
 {
-    public async Task<UserTelegramResultDto> Handle(GetUserByTelegramIdQuery request, CancellationToken cancellationToken)
-        => mapper.Map<UserTelegramResultDto>(await repository.SelectAsync(i => i.TelegramId == request.TelegramId));
+    public async Task<UserResultDto> Handle(GetUserByTelegramIdQuery request, CancellationToken cancellationToken)
+        => mapper.Map<UserResultDto>(await repository.SelectAsync(i => i.TelegramId == request.TelegramId));
 }

@@ -24,14 +24,22 @@ public class ProjectManagersController(IMediator mediator) : BaseController
         => Ok(await mediator.Send(new UpdateProjectManagerCommand(command)));
 
     [HttpDelete("delete/{id:long}")]
-    public async Task<IActionResult> Delete([FromQuery] DeleteProjectManagerCommand command)
-        => Ok(await mediator.Send(new DeleteProjectManagerCommand(command)));
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Delete(long id)
+        => Ok(await mediator.Send(new DeleteProjectManagerCommand(id)));
 
     [HttpGet("get/{id:long}")]
-    public async Task<IActionResult> Get([FromQuery] GetProjectManagerQuery command)
-        => Ok(await mediator.Send(new GetProjectManagerQuery(command)));
+    [ProducesResponseType(typeof(ProjectManagerResultDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Get(long id)
+        => Ok(await mediator.Send(new GetProjectManagerQuery(id)));
+
+    [HttpGet("get-by-user-id/{userId:long}")]
+    [ProducesResponseType(typeof(ProjectManagerResultDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetByUserId(long userId)
+        => Ok(await mediator.Send(new GetProjectManagerByUserIdQuery(userId)));
 
     [HttpGet("get-all")]
+    [ProducesResponseType(typeof(IEnumerable<ProjectManagerResultDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
         => Ok(await mediator.Send(new GetAllProjectManagersQuery()));
 }

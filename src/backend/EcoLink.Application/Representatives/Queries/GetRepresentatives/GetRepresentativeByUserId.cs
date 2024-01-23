@@ -12,5 +12,5 @@ public class GetRepresentativeByUserIdQueryHandler(IRepository<Representative> r
     IRequestHandler<GetRepresentativeByUserIdQuery, RepresentativeResultDto>
 {
     public async Task<RepresentativeResultDto> Handle(GetRepresentativeByUserIdQuery request, CancellationToken cancellationToken)
-        => mapper.Map<RepresentativeResultDto>(await repository.SelectAsync(i => i.UserId.Equals(request.UserId), includes: ["User"]));
+        => mapper.Map<RepresentativeResultDto>(await repository.SelectAsync(i => i.UserId.Equals(request.UserId)));
 }

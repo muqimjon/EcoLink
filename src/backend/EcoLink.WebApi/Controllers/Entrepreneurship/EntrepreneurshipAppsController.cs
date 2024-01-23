@@ -9,12 +9,12 @@ public class EntrepreneurshipAppsController(IMediator mediator) : BaseController
     public async Task<IActionResult> Create(CreateEntrepreneurshipAppWithReturnCommand command)
         => Ok(await mediator.Send(new CreateEntrepreneurshipAppWithReturnCommand(command)));
 
-    [HttpGet("get-all-by-user-id/{user-id:long}")]
-    public async Task<IActionResult> GetAllByUserId([FromQuery] GetAllEntrepreneurshipAppsByUserIdQuery query)
-        => Ok(await mediator.Send(new GetAllEntrepreneurshipAppsByUserIdQuery(query.UserId)));
+    [HttpGet("get-all-by-user-id/{userId:long}")]
+    public async Task<IActionResult> GetAllByUserId(long userId)
+        => Ok(await mediator.Send(new GetAllEntrepreneurshipAppsByUserIdQuery(userId)));
 
     [HttpGet("get/{id:long}")]
-    public async Task<IActionResult> Get([FromQuery]GetEntrepreneurshipAppByIdCommand query)
-        => Ok(await mediator.Send(new GetEntrepreneurshipAppByIdCommand(query.Id)));
+    public async Task<IActionResult> Get(long id)
+        => Ok(await mediator.Send(new GetEntrepreneurshipAppByIdCommand(id)));
 
 }

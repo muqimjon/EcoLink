@@ -13,10 +13,10 @@ public class ProjectManagementAppsController(IMediator mediator) : BaseControlle
 
     [HttpGet("get/{id:long}")]
     [ProducesResponseType(typeof(ProjectManagerResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Get(GetProjectManagementAppQuery query)
-        => Ok(await mediator.Send(new GetProjectManagementAppQuery(query.Id)));
+    public async Task<IActionResult> Get(long id)
+        => Ok(await mediator.Send(new GetProjectManagementAppQuery(id)));
 
-    [HttpGet("get-all-by-user-id/{user-id:long}")]
+    [HttpGet("get-all-by-user-id/{userId:long}")]
     [ProducesResponseType(typeof(IEnumerable<ProjectManagerResultDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllByUserId(long userId)
         => Ok(await mediator.Send(new GetAllProjectManagementAppsByUserIdQuery(userId)));

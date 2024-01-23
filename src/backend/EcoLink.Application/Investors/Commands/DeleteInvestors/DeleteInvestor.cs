@@ -2,8 +2,8 @@
 
 public record DeleteInvestorCommand : IRequest<bool>
 {
-    public DeleteInvestorCommand(DeleteInvestorCommand command) { Id = command.Id; }
-    public int Id { get; set; }
+    public DeleteInvestorCommand(long id) { Id = id; }
+    public long Id { get; set; }
 }
 
 public class DeleteInvestorCommandHandler(IRepository<Investor> repository) : IRequestHandler<DeleteInvestorCommand, bool>

@@ -4,7 +4,7 @@ namespace EcoLink.Application.Representatives.Queries.GetRepresentatives;
 
 public record GetRepresentativeQuery : IRequest<RepresentativeResultDto>
 {
-    public GetRepresentativeQuery(GetRepresentativeQuery command) { Id = command.Id; }
+    public GetRepresentativeQuery(long id) { Id = id; }
     public long Id { get; set; }
 }
 

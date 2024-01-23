@@ -25,13 +25,18 @@ public class InvestorsController(IMediator mediator) : BaseController
 
     [HttpDelete("delete/{id:long}")]
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Delete(DeleteInvestorCommand command)
-        => Ok(await mediator.Send(new DeleteInvestorCommand(command)));
+    public async Task<IActionResult> Delete(long id)
+        => Ok(await mediator.Send(new DeleteInvestorCommand(id)));
 
     [HttpGet("get/{id:long}")]
     [ProducesResponseType(typeof(InvestorResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Get([FromQuery] GetInvestorQuery command)
-        => Ok(await mediator.Send(new GetInvestorQuery(command)));
+    public async Task<IActionResult> Get(long id)
+        => Ok(await mediator.Send(new GetInvestorQuery(id)));
+
+    [HttpGet("get-by-user-id/{userId:long:}")]
+    [ProducesResponseType(typeof(InvestorResultDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetByUserId(long userId)
+        => Ok(await mediator.Send(new GetInvestorByUserIdQuery(userId)));
 
     [HttpGet("get-all")]
     [ProducesResponseType(typeof(IEnumerable<InvestorResultDto>), StatusCodes.Status200OK)]

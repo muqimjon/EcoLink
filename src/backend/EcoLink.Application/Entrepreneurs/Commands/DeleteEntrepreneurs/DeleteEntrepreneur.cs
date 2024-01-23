@@ -2,7 +2,7 @@
 
 public record DeleteEntrepreneurCommand : IRequest<bool>
 {
-    public DeleteEntrepreneurCommand(DeleteEntrepreneurCommand command) { Id = command.Id; }
+    public DeleteEntrepreneurCommand(long id) { Id = id; }
     public long Id { get; set; }
 }
 

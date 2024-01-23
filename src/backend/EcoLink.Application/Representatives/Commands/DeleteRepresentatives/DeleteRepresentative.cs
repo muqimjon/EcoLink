@@ -2,7 +2,7 @@
 
 public record DeleteRepresentativeCommand : IRequest<bool>
 {
-    public DeleteRepresentativeCommand(DeleteRepresentativeCommand command) { Id = command.Id; }
+    public DeleteRepresentativeCommand(long id) { Id = id; }
     public long Id { get; set; }
 }
 

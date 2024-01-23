@@ -63,14 +63,12 @@ public class MappingProfile : Profile
 
 
         // User
-        CreateMap<User, UserApplyResultDto>();
-        CreateMap<User, UserTelegramResultDto>();
-        CreateMap<User, UserApplyResultDto>();
+        CreateMap<User, UserResultDto>();
 
         CreateMap<UpdateUserCommand, User>();
 
         CreateMap<CreateUserCommand, User>();
-        CreateMap<CreateUserWithReturnTgResultCommand, User>();
+        CreateMap<CreateUserWithReturnCommand, User>();
 
 
         // Investment Application

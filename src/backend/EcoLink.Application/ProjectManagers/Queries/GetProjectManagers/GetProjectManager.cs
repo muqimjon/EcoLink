@@ -4,8 +4,8 @@ namespace EcoLink.Application.ProjectManagers.Queries.GetProjectManagers;
 
 public record GetProjectManagerQuery : IRequest<ProjectManagerResultDto>
 {
-    public GetProjectManagerQuery(GetProjectManagerQuery command) { Id = command.Id; }
-    public int Id { get; set; }
+    public GetProjectManagerQuery(long id) { Id = id; }
+    public long Id { get; set; }
 }
 
 public class GetProjectManagerQueryHandler(IRepository<ProjectManager> repository, IMapper mapper) : 

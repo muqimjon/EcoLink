@@ -12,13 +12,13 @@ public class InvestmentAppsController(IMediator mediator) : BaseController
     public async Task<IActionResult> Create(CreateInvestmentAppWithReturnCommand command)
         => Ok(await mediator.Send(new CreateInvestmentAppWithReturnCommand(command)));
 
-    [HttpGet("get-all/{user-id:long}")]
+    [HttpGet("get-all-by-user-userId/{userId:long}")]
     [ProducesResponseType(typeof(IEnumerable<InvestmentAppResultDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Get([FromQuery] GetAllInvestmentAppsByUserIdQuery query)
-        => Ok(await mediator.Send(new GetAllInvestmentAppsByUserIdQuery(query.UserId)));
+    public async Task<IActionResult> GetAllByUserId(long userId)
+        => Ok(await mediator.Send(new GetAllInvestmentAppsByUserIdQuery(userId)));
 
-    [HttpGet("get/{id:long}")]
+    [HttpGet("get/{userId:long}")]
     [ProducesResponseType(typeof(InvestmentAppResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Get([FromQuery] GetInvestmentAppQuery query)
-        => Ok(await mediator.Send(new GetInvestmentAppQuery(query.Id)));
+    public async Task<IActionResult> Get(long id)
+        => Ok(await mediator.Send(new GetInvestmentAppQuery(id)));
 }
