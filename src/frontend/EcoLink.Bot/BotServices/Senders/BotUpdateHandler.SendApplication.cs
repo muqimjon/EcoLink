@@ -1,4 +1,8 @@
-﻿using EcoLink.ApiService.Constants;
+﻿using EcoLink.Application.Commons.Constants;
+using EcoLink.Application.Investors.Queries.GetInvestors;
+using EcoLink.Application.Entrepreneurs.Queries.GetEntrepreneurs;
+using EcoLink.Application.ProjectManagers.Queries.GetProjectManagers;
+using EcoLink.Application.Representatives.Queries.GetRepresentatives;
 
 namespace EcoLink.Bot.BotServices;
 
@@ -38,36 +42,37 @@ public partial class BotUpdateHandler
 
     private async Task SendForSubmitApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var sending =  await botClient.SendTextMessageAsync(
+        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
+        var applicationText = profession switch
+        {
+            UserProfession.ProjectManager => GetApplicationInfoForm(await mediator.Send(new GetProjectManagerByUserIdQuery(user.Id), cancellationToken)),
+            UserProfession.Investor => GetApplicationInfoForm(await mediator.Send(new GetInvestorByUserIdQuery(user.Id), cancellationToken)),
+            UserProfession.Entrepreneur => GetApplicationInfoForm(await mediator.Send(new GetEntrepreneurByUserIdQuery(user.Id), cancellationToken)),
+            UserProfession.Representative => GetApplicationInfoForm(await mediator.Send(new GetRepresentativeByUserIdQuery(user.Id), cancellationToken)),
+            _ => string.Empty,
+        };
+
+        await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
             text: localizer["txtReadyApplication"],
             replyMarkup: new ReplyKeyboardRemove(),
             cancellationToken: cancellationToken
         );
 
-        user.Application = user.Profession switch
-        {
-            UserProfession.ProjectManager => GetApplicationInfoForm(user.Application),
-            UserProfession.Investor => GetApplicationInfoForm(user.Application),
-            UserProfession.Entrepreneur => GetApplicationInfoForm(user.Application),
-            UserProfession.Representative => GetApplicationInfoForm(user.Application),
-            _ => string.Empty,
-        };
-
+        await Task.Delay(1000, cancellationToken);
         var keyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[][] {
             [InlineKeyboardButton.WithCallbackData(localizer["ibtnSubmit"], "submit")],
             [InlineKeyboardButton.WithCallbackData(localizer["ibtnCancel"], "cancel")]
         });
 
-        await botClient.EditMessageTextAsync(
-            messageId: sending.MessageId,
+        await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
             text: applicationText,
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
 
-        user.State = State.WaitingForSubmitApplication;
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSubmitApplication), cancellationToken);
     }
 
     private async Task SendRequestForFirstNameAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -85,7 +90,7 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken
         );
 
-        user.State = State.WaitingForEnterFirstName;
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterFirstName), cancellationToken);
     }
 
     private async Task SendRequestForLastNameAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -103,15 +108,16 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken
         );
 
-        user.State = State.WaitingForEnterLastName;
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterLastName), cancellationToken);
     }
 
     private async Task SendRequestForPatronomycAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var args = string.IsNullOrEmpty(user.Patronomyc) switch
+        var exist = await mediator.Send(new GetUserQuery() { Id = user.Id }, cancellationToken);
+        var args = string.IsNullOrEmpty(exist.Patronomyc) switch
         {
             true => (localizer["txtAskForPatronomyc"], new ReplyKeyboardMarkup(new[] { new KeyboardButton(localizer["rbtnCancel"]) }) { ResizeKeyboard = true }),
-            false => (localizer["txtAskForPatronomyc"] + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Patronomyc)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
+            false => (localizer["txtAskForPatronomyc"] + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(exist.Patronomyc)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
         };
 
         await botClient.SendTextMessageAsync(
@@ -120,15 +126,16 @@ public partial class BotUpdateHandler
             replyMarkup: args.Item2,
             cancellationToken: cancellationToken);
 
-        user.State = State.WaitingForEnterPatronomyc;
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterPatronomyc), cancellationToken);
     }
 
     private async Task SendRequestForAgeAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var args = string.IsNullOrEmpty(user.Age) switch
+        var age = await mediator.Send(new GetAgeQuery(user.Id), cancellationToken);
+        var args = string.IsNullOrEmpty(age) switch
         {
             true => (localizer["txtAskForAge"], new ReplyKeyboardMarkup(new[] { new KeyboardButton(localizer["rbtnCancel"]) }) { ResizeKeyboard = true }),
-            false => (localizer["txtAskForAge"] + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Age)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
+            false => (localizer["txtAskForAge"] + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(age)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
         };
 
         await botClient.SendTextMessageAsync(
@@ -137,15 +144,16 @@ public partial class BotUpdateHandler
             replyMarkup: args.Item2,
             cancellationToken: cancellationToken);
 
-        user.State = State.WaitingForEnterAge;
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterAge), cancellationToken);
     }
 
     private async Task SendRequestForDateOfBirthAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var formattedDate = user.DateOfBirth.ToString("dd.MM.yyyy");
+        var dateOfBirth = await mediator.Send(new GetDateOfBirthQuery(user.Id), cancellationToken);
+        var formattedDate = dateOfBirth.ToString("dd.MM.yyyy");
         var @default = DateTimeOffset.MinValue.AddHours(TimeConstants.UTC);
 
-        var args = (user.DateOfBirth == @default) switch
+        var args = (dateOfBirth == @default) switch
         {
             true => (localizer["txtAskForDateOfBirth"], new ReplyKeyboardMarkup(new[] { new KeyboardButton(localizer["rbtnCancel"]) }) { ResizeKeyboard = true }),
             false => (localizer["txtAskForDateOfBirth"] + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(formattedDate)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
@@ -157,7 +165,7 @@ public partial class BotUpdateHandler
             replyMarkup: args.Item2,
             cancellationToken: cancellationToken);
 
-        user.State = State.WaitingForEnterDateOfBirth;
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterDateOfBirth), cancellationToken);
     }
 
     private async Task SendRequestForDegreeAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -177,15 +185,16 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken
         );
 
-        user.State = State.WaitingForEnterDegree;
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterDegree), cancellationToken);
     }
 
     private async Task SendRequestForLanguagesAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var args = string.IsNullOrEmpty(user.Languages) switch
+        var languages = await mediator.Send(new GetLanguagesQuery(user.Id), cancellationToken);
+        var args = string.IsNullOrEmpty(languages) switch
         {
             true => (localizer["txtAskForSkillLanguages"], new ReplyKeyboardMarkup(new[] { new KeyboardButton(localizer["rbtnCancel"]) }) { ResizeKeyboard = true }),
-            false => (localizer["txtAskForSkillLanguages"] + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Languages)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
+            false => (localizer["txtAskForSkillLanguages"] + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(languages)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
         };
 
         await botClient.SendTextMessageAsync(
@@ -195,7 +204,7 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken
         );
 
-        user.State = State.WaitingForEnterLanguages;
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterLanguages), cancellationToken);
     }
 
     private async Task SendRequestForPhoneNumberAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -213,15 +222,16 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken
         );
 
-        user.State = State.WaitingForEnterPhoneNumber;
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterPhoneNumber), cancellationToken);
     }
 
     private async Task SendRequestForEmailAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var args = string.IsNullOrEmpty(user.Email) switch
+        var email = await mediator.Send(new GetEmailQuery(user.Id), cancellationToken);
+        var args = string.IsNullOrEmpty(email) switch
         {
             true => (localizer["txtAskForEmail"], new ReplyKeyboardMarkup(new[] { new KeyboardButton(localizer["rbtnCancel"]) }) { ResizeKeyboard = true }),
-            false => (localizer["txtAskForEmail"] + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Email)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
+            false => (localizer["txtAskForEmail"] + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(email)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
         };
 
         await botClient.SendTextMessageAsync(
@@ -230,15 +240,16 @@ public partial class BotUpdateHandler
             replyMarkup: args.Item2,
             cancellationToken: cancellationToken);
 
-        user.State = State.WaitingForEnterEmail;
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterEmail), cancellationToken);
     }
 
     private async Task SendRequestForExperienceAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var args = string.IsNullOrEmpty(user.Experience) switch
+        var experience = await mediator.Send(new GetExperienceQuery(user.Id), cancellationToken);
+        var args = string.IsNullOrEmpty(experience) switch
         {
             true => (localizer["txtAskForExperience"], new ReplyKeyboardMarkup(new[] { new KeyboardButton(localizer["rbtnCancel"]) }) { ResizeKeyboard = true }),
-            false => (localizer["txtAskForExperience"] + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Experience)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
+            false => (localizer["txtAskForExperience"] + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(experience)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
         };
 
         await botClient.SendTextMessageAsync(
@@ -247,15 +258,16 @@ public partial class BotUpdateHandler
             replyMarkup: args.Item2,
             cancellationToken: cancellationToken);
 
-        user.State = State.WaitingForEnterExperience;
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterExperience), cancellationToken);
     }
 
     private async Task SendRequestForAddressAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var args = string.IsNullOrEmpty(user.Address) switch
+        var address = await mediator.Send(new GetAddressQuery(user.Id), cancellationToken);
+        var args = string.IsNullOrEmpty(address) switch
         {
             true => (localizer["txtAskForAddress"], new ReplyKeyboardMarkup(new[] { new KeyboardButton(localizer["rbtnCancel"]) }) { ResizeKeyboard = true }),
-            false => (localizer["txtAskForAddress"] + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Address)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
+            false => (localizer["txtAskForAddress"] + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(address)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
         };
 
         await botClient.SendTextMessageAsync(
@@ -264,16 +276,29 @@ public partial class BotUpdateHandler
             replyMarkup: args.Item2,
             cancellationToken: cancellationToken);
 
-        user.State = State.WaitingForEnterAddress;
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterAddress), cancellationToken);
     }
 
     private async Task SendRequestForExpectationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var args = string.IsNullOrEmpty(user.Application.Expectatiopn) switch
+        var expectatiopn = string.Empty;
+        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
+        var handle = profession switch
+        {
+            UserProfession.Representative => mediator.Send(new GetRepresentativeExpectationByUserIdQuery(user.Id), cancellationToken),
+            UserProfession.ProjectManager => mediator.Send(new GetProjectManagerExpectationByUserIdQuery(user.Id), cancellationToken),
+            UserProfession.Entrepreneur => throw new NotImplementedException(),
+            UserProfession.Investor => throw new NotImplementedException(),
+            _ => Task.FromResult(string.Empty)
+        };
+
+        try { expectatiopn = await handle; }
+        catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+
+        var args = string.IsNullOrEmpty(expectatiopn) switch
         {
             true => (localizer["txtAskForExpectation"], new ReplyKeyboardMarkup(new[] { new KeyboardButton(localizer["rbtnCancel"]) }) { ResizeKeyboard = true }),
-            false => (localizer["txtAskForExpectation"] + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Application.Expectatiopn)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true }),
-            _ => default
+            false => (localizer["txtAskForExpectation"] + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(expectatiopn)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
         };
 
         await botClient.SendTextMessageAsync(
@@ -282,23 +307,33 @@ public partial class BotUpdateHandler
             replyMarkup: args.Item2,
             cancellationToken: cancellationToken);
 
-        user.State = State.WaitingForEnterExpectation;
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterExpectation), cancellationToken);
     }
 
     private async Task SendRequestForPurposeAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var askPurpose = user.Profession switch
+        var purpose = string.Empty;
+        var askPurpose = string.Empty;
+        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
+
+        switch(profession)
         {
-            UserProfession.Representative => localizer["txtAskForRepresentativePurpose"],
-            UserProfession.ProjectManager => localizer["txtAskForProjectManagerPurpose"],
-            _ => string.Empty
+            case UserProfession.Representative:
+                purpose = await mediator.Send(new GetRepresentativePurposeByUserIdQuery(user.Id), cancellationToken);
+                askPurpose = localizer["txtAskForRepresentativePurpose"];
+                break;
+            case UserProfession.ProjectManager:
+                purpose = await mediator.Send(new GetProjectManagerPurposeByUserIdQuery(user.Id), cancellationToken);
+                askPurpose = localizer["txtAskForProjectManagerPurpose"];
+                break;
+            default:
+                throw new NotImplementedException();
         };
 
-        var args = string.IsNullOrEmpty(user.Application.Purpose) switch
+        var args = string.IsNullOrEmpty(purpose) switch
         {
             true => (askPurpose, new ReplyKeyboardMarkup(new[] { new KeyboardButton(localizer["rbtnCancel"]) }) { ResizeKeyboard = true }),
-            false => (askPurpose + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Application.Purpose)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true }),
-            _ => default
+            false => (askPurpose + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(purpose)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
         };
 
         await botClient.SendTextMessageAsync(
@@ -307,7 +342,7 @@ public partial class BotUpdateHandler
             replyMarkup: args.Item2,
             cancellationToken: cancellationToken);
 
-        user.State = State.WaitingForEnterPurpose;
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterPurpose), cancellationToken);
     }
     
     private async Task SendRequestForSectorAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -336,12 +371,13 @@ public partial class BotUpdateHandler
             replyMarkup: new ReplyKeyboardMarkup(new[] { new KeyboardButton(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
             cancellationToken: cancellationToken);
 
-        user.State = State.WaitingForEnterSector;
+        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterSector), cancellationToken);
     }
 
     private async Task SendProfessionInfoAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var handler = user.Profession switch
+        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
+        var handler = profession switch
         {
             UserProfession.Investor => botClient.SendTextMessageAsync(chatId: message.Chat.Id,text: localizer["txtInfoInvestment"],cancellationToken: cancellationToken),
             UserProfession.Entrepreneur => botClient.SendTextMessageAsync(chatId: message.Chat.Id, text: localizer["txtInfoEntrepreneurship"], cancellationToken: cancellationToken),

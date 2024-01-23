@@ -24,7 +24,7 @@ public partial class BotUpdateHandler
             State.WaitingForSelectRepresentationMenu => HandleSelectedRepresentationMenuAsync(botClient, message, cancellationToken),
             State.WaitingForFeedbackForOrganization => HandleFeedbackForOrganizationAsync(botClient, message, cancellationToken),
             State.WaitingForFeedbackForTelegramBot => HandleFeedbackForTelegramBotAsync(botClient, message, cancellationToken),
-            State.WaitingForSelectForEditPersonalInfo => HandleSelectedPersonalInfoAsync(botClient, message, cancellationToken),
+            State.WaitingForSelectPersonalInfo => HandleSelectedPersonalInfoAsync(botClient, message, cancellationToken),
             State.WaitingForSubmitApplication => SendGreetingAsync(botClient, message, cancellationToken),
             State.WaitingForResendApplication => HandleResendApplicationAsync(botClient, message, cancellationToken),
             State.WaitingForEnterFirstName => HandleFirstNameAsync(botClient, message, cancellationToken),

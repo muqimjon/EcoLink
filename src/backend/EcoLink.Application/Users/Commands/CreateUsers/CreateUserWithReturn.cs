@@ -13,12 +13,12 @@ public record class CreateUserWithReturnCommand : IRequest<UserResultDto>
         Address = command.Address;
         Username = command.Username;
         LastName = command.LastName;
-        FirstName = command.FirstName;
         Languages = command.Languages;
+        FirstName = command.FirstName;
         TelegramId = command.TelegramId;
         Patronomyc = command.Patronomyc;
-        Profession = command.Profession;
         Experience = command.Experience;
+        Profession = command.Profession;
         DateOfBirth = command.DateOfBirth;
         LanguageCode = command.LanguageCode;
     }

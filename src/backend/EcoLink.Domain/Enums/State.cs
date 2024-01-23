@@ -2,7 +2,6 @@
 
 public enum State
 {
-    NewUser,
     None,
     WaitingForSubmitApplication,
     WaitingForSelectLanguage,
@@ -12,7 +11,6 @@ public enum State
     WaitingForSelectProfession,
     WaitingForEnterPatronomyc,
     WaitingForEnterDateOfBirth,
-    WaitingForEnterAge,
     WaitingForEnterDegree,
     WaitingForEnterSector,
     WaitingForEnterInvestmentAmount,
@@ -32,11 +30,12 @@ public enum State
     WaitingForEnterProjectDirection,
     WaitingForSelectSettings,
     WaitingForSelectForFeedback,
-    WaitingForSelectForEditPersonalInfo,
+    WaitingForSelectPersonalInfo,
     WaitingForFeedbackForOrganization,
     WaitingForFeedbackForTelegramBot,
     WaitingForSelectEntrepreneurshipMenu,
     WaitingForSelectInvestmentMenu,
     WaitingForSelectProjectManagementMenu,
     WaitingForSelectRepresentationMenu,
+    WaitingForEnterAge,
 }

@@ -400,9 +400,6 @@ Toshkent shahri, O'zbekiston</value>
     <value>O‘zbekiston Iqtisodiyot Assambleyasining chet elda, O'zbekiston hududida vakil bolish imkoniyati.</value>
     <comment>Vakillik bo'limi haqida ma'lumot berish uchun yuboriladigan xabar</comment>
   </data>
-  <data name="txtLanguageSelected" xml:space="preserve">
-    <value>Ajoyib, siz bilan o'zbek tilida davom ettiramiz!</value>
-  </data>
   <data name="txtMainMenu" xml:space="preserve">
     <value>Menyuni tanlang: </value>
     <comment>Asosiy menyu xabari</comment>

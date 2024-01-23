@@ -10,35 +10,35 @@ public class RepresentativesController(IMediator mediator) : BaseController
 {
     [HttpPost("create")]
     [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Create(CreateRepresentativeCommand command, CancellationToken cancellationToken = default)
-        => Ok(new Response { Data = await mediator.Send(new CreateRepresentativeCommand(command), cancellationToken) });
+    public async Task<IActionResult> Create(CreateRepresentativeCommand command)
+        => Ok(await mediator.Send(new CreateRepresentativeCommand(command)));
 
     [HttpPost("create-with-return")]
     [ProducesResponseType(type: typeof(RepresentativeResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> CreateWithReturn(CreateRepresentativeWithReturnCommand command, CancellationToken cancellationToken = default)
-        => Ok(new Response { Data = await mediator.Send(new CreateRepresentativeWithReturnCommand(command), cancellationToken) });
+    public async Task<IActionResult> CreateWithReturn(CreateRepresentativeWithReturnCommand command)
+        => Ok(await mediator.Send(new CreateRepresentativeWithReturnCommand(command)));
 
     [HttpPut("update")]
     [ProducesResponseType(typeof(RepresentativeResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Update(UpdateRepresentativeCommand command, CancellationToken cancellationToken = default)
-        => Ok(new Response { Data = await mediator.Send(new UpdateRepresentativeCommand(command), cancellationToken) });
+    public async Task<IActionResult> Update(UpdateRepresentativeCommand command)
+        => Ok(await mediator.Send(new UpdateRepresentativeCommand(command)));
 
     [HttpDelete("delete/{id:long}")]
-    public async Task<IActionResult> Delete(long id, CancellationToken cancellationToken = default)
-        => Ok(new Response { Data = await mediator.Send(new DeleteRepresentativeCommand(id), cancellationToken) });
+    public async Task<IActionResult> Delete(long id)
+        => Ok(await mediator.Send(new DeleteRepresentativeCommand(id)));
 
     [HttpGet("get/{id:long}")]
     [ProducesResponseType(typeof(RepresentativeResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Get(long id, CancellationToken cancellationToken = default)
-        => Ok(new Response { Data = await mediator.Send(new GetRepresentativeQuery(id), cancellationToken) });
+    public async Task<IActionResult> Get(long id)
+        => Ok(await mediator.Send(new GetRepresentativeQuery(id)));
 
     [HttpGet("get-by-user-id/{userId:long}")]
     [ProducesResponseType(typeof(RepresentativeResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetByUserId(long userId, CancellationToken cancellationToken = default)
-        => Ok(new Response { Data = await mediator.Send(new GetRepresentativeByUserIdQuery(userId), cancellationToken) });
+    public async Task<IActionResult> GetByUserId(long userId)
+        => Ok(await mediator.Send(new GetRepresentativeByUserIdQuery(userId)));
 
     [HttpGet("get-all")]
     [ProducesResponseType(typeof(IEnumerable<RepresentativeResultDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
-        => Ok(new Response { Data = await mediator.Send(new GetAllRepresentativesQuery(), cancellationToken) });
+    public async Task<IActionResult> GetAll()
+        => Ok(await mediator.Send(new GetAllRepresentativesQuery()));
 }
