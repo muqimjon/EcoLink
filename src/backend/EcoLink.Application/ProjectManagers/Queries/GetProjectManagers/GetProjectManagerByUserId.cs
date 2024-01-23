@@ -8,7 +8,7 @@ public record GetProjectManagerByUserIdQuery : IRequest<ProjectManagerResultDto>
     public long UserId { get; set; }
 }
 
-public class GetProjectManagerByUserIdQueryHendler(IRepository<ProjectManager> repository, IMapper mapper) : 
+public class GetProjectManagerByUserIdQueryHandler(IRepository<ProjectManager> repository, IMapper mapper) : 
     IRequestHandler<GetProjectManagerByUserIdQuery, ProjectManagerResultDto>
 {
     public async Task<ProjectManagerResultDto> Handle(GetProjectManagerByUserIdQuery request, CancellationToken cancellationToken)

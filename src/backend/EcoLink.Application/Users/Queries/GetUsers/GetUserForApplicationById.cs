@@ -1,20 +1,20 @@
 ﻿namespace EcoLink.Application.Users.Queries.GetUsers;
 
-public record GetUserForApplicationByIdQuery : IRequest<UserApplyResultDto>
+public record GetUserForApplicationQuery : IRequest<UserApplyResultDto>
 {
-    public GetUserForApplicationByIdQuery(GetUserForApplicationByIdQuery command) { Id = command.Id; }
+    public GetUserForApplicationQuery(long id) { Id = id; }
     public long Id { get; set; }
 }
 
-public class GetUserForApplicationByIdQueryHendler(IMapper mapper,
+public class GetUserForApplicationQueryHandler(IMapper mapper,
     IRepository<User> repository,
     IRepository<Investor> investorRepository,   
     IRepository<Entrepreneur> entrepreneurRepository,
     IRepository<ProjectManager> projectManagerRepository,
     IRepository<Representative> representativeRepository) : 
-    IRequestHandler<GetUserForApplicationByIdQuery, UserApplyResultDto>
+    IRequestHandler<GetUserForApplicationQuery, UserApplyResultDto>
 {
-    public async Task<UserApplyResultDto> Handle(GetUserForApplicationByIdQuery request, CancellationToken cancellationToken)
+    public async Task<UserApplyResultDto> Handle(GetUserForApplicationQuery request, CancellationToken cancellationToken)
     {
         var entity = mapper.Map<UserApplyResultDto>(await repository.SelectAsync(i => i.Id.Equals(request.Id)))
         ?? throw new NotFoundException($"User is not found with ID = {request.Id}");

@@ -6,7 +6,7 @@ public record GetUserByIdQuery : IRequest<UserResultDto>
     public long Id { get; set; }
 }
 
-public class GetUserByIdQueryHendler(IRepository<User> repository, IMapper mapper) : IRequestHandler<GetUserByIdQuery, UserResultDto>
+public class GetUserByIdQueryHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<GetUserByIdQuery, UserResultDto>
 {
     public async Task<UserResultDto> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         => mapper.Map<UserResultDto>(await repository.SelectAsync(i => i.Id.Equals(request.Id)))

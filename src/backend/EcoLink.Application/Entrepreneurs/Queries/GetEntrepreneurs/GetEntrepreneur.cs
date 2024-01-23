@@ -8,7 +8,7 @@ public record GetEntrepreneurQuery : IRequest<EntrepreneurResultDto>
     public int Id { get; set; }
 }
 
-public class GetEntrepreneurQueryHendler(IRepository<Entrepreneur> repository, IMapper mapper) : 
+public class GetEntrepreneurQueryHandler(IRepository<Entrepreneur> repository, IMapper mapper) : 
     IRequestHandler<GetEntrepreneurQuery, EntrepreneurResultDto>
 {
     public async Task<EntrepreneurResultDto> Handle(GetEntrepreneurQuery request, CancellationToken cancellationToken)

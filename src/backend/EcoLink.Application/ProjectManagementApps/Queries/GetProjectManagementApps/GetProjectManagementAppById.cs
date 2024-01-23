@@ -8,7 +8,7 @@ public record GetProjectManagementAppQuery : IRequest<ProjectManagementAppResult
     public long Id { get; set; }
 }
 
-public class GetProjectManagementAppQueryHendler(IRepository<ProjectManagementApp> repository, IMapper mapper) : 
+public class GetProjectManagementAppQueryHandler(IRepository<ProjectManagementApp> repository, IMapper mapper) : 
     IRequestHandler<GetProjectManagementAppQuery, ProjectManagementAppResultDto>
 {
     public async Task<ProjectManagementAppResultDto> Handle(GetProjectManagementAppQuery request, CancellationToken cancellationToken)

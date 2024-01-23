@@ -8,7 +8,7 @@ public record GetEntrepreneurshipAppByIdCommand : IRequest<EntrepreneurshipAppRe
     public long Id { get; set; }
 }
 
-public class GetEntrepreneurshipAppByIdCommandHendler(IRepository<EntrepreneurshipApp> repository, IMapper mapper) : 
+public class GetEntrepreneurshipAppByIdCommandHandler(IRepository<EntrepreneurshipApp> repository, IMapper mapper) : 
     IRequestHandler<GetEntrepreneurshipAppByIdCommand, EntrepreneurshipAppResultDto>
 {
     public async Task<EntrepreneurshipAppResultDto> Handle(GetEntrepreneurshipAppByIdCommand request, CancellationToken cancellationToken)

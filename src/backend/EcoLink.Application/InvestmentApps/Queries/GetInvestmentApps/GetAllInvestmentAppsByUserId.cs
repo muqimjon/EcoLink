@@ -8,7 +8,7 @@ public record GetAllInvestmentAppsByUserIdQuery : IRequest<IEnumerable<Investmen
     public long UserId { get; set; }
 }
 
-public class GetAllInvestmentAppsByUserIdQueryHendler(IRepository<InvestmentApp> repository, IMapper mapper) :
+public class GetAllInvestmentAppsByUserIdQueryHandler(IRepository<InvestmentApp> repository, IMapper mapper) :
     IRequestHandler<GetAllInvestmentAppsByUserIdQuery, IEnumerable<InvestmentAppResultDto>>
 {
     public async Task<IEnumerable<InvestmentAppResultDto>> Handle(GetAllInvestmentAppsByUserIdQuery request,

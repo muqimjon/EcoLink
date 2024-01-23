@@ -6,7 +6,7 @@ public record GetUserByTelegramIdQuery : IRequest<UserTelegramResultDto>
     public long TelegramId { get; set; }
 }
 
-public class GetUserByTelegramIdQueryHendler(IRepository<User> repository, IMapper mapper) : IRequestHandler<GetUserByTelegramIdQuery, UserTelegramResultDto>
+public class GetUserByTelegramIdQueryHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<GetUserByTelegramIdQuery, UserTelegramResultDto>
 {
     public async Task<UserTelegramResultDto> Handle(GetUserByTelegramIdQuery request, CancellationToken cancellationToken)
         => mapper.Map<UserTelegramResultDto>(await repository.SelectAsync(i => i.TelegramId == request.TelegramId));

@@ -8,7 +8,7 @@ public record GetInvestorQuery : IRequest<InvestorResultDto>
     public int Id { get; set; }
 }
 
-public class GetInvestorQueryHendler(IRepository<Investor> repository, IMapper mapper) : 
+public class GetInvestorQueryHandler(IRepository<Investor> repository, IMapper mapper) : 
     IRequestHandler<GetInvestorQuery, InvestorResultDto>
 {
     public async Task<InvestorResultDto> Handle(GetInvestorQuery request, CancellationToken cancellationToken)

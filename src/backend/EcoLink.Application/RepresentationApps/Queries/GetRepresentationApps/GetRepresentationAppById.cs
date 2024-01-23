@@ -8,7 +8,7 @@ public record GetRepresentationAppByIdQuery : IRequest<RepresentationAppResultDt
     public long Id { get; set; }
 }
 
-public class GetRepresentationAppByIdQueryHendler(IRepository<RepresentationApp> repository, IMapper mapper) : 
+public class GetRepresentationAppByIdQueryHandler(IRepository<RepresentationApp> repository, IMapper mapper) : 
     IRequestHandler<GetRepresentationAppByIdQuery, RepresentationAppResultDto>
 {
     public async Task<RepresentationAppResultDto> Handle(GetRepresentationAppByIdQuery request, CancellationToken cancellationToken)

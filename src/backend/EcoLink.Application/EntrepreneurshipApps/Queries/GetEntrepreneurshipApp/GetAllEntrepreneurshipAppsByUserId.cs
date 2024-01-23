@@ -8,7 +8,7 @@ public record GetAllEntrepreneurshipAppsByUserIdQuery : IRequest<IEnumerable<Ent
     public long UserId { get; set; }
 }
 
-public class GetAllEntrepreneurshipAppsByUserIdQueryHendler(IRepository<EntrepreneurshipApp> repository, IMapper mapper) : 
+public class GetAllEntrepreneurshipAppsByUserIdQueryHandler(IRepository<EntrepreneurshipApp> repository, IMapper mapper) : 
     IRequestHandler<GetAllEntrepreneurshipAppsByUserIdQuery, IEnumerable<EntrepreneurshipAppResultDto>>
 {
     public async Task<IEnumerable<EntrepreneurshipAppResultDto>> Handle(GetAllEntrepreneurshipAppsByUserIdQuery request, CancellationToken cancellationToken)

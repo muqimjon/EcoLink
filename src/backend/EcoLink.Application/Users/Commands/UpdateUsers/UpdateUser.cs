@@ -18,6 +18,7 @@ public record UpdateUserCommand : IRequest<int>
         Patronomyc = command.Patronomyc;
         Profession = command.Profession;
         DateOfBirth = command.DateOfBirth;
+        Application = command.Application;
         LanguageCode = command.LanguageCode;
     }
 
@@ -34,17 +35,32 @@ public record UpdateUserCommand : IRequest<int>
     public long TelegramId { get; set; }
     public string UserName { get; set; } = string.Empty;
     public string LanguageCode { get; set; } = string.Empty;
-    public long? ChatId { get; set; }
+    public long ChatId { get; set; }
     public bool IsBot { get; set; }
+    public dynamic Application { get; set; } = default!;
 }
 
-public class UpdateUserCommandHandler(IRepository<User> repository, IMapper mapper) : 
+public class UpdateUserCommandHandler(IMapper mapper,
+    IRepository<User> repository,
+    IRepository<Investor> investorRepository,
+    IRepository<Entrepreneur> entrepreneurRepository,
+    IRepository<Representative> representativeRepository,
+    IRepository<ProjectManager> projectManagerRepository) : 
     IRequestHandler<UpdateUserCommand, int>
 {
     public async Task<int> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
             ?? throw new NotFoundException($"This User is not found by id: {request.Id} | User update");
+
+        _ = request.Profession switch
+        {
+            UserProfession.Investor => investorRepository.Update(request.Application),
+            UserProfession.Entrepreneur => entrepreneurRepository.Update(request.Application),
+            UserProfession.Representative => representativeRepository.Update(request.Application),
+            UserProfession.ProjectManager => projectManagerRepository.Update(request.Application),
+            _ => default!
+        };
 
         mapper.Map(request, entity);
         entity.DateOfBirth = request.DateOfBirth.AddHours(TimeConstants.UTC);

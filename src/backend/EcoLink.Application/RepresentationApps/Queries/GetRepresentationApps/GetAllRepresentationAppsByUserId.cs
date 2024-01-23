@@ -8,7 +8,7 @@ public record GetAllRepresentationAppsByUserIdQuery : IRequest<IEnumerable<Repre
     public long UserId { get; set; }
 }
 
-public class GetAllRepresentationAppsByUserIdQueryHendler(IRepository<RepresentationApp> repository, IMapper mapper) : 
+public class GetAllRepresentationAppsByUserIdQueryHandler(IRepository<RepresentationApp> repository, IMapper mapper) : 
     IRequestHandler<GetAllRepresentationAppsByUserIdQuery, IEnumerable<RepresentationAppResultDto>>
 {
     public async Task<IEnumerable<RepresentationAppResultDto>> Handle(GetAllRepresentationAppsByUserIdQuery request, CancellationToken cancellationToken)

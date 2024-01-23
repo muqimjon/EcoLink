@@ -8,7 +8,7 @@ public record GetAllProjectManagementAppsByUserIdQuery : IRequest<IEnumerable<Pr
     public long UserId { get; set; }
 }
 
-public class GetAllProjectManagementAppsByUserIdQueryHendler(IRepository<ProjectManagementApp> repository, IMapper mapper) : 
+public class GetAllProjectManagementAppsByUserIdQueryHandler(IRepository<ProjectManagementApp> repository, IMapper mapper) : 
     IRequestHandler<GetAllProjectManagementAppsByUserIdQuery, IEnumerable<ProjectManagementAppResultDto>>
 {
     public async Task<IEnumerable<ProjectManagementAppResultDto>> Handle(GetAllProjectManagementAppsByUserIdQuery request, CancellationToken cancellationToken)

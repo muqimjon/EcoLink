@@ -8,7 +8,7 @@ public record GetRepresentativeByUserIdQuery : IRequest<RepresentativeResultDto>
     public long UserId { get; set; }
 }
 
-public class GetRepresentativeByUserIdQueryHendler(IRepository<Representative> repository, IMapper mapper) : 
+public class GetRepresentativeByUserIdQueryHandler(IRepository<Representative> repository, IMapper mapper) : 
     IRequestHandler<GetRepresentativeByUserIdQuery, RepresentativeResultDto>
 {
     public async Task<RepresentativeResultDto> Handle(GetRepresentativeByUserIdQuery request, CancellationToken cancellationToken)
