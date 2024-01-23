@@ -117,22 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="apply" xml:space="preserve">
-    <value>📋 Ariza topshirish</value>
-  </data>
-  <data name="contact" xml:space="preserve">
-    <value>☎️ A'loqa</value>
-  </data>
-  <data name="feedback" xml:space="preserve">
-    <value>✍️ Fikr bildirish</value>
-  </data>
-  <data name="info" xml:space="preserve">
-    <value>ℹ️ Ma'lumot</value>
-  </data>
-  <data name="selectMenu" xml:space="preserve">
-    <value>Menyuni tanlang:</value>
-  </data>
-  <data name="settings" xml:space="preserve">
-    <value>⚙️ Sozlamalar</value>
+  <data name="txtLanguageSelected" xml:space="preserve">
+    <value>Отлично, мы продолжим с вами на русском языке!</value>
   </data>
 </root>

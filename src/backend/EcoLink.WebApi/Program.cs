@@ -18,12 +18,6 @@ builder.Services.AddMediatR(cf => cf.RegisterServicesFromAssemblies(typeof(Progr
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
 
-
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "EcoLink", Version = "v1" });
-});
-
 // Build
 var app = builder.Build();
 
@@ -34,11 +28,9 @@ app.MigrateDatabase();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-    });
+    app.UseSwaggerUI();
 }
+
 
 app.UseHttpsRedirection();
 

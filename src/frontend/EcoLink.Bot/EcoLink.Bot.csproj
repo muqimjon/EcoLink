@@ -16,8 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\backend\EcoLink.Application\EcoLink.Application.csproj" />
-    <ProjectReference Include="..\..\backend\EcoLink.Infrastructure\EcoLink.Infrastructure.csproj" />
+    <ProjectReference Include="..\EcoLink.ApiService\EcoLink.ApiService.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,9 @@
-﻿namespace EcoLink.Application.Users.Queries.GetUsers;
+﻿using EcoLink.Application.Investors.DTOs;
+using EcoLink.Application.Entrepreneurs.DTOs;
+using EcoLink.Application.ProjectManagers.DTOs;
+using EcoLink.Application.Representatives.DTOs;
+
+namespace EcoLink.Application.Users.Queries.GetUsers;
 
 public record GetUserByTelegramIdQuery : IRequest<UserResultDto>
 {
@@ -6,8 +11,34 @@ public record GetUserByTelegramIdQuery : IRequest<UserResultDto>
     public long TelegramId { get; set; }
 }
 
-public class GetUserByTelegramIdQueryHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<GetUserByTelegramIdQuery, UserResultDto>
+public class GetUserByTelegramIdQueryHandler(IMapper mapper,
+    IRepository<User> repository,
+    IRepository<Investor> investorRepository,
+    IRepository<Entrepreneur> entrepreneurRepository,
+    IRepository<Representative> representativeRepository,
+    IRepository<ProjectManager> projectManagerRepository) : 
+    IRequestHandler<GetUserByTelegramIdQuery, UserResultDto>
 {
     public async Task<UserResultDto> Handle(GetUserByTelegramIdQuery request, CancellationToken cancellationToken)
-        => mapper.Map<UserResultDto>(await repository.SelectAsync(i => i.TelegramId == request.TelegramId));
+    {
+        var resultDto = mapper.Map<UserResultDto>(await repository.SelectAsync(i => i.TelegramId == request.TelegramId))
+            ?? throw new NotFoundException($"User is not found with Telegram ID = {request.TelegramId}");
+
+        switch(resultDto.Profession)
+        {
+            case UserProfession.Investor:
+                resultDto.Application = mapper.Map<InvestorResultDto>(await investorRepository.SelectAsync(i => i.UserId == resultDto.Id));
+                break;
+            case UserProfession.Entrepreneur:
+                resultDto.Application = mapper.Map<EntrepreneurResultDto>(await entrepreneurRepository.SelectAsync(i => i.UserId == resultDto.Id));
+                break;
+            case UserProfession.Representative:
+                resultDto.Application = mapper.Map<RepresentativeResultDto>(await representativeRepository.SelectAsync(i => i.UserId == resultDto.Id));
+                break;
+            case UserProfession.ProjectManager:
+                resultDto.Application = mapper.Map<ProjectManagerResultDto>(await projectManagerRepository.SelectAsync(i => i.UserId == resultDto.Id));
+                break;
+        };
+        return resultDto;
+    }
 }

@@ -9,6 +9,7 @@ public record UpdateUserCommand : IRequest<int>
         Phone = command.Phone;
         Email = command.Email;
         IsBot = command.IsBot;
+        State = command.State;
         Degree = command.Degree;
         ChatId = command.ChatId;
         Address = command.Address;
@@ -38,6 +39,7 @@ public record UpdateUserCommand : IRequest<int>
     public string Languages { get; set; } = string.Empty;
     public string Experience { get; set; } = string.Empty;
     public UserProfession Profession { get; set; }
+    public State State { get; set; }
     public long TelegramId { get; set; }
     public string UserName { get; set; } = string.Empty;
     public string LanguageCode { get; set; } = string.Empty;

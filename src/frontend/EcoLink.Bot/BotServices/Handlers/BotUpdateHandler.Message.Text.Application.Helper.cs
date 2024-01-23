@@ -1,13 +1,8 @@
-﻿using EcoLink.Application.Investors.DTOs;
-using EcoLink.Application.Entrepreneurs.DTOs;
-using EcoLink.Application.ProjectManagers.DTOs;
-using EcoLink.Application.Representatives.DTOs;
-
-namespace EcoLink.Bot.BotServices;
+﻿namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
-    public static string GetApplicationInfoForm(EntrepreneurResultDto dto)
+    public static string GetApplicationInfoForm(Entrepreneur dto)
         => $"Ism: {dto.User.FirstName}\n" +
         $"Familiya: {dto.User.LastName}\n" +
         $"Yoshi: {dto.User.Age}\n" +
@@ -20,7 +15,7 @@ public partial class BotUpdateHandler
         $"Telefon raqami: {dto.User.Phone}\n" +
         $"Email: {dto.User.Email}";
 
-    public static string GetApplicationInfoForm(InvestorResultDto dto)
+    public static string GetApplicationInfoForm(Investor dto)
         => $"Ism: {dto.User.FirstName}\n" +
         $"Familiya: {dto.User.LastName}\n" +
         $"Yoshi: {dto.User.Age}\n" +
@@ -31,7 +26,7 @@ public partial class BotUpdateHandler
         $"Telefon raqami: {dto.User.Phone}\n" +
         $"Email: {dto.User.Email}";
 
-    public static string GetApplicationInfoForm(RepresentativeResultDto dto)
+    public static string GetApplicationInfoForm(Representative dto)
         => $"Ism: {dto.User.FirstName}\n" +
         $"Familiya: {dto.User.LastName}\n" +
         $"Yoshi: {dto.User.Age}\n" +
@@ -43,7 +38,7 @@ public partial class BotUpdateHandler
         $"Tikilgan aktiv: {dto.Expectation}\n" +
         $"Telefon raqami: {dto.Purpose}\n";
 
-    public static string GetApplicationInfoForm(ProjectManagerResultDto dto)
+    public static string GetApplicationInfoForm(ProjectManager dto)
         => $"Ism: {dto.User.FirstName}\n" +
         $"Familiya: {dto.User.LastName}\n" +
         $"Yoshi: {dto.User.Age}\n" +

@@ -10,36 +10,36 @@ public class EntrepreneursController(IMediator mediator) : BaseController
 {
     [HttpPost("create")]
     [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Create(CreateEntrepreneurCommand command)
-        => Ok(await mediator.Send(new CreateEntrepreneurCommand(command)));
+    public async Task<IActionResult> Create(CreateEntrepreneurCommand command, CancellationToken cancellationToken = default)
+        => Ok(await mediator.Send(new CreateEntrepreneurCommand(command), cancellationToken));
 
     [HttpPost("create-with-return")]
     [ProducesResponseType(typeof(EntrepreneurResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Create(CreateEntrepreneurshipAppWithReturnCommand command)
-        => Ok(await mediator.Send(new CreateEntrepreneurshipAppWithReturnCommand(command)));
+    public async Task<IActionResult> Create(CreateEntrepreneurshipAppWithReturnCommand command, CancellationToken cancellationToken = default)
+        => Ok(new Response { Data = await mediator.Send(new CreateEntrepreneurshipAppWithReturnCommand(command), cancellationToken) });
 
     [HttpPut("update")]
     [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Update(UpdateEntrepreneurCommand command)
-        => Ok(await mediator.Send(new UpdateEntrepreneurCommand(command)));
+    public async Task<IActionResult> Update(UpdateEntrepreneurCommand command, CancellationToken cancellationToken = default)
+        => Ok(new Response { Data = await mediator.Send(new UpdateEntrepreneurCommand(command), cancellationToken) });
 
     [HttpDelete("delete/{id:long}")]
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Delete(long id)
-        => Ok(await mediator.Send(new DeleteEntrepreneurCommand(id)));
+    public async Task<IActionResult> Delete(long id, CancellationToken cancellationToken = default)
+        => Ok(new Response { Data = await mediator.Send(new DeleteEntrepreneurCommand(id), cancellationToken) });
 
     [HttpGet("get/{id:long}")]
     [ProducesResponseType(typeof(EntrepreneurResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Get(long id)
-        => Ok(await mediator.Send(new GetEntrepreneurQuery(id)));
+    public async Task<IActionResult> Get(long id, CancellationToken cancellationToken = default)
+        => Ok(new Response { Data = await mediator.Send(new GetEntrepreneurQuery(id), cancellationToken) });
 
     [HttpGet("get-by-userId/{userId:long}")]
     [ProducesResponseType(typeof(EntrepreneurResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetByUserId(long userId)
-        => Ok(await mediator.Send(new GetEntrepreneurByUserIdQuery(userId)));
+    public async Task<IActionResult> GetByUserId(long userId, CancellationToken cancellationToken = default)
+        => Ok(new Response { Data = await mediator.Send(new GetEntrepreneurByUserIdQuery(userId), cancellationToken) });
 
     [HttpGet("get-all")]
     [ProducesResponseType(typeof(IEnumerable<EntrepreneurResultDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetAll()
-        => Ok(await mediator.Send(new GetAllEntrepreneursQuery()));
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
+        => Ok(new Response { Data = await mediator.Send(new GetAllEntrepreneursQuery(), cancellationToken) });
 }
