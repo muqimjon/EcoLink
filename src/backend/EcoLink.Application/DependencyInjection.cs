@@ -127,7 +127,7 @@ public static class DependencyInjection
         // Project Management Application
         services.AddScoped<IRequestHandler<CreateProjectManagementAppWithReturnCommand, ProjectManagementAppResultDto>, CreateProjectManagementAppWithReturnCommandHandler>();
 
-        services.AddScoped<IRequestHandler<GetProjectManagementAppByIdCommand, ProjectManagementAppResultDto>, GetProjectManagementAppByIdCommandHendler>();
+        services.AddScoped<IRequestHandler<GetProjectManagementAppQuery, ProjectManagementAppResultDto>, GetProjectManagementAppQueryHendler>();
         services.AddScoped<IRequestHandler<GetAllProjectManagementAppsByUserIdQuery, IEnumerable<ProjectManagementAppResultDto>>, GetAllProjectManagementAppsByUserIdQueryHendler>();
 
 

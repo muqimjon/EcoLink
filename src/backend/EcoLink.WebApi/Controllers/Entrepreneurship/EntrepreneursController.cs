@@ -23,9 +23,9 @@ public class EntrepreneursController(IMediator mediator) : BaseController
     public async Task<IActionResult> Update(UpdateEntrepreneurCommand command)
         => Ok(await mediator.Send(new UpdateEntrepreneurCommand(command)));
 
-    [HttpDelete("delete")]
+    [HttpDelete("delete/{id:long}")]
     [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Delete(DeleteEntrepreneurCommand command)
+    public async Task<IActionResult> Delete([FromQuery] DeleteEntrepreneurCommand command)
         => Ok(await mediator.Send(new DeleteEntrepreneurCommand(command)));
 
     [HttpGet("get/{id:long}")]
@@ -33,13 +33,13 @@ public class EntrepreneursController(IMediator mediator) : BaseController
     public async Task<IActionResult> Get([FromQuery] GetEntrepreneurQuery command)
         => Ok(await mediator.Send(new GetEntrepreneurQuery(command)));
 
+    [HttpGet("get-all-by-user-id/{user-id:long}")]
+    [ProducesResponseType(typeof(IEnumerable<EntrepreneurResultDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAllByUserId([FromQuery] GetEntrepreneurByUserIdQuery query)
+        => Ok(await mediator.Send(new GetEntrepreneurByUserIdQuery(query.UserId)));
+
     [HttpGet("get-all")]
     [ProducesResponseType(typeof(IEnumerable<EntrepreneurResultDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
         => Ok(await mediator.Send(new GetAllEntrepreneursQuery()));
-
-    [HttpGet("get-all-by-user-id/{user-id:long}")]
-    [ProducesResponseType(typeof(IEnumerable<EntrepreneurResultDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetAll([FromQuery] GetEntrepreneurByUserIdQuery query)
-        => Ok(await mediator.Send(new GetEntrepreneurByUserIdQuery(query.UserId)));
 }
