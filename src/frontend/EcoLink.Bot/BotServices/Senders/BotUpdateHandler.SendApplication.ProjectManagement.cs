@@ -18,11 +18,7 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken
         );
 
-        await mediator.Send(new UpdateStateAndProfessionCommand()
-        {
-            Id = user.Id,
-            Profession = UserProfession.ProjectManager,
-            State = State.WaitingForSelectProjectManagementMenu,
-        }, cancellationToken: cancellationToken);
+        user.Profession = UserProfession.ProjectManager;
+        user.State = State.WaitingForSelectProjectManagementMenu;
     }
 }

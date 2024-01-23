@@ -20,12 +20,6 @@ public partial class BotUpdateHandler
         catch(Exception ex) { logger.LogError(ex, "Error handling callback query: {callbackQuery.Data}", callbackQuery.Data); }
     }
 
-    private Task HandleUnknownCallbackQueryAsync(ITelegramBotClient botClient, CallbackQuery? callbackQuery, CancellationToken cancellationToken)
-    {
-        logger.LogInformation("Received unknown callback query: {callbackQuery.Data}", callbackQuery?.Data);
-        return Task.CompletedTask;
-    }
-
     private async Task HandleSelectedLanguageAsync(ITelegramBotClient botClient, CallbackQuery? callbackQuery, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(callbackQuery);
@@ -57,6 +51,13 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken);
 
         await SendMainMenuAsync(botClient, callbackQuery.Message, cancellationToken);
+        await service.UpdateAsync(user, cancellationToken);
+    }
+
+    private Task HandleUnknownCallbackQueryAsync(ITelegramBotClient botClient, CallbackQuery? callbackQuery, CancellationToken cancellationToken)
+    {
+        logger.LogInformation("Received unknown callback query: {callbackQuery.Data}", callbackQuery?.Data);
+        return Task.CompletedTask;
     }
 }
 

@@ -66,17 +66,19 @@ public partial class BotUpdateHandler
                 await SendRequestForInvestmentAmountForInvestmentAsync(botClient, callbackQuery.Message, cancellationToken);
                 break;
             case UserProfession.ProjectManager:
-                await mediator.Send(new UpdateProjectManagerProjectDirectionByUserIdCommand() { UserId = user.Id, ProjectDirection = sector }, cancellationToken);
+                user.Application.ProjectDirection = sector;
                 await SendRequestForExpectationAsync(botClient, callbackQuery.Message, cancellationToken);
                 break;
             case UserProfession.Entrepreneur:
-                await mediator.Send(new UpdateEntrepreneurSectorByUserIdCommand() { UserId = user.Id, Sector = sector }, cancellationToken);
+                user.Application.Sector = sector;
                 await SendRequestForAboutProjectForEntrepreneurshipAsync(botClient, callbackQuery.Message, cancellationToken);
                 break;
             default:
                 await HandleUnknownCallbackQueryAsync(botClient, callbackQuery, cancellationToken);
                 break;
         };
+
+        await service.UpdateAsync(user, cancellationToken);
     }
 
     private Task HandleUnknownSubmissionAsync(ITelegramBotClient botClient, CallbackQuery callbackQuery, CancellationToken cancellationToken)

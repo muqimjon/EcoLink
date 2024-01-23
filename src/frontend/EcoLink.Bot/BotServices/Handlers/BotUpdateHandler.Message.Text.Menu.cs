@@ -38,17 +38,7 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message.Text);
 
         if (!message.Text.Equals(localizer["rbtnBack"]))
-            await mediator.Send(new UpdateLanguageCodeCommand()
-            {
-                Id = user.Id,
-                LanguageCode = message.Text switch
-                {
-                    { } text when text == localizer["rbtnEnglish"] => "en",
-                    { } text when text == localizer["rbtnRussian"] => "ru",
-                    _ => "uz",
-                }
-
-            }, cancellationToken);
+            user.LanguageCode = message.Text;
 
         await SendMenuSettingsAsync(botClient, message, cancellationToken);
     }

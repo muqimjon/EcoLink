@@ -1,14 +1,10 @@
-﻿using EcoLink.Application.ProjectManagers.Queries.GetProjectManagers;
-using EcoLink.Application.ProjectManagers.Commands.CreateProjectManagers;
-using EcoLink.Application.ProjectManagers.Commands.UpdateProjectManagers;
-
-namespace EcoLink.Bot.BotServices;
+﻿namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
     private async Task HandleSelectedProjectManagementMenuAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        await mediator.Send(new UpdateProfessionCommand() { Id = user.Id, Profession = UserProfession.ProjectManager }, cancellationToken);
+        user.Application.Profession = UserProfession.ProjectManager;
         var handler = message.Text switch
         {
             { } text when text == localizer["rbtnApply"] => ProjectManagementQueryAsync(botClient, message, cancellationToken),
@@ -23,8 +19,7 @@ public partial class BotUpdateHandler
 
     private async Task ProjectManagementQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var application = await mediator.Send(new GetProjectManagerByUserIdQuery(user.Id), cancellationToken)
-            ?? await mediator.Send(new CreateProjectManagerWithReturnCommand() { UserId = user.Id }, cancellationToken);
+        var application = user.Application; // NEED CREATE APPLICATION
 
         if (application.IsSubmitted)
             await SendAlreadyExistApplicationAsync(GetApplicationInfoForm(application), botClient, message, cancellationToken);
@@ -37,12 +32,10 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         Task handler;
-
         if (message.Text.Equals(localizer["rbtnCancel"]))
         {
-            handler = profession switch
+            handler = user.Profession switch
             {
                 UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
                 _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
@@ -50,15 +43,17 @@ public partial class BotUpdateHandler
         }
         else
         {
-            await mediator.Send(new UpdateProjectManagerProjectDirectionByUserIdCommand() { UserId = user.Id, ProjectDirection = message.Text }, cancellationToken); // TODO: need validation
-            handler = profession switch
+            handler = user.Profession switch
             {
                 UserProfession.ProjectManager => SendRequestForExpectationAsync(botClient, message, cancellationToken),
                 _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
+            user.Application.ProjectDirection = message.Text; // TODO: need validation
         }
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+
+        await service.UpdateAsync(user, cancellationToken);
     }
 }

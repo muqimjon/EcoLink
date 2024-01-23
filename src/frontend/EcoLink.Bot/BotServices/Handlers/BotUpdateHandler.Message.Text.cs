@@ -1,16 +1,11 @@
-﻿using EcoLink.Application.Investors.Commands.UpdateInvestors;
-using EcoLink.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
-using EcoLink.Application.ProjectManagers.Commands.UpdateProjectManagers;
-
-namespace EcoLink.Bot.BotServices;
+﻿namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
     private async Task HandleTextMessageAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(message.Text);
-
-        var userState = message.Text.Equals("/start") ? State.None : await mediator.Send(new GetStateQuery(user.Id), cancellationToken);
+        var userState = message.Text.Equals("/start") ? State.None : user.State;
         var handler = userState switch
         {
             State.None => SendGreetingAsync(botClient, message, cancellationToken),
@@ -61,11 +56,10 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         Task handler;
         if(message.Text.Equals(localizer["rbtnCancel"]))
         {
-            handler = profession switch
+            handler = user.Profession switch
             { 
                 UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
                 UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
@@ -76,16 +70,18 @@ public partial class BotUpdateHandler
         }
         else
         {
-            await mediator.Send(new UpdateFirstNameCommand() { Id = user.Id, FirstName = message.Text }, cancellationToken); // TODO: need validation
-            handler = profession switch
+            handler = user.Profession switch
             {
                 UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 _ => SendRequestForLastNameAsync(botClient, message, cancellationToken)
             };
+            user.FirstName = message.Text; // TODO: need validations
         }
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+
+        await service.UpdateAsync(user, cancellationToken);
     }
 
     private async Task HandleLastNameAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -93,11 +89,10 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         Task handler;
         if (message.Text.Equals(localizer["rbtnCancel"]))
         {
-            handler = profession switch
+            handler = user.Profession switch
             {
                 UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
                 UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
@@ -108,16 +103,18 @@ public partial class BotUpdateHandler
         }
         else
         {
-            await mediator.Send(new UpdateLastNameCommand() { Id = user.Id, LastName = message.Text }, cancellationToken); // TODO: need validation
-            handler = profession switch
+            handler = user.Profession switch
             {
                 UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 _ => SendRequestForAgeAsync(botClient, message, cancellationToken)
             };
+            user.LastName = message.Text; // TODO: need validation
         }
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+
+        await service.UpdateAsync(user, cancellationToken);
     }
 
     private async Task HandlePatronomycAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -125,11 +122,10 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         Task handler;
         if (message.Text == localizer["rbtnCancel"])
         {
-            handler = profession switch
+            handler = user.Profession switch
             {
                 UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
@@ -137,8 +133,8 @@ public partial class BotUpdateHandler
         }
         else
         {
-            await mediator.Send(new UpdatePatronomycCommand() { Id = user.Id, Patronomyc = message.Text }, cancellationToken); // TODO: need validation
-            handler = profession switch
+            user.Patronomyc = message.Text; // TODO: need validation
+            handler = user.Profession switch
             {
                 UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 _ => SendRequestForDateOfBirthAsync(botClient, message, cancellationToken)
@@ -147,6 +143,8 @@ public partial class BotUpdateHandler
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+
+        await service.UpdateAsync(user, cancellationToken);
     }
 
     private async Task HandleAgeAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -154,11 +152,10 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         Task handler;
         if (message.Text.Equals(localizer["rbtnCancel"]))
         {
-            handler = profession switch
+            handler = user.Profession switch
             {
                 UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
                 UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
@@ -169,8 +166,8 @@ public partial class BotUpdateHandler
         }
         else
         {
-            await mediator.Send(new UpdateAgeCommand() { Id = user.Id, Age = message.Text }, cancellationToken); // TODO: need validation
-            handler = profession switch
+            user.Age = message.Text; // TODO: need validation
+            handler = user.Profession switch
             {
                 UserProfession.None => SendMenuEditPersonalInfoAsync(botClient, message, cancellationToken),
                 _ => SendRequestForDegreeAsync(botClient, message, cancellationToken)
@@ -179,6 +176,8 @@ public partial class BotUpdateHandler
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+
+        await service.UpdateAsync(user, cancellationToken);
     }
 
     private async Task HandleDateOfBirthAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -186,11 +185,10 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         Task handler;
         if (message.Text.Equals(localizer["rbtnCancel"]))
         {
-            handler = profession switch
+            handler = user.Profession switch
             {
                 UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
                 UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
@@ -203,8 +201,8 @@ public partial class BotUpdateHandler
         {
             if (DateTime.TryParse(message.Text, out DateTime dateOfBirth))
             {
-                await mediator.Send(new UpdateDateOfBirthCommand() { Id = user.Id, DateOfBirth = dateOfBirth.ToUniversalTime() }, cancellationToken);
-                handler = profession switch
+                user.DateOfBirth = dateOfBirth.ToUniversalTime();
+                handler = user.Profession switch
                 {
                     UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                     _ => SendRequestForDegreeAsync(botClient, message, cancellationToken)
@@ -215,6 +213,8 @@ public partial class BotUpdateHandler
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+
+        await service.UpdateAsync(user, cancellationToken);
     }
 
     private async Task HandleDegreeAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -222,11 +222,10 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         Task handler;
         if (message.Text.Equals(localizer["rbtnCancel"]))
         {
-            handler = profession switch
+            handler = user.Profession switch
             {
                 UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
                 UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
@@ -238,9 +237,9 @@ public partial class BotUpdateHandler
         }
         else
         {
-            await mediator.Send(new UpdateDegreeCommand() { Id = user.Id, Degree = message.Text.TrimStart('✅').Trim() }, cancellationToken); // TODO: need validation
+            user.Degree = message.Text.TrimStart('✅').Trim(); // TODO: need validation
 
-            handler = profession switch
+            handler = user.Profession switch
             {
                 UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 UserProfession.Investor => SendRequestForSectorAsync(botClient, message, cancellationToken),
@@ -251,6 +250,8 @@ public partial class BotUpdateHandler
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+
+        await service.UpdateAsync(user, cancellationToken);
     }
 
     private async Task HandlePhoneNumbeFromTextAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -258,11 +259,10 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         Task handler;
         if (message.Text.Equals(localizer["rbtnCancel"]))
         {
-            handler = profession switch
+            handler = user.Profession switch
             {
                 UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
                 UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
@@ -273,8 +273,8 @@ public partial class BotUpdateHandler
         }
         else
         {
-            await mediator.Send(new UpdatePhoneCommand() { Id = user.Id, Phone = message.Text }, cancellationToken); // TODO: need validation
-            handler = profession switch
+            user.Phone = message.Text; // TODO: need validation
+            handler = user.Profession switch
             {
                 UserProfession.None => SendMenuEditPersonalInfoAsync(botClient, message, cancellationToken),
                 _ => SendRequestForEmailAsync(botClient, message, cancellationToken)
@@ -283,6 +283,8 @@ public partial class BotUpdateHandler
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+
+        await service.UpdateAsync(user, cancellationToken);
     }
 
     private async Task HandleEmailAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -290,11 +292,10 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         Task handler;
         if (message.Text.Equals(localizer["rbtnCancel"]))
         {
-            handler = profession switch
+            handler = user.Profession switch
             {
                 UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
                 UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
@@ -305,8 +306,8 @@ public partial class BotUpdateHandler
         }
         else
         {
-            await mediator.Send(new UpdateEmailCommand() { Id = user.Id, Email = message.Text }, cancellationToken); // TODO: need validation
-            handler = profession switch
+            user.Email = message.Text; // TODO: need validation
+            handler = user.Profession switch
             {
                 UserProfession.None => SendMenuEditPersonalInfoAsync(botClient, message, cancellationToken),
                 _ => SendForSubmitApplicationAsync(botClient, message, cancellationToken)
@@ -315,6 +316,8 @@ public partial class BotUpdateHandler
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+
+        await service.UpdateAsync(user, cancellationToken);
     }
 
     private async Task HandleLanguagesAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -322,11 +325,10 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         Task handler;
         if (message.Text.Equals(localizer["rbtnCancel"]))
         {
-            handler = profession switch
+            handler = user.Profession switch
             {
                 UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
                 UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
@@ -337,8 +339,8 @@ public partial class BotUpdateHandler
         }
         else
         {
-            await mediator.Send(new UpdateLanguagesCommand() { Id = user.Id, Languages = message.Text }, cancellationToken); // TODO: need validation
-            handler = profession switch
+            user.Languages = message.Text; // TODO: need validation
+            handler = user.Profession switch
             {
                 UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 _ => SendRequestForExperienceAsync(botClient, message, cancellationToken)
@@ -347,6 +349,8 @@ public partial class BotUpdateHandler
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+
+        await service.UpdateAsync(user, cancellationToken);
     }
 
     private async Task HandleExperienceAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -354,11 +358,10 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         Task handler;
         if (message.Text.Equals(localizer["rbtnCancel"]))
         {
-            handler = profession switch
+            handler = user.Profession switch
             {
                 UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
                 UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
@@ -369,8 +372,8 @@ public partial class BotUpdateHandler
         }
         else
         {
-            await mediator.Send(new UpdateExperienceCommand() { Id = user.Id, Experience = message.Text }, cancellationToken); // TODO: need validation
-            handler = profession switch
+            user.Experience = message.Text; // TODO: need validation
+            handler = user.Profession switch
             {
                 UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 UserProfession.Entrepreneur => SendRequestForSectorAsync(botClient, message, cancellationToken),
@@ -380,6 +383,8 @@ public partial class BotUpdateHandler
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+
+        await service.UpdateAsync(user, cancellationToken);
     }
 
     private async Task HandleAddressAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -387,11 +392,10 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         Task handler;
         if (message.Text.Equals(localizer["rbtnCancel"]))
         {
-            handler = profession switch
+            handler = user.Profession switch
             {
                 UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
                 UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
@@ -402,8 +406,8 @@ public partial class BotUpdateHandler
         }
         else
         {
-            await mediator.Send(new UpdateAddressCommand() { Id = user.Id, Address = message.Text }, cancellationToken); // TODO: need validation
-            handler = profession switch
+            user.Address = message.Text; // TODO: need validation
+            handler = user.Profession switch
             {
                 UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 UserProfession.Representative => SendRequestForAreaAsync(botClient, message, cancellationToken),
@@ -414,6 +418,8 @@ public partial class BotUpdateHandler
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+
+        await service.UpdateAsync(user, cancellationToken);
     }
 
     private async Task HandleSectorFromTextAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -421,10 +427,9 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         if (message.Text.Equals(localizer["rbtnCancel"]))
         {
-            var handler = profession switch
+            var handler = user.Profession switch
             {
                 UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
                 UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
@@ -438,24 +443,26 @@ public partial class BotUpdateHandler
         }
         else
         {
-            switch (profession)
+            switch (user.Profession)
             {
                 case UserProfession.Investor:
-                    await mediator.Send(new UpdateInvestorSectorByUserIdCommand { UserId = user.Id, Sector = message.Text }, cancellationToken);
+                    user.Application.Sector = message.Text;
                     await SendRequestForInvestmentAmountForInvestmentAsync(botClient, message, cancellationToken);
                     break;
                 case UserProfession.ProjectManager:
-                    await mediator.Send(new UpdateProjectManagerProjectDirectionByUserIdCommand() { UserId = user.Id, ProjectDirection = message.Text }, cancellationToken);
+                    user.Application.ProjectDirection = message.Text;
                     await SendRequestForExpectationAsync(botClient, message, cancellationToken);
                     break;
                 case UserProfession.Entrepreneur:
-                    await mediator.Send(new UpdateEntrepreneurSectorByUserIdCommand() { UserId = user.Id, Sector = message.Text }, cancellationToken);
+                    user.Application.Sector = message.Text;
                     await SendRequestForAboutProjectForEntrepreneurshipAsync(botClient, message, cancellationToken);
                     break;
                 default:
                     await HandleUnknownMessageAsync(botClient, message, cancellationToken);
                     break;
             };
+
+            await service.UpdateAsync(user, cancellationToken);
         }
     }
 }

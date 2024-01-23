@@ -1,6 +1,4 @@
-﻿using EcoLink.Application.Investors.Queries.GetInvestors;
-
-namespace EcoLink.Bot.BotServices;
+﻿namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
@@ -20,21 +18,17 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken
         );
 
-        await mediator.Send(new UpdateStateAndProfessionCommand()
-        {
-            Id = user.Id,
-            Profession = UserProfession.Investor,
-            State = State.WaitingForSelectInvestmentMenu,
-        }, cancellationToken);
+        user.Profession = UserProfession.Investor;
+        user.State = State.WaitingForSelectInvestmentMenu;
     }
 
     private async Task SendRequestForInvestmentAmountForInvestmentAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var investmrntAmount = await mediator.Send(new GetInvestmentAmountByUserIdQuery(user.Id), cancellationToken);
-        var replyKeyboard = string.IsNullOrEmpty(investmrntAmount) switch
+        var replyKeyboard = string.IsNullOrEmpty(user.Application.InvestmrntAmount) switch
         {
             true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(investmrntAmount)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Application.InvestmrntAmount.InvestmrntAmount)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
+            _ => default!
         };
 
         await botClient.SendTextMessageAsync(
@@ -43,6 +37,6 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken,
             replyMarkup: replyKeyboard);
 
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterInvestmentAmount), cancellationToken);
+        user.State = State.WaitingForEnterInvestmentAmount;
     }
 }

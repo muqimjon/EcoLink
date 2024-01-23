@@ -1,9 +1,4 @@
-﻿using EcoLink.Application.Investors.Commands.UpdateInvestors;
-using EcoLink.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
-using EcoLink.Application.ProjectManagers.Commands.UpdateProjectManagers;
-using EcoLink.Application.Representatives.Commands.UpdateRepresentatives;
-
-namespace EcoLink.Bot.BotServices;
+﻿namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
@@ -38,29 +33,19 @@ public partial class BotUpdateHandler
 
     private async Task ClarifyProfessionQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
-        switch (profession)
+        var handler = user.Profession switch
         {
-            case UserProfession.Investor:
-                await mediator.Send(new UpdateInvestorIsSubmittedByUserIdCommand() { UserId = user.Id, IsSubmitted = false }, cancellationToken);
-                await InvestmentApplicationAsync(botClient, message, cancellationToken);
-                break;
-            case UserProfession.Entrepreneur:
-                await mediator.Send(new UpdateEntrepreneurIsSubmittedByUserIdCommand() { UserId = user.Id, IsSubmitted = false }, cancellationToken);
-                await EntrepreneurshipApplicationAsync(botClient, message, cancellationToken);
-                break;
-            case UserProfession.ProjectManager:
-                await mediator.Send(new UpdateProjectManagerIsSubmittedByUserIdCommand() { UserId = user.Id, IsSubmitted = false }, cancellationToken);
-                await ProjectManagementQueryAsync(botClient, message, cancellationToken);
-                break;
-            case UserProfession.Representative:
-                await mediator.Send(new UpdateRepresentativeIsSubmittedByUserCommand() { UserId = user.Id, IsSubmitted = false }, cancellationToken);
-                await RepresentationApplicationAsync(botClient, message, cancellationToken);
-                break;
-            default:
-                await HandleUnknownMessageAsync(botClient, message, cancellationToken);
-                break;
+            UserProfession.Investor => InvestmentApplicationAsync(botClient, message, cancellationToken),
+            UserProfession.Entrepreneur => EntrepreneurshipApplicationAsync(botClient, message, cancellationToken),
+            UserProfession.ProjectManager => ProjectManagementQueryAsync(botClient, message, cancellationToken),
+            UserProfession.Representative => RepresentationApplicationAsync(botClient, message, cancellationToken),
+            _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
+        try { await handler; }
+        catch { logger.LogError("Error handling message from {from.FirstName}", user.FirstName); }
+
+        user.Application.IsSubmitted = false;
+        await service.UpdateAsync(user, cancellationToken);
     }
 
     private async Task HandleExpectationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -68,78 +53,61 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         Task handler;
 
         switch (message.Text)
         {
             case var text when text == localizer["rbtnCancel"]:
-                handler = profession switch
+                handler = user.Profession switch
                 {
                     UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                     _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
                 };
                 break;
             default:
-                handler = profession switch
-                {
-                    UserProfession.Representative => mediator.Send(new UpdateRepresentativeExpectationByUserIdCommand() { UserId = user.Id, Expectation = message.Text }, cancellationToken), // TODO: need validation
-                    UserProfession.ProjectManager => mediator.Send(new UpdateProjectManagerExpectationByUserIdCommand() { UserId = user.Id, Expectation = message.Text }, cancellationToken), // TODO: need validation
-                    _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
-                };
-
-                try { await handler; }
-                catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
-
-                handler = profession switch
+                handler = user.Profession switch
                 {
                     UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                     _ => SendRequestForPurposeAsync(botClient, message, cancellationToken)
                 };
+                user.Application.Expectation = message.Text; // TODO: need validation
                 break;
         }
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+
+        await service.UpdateAsync(user, cancellationToken);
     }
 
     private async Task HandlePurposeAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
-
-        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
         Task handler;
 
         switch (message.Text)
         {
             case var text when text == localizer["rbtnCancel"]:
-                handler = profession switch
+                handler = user.Profession switch
                 {
                     UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                     _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
                 };
                 break;
             default:
-                handler = profession switch
-                {
-                    UserProfession.Representative => mediator.Send(new UpdateRepresentativePurposeByUserIdCommand() { UserId = user.Id, Purpose = message.Text }, cancellationToken), // TODO: need validation
-                    UserProfession.ProjectManager => mediator.Send(new UpdateProjectManagerPurposeVyUserIdCommand() { UserId = user.Id, Purpose = message.Text }, cancellationToken), // TODO: need validation
-                    _ => throw new NotImplementedException()
-                };
-
-                try { await handler; }
-                catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
-
-                handler = profession switch
+                handler = user.Profession switch
                 {
                     UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                     _ => SendForSubmitApplicationAsync(botClient, message, cancellationToken)
                 };
+                user.Application.Purpose = message.Text; // TODO: need validation
                 break;
         }
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+
+        await service.UpdateAsync(user, cancellationToken);
     }
 }

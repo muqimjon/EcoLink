@@ -1,6 +1,4 @@
-﻿using EcoLink.Application.Representatives.Queries.GetRepresentatives;
-
-namespace EcoLink.Bot.BotServices;
+﻿namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
@@ -20,21 +18,18 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken
         );
 
-        await mediator.Send(new UpdateStateAndProfessionCommand() 
-        { 
-            Id = user.Id, 
-            Profession = UserProfession.Representative,
-            State = State.WaitingForSelectRepresentationMenu, 
-        }, cancellationToken);
+        user.Profession = UserProfession.Representative;
+        user.State = State.WaitingForSelectRepresentationMenu;
     }
 
     private async Task SendRequestForAreaAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var area = await mediator.Send(new GetRepresentativeAreaByUserIdQuery(user.Id), cancellationToken);
-        var replyKeyboard = string.IsNullOrEmpty(area) switch
+
+        var replyKeyboard = string.IsNullOrEmpty(user.Application.Area) switch
         {
             true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(area)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Application.Area)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
+            _ => default
         };
 
         await botClient.SendTextMessageAsync(
@@ -43,6 +38,6 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken,
             replyMarkup: replyKeyboard);
 
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForEnterArea), cancellationToken);
+        user.State = State.WaitingForEnterArea;
     }
 }

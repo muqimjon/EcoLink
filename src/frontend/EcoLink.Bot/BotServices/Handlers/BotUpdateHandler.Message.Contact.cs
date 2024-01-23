@@ -6,12 +6,10 @@ public partial class BotUpdateHandler
     {
         ArgumentNullException.ThrowIfNull(message);
 
-        var state = await mediator.Send(new GetStateQuery(user.Id), cancellationToken);
-        var handler = state switch
+        var handler = user.State switch
         {
             State.WaitingForEnterPhoneNumber => HandlePhoneNumbeFromContactAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
-
         };
 
         try { await handler; }
@@ -24,10 +22,7 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message.Contact);
 
         Task handler;
-        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
-        await mediator.Send(new UpdatePhoneCommand() { Id = user.Id, Phone = message.Contact.PhoneNumber }, cancellationToken); // TODO: need validation
-
-        handler = profession switch
+        handler = user.Profession switch
         {
             UserProfession.None => SendMenuEditPersonalInfoAsync(botClient, message, cancellationToken),
             _ => SendRequestForEmailAsync(botClient, message, cancellationToken)
@@ -35,5 +30,8 @@ public partial class BotUpdateHandler
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+
+        user.Phone = message.Contact.PhoneNumber; // TODO: need validation
+        await service.UpdateAsync(user, cancellationToken);
     }
 }
