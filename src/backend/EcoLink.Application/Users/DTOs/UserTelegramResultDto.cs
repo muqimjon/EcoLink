@@ -4,6 +4,8 @@ public class UserTelegramResultDto
 {
     public long Id { get; set; }
     public long TelegramId { get; set; }
+    public long ChatId { get; set; }
+    public bool IsBot { get; set; }
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string Username { get; set; } = string.Empty;

@@ -2,16 +2,16 @@
 
 namespace EcoLink.Application.InvestmentApps.Queries.GetInvestmentApp;
 
-public record GetInvestmentAppByIdQuery : IRequest<InvestmentAppResultDto>
+public record GetInvestmentAppQuery : IRequest<InvestmentAppResultDto>
 {
-    public GetInvestmentAppByIdQuery(long id) { Id = id; }
+    public GetInvestmentAppQuery(long id) { Id = id; }
     public long Id { get; set; }
 }
 
-public class GetInvestmentAppByIdQueryHendler(IRepository<InvestmentApp> repository, IMapper mapper) : 
-    IRequestHandler<GetInvestmentAppByIdQuery, InvestmentAppResultDto>
+public class GetInvestmentAppQueryHendler(IRepository<InvestmentApp> repository, IMapper mapper) : 
+    IRequestHandler<GetInvestmentAppQuery, InvestmentAppResultDto>
 {
-    public async Task<InvestmentAppResultDto> Handle(GetInvestmentAppByIdQuery request, CancellationToken cancellationToken)
+    public async Task<InvestmentAppResultDto> Handle(GetInvestmentAppQuery request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id.Equals(request.Id));
         return mapper.Map<InvestmentAppResultDto>(entity);

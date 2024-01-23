@@ -13,9 +13,4 @@ public class UserResultDto
     public string Address { get; set; } = string.Empty;
     public string Languages { get; set; } = string.Empty;
     public string Experience { get; set; } = string.Empty;
-    public int TelegramId { get; set; }
-    public string Username { get; set; } = string.Empty;
-    public string LanguageCode { get; set; } = string.Empty;
-    public long? ChatId { get; set; }
-    public bool IsBot { get; set; }
 }
