@@ -4,7 +4,6 @@ public partial class BotUpdateHandler
 {
     private async Task HandleSelectedRepresentationMenuAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        user.Profession = UserProfession.Representative;
         var handler = message.Text switch
         {
             { } text when text == localizer["rbtnApply"] => RepresentationApplicationAsync(botClient, message, cancellationToken),
@@ -16,7 +15,7 @@ public partial class BotUpdateHandler
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
 
-        await service.UpdateAsync(user, cancellationToken);
+        user.Profession = UserProfession.Representative;
     }
 
     private async Task RepresentationApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -55,7 +54,5 @@ public partial class BotUpdateHandler
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
-
-        await service.UpdateAsync(user, cancellationToken);
     }
 }

@@ -6,7 +6,6 @@ public partial class BotUpdateHandler
     {
         ArgumentNullException.ThrowIfNull(message);
 
-        var isUserNew = await mediator.Send(new IsUserNewQuery(user.Id), cancellationToken);
         if (isUserNew)
         {
             var keyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[][] {
@@ -20,7 +19,7 @@ public partial class BotUpdateHandler
                 replyMarkup: keyboard,
                 cancellationToken: cancellationToken);
 
-            await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectLanguage), cancellationToken);
+            user.State = State.WaitingForSelectLanguage;
         }
         else await SendMainMenuAsync(botClient, message, cancellationToken);
     }
@@ -41,7 +40,7 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken
         );
 
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectMainMenu), cancellationToken);
+        user.State = State.WaitingForSelectMainMenu;
     }
 
     private async Task SendInfoAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -69,7 +68,7 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken
         );
 
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectSettings), cancellationToken);
+        user.State = State.WaitingForSelectSettings;
     }
 
     private async Task SendFeedbackMenuQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -86,7 +85,7 @@ public partial class BotUpdateHandler
             replyMarkup: replyKeyboard,
             cancellationToken: cancellationToken);
 
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectForFeedback), cancellationToken);
+        user.State = State.WaitingForSelectForFeedback;
     }
 
     private async Task SendSelectLanguageQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -106,7 +105,7 @@ public partial class BotUpdateHandler
             replyMarkup: replyKeyboard,
             cancellationToken: cancellationToken);
 
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectLanguage), cancellationToken);
+        user.State = State.WaitingForSelectLanguage;
     }
 
     private async Task SendMenuEditPersonalInfoAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -125,7 +124,7 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken
         );
 
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForSelectPersonalInfo), cancellationToken);
+        user.State = State.WaitingForSelectPersonalInfo;
     }
 
     private async Task SendContactAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -153,7 +152,7 @@ public partial class BotUpdateHandler
             replyMarkup: replyKeyboard,
             cancellationToken: cancellationToken);
 
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForFeedbackForTelegramBot), cancellationToken);
+        user.State = State.WaitingForFeedbackForTelegramBot;
     }
 
     private async Task SendRequestFeedbackForOrganizationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -166,6 +165,6 @@ public partial class BotUpdateHandler
             replyMarkup: replyKeyboard,
             cancellationToken: cancellationToken);
 
-        await mediator.Send(new UpdateStateCommand(user.Id, State.WaitingForFeedbackForOrganization), cancellationToken);
+        user.State = State.WaitingForFeedbackForOrganization;
     }
 }

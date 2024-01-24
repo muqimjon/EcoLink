@@ -31,7 +31,6 @@ public partial class BotUpdateHandler
             text: $"{callbackQuery.Message.Text}\n\n{localizer["txtCancelApplication"]}", 
             cancellationToken: cancellationToken);
 
-        Thread.Sleep(1000);
         await SendMainMenuAsync(botClient, callbackQuery.Message, cancellationToken);
     }
     
@@ -60,11 +59,10 @@ public partial class BotUpdateHandler
             text: localizer["txtSelected", sector],
             cancellationToken: cancellationToken);
 
-        var profession = await mediator.Send(new GetProfessionQuery(user.Id), cancellationToken);
-        switch (profession)
+        switch (user.Profession)
         {
             case UserProfession.Investor:
-                await mediator.Send(new UpdateInvestorSectorByUserIdCommand { UserId = user.Id, Sector = sector }, cancellationToken);
+                user.Application.Sector = sector;
                 await SendRequestForInvestmentAmountForInvestmentAsync(botClient, callbackQuery.Message, cancellationToken);
                 break;
             case UserProfession.ProjectManager:
@@ -79,12 +77,11 @@ public partial class BotUpdateHandler
                 await HandleUnknownCallbackQueryAsync(botClient, callbackQuery, cancellationToken);
                 break;
         };
-
-        await service.UpdateAsync(user, cancellationToken);
     }
 
     private Task HandleUnknownSubmissionAsync(ITelegramBotClient botClient, CallbackQuery callbackQuery, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        logger.LogInformation("Received unknown callback query: {callbackQuery.Data}", callbackQuery.Data);
+        return Task.CompletedTask;
     }
 }

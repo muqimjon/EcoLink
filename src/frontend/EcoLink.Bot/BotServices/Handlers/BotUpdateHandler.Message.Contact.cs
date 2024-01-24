@@ -32,6 +32,5 @@ public partial class BotUpdateHandler
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
 
         user.Phone = message.Contact.PhoneNumber; // TODO: need validation
-        await service.UpdateAsync(user, cancellationToken);
     }
 }

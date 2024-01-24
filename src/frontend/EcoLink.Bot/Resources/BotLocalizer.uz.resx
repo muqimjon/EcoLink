@@ -559,6 +559,9 @@ Toshkent shahri, O'zbekiston</value>
   <data name="txtSelected" xml:space="preserve">
     <value>{0} tanlandi </value>
   </data>
+  <data name="txtSelectedLanguage" xml:space="preserve">
+    <value>Ajoyib, siz bilan o'zbek tilida davom ettiramiz!</value>
+  </data>
   <data name="txtSettings" xml:space="preserve">
     <value>Sozlamalar </value>
     <comment>Asosiy oynadan Sozlamalar bo'limi tanlanganida yuboriladigan xabar</comment>

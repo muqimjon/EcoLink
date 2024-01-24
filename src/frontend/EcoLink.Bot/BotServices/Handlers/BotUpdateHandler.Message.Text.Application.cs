@@ -45,7 +45,6 @@ public partial class BotUpdateHandler
         catch { logger.LogError("Error handling message from {from.FirstName}", user.FirstName); }
 
         user.Application.IsSubmitted = false;
-        await service.UpdateAsync(user, cancellationToken);
     }
 
     private async Task HandleExpectationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -76,8 +75,6 @@ public partial class BotUpdateHandler
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
-
-        await service.UpdateAsync(user, cancellationToken);
     }
 
     private async Task HandlePurposeAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -107,7 +104,5 @@ public partial class BotUpdateHandler
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
-
-        await service.UpdateAsync(user, cancellationToken);
     }
 }

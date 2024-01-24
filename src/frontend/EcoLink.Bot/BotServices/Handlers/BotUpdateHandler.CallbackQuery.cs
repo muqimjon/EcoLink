@@ -6,8 +6,7 @@ public partial class BotUpdateHandler
     {
         ArgumentNullException.ThrowIfNull(callbackQuery);
 
-        var state = await mediator.Send(new GetStateQuery(user.Id), cancellationToken);
-        var handler = state switch
+        var handler = user.State switch
         {
             State.WaitingForSelectLanguage => HandleSelectedLanguageAsync(botClient, callbackQuery, cancellationToken),
             State.WaitingForEnterSector => HandleSectorAsync(botClient, callbackQuery, cancellationToken),
@@ -25,31 +24,20 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(callbackQuery.Data);
         ArgumentNullException.ThrowIfNull(callbackQuery.Message);
 
-        string text;
-        switch (callbackQuery.Data)
+        user.LanguageCode = callbackQuery.Data switch
         {
-            case "ibtnEn":
-                await mediator.Send(new UpdateLanguageCodeCommand { Id = user.Id, LanguageCode = "en" }, cancellationToken);
-                text = "Great, we will continue with you in English!";
-                break;
-            case "ibtnRu":
-                await mediator.Send(new UpdateLanguageCodeCommand { Id = user.Id, LanguageCode = "ru" }, cancellationToken);
-                text = "Отлично, мы продолжим с вами на русском языке!";
-                break;
-            default:
-                await mediator.Send(new UpdateLanguageCodeCommand { Id = user.Id, LanguageCode = "uz" }, cancellationToken);
-                text = "Ajoyib, siz bilan o'zbek tilida davom ettiramiz!";
-                break;
-        }
+            "ibtnEn" => "en",
+            "ibtnRu" => "ru",
+            _ => "uz"
+        };
 
         await botClient.EditMessageTextAsync(
             chatId: callbackQuery.Message.Chat.Id,
-            text: text,
+            text: localizer["txtSelectedLanguage"],
             messageId: callbackQuery.Message.MessageId,
             cancellationToken: cancellationToken);
 
         await SendMainMenuAsync(botClient, callbackQuery.Message, cancellationToken);
-        await service.UpdateAsync(user, cancellationToken);
     }
 
     private Task HandleUnknownCallbackQueryAsync(ITelegramBotClient botClient, CallbackQuery? callbackQuery, CancellationToken cancellationToken)

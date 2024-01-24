@@ -16,7 +16,6 @@ public partial class BotUpdateHandler
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
 
         user.Profession = UserProfession.Investor;
-        await service.UpdateAsync(user, cancellationToken);
     }
 
     private async Task InvestmentApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -55,7 +54,5 @@ public partial class BotUpdateHandler
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
-
-        await service.UpdateAsync(user, cancellationToken);
     }
 }

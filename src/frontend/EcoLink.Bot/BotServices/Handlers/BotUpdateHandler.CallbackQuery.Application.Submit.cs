@@ -1,6 +1,4 @@
-﻿using EcoLink.Domain.Entities.Representation;
-
-namespace EcoLink.Bot.BotServices;
+﻿namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
@@ -50,7 +48,6 @@ public partial class BotUpdateHandler
         }, cancellationToken);
 
         user.Application.IsSubmitted = true;
-        await service.UpdateAsync(user, cancellationToken);
     }
 
     private async Task HandleSubmitProjectManagerApplicationAsync(ITelegramBotClient botClient, CallbackQuery callbackQuery, CancellationToken cancellationToken)
@@ -80,7 +77,6 @@ public partial class BotUpdateHandler
         }, cancellationToken);
 
         user.Application.IsSubmitted = true;
-        await service.UpdateAsync(user, cancellationToken);
     }
 
     private async Task HandleSubmitEntrepreneurApplicationAsync(ITelegramBotClient botClient, CallbackQuery callbackQuery, CancellationToken cancellationToken)
@@ -111,7 +107,6 @@ public partial class BotUpdateHandler
         }, cancellationToken);
 
         user.Application.IsSubmitted = true;
-        await service.UpdateAsync(user, cancellationToken);
     }
 
     private async Task HandleSubmitInvestmentApplicationAsync(ITelegramBotClient botClient, CallbackQuery callbackQuery, CancellationToken cancellationToken)
@@ -139,6 +134,5 @@ public partial class BotUpdateHandler
         }, cancellationToken);
 
         user.Application.IsSubmitted = true;
-        await service.UpdateAsync(user, cancellationToken);
     }
 }

@@ -24,7 +24,6 @@ public partial class BotUpdateHandler
     private Task HandleUnknownMessageAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         logger.LogInformation("Received message type {message.Type} from {from.FirstName}", message.Type, message.From?.FirstName);
-
         return Task.CompletedTask;
     }
 }

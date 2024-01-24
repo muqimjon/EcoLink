@@ -1,9 +1,9 @@
 ﻿using System.Globalization;
 using EcoLink.Bot.Resources;
 using Telegram.Bot.Types.Enums;
+using EcoLink.ApiService.Models;
 using EcoLink.ApiService.Interfaces;
 using Microsoft.Extensions.Localization;
-using EcoLink.ApiService.Models;
 
 namespace EcoLink.Bot.BotServices;
 
@@ -41,6 +41,8 @@ public partial class BotUpdateHandler(
 
         try { await handler; }
         catch(Exception ex) { await HandlePollingErrorAsync(botClient, ex, cancellationToken); }
+
+        await service.UpdateAsync(user, cancellationToken);
     }
 
     private async Task<UserDto> GetUserAsync(Update update, CancellationToken cancellationToken)
