@@ -1,4 +1,4 @@
-﻿namespace MedX.ApiService.Services;
+﻿namespace EcoLink.ApiService.Services;
 
 public class UserService(HttpClient client) : IUserService
 {
@@ -38,15 +38,5 @@ public class UserService(HttpClient client) : IUserService
             return default!;
 
         return (await response.Content.ReadFromJsonAsync<UserDto>(cancellationToken: cancellationToken))!;
-    }
-
-    public async Task<IEnumerable<UserDto>> GetAllAsync(CancellationToken cancellationToken)
-    {
-        using var response = await client.GetAsync($"get-all", cancellationToken);
-
-        if (!response.IsSuccessStatusCode)
-            return default!;
-
-        return (await response.Content.ReadFromJsonAsync<IEnumerable<UserDto>>(cancellationToken: cancellationToken))!;
     }
 }

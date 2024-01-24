@@ -1,6 +1,9 @@
-﻿namespace MedX.ApiService.Services;
+﻿using EcoLink.ApiService.Interfaces.ProjectManagement;
+using EcoLink.ApiService.Models.ProjectManagement;
 
-public class ProjectManagementService(HttpClient client) : IProjectManagementService
+namespace EcoLink.ApiService.Services.ProjectManagement;
+
+public class ProjectManagementAppService(HttpClient client) : IProjectManagementAppService
 {
     public async Task<ProjectManagementAppDto> AddAsync(ProjectManagementAppDto dto, CancellationToken cancellationToken)
     {
@@ -10,16 +13,6 @@ public class ProjectManagementService(HttpClient client) : IProjectManagementSer
             return default!;
 
         return (await response.Content.ReadFromJsonAsync<ProjectManagementAppDto>(cancellationToken: cancellationToken))!;
-    }
-
-    public async Task<int> UpdateAsync(ProjectManagementAppDto dto, CancellationToken cancellationToken)
-    {
-        using var multipartFormContent = ConvertHelper.ConvertToStringContent(dto);
-        using var response = await client.PutAsync("update", multipartFormContent, cancellationToken);
-        if (!response.IsSuccessStatusCode)
-            return default!;
-
-        return (await response.Content.ReadFromJsonAsync<int>(cancellationToken: cancellationToken))!;
     }
 
     public async Task<ProjectManagementAppDto> GetAsync(long id, CancellationToken cancellationToken)

@@ -1,6 +1,9 @@
-﻿namespace MedX.ApiService.Services;
+﻿using EcoLink.ApiService.Models.Entrepreneurship;
+using EcoLink.ApiService.Interfaces.Entrepreneurship;
 
-public class EntrepreneurshipService(HttpClient client) : IEntrepreneurshipService
+namespace EcoLink.ApiService.Services.Entrepreneurship;
+
+public class EntrepreneurshipAppService(HttpClient client) : IEntrepreneurshipAppService
 {
     public async Task<EntrepreneurshipAppDto> AddAsync(EntrepreneurshipAppDto dto, CancellationToken cancellationToken)
     {
@@ -10,16 +13,6 @@ public class EntrepreneurshipService(HttpClient client) : IEntrepreneurshipServi
             return default!;
 
         return (await response.Content.ReadFromJsonAsync<EntrepreneurshipAppDto>(cancellationToken: cancellationToken))!;
-    }
-
-    public async Task<int> UpdateAsync(EntrepreneurshipAppDto dto, CancellationToken cancellationToken)
-    {
-        using var multipartFormContent = ConvertHelper.ConvertToStringContent(dto);
-        using var response = await client.PutAsync("update", multipartFormContent, cancellationToken);
-        if (!response.IsSuccessStatusCode)
-            return default!;
-
-        return (await response.Content.ReadFromJsonAsync<int>(cancellationToken: cancellationToken))!;
     }
 
     public async Task<EntrepreneurshipAppDto> GetAsync(long id, CancellationToken cancellationToken)

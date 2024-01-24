@@ -12,7 +12,7 @@ public class DeleteRepresentativeCommandHandler(IRepository<Representative> repo
     public async Task<bool> Handle(DeleteRepresentativeCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new NotFoundException($"Representative is not found with id: {request.Id} | delete representative");
+            ?? throw new NotFoundException($"Representation is not found with id: {request.Id} | delete representative");
 
         repository.Delete(entity);
         return await repository.SaveAsync() > 0;

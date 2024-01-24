@@ -44,7 +44,7 @@ public class MappingProfile : Profile
         CreateMap<CreateProjectManagerWithReturnCommand, ProjectManager>();
 
 
-        // Entrepreneur
+        // Entrepreneurship
         CreateMap<Entrepreneur, EntrepreneurResultDto>();
 
         CreateMap<UpdateEntrepreneurCommand, Entrepreneur>();
@@ -53,7 +53,7 @@ public class MappingProfile : Profile
         CreateMap<CreateEntrepreneurWithReturnCommand, Entrepreneur>();
 
 
-        // Representative
+        // Representation
         CreateMap<Representative, RepresentativeResultDto>();
 
         CreateMap<UpdateRepresentativeCommand, Representative>();

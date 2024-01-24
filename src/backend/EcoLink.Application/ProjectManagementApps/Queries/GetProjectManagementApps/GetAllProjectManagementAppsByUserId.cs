@@ -13,7 +13,7 @@ public class GetAllProjectManagementAppsByUserIdQueryHandler(IRepository<Project
 {
     public async Task<IEnumerable<ProjectManagementAppResultDto>> Handle(GetAllProjectManagementAppsByUserIdQuery request, CancellationToken cancellationToken)
     {
-        var query = repository.SelectAll(entity => entity.UserId.Equals(request.UserId));
+        var query = repository.SelectAll(entity => entity.UserId.Equals(request.UserId), includes: ["User"]);
         var entities = await Task.Run(() => query.ToList());
 
         return mapper.Map<IEnumerable<ProjectManagementAppResultDto>>(entities);

@@ -1,4 +1,6 @@
-﻿namespace EcoLink.Bot.BotServices;
+﻿using EcoLink.ApiService.Constants;
+
+namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
@@ -6,7 +8,7 @@ public partial class BotUpdateHandler
     {
         ArgumentNullException.ThrowIfNull(message);
 
-        if (isUserNew)
+        if (user.CreatedAt.AddSeconds(5) > DateTimeOffset.UtcNow.AddHours(TimeConstants.UTC))
         {
             var keyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[][] {
                 [InlineKeyboardButton.WithCallbackData("🇺🇿 o'zbekcha 🇺🇿", "ibtnUz")],

@@ -1,4 +1,6 @@
-﻿namespace EcoLink.Bot.BotServices;
+﻿using EcoLink.ApiService.Models.Investment;
+
+namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
@@ -20,10 +22,10 @@ public partial class BotUpdateHandler
 
     private async Task InvestmentApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var application = user.Application; // NEED CREATE APPLICATION
+        user.Investment ??= await investmentService.AddAsync(new InvestmentDto() { UserId = user.Id }, cancellationToken);
 
-        if (application.IsSubmitted)
-            await SendAlreadyExistApplicationAsync(GetApplicationInfoForm(application), botClient, message, cancellationToken);
+        if (user.Investment.IsSubmitted)
+            await SendAlreadyExistApplicationAsync(botClient, message, cancellationToken);
         else
             await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
     }
@@ -33,26 +35,22 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
 
-        Task handler;
         if (message.Text.Equals(localizer["rbtnCancel"]))
         {
-            handler = user.Profession switch
+            await (user.Profession switch
             {
                 UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
                 _ => SendMenuProfessionsAsync(botClient, message, cancellationToken),
-            };
-        }
-        else
-        {
-            handler = user.Profession switch
-            {
-                UserProfession.Investor => SendRequestForPhoneNumberAsync(botClient, message, cancellationToken),
-                _ => SendMenuProfessionsAsync(botClient, message, cancellationToken),
-            };
-            user.Application.InvestmentAmount = message.Text; // TODO: need validation
+            });
+            return;
         }
 
-        try { await handler; }
-        catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+        await (user.Profession switch
+        {
+            UserProfession.Investor => SendRequestForPhoneNumberAsync(botClient, message, cancellationToken),
+            _ => SendMenuProfessionsAsync(botClient, message, cancellationToken),
+        });
+
+        user.Investment.InvestmentAmount = message.Text; // TODO: need validation
     }
 }

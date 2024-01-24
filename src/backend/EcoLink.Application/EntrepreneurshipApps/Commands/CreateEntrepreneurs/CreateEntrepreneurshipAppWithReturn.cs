@@ -1,6 +1,4 @@
-﻿using EcoLink.Application.EntrepreneurshipApps.DTOs;
-
-namespace EcoLink.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
+﻿namespace EcoLink.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
 
 public record CreateEntrepreneurshipAppWithReturnCommand : IRequest<EntrepreneurshipAppResultDto>
 {

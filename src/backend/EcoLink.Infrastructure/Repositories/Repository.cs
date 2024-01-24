@@ -48,8 +48,17 @@ public class Repository<T>(AppDbContext dbContext) : IRepository<T> where T : Au
         return (await query.FirstOrDefaultAsync(expression))!;
     }
 
-    public IQueryable<T> SelectAll(Expression<Func<T, bool>> expression = null!)
-        => expression is null ? Table : Table.Where(expression);
+    public IQueryable<T> SelectAll(Expression<Func<T, bool>> expression = null!, string[] includes = null!)
+    {
+        if (includes is null)
+            return Table.Where(expression);
+
+        var query = Table.AsQueryable();
+        foreach (string item in includes)
+            query = query.Include(item);
+
+        return expression is null ? Table : Table.Where(expression);
+    }
 
     public Task<int> SaveAsync()
         => dbContext.SaveChangesAsync();

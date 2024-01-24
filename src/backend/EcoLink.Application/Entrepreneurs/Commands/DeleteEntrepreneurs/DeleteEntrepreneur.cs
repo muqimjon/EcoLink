@@ -12,7 +12,7 @@ public class DeleteEntrepreneurCommandHandler(IRepository<Entrepreneur> reposito
     public async Task<bool> Handle(DeleteEntrepreneurCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new NotFoundException($"Entrepreneur is not found with id: {request.Id} | delete Entrepreneur");
+            ?? throw new NotFoundException($"Entrepreneurship is not found with id: {request.Id} | delete Entrepreneurship");
 
         repository.Delete(entity);
         return await repository.SaveAsync() > 0;

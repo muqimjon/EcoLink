@@ -1,4 +1,5 @@
 ﻿using EcoLink.ApiService.Constants;
+using EcoLink.ApiService.Models.Investment;
 
 namespace EcoLink.Bot.BotServices;
 
@@ -24,13 +25,22 @@ public partial class BotUpdateHandler
         );
     }
 
-    private async Task SendAlreadyExistApplicationAsync(string text, ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendAlreadyExistApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
+        var app = await (user.Profession switch
+        {
+            UserProfession.Investor => investmentAppService.GetAsync(userId: user.Id, cancellationToken: cancellationToken),
+            UserProfession.Representative => representationAppService.GetAsync(userId: user.Id, cancellationToken: cancellationToken),
+            UserProfession.ProjectManager => projectManagementAppService.GetAsync(userId: user.Id, cancellationToken: cancellationToken),
+            UserProfession.Entrepreneur => (dynamic)entrepreneurshipAppService.GetAsync(userId: user.Id, cancellationToken: cancellationToken),
+            _ => default
+        });
+
         var keyboard = new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(localizer["rbtnResend"])], [new(localizer["rbtnBack"])] }) { ResizeKeyboard = true };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: localizer["txtSubmittedApplication"] + text,
+            text: localizer["txtSubmittedApplication"] + (string)GetApplicationInForm(app),
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
@@ -38,74 +48,23 @@ public partial class BotUpdateHandler
 
     private async Task SendForSubmitApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var applicationText = user.Profession switch
-        {
-            UserProfession.Entrepreneur => localizer["txtApplicationEntrepreneurship", 
-                user.FirstName, 
-                user.LastName,
-                user.Age,
-                user.Degree,
-                user.Experience,
-                (string)user.Application.Project,
-                (string)user.Application.HelpType,
-                (string)user.Application.RequiredFunding,
-                (string)user.Application.AssetsInvested,
-                user.Phone,
-                user.Email],
-            UserProfession.Investor => localizer["txtApplicationInvestment",
-                user.FirstName,
-                user.LastName,
-                user.Age,
-                user.Degree,
-                (string)user.Application.Sector,
-                (string)user.Application.InvestmentAmount,
-                user.Phone,
-                user.Email],
-            UserProfession.Representative => localizer["txtApplicationRepresentation",
-                user.FirstName,
-                user.LastName,
-                user.Age,
-                user.Degree,
-                user.Languages,
-                user.Experience,
-                user.Address,
-                (string)user.Application.Area,
-                (string)user.Application.Expectation,
-                (string)user.Application.Purpose,
-                user.Phone,
-                user.Email],
-            UserProfession.ProjectManager => localizer["txtApplicationProjectManagement",
-                user.FirstName,
-                user.LastName,
-                user.Age,
-                user.Degree,
-                user.Languages,
-                user.Experience,
-                user.Address,
-                (string)user.Application.ProjectDirection,
-                (string)user.Application.Expectation,
-                (string)user.Application.Purpose,
-                user.Phone,
-                user.Email],
-            _ => string.Empty,
-        };
-
-        await botClient.SendTextMessageAsync(
+        var sending = await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
             text: localizer["txtReadyApplication"],
             replyMarkup: new ReplyKeyboardRemove(),
             cancellationToken: cancellationToken
         );
 
-        await Task.Delay(1000, cancellationToken);
+        await Task.Delay(2000, cancellationToken);
         var keyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[][] {
             [InlineKeyboardButton.WithCallbackData(localizer["ibtnSubmit"], "submit")],
             [InlineKeyboardButton.WithCallbackData(localizer["ibtnCancel"], "cancel")]
         });
 
-        await botClient.SendTextMessageAsync(
+        await botClient.EditMessageTextAsync(
+            messageId: sending.MessageId,
             chatId: message.Chat.Id,
-            text: applicationText,
+            text: GetApplicationInForm(),
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
@@ -312,10 +271,17 @@ public partial class BotUpdateHandler
 
     private async Task SendRequestForExpectationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var args = string.IsNullOrEmpty(user.Application.Expectation) switch
+        var expectation = user.Profession switch
+        {
+            UserProfession.ProjectManager => user.ProjectManagement.Expectation,
+            UserProfession.Representative => user.Representation.Expectation,
+            _ => string.Empty
+        };
+
+        var args = string.IsNullOrEmpty(expectation) switch
         {
             true => (localizer["txtAskForExpectation"], new ReplyKeyboardMarkup(new[] { new KeyboardButton(localizer["rbtnCancel"]) }) { ResizeKeyboard = true }),
-            false => (localizer["txtAskForExpectation"] + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Application.Expectation)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
+            false => (localizer["txtAskForExpectation"] + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(expectation)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
         };
 
         await botClient.SendTextMessageAsync(
@@ -329,18 +295,23 @@ public partial class BotUpdateHandler
 
     private async Task SendRequestForPurposeAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var askPurpose = user.Profession switch
+        string purpose = string.Empty, askPurpose = string.Empty;
+        switch(user.Profession)
         {
-            UserProfession.Representative => localizer["txtAskForRepresentativePurpose"],
-            UserProfession.ProjectManager => localizer["txtAskForProjectManagerPurpose"],
-            _ => throw new NotImplementedException()
+            case UserProfession.Representative:
+                askPurpose = localizer["txtAskForRepresentativePurpose"];
+                purpose = user.Representation.Purpose;
+                break;
+            case UserProfession.ProjectManager:
+                askPurpose = localizer["txtAskForProjectManagerPurpose"];
+                purpose = user.ProjectManagement.Purpose;
+                break;
         };
 
-        var args = string.IsNullOrEmpty(user.Application.Purpose) switch
+        var args = string.IsNullOrEmpty(purpose) switch
         {
             true => (askPurpose, new ReplyKeyboardMarkup(new[] { new KeyboardButton(localizer["rbtnCancel"]) }) { ResizeKeyboard = true }),
-            false => (askPurpose + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Application.Purpose)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true }),
-            _ => default
+            false => (askPurpose + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(purpose)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
         };
 
         await botClient.SendTextMessageAsync(
@@ -395,4 +366,70 @@ public partial class BotUpdateHandler
         try { await handler; }
         catch(Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
     }
+
+    private string GetApplicationInForm()
+    {
+        return user.Profession switch
+        {
+            UserProfession.Entrepreneur => localizer["txtApplicationEntrepreneurship",
+                user.FirstName,
+                user.LastName,
+                user.Age,
+                user.Degree,
+                user.Experience,
+                user.Entrepreneurship.Project,
+                user.Entrepreneurship.HelpType,
+                user.Entrepreneurship.RequiredFunding,
+                user.Entrepreneurship.AssetsInvested,
+                user.Phone,
+                user.Email],
+            UserProfession.Investor => localizer["txtApplicationInvestment",
+                user.FirstName,
+                user.LastName,
+                user.Age,
+                user.Degree,
+                user.Investment.Sector,
+                user.Investment.InvestmentAmount,
+                user.Phone,
+                user.Email],
+            UserProfession.Representative => localizer["txtApplicationRepresentation",
+                user.FirstName,
+                user.LastName,
+                user.Age,
+                user.Degree,
+                user.Languages,
+                user.Experience,
+                user.Address,
+                user.Representation.Area,
+                user.Representation.Expectation,
+                user.Representation.Purpose,
+                user.Phone,
+                user.Email],
+            UserProfession.ProjectManager => localizer["txtApplicationProjectManagement",
+                user.FirstName,
+                user.LastName,
+                user.Age,
+                user.Degree,
+                user.Languages,
+                user.Experience,
+                user.Address,
+                user.ProjectManagement.ProjectDirection,
+                user.ProjectManagement.Expectation,
+                user.ProjectManagement.Purpose,
+                user.Phone,
+                user.Email],
+            _ => string.Empty,
+        };
+    }
+
+    private string GetApplicationInForm(InvestmentAppDto dto)
+        => localizer["txtApplicationInvestment",
+            user.FirstName,
+            user.LastName,
+            user.Age,
+            user.Degree,
+            user.Investment.Sector,
+            user.Investment.InvestmentAmount,
+            user.Phone,
+            user.Email];
 }

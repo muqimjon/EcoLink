@@ -1,6 +1,9 @@
-﻿namespace MedX.ApiService.Services;
+﻿using EcoLink.ApiService.Interfaces.Investment;
+using EcoLink.ApiService.Models.Investment;
 
-public class InvestmentService(HttpClient client) : IInvestmentService
+namespace EcoLink.ApiService.Services.Investment;
+
+public class InvestmentAppService(HttpClient client) : IInvestmentAppService
 {
     public async Task<InvestmentAppDto> AddAsync(InvestmentAppDto dto, CancellationToken cancellationToken)
     {
@@ -10,16 +13,6 @@ public class InvestmentService(HttpClient client) : IInvestmentService
             return default!;
 
         return (await response.Content.ReadFromJsonAsync<InvestmentAppDto>(cancellationToken: cancellationToken))!;
-    }
-
-    public async Task<int> UpdateAsync(InvestmentAppDto dto, CancellationToken cancellationToken)
-    {
-        using var multipartFormContent = ConvertHelper.ConvertToStringContent(dto);
-        using var response = await client.PutAsync("update", multipartFormContent, cancellationToken);
-        if (!response.IsSuccessStatusCode)
-            return default!;
-
-        return (await response.Content.ReadFromJsonAsync<int>(cancellationToken: cancellationToken))!;
     }
 
     public async Task<InvestmentAppDto> GetAsync(long id, CancellationToken cancellationToken)

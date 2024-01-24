@@ -27,7 +27,7 @@ public class CreateEntrepreneurCommandHandler(IRepository<Entrepreneur> reposito
     {
         var entity = await repository.SelectAsync(entity => entity.UserId == request.UserId);
         if (entity is not null)
-            throw new AlreadyExistException($"Entrepreneur is already exist with user id: {request.UserId} | Create Entrepreneur");
+            throw new AlreadyExistException($"Entrepreneurship is already exist with user id: {request.UserId} | Create Entrepreneurship");
 
         entity = mapper.Map<Entrepreneur>(request);
         entity.CreatedAt = TimeHelper.GetDateTime();

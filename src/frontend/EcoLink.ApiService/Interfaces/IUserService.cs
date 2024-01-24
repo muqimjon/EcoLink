@@ -6,5 +6,4 @@ public interface IUserService
     Task<int> UpdateAsync(UserDto dto, CancellationToken cancellationToken);
     Task<bool> DeleteAsync(long id, CancellationToken cancellationToken);
     Task<UserDto> GetAsync(long id, CancellationToken cancellationToken);
-    Task<IEnumerable<UserDto>> GetAllAsync(CancellationToken cancellationToken);
 }

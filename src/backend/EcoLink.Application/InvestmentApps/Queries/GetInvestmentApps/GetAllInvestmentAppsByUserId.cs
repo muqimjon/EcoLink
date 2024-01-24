@@ -14,7 +14,7 @@ public class GetAllInvestmentAppsByUserIdQueryHandler(IRepository<InvestmentApp>
     public async Task<IEnumerable<InvestmentAppResultDto>> Handle(GetAllInvestmentAppsByUserIdQuery request,
         CancellationToken cancellationToken)
     {
-        var query = repository.SelectAll(entity => entity.UserId.Equals(request.UserId));
+        var query = repository.SelectAll(entity => entity.UserId.Equals(request.UserId), includes: ["User"]);
         var entities = await Task.Run(() => query.ToList());
 
         return mapper.Map<IEnumerable<InvestmentAppResultDto>>(entities);

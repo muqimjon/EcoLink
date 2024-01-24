@@ -1,16 +1,27 @@
 ﻿using System.Globalization;
 using EcoLink.Bot.Resources;
 using Telegram.Bot.Types.Enums;
-using EcoLink.ApiService.Models;
 using EcoLink.ApiService.Interfaces;
 using Microsoft.Extensions.Localization;
+using EcoLink.ApiService.Interfaces.Investment;
+using EcoLink.ApiService.Interfaces.Representation;
+using EcoLink.ApiService.Interfaces.Entrepreneurship;
+using EcoLink.ApiService.Interfaces.ProjectManagement;
 
 namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler(
     ILogger<BotUpdateHandler> logger,
     IServiceScopeFactory serviceScopeFactory,
-    IUserService service) : IUpdateHandler
+    IUserService service,
+    IInvestmentService investmentService,
+    IInvestmentAppService investmentAppService,
+    IRepresentationService representationService,
+    IEntrepreneurshipService entrepreneurshipService,
+    IProjectManagementService projectManagementService,
+    IRepresentationAppService representationAppService,
+    IEntrepreneurshipAppService entrepreneurshipAppService,
+    IProjectManagementAppService projectManagementAppService) : IUpdateHandler
 {
     private IStringLocalizer localizer  = default!;
     private UserDto user = default!;

@@ -24,12 +24,17 @@ public partial class BotUpdateHandler
 
     private async Task SendRequestForAreaAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
+        string area = user.Profession switch
+        {
+            UserProfession.Representative => user.Representation.Area,
+            UserProfession.ProjectManager => user.ProjectManagement.Area,
+            _ => default!
+        };
 
-        var replyKeyboard = string.IsNullOrEmpty(user.Application.Area) switch
+        var replyKeyboard = string.IsNullOrEmpty(area) switch
         {
             true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Application.Area)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
-            _ => default
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(area)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true }
         };
 
         await botClient.SendTextMessageAsync(

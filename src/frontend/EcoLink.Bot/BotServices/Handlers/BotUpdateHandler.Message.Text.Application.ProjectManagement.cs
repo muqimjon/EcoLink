@@ -1,10 +1,11 @@
-﻿namespace EcoLink.Bot.BotServices;
+﻿using EcoLink.ApiService.Models.ProjectManagement;
+
+namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
     private async Task HandleSelectedProjectManagementMenuAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        user.Application.Profession = UserProfession.ProjectManager;
         var handler = message.Text switch
         {
             { } text when text == localizer["rbtnApply"] => ProjectManagementQueryAsync(botClient, message, cancellationToken),
@@ -15,14 +16,15 @@ public partial class BotUpdateHandler
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
+        user.Profession = UserProfession.ProjectManager;
     }
 
     private async Task ProjectManagementQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var application = user.Application; // NEED CREATE APPLICATION
+        user.ProjectManagement ??= await projectManagementService.AddAsync(new ProjectManagementDto() { UserId = user.Id }, cancellationToken);
 
-        if (application.IsSubmitted)
-            await SendAlreadyExistApplicationAsync(GetApplicationInfoForm(application), botClient, message, cancellationToken);
+        if (user.ProjectManagement.IsSubmitted)
+            await SendAlreadyExistApplicationAsync(botClient, message, cancellationToken);
         else
             await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
     }
@@ -48,7 +50,7 @@ public partial class BotUpdateHandler
                 UserProfession.ProjectManager => SendRequestForExpectationAsync(botClient, message, cancellationToken),
                 _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
-            user.Application.ProjectDirection = message.Text; // TODO: need validation
+            user.ProjectManagement.ProjectDirection = message.Text; // TODO: need validation
         }
 
         try { await handler; }

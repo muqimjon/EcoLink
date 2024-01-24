@@ -1,7 +1,8 @@
-﻿namespace EcoLink.ApiService.Models;
+﻿namespace EcoLink.ApiService.Models.Representation;
 
 public class RepresentationAppDto
 {
+    public long Id { get; set; }
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string Age { get; set; } = string.Empty;
@@ -12,5 +13,7 @@ public class RepresentationAppDto
     public string Area { get; set; } = string.Empty;
     public string Expectation { get; set; } = string.Empty;
     public string Purpose { get; set; } = string.Empty;
+
     public long UserId { get; set; }
+    public UserDto User { get; set; } = default!;
 }

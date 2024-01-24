@@ -1,9 +1,4 @@
-﻿using EcoLink.Application.Investors.Commands.UpdateInvestors;
-using EcoLink.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
-using EcoLink.Application.ProjectManagers.Commands.UpdateProjectManagers;
-using EcoLink.Application.Representatives.Commands.UpdateRepresentatives;
-
-namespace EcoLink.Application.Users.Commands.UpdateUsers;
+﻿namespace EcoLink.Application.Users.Commands.UpdateUsers;
 
 public record UpdateUserCommand : IRequest<int>
 {
@@ -13,8 +8,8 @@ public record UpdateUserCommand : IRequest<int>
         Age = command.Age;
         Phone = command.Phone;
         Email = command.Email;
-        State = command.State;
         IsBot = command.IsBot;
+        State = command.State;
         Degree = command.Degree;
         ChatId = command.ChatId;
         Address = command.Address;
@@ -22,40 +17,45 @@ public record UpdateUserCommand : IRequest<int>
         LastName = command.LastName;
         Languages = command.Languages;
         FirstName = command.FirstName;
-        Experience = command.Experience;
         TelegramId = command.TelegramId;
         Patronomyc = command.Patronomyc;
+        Experience = command.Experience;
         Profession = command.Profession;
+        Investment = command.Investment;
         DateOfBirth = command.DateOfBirth;
-        Application = command.Application;
         LanguageCode = command.LanguageCode;
+        Representation = command.Representation;
+        Entrepreneurship = command.Entrepreneurship;
+        ProjectManagement = command.ProjectManagement;
     }
 
     public long Id { get; set; }
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } = string.Empty;
-    public string Patronomyc { get; set; } = string.Empty;
-    public string Age { get; set; } = string.Empty;
-    public DateTime DateOfBirth { get; set; }
-    public string Degree { get; set; } = string.Empty;
-    public string Phone { get; set; } = string.Empty;
-    public string Email { get; set; } = string.Empty;
-    public string Address { get; set; } = string.Empty;
-    public string Languages { get; set; } = string.Empty;
-    public string Experience { get; set; } = string.Empty;
-    public UserProfession Profession { get; set; }
-    public State State { get; set; }
     public long TelegramId { get; set; }
     public string Username { get; set; } = string.Empty;
     public string LanguageCode { get; set; } = string.Empty;
     public long ChatId { get; set; }
     public bool IsBot { get; set; }
-    public dynamic Application { get; set; } = default!;
+    public State State { get; set; }
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public string Patronomyc { get; set; } = string.Empty;
+    public DateTimeOffset DateOfBirth { get; set; }
+    public string Age { get; set; } = string.Empty;
+    public string Degree { get; set; } = string.Empty;
+    public string Phone { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public UserProfession Profession { get; set; }
+    public string Address { get; set; } = string.Empty;
+    public string Languages { get; set; } = string.Empty;
+    public string Experience { get; set; } = string.Empty;
+    public Investor Investment { get; set; } = default!;
+    public Entrepreneur Entrepreneurship { get; set; } = default!;
+    public Representative Representation { get; set; } = default!;
+    public ProjectManager ProjectManagement { get; set; } = default!;
 }
 
 public class UpdateUserCommandHandler(IMapper mapper,
-    IRepository<User> repository,
-    IMediator mediator) : 
+    IRepository<User> repository) : 
     IRequestHandler<UpdateUserCommand, int>
 {
     public async Task<int> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
@@ -63,17 +63,10 @@ public class UpdateUserCommandHandler(IMapper mapper,
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
             ?? throw new NotFoundException($"This User is not found by id: {request.Id} | User update");
 
-        await (request.Profession switch
-        {
-            UserProfession.Investor => mediator.Send(new UpdateInvestorCommand(request.Application), cancellationToken),
-            UserProfession.Entrepreneur => mediator.Send(new UpdateEntrepreneurCommand(request.Application), cancellationToken),
-            UserProfession.Representative => mediator.Send(new UpdateRepresentativeCommand(request.Application), cancellationToken),
-            UserProfession.ProjectManager => mediator.Send(new UpdateProjectManagerCommand(request.Application), cancellationToken),
-            _ => default!
-        });
-
         mapper.Map(request, entity);
+
         entity.DateOfBirth = request.DateOfBirth.AddHours(TimeConstants.UTC);
+
         repository.Update(entity);
         return await repository.SaveAsync();
     }

@@ -19,7 +19,7 @@ namespace EcoLink.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("EcoLink.Domain.Entities.Entrepreneurship.Entrepreneur", b =>
+            modelBuilder.Entity("EcoLink.Domain.Entities.Entrepreneurship.Entrepreneurship", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -291,7 +291,7 @@ namespace EcoLink.Infrastructure.Migrations
                     b.ToTable("ProjectManagementApps");
                 });
 
-            modelBuilder.Entity("EcoLink.Domain.Entities.ProjectManagement.ProjectManager", b =>
+            modelBuilder.Entity("EcoLink.Domain.Entities.ProjectManagement.ProjectManagement", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -395,7 +395,7 @@ namespace EcoLink.Infrastructure.Migrations
                     b.ToTable("RepresentationApps");
                 });
 
-            modelBuilder.Entity("EcoLink.Domain.Entities.Representation.Representative", b =>
+            modelBuilder.Entity("EcoLink.Domain.Entities.Representation.Representation", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -510,7 +510,7 @@ namespace EcoLink.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("EcoLink.Domain.Entities.Entrepreneurship.Entrepreneur", b =>
+            modelBuilder.Entity("EcoLink.Domain.Entities.Entrepreneurship.Entrepreneurship", b =>
                 {
                     b.HasOne("EcoLink.Domain.Entities.Users.User", "User")
                         .WithMany()
@@ -532,7 +532,7 @@ namespace EcoLink.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("EcoLink.Domain.Entities.ProjectManagement.ProjectManager", b =>
+            modelBuilder.Entity("EcoLink.Domain.Entities.ProjectManagement.ProjectManagement", b =>
                 {
                     b.HasOne("EcoLink.Domain.Entities.Users.User", "User")
                         .WithMany()
@@ -543,7 +543,7 @@ namespace EcoLink.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("EcoLink.Domain.Entities.Representation.Representative", b =>
+            modelBuilder.Entity("EcoLink.Domain.Entities.Representation.Representation", b =>
                 {
                     b.HasOne("EcoLink.Domain.Entities.Users.User", "User")
                         .WithMany()

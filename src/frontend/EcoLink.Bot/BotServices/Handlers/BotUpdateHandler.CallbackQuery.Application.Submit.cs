@@ -1,5 +1,7 @@
-﻿using EcoLink.ApiService.Models;
-using MedX.ApiService.Services;
+﻿using EcoLink.ApiService.Models.Investment;
+using EcoLink.ApiService.Models.Representation;
+using EcoLink.ApiService.Models.Entrepreneurship;
+using EcoLink.ApiService.Models.ProjectManagement;
 
 namespace EcoLink.Bot.BotServices;
 
@@ -35,22 +37,22 @@ public partial class BotUpdateHandler
             text: $"{callbackQuery.Message.Text}\n\n{localizer["txtResponseSubmittedApp"]}",
             cancellationToken: cancellationToken);
 
-        using (await serviceProvider.GetRequiredService<RepresentationService>().CreateAsync(new RepresentationAppDto
+        await representationAppService.AddAsync(new RepresentationAppDto
         {
             UserId = user.Id,
-            Area = user.Application.Area,
+            Area = user.Representation.Area,
             Age = user.Age,
-            Purpose = user.Application.Purpose,
+            Purpose = user.Representation.Purpose,
             Degree = user.Degree,
             Address = user.Address,
             LastName = user.LastName,
-            Expectation = user.Application.Expectation,
+            Expectation = user.Representation.Expectation,
             FirstName = user.FirstName,
             Languages = user.Languages,
             Experience = user.Experience,
-        }, cancellationToken))
+        }, cancellationToken);
 
-            user.Application.IsSubmitted = true;
+            user.Representation.IsSubmitted = true;
     }
 
     private async Task HandleSubmitProjectManagerApplicationAsync(ITelegramBotClient botClient, CallbackQuery callbackQuery, CancellationToken cancellationToken)
@@ -64,22 +66,22 @@ public partial class BotUpdateHandler
             text: $"{callbackQuery.Message.Text}\n\n{localizer["txtResponseSubmittedApp"]}",
             cancellationToken: cancellationToken);
 
-        using (await serviceProvider.GetRequiredService<ProjectManagementService>().CreateAsync(new ProjectManagementAppDto
+        await projectManagementAppService.AddAsync(new ProjectManagementAppDto
         {
             UserId = user.Id,
             Age = user.Age,
-            Purpose = user.Application.Purpose,
+            Purpose = user.ProjectManagement.Purpose,
             Degree = user.Degree,
             Address = user.Address,
             LastName = user.LastName,
-            Expectation = user.Application.Expectation,
+            Expectation = user.ProjectManagement.Expectation,
             FirstName = user.FirstName,
             Languages = user.Languages,
             Experience = user.Experience,
-            ProjectDirection = user.Application.ProjectDirection,
-        }, cancellationToken))
+            ProjectDirection = user.ProjectManagement.ProjectDirection,
+        }, cancellationToken);
 
-            user.Application.IsSubmitted = true;
+            user.ProjectManagement.IsSubmitted = true;
     }
 
     private async Task HandleSubmitEntrepreneurApplicationAsync(ITelegramBotClient botClient, CallbackQuery callbackQuery, CancellationToken cancellationToken)
@@ -93,23 +95,23 @@ public partial class BotUpdateHandler
             text: $"{callbackQuery.Message.Text}\n\n{localizer["txtResponseSubmittedApp"]}",
             cancellationToken: cancellationToken);
 
-        using (await serviceProvider.GetRequiredService<EntrepreneurshipService>().CreateAsync(new EntrepreneurshipAppDto
+        await entrepreneurshipAppService.AddAsync(new EntrepreneurshipAppDto
         {
             UserId = user.Id,
             Age = user.Age,
-            Project = user.Application.Project,
+            Project = user.Entrepreneurship.Project,
             Phone = user.Phone,
             Email = user.Email,
-            HelpType = user.Application.HelpType,
+            HelpType = user.Entrepreneurship.HelpType,
             Degree = user.Degree,
             LastName = user.LastName,
             FirstName = user.FirstName,
             Experience = user.Experience,
-            AssetsInvested = user.Application.AssetsInvested,
-            RequiredFunding = user.Application.RequiredFunding,
-        }, cancellationToken))
+            AssetsInvested = user.Entrepreneurship.AssetsInvested,
+            RequiredFunding = user.Entrepreneurship.RequiredFunding,
+        }, cancellationToken);
 
-        user.Application.IsSubmitted = true;
+        user.Entrepreneurship.IsSubmitted = true;
     }
 
     private async Task HandleSubmitInvestmentApplicationAsync(ITelegramBotClient botClient, CallbackQuery callbackQuery, CancellationToken cancellationToken)
@@ -123,19 +125,19 @@ public partial class BotUpdateHandler
             text: $"{callbackQuery.Message.Text}\n\n{localizer["txtResponseSubmittedApp"]}",
             cancellationToken: cancellationToken);
 
-        using (await serviceProvider.GetRequiredService<InvestmentService>().CreateAsync(new InvestmentAppDto
+        await investmentAppService.AddAsync(new InvestmentAppDto
         {
             UserId = user.Id,
             Age = user.Age,
-            Sector = user.Application.Sector,
+            Sector = user.Investment.Sector,
             Phone = user.Phone,
             Email = user.Email,
             Degree = user.Degree,
             LastName = user.LastName,
             FirstName = user.FirstName,
-            InvestmentAmount = user.Application.InvestmentAmount
-        }, cancellationToken))
+            InvestmentAmount = user.Investment.InvestmentAmount
+        }, cancellationToken);
 
-        user.Application.IsSubmitted = true;
+        user.Investment.IsSubmitted = true;
     }
 }

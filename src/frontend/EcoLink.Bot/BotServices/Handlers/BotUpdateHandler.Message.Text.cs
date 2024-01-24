@@ -424,15 +424,15 @@ public partial class BotUpdateHandler
             switch (user.Profession)
             {
                 case UserProfession.Investor:
-                    user.Application.Sector = message.Text;
+                    user.Investment.Sector = message.Text;
                     await SendRequestForInvestmentAmountForInvestmentAsync(botClient, message, cancellationToken);
                     break;
                 case UserProfession.ProjectManager:
-                    user.Application.ProjectDirection = message.Text;
+                    user.ProjectManagement.ProjectDirection = message.Text;
                     await SendRequestForExpectationAsync(botClient, message, cancellationToken);
                     break;
                 case UserProfession.Entrepreneur:
-                    user.Application.Sector = message.Text;
+                    user.Entrepreneurship.Sector = message.Text;
                     await SendRequestForAboutProjectForEntrepreneurshipAsync(botClient, message, cancellationToken);
                     break;
                 default:

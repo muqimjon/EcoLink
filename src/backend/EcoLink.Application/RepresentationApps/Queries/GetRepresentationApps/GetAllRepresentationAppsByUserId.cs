@@ -13,7 +13,7 @@ public class GetAllRepresentationAppsByUserIdQueryHandler(IRepository<Representa
 {
     public async Task<IEnumerable<RepresentationAppResultDto>> Handle(GetAllRepresentationAppsByUserIdQuery request, CancellationToken cancellationToken)
     {
-        var query = repository.SelectAll(entity => entity.UserId.Equals(request.UserId));
+        var query = repository.SelectAll(entity => entity.UserId.Equals(request.UserId), includes: ["User"]);
         var entities = await Task.Run(() => query.ToList());
 
         return mapper.Map<IEnumerable<RepresentationAppResultDto>>(entities);

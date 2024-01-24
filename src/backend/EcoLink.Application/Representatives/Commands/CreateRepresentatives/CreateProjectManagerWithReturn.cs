@@ -27,7 +27,7 @@ public class CreateRepresentativeWithReturnCommandHandler(IRepository<Representa
     {
         var entity = await repository.SelectAsync(entity => entity.UserId == request.UserId);
         if (entity is not null)
-            throw new AlreadyExistException($"Representative is already exist create Representative by user id {request.UserId}");
+            throw new AlreadyExistException($"Representation is already exist create Representation by user id {request.UserId}");
 
         entity = mapper.Map<Representative>(request);
         entity.CreatedAt = TimeHelper.GetDateTime();

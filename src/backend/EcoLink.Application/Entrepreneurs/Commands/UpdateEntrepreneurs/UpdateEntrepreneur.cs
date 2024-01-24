@@ -30,7 +30,7 @@ public class UpdateEntrepreneurCommandHandler(IRepository<Entrepreneur> reposito
     public async Task<int> Handle(UpdateEntrepreneurCommand request, CancellationToken cancellationToken)
     {
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
-            ?? throw new NotFoundException($"Entrepreneur is not found with id: {request.Id} | Update Entrepreneur");
+            ?? throw new NotFoundException($"Entrepreneurship is not found with id: {request.Id} | Update Entrepreneurship");
 
         mapper.Map(request, entity);
         repository.Update(entity);

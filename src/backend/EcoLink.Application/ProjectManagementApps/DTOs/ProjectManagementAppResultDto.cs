@@ -2,6 +2,7 @@
 
 public class ProjectManagementAppResultDto
 {
+    public long Id { get; set; }
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string Age { get; set; } = string.Empty;
@@ -12,5 +13,5 @@ public class ProjectManagementAppResultDto
     public string ProjectDirection { get; set; } = string.Empty;
     public string Expectation { get; set; } = string.Empty;
     public string Purpose { get; set; } = string.Empty;
-    public DateTimeOffset CreatedAt { get; set; }
+    public UserResultDto User { get; set; } = default!;
 }

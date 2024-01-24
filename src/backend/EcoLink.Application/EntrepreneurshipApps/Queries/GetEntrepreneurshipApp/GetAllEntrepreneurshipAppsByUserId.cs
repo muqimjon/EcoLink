@@ -13,7 +13,7 @@ public class GetAllEntrepreneurshipAppsByUserIdQueryHandler(IRepository<Entrepre
 {
     public async Task<IEnumerable<EntrepreneurshipAppResultDto>> Handle(GetAllEntrepreneurshipAppsByUserIdQuery request, CancellationToken cancellationToken)
     {
-        var query = repository.SelectAll(entity => entity.UserId.Equals(request.UserId));
+        var query = repository.SelectAll(expression: entity => entity.UserId.Equals(request.UserId), includes: [ "User" ]);
         var entities = await Task.Run(() => query.ToList());
 
         return mapper.Map<IEnumerable<EntrepreneurshipAppResultDto>>(entities);

@@ -1,4 +1,9 @@
-﻿namespace EcoLink.Domain.Entities.Users;
+﻿using EcoLink.Domain.Entities.Investment;
+using EcoLink.Domain.Entities.Representation;
+using EcoLink.Domain.Entities.Entrepreneurship;
+using EcoLink.Domain.Entities.ProjectManagement;
+
+namespace EcoLink.Domain.Entities.Users;
 
 public class User : Auditable
 {
@@ -20,4 +25,8 @@ public class User : Auditable
     public string? Address { get; set; }
     public string? Languages { get; set; }
     public string? Experience { get; set; }
+    public Investor? Investment { get; set; }
+    public Entrepreneur? Entrepreneurship { get; set; }
+    public Representative? Representation { get; set; }
+    public ProjectManager? ProjectManagement { get; set; }
 }

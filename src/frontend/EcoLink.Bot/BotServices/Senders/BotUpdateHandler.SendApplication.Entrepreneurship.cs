@@ -25,11 +25,10 @@ public partial class BotUpdateHandler
 
     private async Task SendRequestForAboutProjectForEntrepreneurshipAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var replyKeyboard = string.IsNullOrEmpty(user.Application.Project) switch
+        var replyKeyboard = string.IsNullOrEmpty(user.Entrepreneurship.Project) switch
         {
             true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Application.Project)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
-            _ => default
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Entrepreneurship.Project)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
         };
 
         await botClient.SendTextMessageAsync(
@@ -44,11 +43,10 @@ public partial class BotUpdateHandler
 
     private async Task SendRequestForHelpTypeEntrepreneurshipAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var replyKeyboard = string.IsNullOrEmpty(user.Application.HelpType) switch
+        var replyKeyboard = string.IsNullOrEmpty(user.Entrepreneurship.HelpType) switch
         {
             true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Application.HelpType)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
-            _ => default
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Entrepreneurship.HelpType)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
         };
 
         await botClient.SendTextMessageAsync(
@@ -63,11 +61,10 @@ public partial class BotUpdateHandler
 
     private async Task SendRequestForRequiredFundingForEntrepreneurshipAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var replyKeyboard = string.IsNullOrEmpty(user.Application.RequiredFunding) switch
+        var replyKeyboard = string.IsNullOrEmpty(user.Entrepreneurship.RequiredFunding) switch
         {
             true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Application.RequiredFunding)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
-            _ => default
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Entrepreneurship.RequiredFunding)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true }
         };
 
         await botClient.SendTextMessageAsync(
@@ -82,11 +79,10 @@ public partial class BotUpdateHandler
 
     private async Task SendRequestForAssetsInvestedForEntrepreneurshipAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var replyKeyboard = string.IsNullOrEmpty(user.Application.AssetsInvested) switch
+        var replyKeyboard = string.IsNullOrEmpty(user.Entrepreneurship.AssetsInvested) switch
         {
             true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Application.AssetsInvested)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
-            _ => default
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Entrepreneurship.AssetsInvested)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
         };
 
         await botClient.SendTextMessageAsync(

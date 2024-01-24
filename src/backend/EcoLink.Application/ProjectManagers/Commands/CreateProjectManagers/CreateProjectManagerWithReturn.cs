@@ -27,7 +27,7 @@ public class CreateProjectManagerWithReturnCommandHandler(IRepository<ProjectMan
     {
         var entity = await repository.SelectAsync(entity => entity.UserId == request.UserId);
         if (entity is not null)
-            throw new AlreadyExistException($"ProjectManager is already exist create ProjectManager by user id {request.UserId}");
+            throw new AlreadyExistException($"ProjectManagement is already exist create ProjectManagement by user id {request.UserId}");
 
         entity = mapper.Map<ProjectManager>(request);
         entity.CreatedAt = TimeHelper.GetDateTime();

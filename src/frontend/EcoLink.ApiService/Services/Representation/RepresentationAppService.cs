@@ -1,6 +1,9 @@
-﻿namespace MedX.ApiService.Services;
+﻿using EcoLink.ApiService.Models.Representation;
+using EcoLink.ApiService.Interfaces.Representation;
 
-public class RepresentationService(HttpClient client) : IRepresentationService
+namespace EcoLink.ApiService.Services.Representation;
+
+public class RepresentationAppService(HttpClient client) : IRepresentationAppService
 {
     public async Task<RepresentationAppDto> AddAsync(RepresentationAppDto dto, CancellationToken cancellationToken)
     {
@@ -10,16 +13,6 @@ public class RepresentationService(HttpClient client) : IRepresentationService
             return default!;
 
         return (await response.Content.ReadFromJsonAsync<RepresentationAppDto>(cancellationToken: cancellationToken))!;
-    }
-
-    public async Task<int> UpdateAsync(RepresentationAppDto dto, CancellationToken cancellationToken)
-    {
-        using var multipartFormContent = ConvertHelper.ConvertToStringContent(dto);
-        using var response = await client.PutAsync("update", multipartFormContent, cancellationToken);
-        if (!response.IsSuccessStatusCode)
-            return default!;
-
-        return (await response.Content.ReadFromJsonAsync<int>(cancellationToken: cancellationToken))!;
     }
 
     public async Task<RepresentationAppDto> GetAsync(long id, CancellationToken cancellationToken)

@@ -1,6 +1,4 @@
-﻿using EcoLink.Application.RepresentationApps.DTOs;
-
-namespace EcoLink.Application.RepresentationApps.Commands.CreateRepresentationApps;
+﻿namespace EcoLink.Application.RepresentationApps.Commands.CreateRepresentationApps;
 
 public record CreateRepresentationAppWithReturnCommand : IRequest<RepresentationAppResultDto>
 {

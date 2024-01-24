@@ -1,42 +1,4 @@
-﻿using EcoLink.Application.Investors.DTOs;
-using EcoLink.Application.Commons.Mappers;
-using EcoLink.Application.Entrepreneurs.DTOs;
-using Microsoft.Extensions.DependencyInjection;
-using EcoLink.Application.InvestmentApps.DTOs;
-using EcoLink.Application.ProjectManagers.DTOs;
-using EcoLink.Application.Representatives.DTOs;
-using EcoLink.Application.Users.Queries.GetUsers;
-using EcoLink.Application.RepresentationApps.DTOs;
-using EcoLink.Application.EntrepreneurshipApps.DTOs;
-using EcoLink.Application.ProjectManagementApps.DTOs;
-using EcoLink.Application.Users.Commands.CreateUsers;
-using EcoLink.Application.Users.Commands.DeleteUsers;
-using EcoLink.Application.Users.Commands.UpdateUsers;
-using EcoLink.Application.Investors.Queries.GetInvestors;
-using EcoLink.Application.Investors.Commands.CreateInvestors;
-using EcoLink.Application.Investors.Commands.DeleteInvestors;
-using EcoLink.Application.Investors.Commands.UpdateInvestors;
-using EcoLink.Application.Entrepreneurs.Queries.GetEntrepreneurs;
-using EcoLink.Application.InvestmentApps.Queries.GetInvestmentApp;
-using EcoLink.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
-using EcoLink.Application.Entrepreneurs.Commands.DeleteEntrepreneurs;
-using EcoLink.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
-using EcoLink.Application.ProjectManagers.Queries.GetProjectManagers;
-using EcoLink.Application.Representatives.Queries.GetRepresentatives;
-using EcoLink.Application.InvestmentApps.Commands.CreateInvestmentApps;
-using EcoLink.Application.ProjectManagers.Commands.CreateProjectManagers;
-using EcoLink.Application.ProjectManagers.Commands.DeleteProjectManagers;
-using EcoLink.Application.ProjectManagers.Commands.UpdateProjectManagers;
-using EcoLink.Application.RepresentationApps.Queries.GetRepresentationApp;
-using EcoLink.Application.Representatives.Commands.CreateRepresentatives;
-using EcoLink.Application.Representatives.Commands.DeleteRepresentatives;
-using EcoLink.Application.Representatives.Commands.UpdateRepresentatives;
-using EcoLink.Application.EntrepreneurshipApps.Queries.GetEntrepreneurshipApp;
-using EcoLink.Application.RepresentationApps.Commands.CreateRepresentationApps;
-using EcoLink.Application.ProjectManagementApps.Queries.GetProjectManagementApp;
-using EcoLink.Application.ProjectManagementApps.Commands.CreateProjectManagementApps;
-
-namespace EcoLink.Application;
+﻿namespace EcoLink.Application;
 
 public static class DependencyInjection
 {
@@ -71,7 +33,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<GetAllInvestorsQuery, IEnumerable<InvestorResultDto>>, GetAllInvestorsQueryHandler>();
 
 
-        // Representative
+        // Representation
         services.AddScoped<IRequestHandler<CreateRepresentativeCommand, int>, CreateRepresentativeCommandHandler>();
         services.AddScoped<IRequestHandler<CreateRepresentativeWithReturnCommand, RepresentativeResultDto>, CreateRepresentativeWithReturnCommandHandler>();
 
@@ -84,7 +46,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<GetAllRepresentativesQuery, IEnumerable<RepresentativeResultDto>>, GetAllRepresentativesQueryHandler>();
 
 
-        // ProjectManager
+        // ProjectManagement
         services.AddScoped<IRequestHandler<CreateProjectManagerCommand, int>, CreateProjectManagerCommandHandler>();
         services.AddScoped<IRequestHandler<CreateProjectManagerWithReturnCommand, ProjectManagerResultDto>, CreateProjectManagerWithReturnCommandHandler>();
 
@@ -97,7 +59,7 @@ public static class DependencyInjection
         services.AddScoped<IRequestHandler<GetAllProjectManagersQuery, IEnumerable<ProjectManagerResultDto>>, GetAllProjectManagersQueryHandler>();
 
 
-        // Entrepreneur
+        // Entrepreneurship
         services.AddScoped<IRequestHandler<CreateEntrepreneurCommand, int>, CreateEntrepreneurCommandHandler>();
         services.AddScoped<IRequestHandler<CreateEntrepreneurWithReturnCommand, EntrepreneurResultDto>, CreateEntrepreneurWithReturnCommandHandler>();
 

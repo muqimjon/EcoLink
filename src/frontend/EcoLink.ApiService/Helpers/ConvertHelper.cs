@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 
-namespace MedX.ApiService.Helpers;
+namespace EcoLink.ApiService.Helpers;
 
 public class ConvertHelper
 {
