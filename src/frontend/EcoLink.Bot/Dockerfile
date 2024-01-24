@@ -5,8 +5,8 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /App
 
 # Copy the project file and restore dependencies
-COPY ./src/EcoLink.Bot/EcoLink.Bot.csproj ./src/EcoLink.Bot/
-RUN dotnet restore ./src/EcoLink.Bot/EcoLink.Bot.csproj
+COPY ./src/frontend/EcoLink.Bot/EcoLink.Bot.csproj ./src/frontend/EcoLink.Bot/
+RUN dotnet restore ./src/frontend/EcoLink.Bot/EcoLink.Bot.csproj
 
 # Copy the remaining files
 COPY . .

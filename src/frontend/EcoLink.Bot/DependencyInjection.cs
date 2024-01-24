@@ -1,5 +1,4 @@
-﻿using Telegram.Bot.Polling;
-using EcoLink.Bot.BotServices;
+﻿using EcoLink.Bot.BotServices;
 using EcoLink.Bot.BotServices.Commons;
 
 namespace EcoLink.Bot;

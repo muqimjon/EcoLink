@@ -1,8 +1,7 @@
-﻿namespace EcoLink.Application.EntrepreneurshipApps.DTOs;
+﻿namespace EcoLink.ApiService.Models;
 
-public class EntrepreneurshipAppResultDto
+public class EntrepreneurshipAppDto
 {
-    public long Id { get; set; }
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string Age { get; set; } = string.Empty;
@@ -14,4 +13,5 @@ public class EntrepreneurshipAppResultDto
     public string AssetsInvested { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+    public long UserId { get; set; }
 }

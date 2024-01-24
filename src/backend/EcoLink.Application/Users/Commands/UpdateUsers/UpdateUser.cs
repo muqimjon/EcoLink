@@ -1,4 +1,9 @@
-﻿namespace EcoLink.Application.Users.Commands.UpdateUsers;
+﻿using EcoLink.Application.Investors.Commands.UpdateInvestors;
+using EcoLink.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
+using EcoLink.Application.ProjectManagers.Commands.UpdateProjectManagers;
+using EcoLink.Application.Representatives.Commands.UpdateRepresentatives;
+
+namespace EcoLink.Application.Users.Commands.UpdateUsers;
 
 public record UpdateUserCommand : IRequest<int>
 {
@@ -50,10 +55,7 @@ public record UpdateUserCommand : IRequest<int>
 
 public class UpdateUserCommandHandler(IMapper mapper,
     IRepository<User> repository,
-    IRepository<Investor> investorRepository,
-    IRepository<Entrepreneur> entrepreneurRepository,
-    IRepository<Representative> representativeRepository,
-    IRepository<ProjectManager> projectManagerRepository) : 
+    IMediator mediator) : 
     IRequestHandler<UpdateUserCommand, int>
 {
     public async Task<int> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
@@ -61,14 +63,14 @@ public class UpdateUserCommandHandler(IMapper mapper,
         var entity = await repository.SelectAsync(entity => entity.Id == request.Id)
             ?? throw new NotFoundException($"This User is not found by id: {request.Id} | User update");
 
-        _ = request.Profession switch
+        await (request.Profession switch
         {
-            UserProfession.Investor => investorRepository.Update(request.Application),
-            UserProfession.Entrepreneur => entrepreneurRepository.Update(request.Application),
-            UserProfession.Representative => representativeRepository.Update(request.Application),
-            UserProfession.ProjectManager => projectManagerRepository.Update(request.Application),
+            UserProfession.Investor => mediator.Send(new UpdateInvestorCommand(request.Application), cancellationToken),
+            UserProfession.Entrepreneur => mediator.Send(new UpdateEntrepreneurCommand(request.Application), cancellationToken),
+            UserProfession.Representative => mediator.Send(new UpdateRepresentativeCommand(request.Application), cancellationToken),
+            UserProfession.ProjectManager => mediator.Send(new UpdateProjectManagerCommand(request.Application), cancellationToken),
             _ => default!
-        };
+        });
 
         mapper.Map(request, entity);
         entity.DateOfBirth = request.DateOfBirth.AddHours(TimeConstants.UTC);

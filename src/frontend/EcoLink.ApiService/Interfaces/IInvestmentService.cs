@@ -1,10 +1,8 @@
-﻿using EcoLink.ApiService.Models;
-
-namespace EcoLink.ApiService.Interfaces;
+﻿namespace EcoLink.ApiService.Interfaces;
 
 public interface IInvestmentService
 {
-    Task<InvestmentDto> AddAsync(InvestmentDto dto, CancellationToken cancellationToken);
-    Task<int> UpdateAsync(InvestmentDto dto, CancellationToken cancellationToken);
-    Task<InvestmentDto> GetAsync(long id, CancellationToken cancellationToken);
+    Task<InvestmentAppDto> AddAsync(InvestmentAppDto dto, CancellationToken cancellationToken);
+    Task<int> UpdateAsync(InvestmentAppDto dto, CancellationToken cancellationToken);
+    Task<InvestmentAppDto> GetAsync(long id, CancellationToken cancellationToken);
 }
