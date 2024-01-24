@@ -1,8 +1,4 @@
-﻿using EcoLink.Application.Investors.Commands.UpdateInvestors;
-using EcoLink.Application.Entrepreneurs.Commands.UpdateEntrepreneurs;
-using EcoLink.Application.ProjectManagers.Commands.UpdateProjectManagers;
-
-namespace EcoLink.Bot.BotServices;
+﻿namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {

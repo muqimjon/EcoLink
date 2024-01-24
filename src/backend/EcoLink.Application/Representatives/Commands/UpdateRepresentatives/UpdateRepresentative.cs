@@ -8,22 +8,16 @@ public record UpdateRepresentativeCommand : IRequest<int>
         Area = command.Area;
         UserId = command.UserId;
         Purpose = command.Purpose;
-        Address = command.Address;
-        Languages = command.Languages;
-        Experience = command.Experience;
         Expectation = command.Expectation;
         IsSubmitted = command.IsSubmitted;
     }
 
     public long Id { get; set; }
-    public string Languages { get; set; } = string.Empty;
-    public string Experience { get; set; } = string.Empty;
-    public string Address { get; set; } = string.Empty;
     public string Area { get; set; } = string.Empty;
     public string Expectation { get; set; } = string.Empty;
     public string Purpose { get; set; } = string.Empty;
-    public long UserId { get; set; }
     public bool IsSubmitted { get; set; }
+    public long UserId { get; set; }
 }
 
 public class UpdateRepresentativeCommandHandler(IRepository<Representative> repository, IMapper mapper) : 

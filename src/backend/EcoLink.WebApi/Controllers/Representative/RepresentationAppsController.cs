@@ -1,7 +1,6 @@
 ﻿using EcoLink.Domain.Entities.Representation;
-using EcoLink.Application.Representatives.Queries.GetRepresentatives;
-using EcoLink.Application.RepresentationApps.Commands.CreateRepresentationApps;
 using EcoLink.Application.RepresentationApps.Queries.GetRepresentationApp;
+using EcoLink.Application.RepresentationApps.Commands.CreateRepresentationApps;
 
 namespace EcoLink.WebApi.Controllers.Representative;
 

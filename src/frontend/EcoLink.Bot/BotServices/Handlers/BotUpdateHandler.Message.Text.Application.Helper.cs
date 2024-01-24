@@ -42,11 +42,23 @@ public partial class BotUpdateHandler
         => $"Ism: {dto.User.FirstName}\n" +
         $"Familiya: {dto.User.LastName}\n" +
         $"Yoshi: {dto.User.Age}\n" +
-        $"Rol: {Enum.GetName(dto.User.Profession)}\n" +
-        $"Loyiha: {dto.User.Languages}\n" +
-        $"Sektor: {dto.User.Experience}\n" +
+        $"Ma'lumoti: {Enum.GetName(dto.User.Profession)}\n" +
+        $"Til ko'nikmalari: {dto.User.Languages}\n" +
+        $"Ish tajribasi: {dto.User.Experience}\n" +
         $"Yordam turi: {dto.User.Address}\n" +
         $"Kerakli summa: {dto.ProjectDirection}\n" +
         $"Tikilgan aktiv: {dto.Expectation}\n" +
         $"Telefon raqami: {dto.Purpose}\n";
+
+
+    public static string GetApplicationInfoFor(EntrepreneurResultDto dto)
+        => $"Ism: {0}\n" +
+        $"Familiya: {1}\n" +
+        $"Yoshi: {2}\n" +
+        $"Rol: {3}\n" +
+        $"Sektor: {4}\n" +
+        $"Ma'lumoti: {dto.User.Degree}\n" +
+        $"Qiymati: {dto.InvestmentAmount}\n" +
+        $"Telefon raqami: {dto.User.Phone}\n" +
+        $"Email: {dto.User.Email}";
 }

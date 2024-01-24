@@ -1,12 +1,12 @@
-﻿using EcoLink.ApiService.Models.Users;
+﻿using EcoLink.ApiService.Models;
 
 namespace EcoLink.ApiService.Interfaces;
 
 public interface IUserService
 {
-    Task<Response<UserDto>> AddAsync(EmployeeCreationDto dto);
-    Task<Response<EmployeeResultDto>> UpdateAsync(EmployeeUpdateDto dto);
-    Task<Response<bool>> DeleteAsync(long id);
-    Task<Response<EmployeeResultDto>> GetAsync(long id);
-    Task<Response<IEnumerable<EmployeeResultDto>>> GetAllAsync(PaginationParams @params, string search = null!);
+    Task<UserDto> AddAsync(UserDto dto, CancellationToken cancellationToken);
+    Task<int> UpdateAsync(UserDto dto, CancellationToken cancellationToken);
+    Task<bool> DeleteAsync(long id, CancellationToken cancellationToken);
+    Task<UserDto> GetAsync(long id, CancellationToken cancellationToken);
+    Task<IEnumerable<UserDto>> GetAllAsync(CancellationToken cancellationToken);
 }

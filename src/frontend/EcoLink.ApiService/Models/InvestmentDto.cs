@@ -1,6 +1,6 @@
-﻿namespace EcoLink.Application.Investors.DTOs;
+﻿namespace EcoLink.ApiService.Models;
 
-public class InvestorResultDto
+public class InvestmentDto
 {
     public long Id { get; set; }
     public string Sector { get; set; } = string.Empty;

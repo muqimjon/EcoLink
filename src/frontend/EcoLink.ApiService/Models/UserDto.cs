@@ -1,4 +1,4 @@
-﻿namespace EcoLink.ApiService.Models.Users;
+﻿namespace EcoLink.ApiService.Models;
 
 public class UserDto
 {
@@ -15,8 +15,9 @@ public class UserDto
     public string Languages { get; set; } = string.Empty;
     public string Experience { get; set; } = string.Empty;
     public UserProfession Profession { get; set; }
+    public State State { get; set; }
     public long TelegramId { get; set; }
-    public string UserName { get; set; } = string.Empty;
+    public string Username { get; set; } = string.Empty;
     public string LanguageCode { get; set; } = string.Empty;
     public long ChatId { get; set; }
     public bool IsBot { get; set; }

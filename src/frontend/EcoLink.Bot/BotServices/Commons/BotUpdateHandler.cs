@@ -2,16 +2,15 @@
 using EcoLink.Bot.Resources;
 using Telegram.Bot.Types.Enums;
 using EcoLink.ApiService.Interfaces;
-using EcoLink.ApiService.Models.Users;
 using Microsoft.Extensions.Localization;
+using EcoLink.ApiService.Models;
 
 namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler(
     ILogger<BotUpdateHandler> logger,
     IServiceScopeFactory serviceScopeFactory,
-    IUserService service
-    ) : IUpdateHandler
+    IUserService service) : IUpdateHandler
 {
     private IStringLocalizer localizer  = default!;
     private UserDto user = default!;
@@ -21,7 +20,7 @@ public partial class BotUpdateHandler(
         using var scope = serviceScopeFactory.CreateScope();
         localizer = scope.ServiceProvider.GetRequiredService<IStringLocalizer<BotLocalizer>>();
 
-        user = await GetUserAsync(update);
+        user = await GetUserAsync(update, cancellationToken);
         var culture = user.LanguageCode switch
         {
             "uz" => new CultureInfo("uz-Uz"),
@@ -41,19 +40,15 @@ public partial class BotUpdateHandler(
         };
 
         try { await handler; }
-        catch(Exception ex) 
-        { 
-            logger.LogError("HandlePollingError: {ErrorText}", ex.Message);
-            await HandlePollingErrorAsync(botClient, ex, cancellationToken);
-        }
+        catch(Exception ex) { await HandlePollingErrorAsync(botClient, ex, cancellationToken); }
     }
 
-    private async Task<UserDto> GetUserAsync(Update update)
+    private async Task<UserDto> GetUserAsync(Update update, CancellationToken cancellationToken)
     {
         var updateContent = BotUpdateHandler.GetUpdateType(update);
         var from = updateContent.From;
 
-        return (await service.GetAsync(from.Id, default)).Data
+        return await service.GetAsync((long)from.Id, cancellationToken)
             ?? await service.AddAsync(new UserDto
             {
                     IsBot = from.IsBot,
@@ -63,7 +58,7 @@ public partial class BotUpdateHandler(
                     FirstName = from.FirstName,
                     ChatId = update.Message!.Chat.Id,
                     LanguageCode = from.LanguageCode
-                });
+            }, cancellationToken);
     }
 
     private static dynamic GetUpdateType(Update update)
@@ -85,7 +80,8 @@ public partial class BotUpdateHandler(
 
     public Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        logger.LogError("HandlePollingError: {ErrorText}", exception.Message);
+        return Task.CompletedTask;
     }
 
     private Task HandleUnknownUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)

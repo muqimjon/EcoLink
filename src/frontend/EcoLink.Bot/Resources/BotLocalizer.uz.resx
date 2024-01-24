@@ -270,6 +270,102 @@ O'zingiz uchun qulay tilni tanlang: </value>
     <value>🇺🇿  o'zbek tili</value>
     <comment>Sozlamalar bo'limidagi bot tiilini o'zgartirish oyna tugmasi. Bot tilini o'zbek tiliga o'zgartirish uchun</comment>
   </data>
+  <data name="txtApplicationEntrepreneurship" xml:space="preserve">
+    <value>Ism: 
+     {0}
+Familiya: 
+     {1}
+Yoshi: 
+     {2}
+Ma'lumoti: 
+     {3}
+Ish tajribasi:
+     {4}
+Loyiha haqida:
+     {5}
+Yordam turi: 
+     {6}
+Kerakli summa: 
+     {7}
+Tikiladigan aktiv: 
+     {8}
+Telefon raqami: 
+     {9}
+Email: 
+     {10}</value>
+    <comment>Tayyor Arizani tasdiqlash uchun foydalanuvchiga to'liq holda taqdim qilish uchun tadbirkor ma'lumotlari</comment>
+  </data>
+  <data name="txtApplicationInvestment" xml:space="preserve">
+    <value>Ism: 
+     {0}
+Familiya: 
+     {1}
+Yoshi: 
+     {2}
+Ma'lumoti: 
+     {3}
+Sektor: 
+     {4}
+Yordam: 
+     {5}
+Telefon raqami:
+     {6}
+Email: 
+     {8}</value>
+    <comment>Tayyor Arizani tasdiqlash uchun foydalanuvchiga to'liq holda taqdim qilish uchun investor ma'lumotlari</comment>
+  </data>
+  <data name="txtApplicationProjectManagement" xml:space="preserve">
+    <value>Ism: 
+     {0}
+Familiya: 
+     {1}
+Yoshi: 
+     {2}
+Ma'lumoti: 
+     {3}
+Til ko'nikmasi:
+     {4}
+Ish tajribasi:
+     {5}
+Manzili: 
+     {6}
+Loyiha yo'nalishi:
+     {7}
+Iqtisodiyot assambleyasidan kutuv:
+     {8}
+Vakil bo'lishdan maqsad: 
+     {9}
+Telefon raqami: 
+     {10}
+Email: 
+     {11}</value>
+  </data>
+  <data name="txtApplicationRepresentation" xml:space="preserve">
+    <value>Ism: 
+     {0}
+Familiya: 
+     {1}
+Yoshi: 
+     {2}
+Ma'lumoti: 
+     {3}
+Til ko'nikmasi:
+     {4}
+Ish tajribasi:
+     {5}
+Manzili: 
+     {6}
+Vakillik manzili:
+     {7}
+Iqtisodiyot assambleyasidan kutuv:
+     {8}
+Vakil bo'lishdan maqsad: 
+     {9}
+Telefon raqami: 
+     {10}
+Email: 
+     {11}</value>
+  </data>
   <data name="txtAskFeedbackForOrganization" xml:space="preserve">
     <value>O'xbekiston Iqtisodiyot Assambleyasi tashkilotining rivoji uchun yana qanday ishlar qilishimiz mumkinligi haqida o'z fikringizni qoldiring. Bu biz uchun juda muhim!</value>
     <comment>Foydalanuvchidan tashkilot uchun fikrini so'rash xabari </comment>

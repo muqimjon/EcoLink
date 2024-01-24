@@ -11,14 +11,14 @@ public record UpdateEntrepreneurCommand : IRequest<int>
         HelpType = command.HelpType;
         IsSubmitted = command.IsSubmitted;
         AssetsInvested = command.AssetsInvested;
-        InvestmentAmount = command.InvestmentAmount;
+        RequiredFunding = command.RequiredFunding;
     }
 
     public long Id { get; set; }
     public string Sector { get; set; } = string.Empty;
     public string Project { get; set; } = string.Empty;
     public string HelpType { get; set; } = string.Empty;
-    public decimal? InvestmentAmount { get; set; }
+    public string RequiredFunding { get; set; } = string.Empty;
     public string AssetsInvested { get; set; } = string.Empty;
     public long UserId { get; set; }
     public bool IsSubmitted { get; set; }

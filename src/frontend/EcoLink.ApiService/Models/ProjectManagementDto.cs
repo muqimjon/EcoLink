@@ -1,6 +1,6 @@
-﻿namespace EcoLink.Application.ProjectManagers.DTOs;
+﻿namespace EcoLink.ApiService.Models;
 
-public class ProjectManagerResultDto
+public class ProjectManagementDto
 {
     public long Id { get; set; }
     public string Area { get; set; } = string.Empty;
