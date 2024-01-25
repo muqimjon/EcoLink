@@ -51,7 +51,7 @@ public class Repository<T>(AppDbContext dbContext) : IRepository<T> where T : Au
     public IQueryable<T> SelectAll(Expression<Func<T, bool>> expression = null!, string[] includes = null!)
     {
         if (includes is null)
-            return Table.Where(expression);
+            return expression is null ? Table : Table.Where(expression);
 
         var query = Table.AsQueryable();
         foreach (string item in includes)

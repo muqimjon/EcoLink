@@ -39,8 +39,7 @@ public static class DependencyInjection
             SpreadsheetId = configuration.GetConnectionString("SpreadsheetId")!,
             Service = new SheetsService(new BaseClientService.Initializer()
             {
-                HttpClientInitializer = GoogleCredential.FromJson(json: googleAuthJson),
-                ApplicationName = configuration["ApplicationName"] ?? string.Empty,
+                HttpClientInitializer = GoogleCredential.FromJson(json: googleAuthJson)
             }),
         });
         #endregion

@@ -1,6 +1,10 @@
 using EcoLink.Bot;
+using EcoLink.ApiService;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add layers
+builder.Services.AddApiServices(builder.Configuration);
 
 // Add services
 builder.Services.AddThis(configuration: builder.Configuration);

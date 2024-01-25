@@ -1,6 +1,4 @@
-﻿using EcoLink.Application.InvestmentApps.DTOs;
-
-namespace EcoLink.Application.InvestmentApps.Queries.GetInvestmentApp;
+﻿namespace EcoLink.Application.InvestmentApps.Queries.GetInvestmentApp;
 
 public record GetAllInvestmentAppsByUserIdQuery : IRequest<IEnumerable<InvestmentAppResultDto>>
 {
@@ -8,11 +6,10 @@ public record GetAllInvestmentAppsByUserIdQuery : IRequest<IEnumerable<Investmen
     public long UserId { get; set; }
 }
 
-public class GetAllInvestmentAppsByUserIdQueryHandler(IRepository<InvestmentApp> repository, IMapper mapper) :
+public class GetAllInvestmentAppsByUserIdQueryHandler(IRepository<InvestmentApp> repository, IMapper mapper) : 
     IRequestHandler<GetAllInvestmentAppsByUserIdQuery, IEnumerable<InvestmentAppResultDto>>
 {
-    public async Task<IEnumerable<InvestmentAppResultDto>> Handle(GetAllInvestmentAppsByUserIdQuery request,
-        CancellationToken cancellationToken)
+    public async Task<IEnumerable<InvestmentAppResultDto>> Handle(GetAllInvestmentAppsByUserIdQuery request, CancellationToken cancellationToken)
     {
         var query = repository.SelectAll(entity => entity.UserId.Equals(request.UserId), includes: ["User"]);
         var entities = await Task.Run(() => query.ToList());

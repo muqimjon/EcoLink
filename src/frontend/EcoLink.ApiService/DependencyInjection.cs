@@ -17,6 +17,7 @@ public static class DependencyInjection
     public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
     {
         var baseLink = configuration["BaseLink"];
+
         services.AddHttpClient<IUserService, UserService>(client =>
             { client.BaseAddress = new Uri($"{baseLink}api/Users/"); });
 

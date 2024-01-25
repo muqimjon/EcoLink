@@ -1,9 +1,4 @@
-﻿using EcoLink.Domain.Entities.Investment;
-using EcoLink.Domain.Entities.Representation;
-using EcoLink.Domain.Entities.Entrepreneurship;
-using EcoLink.Domain.Entities.ProjectManagement;
-
-namespace EcoLink.Domain.Entities.Users;
+﻿namespace EcoLink.Domain.Entities.Users;
 
 public class User : Auditable
 {
@@ -25,8 +20,14 @@ public class User : Auditable
     public string? Address { get; set; }
     public string? Languages { get; set; }
     public string? Experience { get; set; }
-    public Investor? Investment { get; set; }
-    public Entrepreneur? Entrepreneurship { get; set; }
-    public Representative? Representation { get; set; }
-    public ProjectManager? ProjectManagement { get; set; }
+    public string? Sector { get; set; }
+    public string? Project { get; set; }
+    public string? HelpType { get; set; }
+    public string? RequiredFunding { get; set; }
+    public string? AssetsInvested { get; set; }
+    public string? InvestmentAmount { get; set; }
+    public string? ProjectDirection { get; set; }
+    public string? Expectation { get; set; }
+    public string? Purpose { get; set; }
+    public string? Area { get; set; }
 }

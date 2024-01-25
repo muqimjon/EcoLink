@@ -1,4 +1,4 @@
-﻿namespace EcoLink.Application.Entrepreneurs.Commands.CreateEntrepreneurs;
+﻿namespace EcoLink.Application.Apps.Commands.CreateEntrepreneurs;
 
 public record CreateEntrepreneurshipAppWithReturnCommand : IRequest<EntrepreneurshipAppResultDto>
 {

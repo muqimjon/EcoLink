@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EcoLink.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240118132745_InitialMigrate")]
-    partial class InitialMigrate
+    [Migration("20240125175624_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,51 +24,6 @@ namespace EcoLink.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("EcoLink.Domain.Entities.Entrepreneurship.Entrepreneurship", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("AssetsInvested")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("HelpType")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsSubmitted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Project")
-                        .HasColumnType("text");
-
-                    b.Property<string>("RequiredFunding")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Sector")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Entrepreneurs");
-                });
 
             modelBuilder.Entity("EcoLink.Domain.Entities.Entrepreneurship.EntrepreneurshipApp", b =>
                 {
@@ -128,6 +83,10 @@ namespace EcoLink.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Sector")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -135,6 +94,8 @@ namespace EcoLink.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("EntrepreneurshipApps");
                 });
@@ -193,43 +154,9 @@ namespace EcoLink.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InvestmentApps");
-                });
-
-            modelBuilder.Entity("EcoLink.Domain.Entities.Investment.Investor", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("InvestmentAmount")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsSubmitted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Sector")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("Investors");
+                    b.ToTable("InvestmentApps");
                 });
 
             modelBuilder.Entity("EcoLink.Domain.Entities.ProjectManagement.ProjectManagementApp", b =>
@@ -294,46 +221,9 @@ namespace EcoLink.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProjectManagementApps");
-                });
-
-            modelBuilder.Entity("EcoLink.Domain.Entities.ProjectManagement.ProjectManagement", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Expectation")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsSubmitted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("ProjectDirection")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Purpose")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("ProjectManagers");
+                    b.ToTable("ProjectManagementApps");
                 });
 
             modelBuilder.Entity("EcoLink.Domain.Entities.Representation.RepresentationApp", b =>
@@ -398,46 +288,9 @@ namespace EcoLink.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RepresentationApps");
-                });
-
-            modelBuilder.Entity("EcoLink.Domain.Entities.Representation.Representation", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Area")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Expectation")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsSubmitted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Purpose")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("Representatives");
+                    b.ToTable("RepresentationApps");
                 });
 
             modelBuilder.Entity("EcoLink.Domain.Entities.Users.User", b =>
@@ -452,6 +305,12 @@ namespace EcoLink.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Age")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Area")
+                        .HasColumnType("text");
+
+                    b.Property<string>("AssetsInvested")
                         .HasColumnType("text");
 
                     b.Property<long?>("ChatId")
@@ -469,10 +328,19 @@ namespace EcoLink.Infrastructure.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
+                    b.Property<string>("Expectation")
+                        .HasColumnType("text");
+
                     b.Property<string>("Experience")
                         .HasColumnType("text");
 
                     b.Property<string>("FirstName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("HelpType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("InvestmentAmount")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsBot")
@@ -499,6 +367,21 @@ namespace EcoLink.Infrastructure.Migrations
                     b.Property<int>("Profession")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Project")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProjectDirection")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Purpose")
+                        .HasColumnType("text");
+
+                    b.Property<string>("RequiredFunding")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Sector")
+                        .HasColumnType("text");
+
                     b.Property<int>("State")
                         .HasColumnType("integer");
 
@@ -516,7 +399,7 @@ namespace EcoLink.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("EcoLink.Domain.Entities.Entrepreneurship.Entrepreneurship", b =>
+            modelBuilder.Entity("EcoLink.Domain.Entities.Entrepreneurship.EntrepreneurshipApp", b =>
                 {
                     b.HasOne("EcoLink.Domain.Entities.Users.User", "User")
                         .WithMany()
@@ -527,7 +410,7 @@ namespace EcoLink.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("EcoLink.Domain.Entities.Investment.Investor", b =>
+            modelBuilder.Entity("EcoLink.Domain.Entities.Investment.InvestmentApp", b =>
                 {
                     b.HasOne("EcoLink.Domain.Entities.Users.User", "User")
                         .WithMany()
@@ -538,7 +421,7 @@ namespace EcoLink.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("EcoLink.Domain.Entities.ProjectManagement.ProjectManagement", b =>
+            modelBuilder.Entity("EcoLink.Domain.Entities.ProjectManagement.ProjectManagementApp", b =>
                 {
                     b.HasOne("EcoLink.Domain.Entities.Users.User", "User")
                         .WithMany()
@@ -549,7 +432,7 @@ namespace EcoLink.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("EcoLink.Domain.Entities.Representation.Representation", b =>
+            modelBuilder.Entity("EcoLink.Domain.Entities.Representation.RepresentationApp", b =>
                 {
                     b.HasOne("EcoLink.Domain.Entities.Users.User", "User")
                         .WithMany()

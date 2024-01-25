@@ -5,28 +5,36 @@ public record class CreateUserCommand : IRequest<int>
     public CreateUserCommand(CreateUserCommand command)
     {
         Age = command.Age;
+        Area = command.Area;
         Phone = command.Phone;
         Email = command.Email;
         IsBot = command.IsBot;
         State = command.State;
         Degree = command.Degree;
         ChatId = command.ChatId;
+        Sector = command.Sector;
         Address = command.Address;
+        Address = command.Address;
+        Project = command.Project;
+        Purpose = command.Purpose;
         Username = command.Username;
         LastName = command.LastName;
+        HelpType = command.HelpType;
         Languages = command.Languages;
         FirstName = command.FirstName;
         TelegramId = command.TelegramId;
         Patronomyc = command.Patronomyc;
         Experience = command.Experience;
         Profession = command.Profession;
-        Investment = command.Investment;
         DateOfBirth = command.DateOfBirth;
+        Expectation = command.Expectation;
         LanguageCode = command.LanguageCode;
-        Representation = command.Representation;
-        Entrepreneurship = command.Entrepreneurship;
-        ProjectManagement = command.ProjectManagement;
+        AssetsInvested = command.AssetsInvested;
+        RequiredFunding = command.RequiredFunding;
+        InvestmentAmount = command.InvestmentAmount;
+        ProjectDirection = command.ProjectDirection;
     }
+
 
     public long TelegramId { get; set; }
     public string Username { get; set; } = string.Empty;
@@ -46,13 +54,20 @@ public record class CreateUserCommand : IRequest<int>
     public string Address { get; set; } = string.Empty;
     public string Languages { get; set; } = string.Empty;
     public string Experience { get; set; } = string.Empty;
-    public Investor Investment { get; set; } = default!;
-    public Entrepreneur Entrepreneurship { get; set; } = default!;
-    public Representative Representation { get; set; } = default!;
-    public ProjectManager ProjectManagement { get; set; } = default!;
+    public string Sector { get; set; } = string.Empty;
+    public string Project { get; set; } = string.Empty;
+    public string HelpType { get; set; } = string.Empty;
+    public string RequiredFunding { get; set; } = string.Empty;
+    public string AssetsInvested { get; set; } = string.Empty;
+    public string InvestmentAmount { get; set; } = string.Empty;
+    public string ProjectDirection { get; set; } = string.Empty;
+    public string Expectation { get; set; } = string.Empty;
+    public string Purpose { get; set; } = string.Empty;
+    public string Area { get; set; } = string.Empty;
 }
 
-public class CreateUserCommandHandler(IRepository<User> repository, IMapper mapper) : IRequestHandler<CreateUserCommand, int>
+public class CreateUserCommandHandler(IMapper mapper,
+    IRepository<User> repository) : IRequestHandler<CreateUserCommand, int>
 {
     public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {

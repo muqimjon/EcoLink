@@ -16,7 +16,6 @@ public partial class BotUpdateHandler(
     IUserService service,
     IInvestmentService investmentService,
     IInvestmentAppService investmentAppService,
-    IRepresentationService representationService,
     IEntrepreneurshipService entrepreneurshipService,
     IProjectManagementService projectManagementService,
     IRepresentationAppService representationAppService,
