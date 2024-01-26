@@ -16,10 +16,10 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
     {
-        var baseLink = configuration["BaseLink"];
+        var baseLink = configuration.GetConnectionString("BaseLink");
 
         services.AddHttpClient<IUserService, UserService>(client =>
-            { client.BaseAddress = new Uri($"{baseLink}api/Users/"); });
+            { client.BaseAddress = new Uri($"{baseLink}api/users/"); });
 
         services.AddHttpClient<IInvestmentAppService, InvestmentAppService>(client =>
             { client.BaseAddress = new Uri($"{baseLink}api/InvestmentApps/"); });
@@ -32,18 +32,6 @@ public static class DependencyInjection
 
         services.AddHttpClient<IProjectManagementAppService, ProjectManagementAppService>(client =>
             { client.BaseAddress = new Uri($"{baseLink}api/ProjectManagementApps/"); });
-
-        services.AddHttpClient<IInvestmentService, InvestmentService>(client => 
-            { client.BaseAddress = new Uri($"{baseLink}api/Investments/"); });
-
-        services.AddHttpClient<IRepresentationService, RepresentationService>(client =>
-            { client.BaseAddress = new Uri($"{baseLink}api/Representations/"); });
-
-        services.AddHttpClient<IEntrepreneurshipService, EntrepreneurshipService>(client =>
-            { client.BaseAddress = new Uri($"{baseLink}api/Entrepreneurships/"); });
-
-        services.AddHttpClient<IProjectManagementService, ProjectManagementService>(client =>
-            { client.BaseAddress = new Uri($"{baseLink}api/ProjectManagements/"); });
 
         return services;
     }

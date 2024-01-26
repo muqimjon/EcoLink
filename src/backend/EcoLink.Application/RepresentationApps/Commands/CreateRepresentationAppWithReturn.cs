@@ -6,6 +6,8 @@ public record CreateRepresentationAppWithReturnCommand : IRequest<Representation
     {
         Age = command.Age;
         Area = command.Area;
+        Phone = command.Phone;
+        Email = command.Email;
         Degree = command.Degree;
         UserId = command.UserId;
         Purpose = command.Purpose;
@@ -27,6 +29,8 @@ public record CreateRepresentationAppWithReturnCommand : IRequest<Representation
     public string Area { get; set; } = string.Empty;
     public string Expectation { get; set; } = string.Empty;
     public string Purpose { get; set; } = string.Empty;
+    public string Phone { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
     public long UserId { get; set; }
 }
 

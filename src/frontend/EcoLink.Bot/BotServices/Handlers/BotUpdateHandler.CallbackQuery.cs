@@ -5,16 +5,16 @@ public partial class BotUpdateHandler
     private async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery? callbackQuery, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(callbackQuery);
-
-        var handler = user.State switch
+        try
         {
-            State.WaitingForSelectLanguage => HandleSelectedLanguageAsync(botClient, callbackQuery, cancellationToken),
-            State.WaitingForEnterSector => HandleSectorAsync(botClient, callbackQuery, cancellationToken),
-            State.WaitingForSubmitApplication => HandleSubmittionApplicationAsync(botClient, callbackQuery, cancellationToken),
-            _ => HandleUnknownCallbackQueryAsync(botClient, callbackQuery, cancellationToken)
-        };
-
-        try { await handler; }
+            await (user.State switch
+            {
+                State.WaitingForSelectLanguage => HandleSelectedLanguageAsync(botClient, callbackQuery, cancellationToken),
+                State.WaitingForEnterSector => HandleSectorAsync(botClient, callbackQuery, cancellationToken),
+                State.WaitingForSubmitApplication => HandleSubmittionApplicationAsync(botClient, callbackQuery, cancellationToken),
+                _ => HandleUnknownCallbackQueryAsync(botClient, callbackQuery, cancellationToken)
+            });
+        }
         catch(Exception ex) { logger.LogError(ex, "Error handling callback query: {callbackQuery.Data}", callbackQuery.Data); }
     }
 

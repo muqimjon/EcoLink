@@ -33,7 +33,7 @@ public class UserService(HttpClient client) : IUserService
 
     public async Task<UserDto> GetAsync(long id, CancellationToken cancellationToken)
     {
-        using var response = await client.GetAsync($"get/{id}", cancellationToken);
+        using var response = await client.GetAsync($"get-by-telegram-id/{id}", cancellationToken);
         if (!response.IsSuccessStatusCode)
             return default!;
 

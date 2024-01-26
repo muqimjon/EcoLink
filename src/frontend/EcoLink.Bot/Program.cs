@@ -9,6 +9,9 @@ builder.Services.AddApiServices(builder.Configuration);
 // Add services
 builder.Services.AddThis(configuration: builder.Configuration);
 
+// Add localization
+builder.Services.AddLocalization();
+
 // Build
 var app = builder.Build();
 

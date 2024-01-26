@@ -40,19 +40,17 @@ public partial class BotUpdateHandler
         await representationAppService.AddAsync(new RepresentationAppDto
         {
             UserId = user.Id,
-            Area = user.Representation.Area,
+            Area = user.Area,
             Age = user.Age,
-            Purpose = user.Representation.Purpose,
+            Purpose = user.Purpose,
             Degree = user.Degree,
             Address = user.Address,
             LastName = user.LastName,
-            Expectation = user.Representation.Expectation,
+            Expectation = user.Expectation,
             FirstName = user.FirstName,
             Languages = user.Languages,
             Experience = user.Experience,
         }, cancellationToken);
-
-            user.Representation.IsSubmitted = true;
     }
 
     private async Task HandleSubmitProjectManagerApplicationAsync(ITelegramBotClient botClient, CallbackQuery callbackQuery, CancellationToken cancellationToken)
@@ -70,18 +68,16 @@ public partial class BotUpdateHandler
         {
             UserId = user.Id,
             Age = user.Age,
-            Purpose = user.ProjectManagement.Purpose,
+            Purpose = user.Purpose,
             Degree = user.Degree,
             Address = user.Address,
             LastName = user.LastName,
-            Expectation = user.ProjectManagement.Expectation,
+            Expectation = user.Expectation,
             FirstName = user.FirstName,
             Languages = user.Languages,
             Experience = user.Experience,
-            ProjectDirection = user.ProjectManagement.ProjectDirection,
+            Sector = user.Sector,
         }, cancellationToken);
-
-            user.ProjectManagement.IsSubmitted = true;
     }
 
     private async Task HandleSubmitEntrepreneurApplicationAsync(ITelegramBotClient botClient, CallbackQuery callbackQuery, CancellationToken cancellationToken)
@@ -99,19 +95,17 @@ public partial class BotUpdateHandler
         {
             UserId = user.Id,
             Age = user.Age,
-            Project = user.Entrepreneurship.Project,
+            Project = user.Project,
             Phone = user.Phone,
             Email = user.Email,
-            HelpType = user.Entrepreneurship.HelpType,
+            HelpType = user.HelpType,
             Degree = user.Degree,
             LastName = user.LastName,
             FirstName = user.FirstName,
             Experience = user.Experience,
-            AssetsInvested = user.Entrepreneurship.AssetsInvested,
-            RequiredFunding = user.Entrepreneurship.RequiredFunding,
+            AssetsInvested = user.AssetsInvested,
+            RequiredFunding = user.RequiredFunding,
         }, cancellationToken);
-
-        user.Entrepreneurship.IsSubmitted = true;
     }
 
     private async Task HandleSubmitInvestmentApplicationAsync(ITelegramBotClient botClient, CallbackQuery callbackQuery, CancellationToken cancellationToken)
@@ -129,15 +123,13 @@ public partial class BotUpdateHandler
         {
             UserId = user.Id,
             Age = user.Age,
-            Sector = user.Investment.Sector,
+            Sector = user.Sector,
             Phone = user.Phone,
             Email = user.Email,
             Degree = user.Degree,
             LastName = user.LastName,
             FirstName = user.FirstName,
-            InvestmentAmount = user.Investment.InvestmentAmount
+            InvestmentAmount = user.InvestmentAmount
         }, cancellationToken);
-
-        user.Investment.IsSubmitted = true;
     }
 }

@@ -26,7 +26,6 @@ public class User : Auditable
     public string? RequiredFunding { get; set; }
     public string? AssetsInvested { get; set; }
     public string? InvestmentAmount { get; set; }
-    public string? ProjectDirection { get; set; }
     public string? Expectation { get; set; }
     public string? Purpose { get; set; }
     public string? Area { get; set; }

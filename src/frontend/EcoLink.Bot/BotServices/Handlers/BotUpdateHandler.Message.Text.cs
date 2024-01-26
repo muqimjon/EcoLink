@@ -5,6 +5,7 @@ public partial class BotUpdateHandler
     private async Task HandleTextMessageAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(message.Text);
+
         var userState = message.Text.Equals("/start") ? State.None : user.State;
         var handler = userState switch
         {
@@ -227,8 +228,6 @@ public partial class BotUpdateHandler
         }
         else
         {
-            user.Degree = message.Text.TrimStart('✅').Trim(); // TODO: need validation
-
             handler = user.Profession switch
             {
                 UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
@@ -236,6 +235,7 @@ public partial class BotUpdateHandler
                 UserProfession.Entrepreneur => SendRequestForExperienceAsync(botClient, message, cancellationToken),
                 _ => SendRequestForLanguagesAsync(botClient, message, cancellationToken),
             };
+            user.Degree = message.Text.TrimStart('✅').Trim(); // TODO: need validation
         }
 
         try { await handler; }
@@ -261,12 +261,12 @@ public partial class BotUpdateHandler
         }
         else
         {
-            user.Phone = message.Text; // TODO: need validation
             handler = user.Profession switch
             {
                 UserProfession.None => SendMenuEditPersonalInfoAsync(botClient, message, cancellationToken),
                 _ => SendRequestForEmailAsync(botClient, message, cancellationToken)
             };
+            user.Phone = message.Text; // TODO: need validation
         }
 
         try { await handler; }
@@ -292,12 +292,12 @@ public partial class BotUpdateHandler
         }
         else
         {
-            user.Email = message.Text; // TODO: need validation
             handler = user.Profession switch
             {
                 UserProfession.None => SendMenuEditPersonalInfoAsync(botClient, message, cancellationToken),
                 _ => SendForSubmitApplicationAsync(botClient, message, cancellationToken)
             };
+            user.Email = message.Text; // TODO: need validation
         }
 
         try { await handler; }
@@ -323,12 +323,12 @@ public partial class BotUpdateHandler
         }
         else
         {
-            user.Languages = message.Text; // TODO: need validation
             handler = user.Profession switch
             {
                 UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 _ => SendRequestForExperienceAsync(botClient, message, cancellationToken)
             };
+            user.Languages = message.Text; // TODO: need validation
         }
 
         try { await handler; }
@@ -354,13 +354,13 @@ public partial class BotUpdateHandler
         }
         else
         {
-            user.Experience = message.Text; // TODO: need validation
             handler = user.Profession switch
             {
                 UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 UserProfession.Entrepreneur => SendRequestForSectorAsync(botClient, message, cancellationToken),
                 _ => SendRequestForAddressAsync(botClient, message, cancellationToken), // Works for PM and Representative
             };
+            user.Experience = message.Text; // TODO: need validation
         }
 
         try { await handler; }
@@ -386,7 +386,6 @@ public partial class BotUpdateHandler
         }
         else
         {
-            user.Address = message.Text; // TODO: need validation
             handler = user.Profession switch
             {
                 UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
@@ -394,6 +393,7 @@ public partial class BotUpdateHandler
                 UserProfession.ProjectManager => SendRequestForSectorAsync(botClient, message, cancellationToken),
                 _ => HandleUnknownMessageAsync(botClient, message, cancellationToken),
             };
+            user.Address = message.Text; // TODO: need validation
         }
 
         try { await handler; }
@@ -404,10 +404,11 @@ public partial class BotUpdateHandler
     {
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
+        Task handler;
 
         if (message.Text.Equals(localizer["rbtnCancel"]))
         {
-            var handler = user.Profession switch
+            handler = user.Profession switch
             {
                 UserProfession.Entrepreneur => SendMenuEntrepreneurshipAsync(botClient, message, cancellationToken),
                 UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
@@ -415,30 +416,19 @@ public partial class BotUpdateHandler
                 UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
                 _ => SendMenuSettingsAsync(botClient, message, cancellationToken),
             };
-
-            try { await handler; }
-            catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
         }
         else
         {
-            switch (user.Profession)
+            handler = user.Profession switch
             {
-                case UserProfession.Investor:
-                    user.Investment.Sector = message.Text;
-                    await SendRequestForInvestmentAmountForInvestmentAsync(botClient, message, cancellationToken);
-                    break;
-                case UserProfession.ProjectManager:
-                    user.ProjectManagement.ProjectDirection = message.Text;
-                    await SendRequestForExpectationAsync(botClient, message, cancellationToken);
-                    break;
-                case UserProfession.Entrepreneur:
-                    user.Entrepreneurship.Sector = message.Text;
-                    await SendRequestForAboutProjectForEntrepreneurshipAsync(botClient, message, cancellationToken);
-                    break;
-                default:
-                    await HandleUnknownMessageAsync(botClient, message, cancellationToken);
-                    break;
+                UserProfession.Investor => SendRequestForInvestmentAmountForInvestmentAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendRequestForExpectationAsync(botClient, message, cancellationToken),
+                UserProfession.Entrepreneur => SendRequestForAboutProjectForEntrepreneurshipAsync(botClient, message, cancellationToken),
+                _ => HandleUnknownMessageAsync(botClient, message, cancellationToken),
             };
+            user.Sector = message.Text;
         }
+        try { await handler; }
+        catch (Exception ex) { logger.LogError(ex, "Error handling message from {user.FirstName}", user.FirstName); }
     }
 }

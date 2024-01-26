@@ -49,63 +49,63 @@ public partial class BotUpdateHandler
     {
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
+        Task handler;
+
         if (message.Text == localizer["rbtnCancel"])
         {
-            await (user.Profession switch
+            handler = user.Profession switch
             {
                 UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
                 UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
                 _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
-            });
-            return;
+            };
+        }
+        else
+        {
+            handler = user.Profession switch
+            {
+                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendRequestForPurposeAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendRequestForPurposeAsync(botClient, message, cancellationToken),
+                _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
+            };
+            user.Expectation = message.Text; // TODO: need validation
         }
 
-        switch(user.Profession)
-        {
-            case UserProfession.None: 
-                await SendMenuSettingsAsync(botClient, message, cancellationToken); 
-                break;
-            case UserProfession.Representative:
-                user.Representation.Expectation = message.Text; // TODO: need validation
-                await SendRequestForPurposeAsync(botClient, message, cancellationToken);
-                break;
-            case UserProfession.ProjectManager:
-                user.ProjectManagement.Expectation = message.Text; // TODO: need validation
-                await SendRequestForPurposeAsync(botClient, message, cancellationToken);
-                break;
-        };
+        try { await handler; }
+        catch { logger.LogError("Error handling message from {from.FirstName}", user.FirstName); }
     }
 
     private async Task HandlePurposeAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
-        if(message.Text == localizer["rbtnCancel"])
+        Task handler;
+
+        if (message.Text == localizer["rbtnCancel"])
         {
-            await (user.Profession switch
+            handler = user.Profession switch
             {
                 UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
                 UserProfession.Representative => SendMenuRepresentationAsync(botClient, message, cancellationToken),
                 UserProfession.ProjectManager => SendMenuProjectManagementAsync(botClient, message, cancellationToken),
                 _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
-            });
-            return;
+            };
+        }
+        else
+        {
+            handler = user.Profession switch
+            {
+                UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendRequestForPurposeAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendRequestForPurposeAsync(botClient, message, cancellationToken),
+                _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
+            };
+            user.Purpose = message.Text; // TODO: need validation
         }
 
-        switch(user.Profession)
-        {
-            case UserProfession.None:
-                await SendMenuSettingsAsync(botClient, message, cancellationToken);
-                break;
-            case UserProfession.Representative:
-                user.Representation.Purpose = message.Text; // TODO: need validation
-                await SendForSubmitApplicationAsync(botClient, message, cancellationToken);
-                break;
-            case UserProfession.ProjectManager:
-                user.ProjectManagement.Purpose = message.Text; // TODO: need validation
-                await SendForSubmitApplicationAsync(botClient, message, cancellationToken);
-                break;
-        };
+        try { await handler; }
+        catch { logger.LogError("Error handling message from {from.FirstName}", user.FirstName); }
     }
 }

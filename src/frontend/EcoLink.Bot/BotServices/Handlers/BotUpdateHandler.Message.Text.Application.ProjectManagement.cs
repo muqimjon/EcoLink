@@ -21,10 +21,10 @@ public partial class BotUpdateHandler
 
     private async Task ProjectManagementQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        user.ProjectManagement ??= await projectManagementService.AddAsync(new ProjectManagementDto() { UserId = user.Id }, cancellationToken);
+        var app = await projectManagementAppService.GetAsync(user.Id, cancellationToken);
 
-        if (user.ProjectManagement.IsSubmitted)
-            await SendAlreadyExistApplicationAsync(botClient, message, cancellationToken);
+        if (app is not null)
+            await SendAlreadyExistApplicationAsync(GetApplicationInForm(app), botClient, message, cancellationToken);
         else
             await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
     }
@@ -50,7 +50,7 @@ public partial class BotUpdateHandler
                 UserProfession.ProjectManager => SendRequestForExpectationAsync(botClient, message, cancellationToken),
                 _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
-            user.ProjectManagement.ProjectDirection = message.Text; // TODO: need validation
+            user.Sector = message.Text; // TODO: need validation
         }
 
         try { await handler; }

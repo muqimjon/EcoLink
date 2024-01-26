@@ -1,9 +1,4 @@
-﻿using EcoLink.ApiService.Models.Investment;
-using EcoLink.ApiService.Models.Representation;
-using EcoLink.ApiService.Models.Entrepreneurship;
-using EcoLink.ApiService.Models.ProjectManagement;
-
-namespace EcoLink.ApiService.Models;
+﻿namespace EcoLink.ApiService.Models;
 
 public class UserDto
 {
@@ -26,9 +21,14 @@ public class UserDto
     public string Address { get; set; } = string.Empty;
     public string Languages { get; set; } = string.Empty;
     public string Experience { get; set; } = string.Empty;
-    public InvestmentDto Investment { get; set; } = default!;
-    public EntrepreneurshipDto Entrepreneurship { get; set; } = default!;
-    public RepresentationDto Representation { get; set; } = default!;
-    public ProjectManagementDto ProjectManagement { get; set; } = default!;
+    public string Sector { get; set; } = string.Empty;
+    public string Project { get; set; } = string.Empty;
+    public string HelpType { get; set; } = string.Empty;
+    public string RequiredFunding { get; set; } = string.Empty;
+    public string AssetsInvested { get; set; } = string.Empty;
+    public string InvestmentAmount { get; set; } = string.Empty;
+    public string Expectation { get; set; } = string.Empty;
+    public string Purpose { get; set; } = string.Empty;
+    public string Area { get; set; } = string.Empty;
     public DateTimeOffset CreatedAt { get; set; }
 }

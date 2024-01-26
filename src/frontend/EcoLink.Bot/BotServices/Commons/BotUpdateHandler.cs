@@ -14,10 +14,7 @@ public partial class BotUpdateHandler(
     ILogger<BotUpdateHandler> logger,
     IServiceScopeFactory serviceScopeFactory,
     IUserService service,
-    IInvestmentService investmentService,
     IInvestmentAppService investmentAppService,
-    IEntrepreneurshipService entrepreneurshipService,
-    IProjectManagementService projectManagementService,
     IRepresentationAppService representationAppService,
     IEntrepreneurshipAppService entrepreneurshipAppService,
     IProjectManagementAppService projectManagementAppService) : IUpdateHandler

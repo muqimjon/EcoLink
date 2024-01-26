@@ -1,6 +1,4 @@
-﻿using EcoLink.ApiService.Models.Investment;
-
-namespace EcoLink.Bot.BotServices;
+﻿namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
@@ -22,10 +20,10 @@ public partial class BotUpdateHandler
 
     private async Task InvestmentApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        user.Investment ??= await investmentService.AddAsync(new InvestmentDto() { UserId = user.Id }, cancellationToken);
+        var app = await investmentAppService.GetAsync(user.Id, cancellationToken);
 
-        if (user.Investment.IsSubmitted)
-            await SendAlreadyExistApplicationAsync(botClient, message, cancellationToken);
+        if (app is not null)
+            await SendAlreadyExistApplicationAsync(GetApplicationInForm(app), botClient, message, cancellationToken);
         else
             await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
     }
@@ -34,23 +32,27 @@ public partial class BotUpdateHandler
     {
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
+        Task handler;
 
         if (message.Text.Equals(localizer["rbtnCancel"]))
         {
-            await (user.Profession switch
+            handler = user.Profession switch
             {
                 UserProfession.Investor => SendMenuInvestmentAsync(botClient, message, cancellationToken),
                 _ => SendMenuProfessionsAsync(botClient, message, cancellationToken),
-            });
-            return;
+            };
+        }
+        else
+        {
+            handler = user.Profession switch
+            {
+                UserProfession.Investor => SendRequestForPhoneNumberAsync(botClient, message, cancellationToken),
+                _ => SendMenuProfessionsAsync(botClient, message, cancellationToken),
+            };
+            user.InvestmentAmount = message.Text; // TODO: need validation
         }
 
-        await (user.Profession switch
-        {
-            UserProfession.Investor => SendRequestForPhoneNumberAsync(botClient, message, cancellationToken),
-            _ => SendMenuProfessionsAsync(botClient, message, cancellationToken),
-        });
-
-        user.Investment.InvestmentAmount = message.Text; // TODO: need validation
+        try { await handler; }
+        catch { logger.LogError("Error handling message from {user.FirstName}", user.FirstName); }
     }
 }

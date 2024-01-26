@@ -1,7 +1,4 @@
-﻿using EcoLink.ApiService.Models;
-using EcoLink.ApiService.Models.Entrepreneurship;
-
-namespace EcoLink.Bot.BotServices;
+﻿namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
@@ -23,10 +20,9 @@ public partial class BotUpdateHandler
 
     private async Task EntrepreneurshipApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        user.Entrepreneurship ??= await entrepreneurshipService.AddAsync(new EntrepreneurshipDto() { UserId = user.Id }, cancellationToken);
-
-        if (user.Entrepreneurship.IsSubmitted)
-            await SendAlreadyExistApplicationAsync(botClient, message, cancellationToken);
+        var apps = await entrepreneurshipAppService.GetAsync(user.Id, cancellationToken);
+        if (apps is not null)
+            await SendAlreadyExistApplicationAsync(GetApplicationInForm(apps), botClient, message, cancellationToken);
         else
             await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
     }
@@ -52,7 +48,7 @@ public partial class BotUpdateHandler
                 UserProfession.Entrepreneur => SendRequestForHelpTypeEntrepreneurshipAsync(botClient, message, cancellationToken),
                 _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
-            user.Entrepreneurship.Project = message.Text; // TODO: need validation
+            user.Project = message.Text; // TODO: need validation
         }
 
         try { await handler; }
@@ -80,7 +76,7 @@ public partial class BotUpdateHandler
                 UserProfession.Entrepreneur => SendRequestForRequiredFundingForEntrepreneurshipAsync(botClient, message, cancellationToken),
                 _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
-            user.Entrepreneurship.HelpType = message.Text; // TODO: need validation
+            user.HelpType = message.Text; // TODO: need validation
         }
 
         try { await handler; }
@@ -108,7 +104,7 @@ public partial class BotUpdateHandler
                 UserProfession.Entrepreneur => SendRequestForAssetsInvestedForEntrepreneurshipAsync(botClient, message, cancellationToken),
                 _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
-            user.Entrepreneurship.RequiredFunding = message.Text; // TODO: need validation
+            user.RequiredFunding = message.Text; // TODO: need validation
         }
 
         try { await handler; }
@@ -136,7 +132,7 @@ public partial class BotUpdateHandler
                 UserProfession.Entrepreneur => SendRequestForPhoneNumberAsync(botClient, message, cancellationToken),
                 _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
-            user.Entrepreneurship.AssetsInvested = message.Text; // TODO: need validation
+            user.AssetsInvested = message.Text; // TODO: need validation
         }
 
         try { await handler; }

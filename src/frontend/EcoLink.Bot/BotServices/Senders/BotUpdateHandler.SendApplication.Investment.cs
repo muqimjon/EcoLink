@@ -25,10 +25,10 @@ public partial class BotUpdateHandler
     private async Task SendRequestForInvestmentAmountForInvestmentAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
 
-        var replyKeyboard = string.IsNullOrEmpty(user.Investment.InvestmentAmount) switch
+        var replyKeyboard = string.IsNullOrEmpty(user.InvestmentAmount) switch
         {
             true => new ReplyKeyboardMarkup(new KeyboardButton[] { new(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
-            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Investment.InvestmentAmount)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
+            false => new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.InvestmentAmount)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true },
         };
 
         await botClient.SendTextMessageAsync(

@@ -8,14 +8,14 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(callbackQuery.Data);
         ArgumentNullException.ThrowIfNull(callbackQuery.Message);
 
-        var profession = callbackQuery.Data switch
+        var handler = callbackQuery.Data switch
         {
             "submit" => HandleSubmitApplicationAsync(botClient, callbackQuery, cancellationToken),
             "cancel" => HandleCancelApplication(botClient, callbackQuery, cancellationToken),
             _ => HandleUnknownSubmissionAsync(botClient, callbackQuery, cancellationToken)
         };
 
-        try { await profession; }
+        try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling callback query: {callbackQuery.Data}", callbackQuery.Data); }
     }
 
@@ -40,7 +40,7 @@ public partial class BotUpdateHandler
         ArgumentNullException.ThrowIfNull(callbackQuery.Data);
         ArgumentNullException.ThrowIfNull(callbackQuery.Message);
 
-        var sector = callbackQuery.Data switch
+        user.Sector = callbackQuery.Data switch
         {
             "sectorIT" => "Axborot texnologiyalari",
             "sectorManufacturing" => "Ishlab chiqarish",
@@ -53,30 +53,22 @@ public partial class BotUpdateHandler
             _ => string.Empty,
         };
 
-        await botClient.EditMessageTextAsync(
+         await botClient.EditMessageTextAsync(
             chatId: callbackQuery.Message.Chat.Id,
             messageId: callbackQuery.Message.MessageId,
-            text: localizer["txtSelected", sector],
+            text: localizer["txtSelected", user.Sector],
             cancellationToken: cancellationToken);
 
-        switch (user.Profession)
+        var handler = user.Profession switch
         {
-            case UserProfession.Investor:
-                user.Investment.Sector = sector;
-                await SendRequestForInvestmentAmountForInvestmentAsync(botClient, callbackQuery.Message, cancellationToken);
-                break;
-            case UserProfession.ProjectManager:
-                user.ProjectManagement.ProjectDirection = sector;
-                await SendRequestForExpectationAsync(botClient, callbackQuery.Message, cancellationToken);
-                break;
-            case UserProfession.Entrepreneur:
-                user.Entrepreneurship.Sector = sector;
-                await SendRequestForAboutProjectForEntrepreneurshipAsync(botClient, callbackQuery.Message, cancellationToken);
-                break;
-            default:
-                await HandleUnknownCallbackQueryAsync(botClient, callbackQuery, cancellationToken);
-                break;
+            UserProfession.Investor => SendRequestForInvestmentAmountForInvestmentAsync(botClient, callbackQuery.Message, cancellationToken),
+            UserProfession.ProjectManager => SendRequestForExpectationAsync(botClient, callbackQuery.Message, cancellationToken),
+            UserProfession.Entrepreneur => SendRequestForAboutProjectForEntrepreneurshipAsync(botClient, callbackQuery.Message, cancellationToken),
+            _ => HandleUnknownCallbackQueryAsync(botClient, callbackQuery, cancellationToken),
         };
+
+        try { await handler; }
+        catch (Exception ex) { logger.LogError(ex, "Error handling callback query: {callbackQuery.Data}", callbackQuery.Data); }
     }
 
     private Task HandleUnknownSubmissionAsync(ITelegramBotClient botClient, CallbackQuery callbackQuery, CancellationToken cancellationToken)

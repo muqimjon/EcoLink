@@ -13,5 +13,7 @@ public class RepresentationAppResultDto
     public string Area { get; set; } = string.Empty;
     public string Expectation { get; set; } = string.Empty;
     public string Purpose { get; set; } = string.Empty;
+    public string Phone { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
     public UserResultDto User { get; set; } = default!;
 }

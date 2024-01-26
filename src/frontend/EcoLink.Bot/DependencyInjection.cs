@@ -13,8 +13,8 @@ public static class DependencyInjection
         services.AddSingleton<IUpdateHandler, BotUpdateHandler>();
         services.AddHostedService<BotBackgroundService>();
 
-        // Add localization
-        services.AddLocalization();
+        //// Add localization
+        //services.AddLocalization();
         return services;
     }
 }

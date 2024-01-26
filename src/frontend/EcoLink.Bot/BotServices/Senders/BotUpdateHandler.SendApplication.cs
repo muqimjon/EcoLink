@@ -1,5 +1,8 @@
 ﻿using EcoLink.ApiService.Constants;
 using EcoLink.ApiService.Models.Investment;
+using EcoLink.ApiService.Models.Representation;
+using EcoLink.ApiService.Models.Entrepreneurship;
+using EcoLink.ApiService.Models.ProjectManagement;
 
 namespace EcoLink.Bot.BotServices;
 
@@ -25,22 +28,13 @@ public partial class BotUpdateHandler
         );
     }
 
-    private async Task SendAlreadyExistApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task SendAlreadyExistApplicationAsync(string text, ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var app = await (user.Profession switch
-        {
-            UserProfession.Investor => investmentAppService.GetAsync(userId: user.Id, cancellationToken: cancellationToken),
-            UserProfession.Representative => representationAppService.GetAsync(userId: user.Id, cancellationToken: cancellationToken),
-            UserProfession.ProjectManager => projectManagementAppService.GetAsync(userId: user.Id, cancellationToken: cancellationToken),
-            UserProfession.Entrepreneur => (dynamic)entrepreneurshipAppService.GetAsync(userId: user.Id, cancellationToken: cancellationToken),
-            _ => default
-        });
-
         var keyboard = new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(localizer["rbtnResend"])], [new(localizer["rbtnBack"])] }) { ResizeKeyboard = true };
 
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: localizer["txtSubmittedApplication"] + (string)GetApplicationInForm(app),
+            text: localizer["txtSubmittedApplication"] + text,
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
@@ -271,17 +265,10 @@ public partial class BotUpdateHandler
 
     private async Task SendRequestForExpectationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        var expectation = user.Profession switch
-        {
-            UserProfession.ProjectManager => user.ProjectManagement.Expectation,
-            UserProfession.Representative => user.Representation.Expectation,
-            _ => string.Empty
-        };
-
-        var args = string.IsNullOrEmpty(expectation) switch
+        var args = string.IsNullOrEmpty(user.Expectation) switch
         {
             true => (localizer["txtAskForExpectation"], new ReplyKeyboardMarkup(new[] { new KeyboardButton(localizer["rbtnCancel"]) }) { ResizeKeyboard = true }),
-            false => (localizer["txtAskForExpectation"] + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(expectation)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
+            false => (localizer["txtAskForExpectation"] + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Expectation)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
         };
 
         await botClient.SendTextMessageAsync(
@@ -295,23 +282,17 @@ public partial class BotUpdateHandler
 
     private async Task SendRequestForPurposeAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        string purpose = string.Empty, askPurpose = string.Empty;
-        switch(user.Profession)
+        string askPurpose = user.Profession switch
         {
-            case UserProfession.Representative:
-                askPurpose = localizer["txtAskForRepresentativePurpose"];
-                purpose = user.Representation.Purpose;
-                break;
-            case UserProfession.ProjectManager:
-                askPurpose = localizer["txtAskForProjectManagerPurpose"];
-                purpose = user.ProjectManagement.Purpose;
-                break;
+            UserProfession.Representative => localizer["txtAskForRepresentativePurpose"],
+            UserProfession.ProjectManager => localizer["txtAskForProjectManagerPurpose"],
+            _ => string.Empty
         };
 
-        var args = string.IsNullOrEmpty(purpose) switch
+        var args = string.IsNullOrEmpty(user.Purpose) switch
         {
             true => (askPurpose, new ReplyKeyboardMarkup(new[] { new KeyboardButton(localizer["rbtnCancel"]) }) { ResizeKeyboard = true }),
-            false => (askPurpose + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(purpose)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
+            false => (askPurpose + localizer["txtAskWithButton"], new ReplyKeyboardMarkup(new KeyboardButton[][] { [new(user.Purpose)], [new(localizer["rbtnCancel"])] }) { ResizeKeyboard = true })
         };
 
         await botClient.SendTextMessageAsync(
@@ -377,10 +358,10 @@ public partial class BotUpdateHandler
                 user.Age,
                 user.Degree,
                 user.Experience,
-                user.Entrepreneurship.Project,
-                user.Entrepreneurship.HelpType,
-                user.Entrepreneurship.RequiredFunding,
-                user.Entrepreneurship.AssetsInvested,
+                user.Project,
+                user.HelpType,
+                user.RequiredFunding,
+                user.AssetsInvested,
                 user.Phone,
                 user.Email],
             UserProfession.Investor => localizer["txtApplicationInvestment",
@@ -388,8 +369,8 @@ public partial class BotUpdateHandler
                 user.LastName,
                 user.Age,
                 user.Degree,
-                user.Investment.Sector,
-                user.Investment.InvestmentAmount,
+                user.Sector,
+                user.InvestmentAmount,
                 user.Phone,
                 user.Email],
             UserProfession.Representative => localizer["txtApplicationRepresentation",
@@ -400,9 +381,9 @@ public partial class BotUpdateHandler
                 user.Languages,
                 user.Experience,
                 user.Address,
-                user.Representation.Area,
-                user.Representation.Expectation,
-                user.Representation.Purpose,
+                user.Area,
+                user.Expectation,
+                user.Purpose,
                 user.Phone,
                 user.Email],
             UserProfession.ProjectManager => localizer["txtApplicationProjectManagement",
@@ -413,23 +394,67 @@ public partial class BotUpdateHandler
                 user.Languages,
                 user.Experience,
                 user.Address,
-                user.ProjectManagement.ProjectDirection,
-                user.ProjectManagement.Expectation,
-                user.ProjectManagement.Purpose,
+                user.Sector,
+                user.Expectation,
+                user.Purpose,
                 user.Phone,
                 user.Email],
             _ => string.Empty,
         };
     }
 
+    private string GetApplicationInForm(ProjectManagementAppDto dto)
+        => localizer["txtApplicationProjectManagement",
+                dto.FirstName,
+                dto.LastName,
+                dto.Age,
+                dto.Degree,
+                dto.Languages,
+                dto.Experience,
+                dto.Address,
+                dto.Sector,
+                dto.Expectation,
+                dto.Purpose,
+                dto.Phone,
+                dto.Email];
+
+    private string GetApplicationInForm(EntrepreneurshipAppDto dto)
+        => localizer["txtApplicationEntrepreneurship",
+                dto.FirstName,
+                dto.LastName,
+                dto.Age,
+                dto.Degree,
+                dto.Experience,
+                dto.Project,
+                dto.HelpType,
+                dto.RequiredFunding,
+                dto.AssetsInvested,
+                dto.Phone,
+                dto.Email];
+
     private string GetApplicationInForm(InvestmentAppDto dto)
         => localizer["txtApplicationInvestment",
-            user.FirstName,
-            user.LastName,
-            user.Age,
-            user.Degree,
-            user.Investment.Sector,
-            user.Investment.InvestmentAmount,
-            user.Phone,
-            user.Email];
+                dto.FirstName,
+                dto.LastName,
+                dto.Age,
+                dto.Degree,
+                dto.Sector,
+                dto.InvestmentAmount,
+                dto.Phone,
+                dto.Email];
+
+    private string GetApplicationInForm(RepresentationAppDto dto)
+        => localizer["txtApplicationRepresentation",
+                dto.FirstName,
+                dto.LastName,
+                dto.Age,
+                dto.Degree,
+                dto.Languages,
+                dto.Experience,
+                dto.Address,
+                dto.Area,
+                dto.Expectation,
+                dto.Purpose,
+                dto.Phone,
+                dto.Email];
 }

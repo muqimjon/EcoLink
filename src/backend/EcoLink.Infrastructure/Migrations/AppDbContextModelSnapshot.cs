@@ -179,6 +179,10 @@ namespace EcoLink.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Expectation")
                         .IsRequired()
                         .HasColumnType("text");
@@ -202,11 +206,15 @@ namespace EcoLink.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("ProjectDirection")
+                    b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Purpose")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Sector")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -250,6 +258,10 @@ namespace EcoLink.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Expectation")
                         .IsRequired()
                         .HasColumnType("text");
@@ -270,6 +282,10 @@ namespace EcoLink.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -365,9 +381,6 @@ namespace EcoLink.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Project")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ProjectDirection")
                         .HasColumnType("text");
 
                     b.Property<string>("Purpose")

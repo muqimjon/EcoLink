@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EcoLink.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240125175624_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240126042206_InitialMigrate")]
+    partial class InitialMigrate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -182,6 +182,10 @@ namespace EcoLink.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Expectation")
                         .IsRequired()
                         .HasColumnType("text");
@@ -205,11 +209,15 @@ namespace EcoLink.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("ProjectDirection")
+                    b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Purpose")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Sector")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -253,6 +261,10 @@ namespace EcoLink.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Expectation")
                         .IsRequired()
                         .HasColumnType("text");
@@ -273,6 +285,10 @@ namespace EcoLink.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -368,9 +384,6 @@ namespace EcoLink.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Project")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ProjectDirection")
                         .HasColumnType("text");
 
                     b.Property<string>("Purpose")

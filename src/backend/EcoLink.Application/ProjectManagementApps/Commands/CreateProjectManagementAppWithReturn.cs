@@ -1,14 +1,15 @@
-﻿using EcoLink.Application.ProjectManagementApps.DTOs;
-
-namespace EcoLink.Application.ProjectManagementApps.Commands.CreateProjectManagementApps;
+﻿namespace EcoLink.Application.ProjectManagementApps.Commands.CreateProjectManagementApps;
 
 public record CreateProjectManagementAppWithReturnCommand : IRequest<ProjectManagementAppResultDto>
 {
     public CreateProjectManagementAppWithReturnCommand(CreateProjectManagementAppWithReturnCommand command)
     {
         Age = command.Age;
+        Phone = command.Phone;
+        Email = command.Email;
         UserId = command.UserId;
         Degree = command.Degree;
+        Sector = command.Sector;
         Purpose = command.Purpose;
         Address = command.Address;
         LastName = command.LastName;
@@ -16,7 +17,6 @@ public record CreateProjectManagementAppWithReturnCommand : IRequest<ProjectMana
         Languages = command.Languages;
         Experience = command.Experience;
         Expectation = command.Expectation;
-        ProjectDirection = command.ProjectDirection;
     }
 
     public string FirstName { get; set; } = string.Empty;
@@ -26,9 +26,11 @@ public record CreateProjectManagementAppWithReturnCommand : IRequest<ProjectMana
     public string Languages { get; set; } = string.Empty;
     public string Experience { get; set; } = string.Empty;
     public string Address { get; set; } = string.Empty;
-    public string ProjectDirection { get; set; } = string.Empty;
+    public string Sector { get; set; } = string.Empty;
     public string Expectation { get; set; } = string.Empty;
     public string Purpose { get; set; } = string.Empty;
+    public string Phone { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
     public long UserId { get; set; }
 }
 

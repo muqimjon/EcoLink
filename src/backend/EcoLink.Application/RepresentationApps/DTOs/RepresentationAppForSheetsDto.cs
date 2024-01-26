@@ -12,5 +12,7 @@ public class RepresentationAppForSheetsDto
     public string Area { get; set; } = string.Empty;
     public string Expectation { get; set; } = string.Empty;
     public string Purpose { get; set; } = string.Empty;
+    public string Phone { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
     public string WasCreated { get; set; } = string.Empty;
 }

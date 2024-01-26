@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -6,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EcoLink.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialMigrate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -41,7 +42,6 @@ namespace EcoLink.Infrastructure.Migrations
                     RequiredFunding = table.Column<string>(type: "text", nullable: true),
                     AssetsInvested = table.Column<string>(type: "text", nullable: true),
                     InvestmentAmount = table.Column<string>(type: "text", nullable: true),
-                    ProjectDirection = table.Column<string>(type: "text", nullable: true),
                     Expectation = table.Column<string>(type: "text", nullable: true),
                     Purpose = table.Column<string>(type: "text", nullable: true),
                     Area = table.Column<string>(type: "text", nullable: true),
@@ -131,9 +131,11 @@ namespace EcoLink.Infrastructure.Migrations
                     Languages = table.Column<string>(type: "text", nullable: false),
                     Experience = table.Column<string>(type: "text", nullable: false),
                     Address = table.Column<string>(type: "text", nullable: false),
-                    ProjectDirection = table.Column<string>(type: "text", nullable: false),
+                    Sector = table.Column<string>(type: "text", nullable: false),
                     Expectation = table.Column<string>(type: "text", nullable: false),
                     Purpose = table.Column<string>(type: "text", nullable: false),
+                    Phone = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
@@ -166,6 +168,8 @@ namespace EcoLink.Infrastructure.Migrations
                     Area = table.Column<string>(type: "text", nullable: false),
                     Expectation = table.Column<string>(type: "text", nullable: false),
                     Purpose = table.Column<string>(type: "text", nullable: false),
+                    Phone = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),

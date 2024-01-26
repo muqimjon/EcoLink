@@ -20,8 +20,9 @@ public partial class BotUpdateHandler
 
     private async Task RepresentationApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
     {
-        if (user.Representation.IsSubmitted)
-            await SendAlreadyExistApplicationAsync(botClient, message, cancellationToken);
+        var app = await representationAppService.GetAsync(user.Id, cancellationToken);
+        if (app is not null)
+            await SendAlreadyExistApplicationAsync(GetApplicationInForm(app), botClient, message, cancellationToken);
         else
             await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
     }
@@ -30,8 +31,8 @@ public partial class BotUpdateHandler
     {
         ArgumentNullException.ThrowIfNull(message);
         ArgumentNullException.ThrowIfNull(message.Text);
-
         Task handler;
+
         if (message.Text.Equals(localizer["rbtnCancel"]))
         {
             handler = user.Profession switch
@@ -47,7 +48,7 @@ public partial class BotUpdateHandler
                 UserProfession.Representative => SendRequestForExpectationAsync(botClient, message, cancellationToken),
                 _ => SendMenuProfessionsAsync(botClient, message, cancellationToken)
             };
-            user.Representation.Area = message.Text; // TODO: need validation
+            user.Area = message.Text; // TODO: need validation
         }
 
         try { await handler; }
