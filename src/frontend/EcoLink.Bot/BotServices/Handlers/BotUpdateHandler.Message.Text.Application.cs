@@ -98,8 +98,8 @@ public partial class BotUpdateHandler
             handler = user.Profession switch
             {
                 UserProfession.None => SendMenuSettingsAsync(botClient, message, cancellationToken),
-                UserProfession.Representative => SendRequestForPurposeAsync(botClient, message, cancellationToken),
-                UserProfession.ProjectManager => SendRequestForPurposeAsync(botClient, message, cancellationToken),
+                UserProfession.Representative => SendRequestForPhoneNumberAsync(botClient, message, cancellationToken),
+                UserProfession.ProjectManager => SendRequestForPhoneNumberAsync(botClient, message, cancellationToken),
                 _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
             };
             user.Purpose = message.Text; // TODO: need validation

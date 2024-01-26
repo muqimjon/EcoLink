@@ -1,5 +1,6 @@
 ﻿using EcoLink.ApiService.Interfaces.ProjectManagement;
 using EcoLink.ApiService.Models.ProjectManagement;
+using System.Net;
 
 namespace EcoLink.ApiService.Services.ProjectManagement;
 
@@ -18,7 +19,7 @@ public class ProjectManagementAppService(HttpClient client) : IProjectManagement
     public async Task<ProjectManagementAppDto> GetAsync(long id, CancellationToken cancellationToken)
     {
         using var response = await client.GetAsync($"get/{id}", cancellationToken);
-        if (!response.IsSuccessStatusCode)
+        if (!response.IsSuccessStatusCode || response.StatusCode is HttpStatusCode.NoContent)
             return default!;
 
         return (await response.Content.ReadFromJsonAsync<ProjectManagementAppDto>(cancellationToken: cancellationToken))!;

@@ -26,6 +26,8 @@ public partial class BotUpdateHandler
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
+
+        user.State = State.WaitingForSelectProfession;
     }
 
     private async Task SendAlreadyExistApplicationAsync(string text, ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -50,19 +52,21 @@ public partial class BotUpdateHandler
         );
 
         await Task.Delay(2000, cancellationToken);
-        var keyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[][] {
+
+        var keyboard = new InlineKeyboardMarkup(new InlineKeyboardButton[][]
+        {
             [InlineKeyboardButton.WithCallbackData(localizer["ibtnSubmit"], "submit")],
             [InlineKeyboardButton.WithCallbackData(localizer["ibtnCancel"], "cancel")]
         });
 
-        await botClient.EditMessageTextAsync(
-            messageId: sending.MessageId,
+        await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
             text: GetApplicationInForm(),
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
 
+        user.MessageId = sending.MessageId;
         user.State = State.WaitingForSubmitApplication;
     }
 
@@ -319,17 +323,18 @@ public partial class BotUpdateHandler
         });
 
         await botClient.SendTextMessageAsync(
-        chatId: message.Chat.Id,
+            chatId: message.Chat.Id,
             text: localizer["txtAskForSector"],
             replyMarkup: keyboard,
             cancellationToken: cancellationToken);
 
-        await botClient.SendTextMessageAsync(
-        chatId: message.Chat.Id,
+        var sending = await botClient.SendTextMessageAsync(
+            chatId: message.Chat.Id,
             text: localizer["txtAskForSelectOrWrite"],
             replyMarkup: new ReplyKeyboardMarkup(new[] { new KeyboardButton(localizer["rbtnCancel"]) }) { ResizeKeyboard = true },
             cancellationToken: cancellationToken);
 
+        user.MessageId = sending.MessageId;
         user.State = State.WaitingForEnterSector;
     }
 

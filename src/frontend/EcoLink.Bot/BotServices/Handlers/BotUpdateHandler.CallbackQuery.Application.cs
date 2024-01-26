@@ -31,6 +31,8 @@ public partial class BotUpdateHandler
             text: $"{callbackQuery.Message.Text}\n\n{localizer["txtCancelApplication"]}", 
             cancellationToken: cancellationToken);
 
+        await botClient.DeleteMessageAsync(user.ChatId, user.MessageId, cancellationToken);
+
         await SendMainMenuAsync(botClient, callbackQuery.Message, cancellationToken);
     }
     
@@ -69,6 +71,8 @@ public partial class BotUpdateHandler
 
         try { await handler; }
         catch (Exception ex) { logger.LogError(ex, "Error handling callback query: {callbackQuery.Data}", callbackQuery.Data); }
+
+        await botClient.DeleteMessageAsync(user.ChatId, user.MessageId, cancellationToken);
     }
 
     private Task HandleUnknownSubmissionAsync(ITelegramBotClient botClient, CallbackQuery callbackQuery, CancellationToken cancellationToken)

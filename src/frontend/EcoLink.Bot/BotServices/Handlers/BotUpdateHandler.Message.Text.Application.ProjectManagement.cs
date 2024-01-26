@@ -1,6 +1,4 @@
-﻿using EcoLink.ApiService.Models.ProjectManagement;
-
-namespace EcoLink.Bot.BotServices;
+﻿namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {

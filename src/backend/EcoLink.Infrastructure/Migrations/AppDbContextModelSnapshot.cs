@@ -326,13 +326,13 @@ namespace EcoLink.Infrastructure.Migrations
                     b.Property<string>("AssetsInvested")
                         .HasColumnType("text");
 
-                    b.Property<long?>("ChatId")
+                    b.Property<long>("ChatId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTimeOffset?>("DateOfBirth")
+                    b.Property<DateTimeOffset>("DateOfBirth")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Degree")
@@ -371,6 +371,9 @@ namespace EcoLink.Infrastructure.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("text");
 
+                    b.Property<int>("MessageId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Patronomyc")
                         .HasColumnType("text");
 
@@ -395,7 +398,7 @@ namespace EcoLink.Infrastructure.Migrations
                     b.Property<int>("State")
                         .HasColumnType("integer");
 
-                    b.Property<long?>("TelegramId")
+                    b.Property<long>("TelegramId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset?>("UpdatedAt")

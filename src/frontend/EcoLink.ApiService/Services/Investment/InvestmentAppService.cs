@@ -1,5 +1,6 @@
 ﻿using EcoLink.ApiService.Interfaces.Investment;
 using EcoLink.ApiService.Models.Investment;
+using System.Net;
 
 namespace EcoLink.ApiService.Services.Investment;
 
@@ -18,7 +19,7 @@ public class InvestmentAppService(HttpClient client) : IInvestmentAppService
     public async Task<InvestmentAppDto> GetAsync(long id, CancellationToken cancellationToken)
     {
         using var response = await client.GetAsync($"get/{id}", cancellationToken);
-        if (!response.IsSuccessStatusCode)
+        if (!response.IsSuccessStatusCode || response.StatusCode is HttpStatusCode.NoContent)
             return default!;
 
         return (await response.Content.ReadFromJsonAsync<InvestmentAppDto>(cancellationToken: cancellationToken))!;

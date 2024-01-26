@@ -21,6 +21,7 @@ public record UpdateUserCommand : IRequest<int>
         Username = command.Username;
         LastName = command.LastName;
         HelpType = command.HelpType;
+        MessageId = command.MessageId;
         Languages = command.Languages;
         FirstName = command.FirstName;
         TelegramId = command.TelegramId;
@@ -42,6 +43,7 @@ public record UpdateUserCommand : IRequest<int>
     public string LanguageCode { get; set; } = string.Empty;
     public long ChatId { get; set; }
     public bool IsBot { get; set; }
+    public int MessageId { get; set; }
     public State State { get; set; }
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;

@@ -1,5 +1,6 @@
 ﻿using EcoLink.ApiService.Models.Representation;
 using EcoLink.ApiService.Interfaces.Representation;
+using System.Net;
 
 namespace EcoLink.ApiService.Services.Representation;
 
@@ -18,7 +19,7 @@ public class RepresentationAppService(HttpClient client) : IRepresentationAppSer
     public async Task<RepresentationAppDto> GetAsync(long id, CancellationToken cancellationToken)
     {
         using var response = await client.GetAsync($"get/{id}", cancellationToken);
-        if (!response.IsSuccessStatusCode)
+        if (!response.IsSuccessStatusCode || response.StatusCode is HttpStatusCode.NoContent)
             return default!;
 
         return (await response.Content.ReadFromJsonAsync<RepresentationAppDto>(cancellationToken: cancellationToken))!;

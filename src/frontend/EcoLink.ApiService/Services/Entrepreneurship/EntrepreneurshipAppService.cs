@@ -18,7 +18,8 @@ public class EntrepreneurshipAppService(HttpClient client) : IEntrepreneurshipAp
     public async Task<EntrepreneurshipAppDto> GetAsync(long id, CancellationToken cancellationToken)
     {
         using var response = await client.GetAsync($"get/{id}", cancellationToken);
-        if (!response.IsSuccessStatusCode)
+        var s = response.StatusCode;
+        if (!response.IsSuccessStatusCode || response.StatusCode is System.Net.HttpStatusCode.NoContent)
             return default!;
 
         return (await response.Content.ReadFromJsonAsync<EntrepreneurshipAppDto>(cancellationToken: cancellationToken))!;
