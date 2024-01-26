@@ -14,7 +14,7 @@ namespace EcoLink.ApiService;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddApiServices(this IServiceCollection services, IConfigurationRoot configuration)
     {
         var baseLink = configuration.GetConnectionString("BaseLink");
 

@@ -5,8 +5,8 @@ on:
     branches: [ "production" ]
 
 jobs:
-  build:
-    name: Build
+  build-api:
+    name: Build backend
     runs-on: ubuntu-latest
 
     steps:
@@ -18,11 +18,11 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
-    
-  dockerize:
-    name: Dockerize
-    needs: build
+      run: dotnet build --configuration Release --output out --verbosity normal /src/backend/EcoLink.WebApi
+
+  dockerize-api:
+    name: Dockerize backend
+    needs: build-api
     runs-on: ubuntu-latest
 
     env:
@@ -38,15 +38,56 @@ jobs:
         dotnet-version: 8.0.x
     - name: Login to DockerHub
       run: |
-        echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+        echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
     - name: Build and push
       run: |
-        docker build -t $DOCKER_USERNAME/$PROJECT -f src/EcoLink.Bot/Dockerfile .
-        docker push $DOCKER_USERNAME/$PROJECT
+        docker build --tag $DOCKER_USERNAME/$PROJECT-bot --file ./src/backend/EcoLink.WebApi/Dockerfile .
+        docker push $DOCKER_USERNAME/$PROJECT-api
+
+  build-bot:
+    name: Build Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --output out --verbosity normal /src/frontend/EcoLink.Bot
+
+  dockerize-bot:
+    name: Dockerize Bot
+    needs: build-bot
+    runs-on: ubuntu-latest
+
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      PROJECT: ${{ secrets.PROJECT }}
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    - name: Login to DockerHub
+      run: |
+        echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
+    - name: Build and push
+      run: |
+        docker build --tag $DOCKER_USERNAME/$PROJECT-bot --file ./src/frontend/EcoLink.Bot/Dockerfile .
+        docker push $DOCKER_USERNAME/$PROJECT-bot
 
   deploy:
     name: Deploy
-    needs: dockerize
+    needs:
+      - dockerize-api
+      - dockerize-bot
     runs-on: ubuntu-latest
 
     steps:
@@ -60,4 +101,5 @@ jobs:
           script: |
             cd ~/eco-link
             docker-compose pull
-            docker-compose up -d
+            docker rmi $(docker images --quiet --filter dangling=true)
+            docker-compose up --detach
