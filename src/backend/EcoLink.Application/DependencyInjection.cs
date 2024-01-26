@@ -17,7 +17,7 @@ public static class DependencyInjection
 
         services.AddScoped<IRequestHandler<GetUserQuery, UserResultDto>, GetUserQueryHandler>();
         services.AddScoped<IRequestHandler<GetAllUsersQuery, IEnumerable<UserResultDto>>, GetAllUsersQueryHandler>();
-        services.AddScoped<IRequestHandler<CreateUserWithReturnCommand, UserResultDto>, CreateUserWithReturnCommandHandler>();
+        services.AddScoped<IRequestHandler<GetUserByTelegramIdQuery, UserResultDto>, GetUserByTelegramIdQueryHandler>();
 
 
         // Investment

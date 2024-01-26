@@ -5,7 +5,7 @@ public class UserService(HttpClient client) : IUserService
     public async Task<UserDto> AddAsync(UserDto dto, CancellationToken cancellationToken)
     {
         using var content = ConvertHelper.ConvertToStringContent(dto);
-        using var response = await client.PostAsync("create", content, cancellationToken);
+        using var response = await client.PostAsync("create-with-return", content, cancellationToken);
         if (!response.IsSuccessStatusCode)
             return default!;
 

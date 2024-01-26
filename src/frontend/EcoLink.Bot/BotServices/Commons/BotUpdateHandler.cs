@@ -25,6 +25,7 @@ public partial class BotUpdateHandler(
     public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
         using var scope = serviceScopeFactory.CreateScope();
+        service = scope.ServiceProvider.GetRequiredService<IUserService>();
         localizer = scope.ServiceProvider.GetRequiredService<IStringLocalizer<BotLocalizer>>();
 
         user = await GetUserAsync(update, cancellationToken);

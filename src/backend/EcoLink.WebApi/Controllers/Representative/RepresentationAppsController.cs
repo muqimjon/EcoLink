@@ -8,16 +8,16 @@ public class RepresentationAppsController(IMediator mediator) : BaseController
 {
     [HttpPost("create-with-return")]
     [ProducesResponseType(typeof(RepresentationApp), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Create(CreateRepresentationAppWithReturnCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create(CreateRepresentationAppWithReturnCommand command, CancellationToken cancellationToken = default)
         => Ok(await mediator.Send(new CreateRepresentationAppWithReturnCommand(command), cancellationToken));
 
     [HttpGet("get/{id:long}")]
     [ProducesResponseType(typeof(RepresentationApp), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Get(long id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Get(long id, CancellationToken cancellationToken = default)
         => Ok(await mediator.Send(new GetRepresentationAppByIdQuery(id), cancellationToken));
 
     [HttpGet("get-all-by-user-id/{userId:long}")]
     [ProducesResponseType(typeof(IEnumerable<RepresentationApp>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetAllByUserId(long userId, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAllByUserId(long userId, CancellationToken cancellationToken = default)
         => Ok(await mediator.Send(new GetRepresentationAppByIdQuery(userId), cancellationToken));
 }
