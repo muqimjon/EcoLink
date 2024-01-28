@@ -1,4 +1,6 @@
-﻿namespace EcoLink.ApiService.Models.ProjectManagement;
+﻿using EcoLink.ApiService.Models.Users;
+
+namespace EcoLink.ApiService.Models.ProjectManagement;
 
 public class ProjectManagementAppDto
 {

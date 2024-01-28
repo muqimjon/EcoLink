@@ -1,10 +1,9 @@
-﻿using EcoLink.ApiService.Interfaces.Investment;
-using EcoLink.ApiService.Models.Investment;
-using System.Net;
+﻿using EcoLink.ApiService.Models.Investment;
+using EcoLink.ApiService.Interfaces.Investment;
 
 namespace EcoLink.ApiService.Services.Investment;
 
-public class InvestmentAppService(HttpClient client) : IInvestmentAppService
+public class InvestmentAppService(HttpClient client, ILogger<InvestmentAppService> logger) : IInvestmentAppService
 {
     public async Task<InvestmentAppDto> AddAsync(InvestmentAppDto dto, CancellationToken cancellationToken)
     {
@@ -13,7 +12,12 @@ public class InvestmentAppService(HttpClient client) : IInvestmentAppService
         if (!response.IsSuccessStatusCode)
             return default!;
 
-        return (await response.Content.ReadFromJsonAsync<InvestmentAppDto>(cancellationToken: cancellationToken))!;
+        var result = await response.Content.ReadFromJsonAsync<Response<InvestmentAppDto>>(cancellationToken: cancellationToken);
+        if (result!.Status == 200)
+            return result.Data;
+
+        logger.LogInformation(message: result.Message);
+        return default!;
     }
 
     public async Task<InvestmentAppDto> GetAsync(long id, CancellationToken cancellationToken)
@@ -22,6 +26,11 @@ public class InvestmentAppService(HttpClient client) : IInvestmentAppService
         if (!response.IsSuccessStatusCode || response.StatusCode is HttpStatusCode.NoContent)
             return default!;
 
-        return (await response.Content.ReadFromJsonAsync<InvestmentAppDto>(cancellationToken: cancellationToken))!;
+        var result = await response.Content.ReadFromJsonAsync<Response<InvestmentAppDto>>(cancellationToken: cancellationToken);
+        if (result!.Status == 200)
+            return result.Data;
+
+        logger.LogInformation(message: result.Message);
+        return default!;
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace EcoLink.ApiService.Models;
+﻿namespace EcoLink.ApiService.Models.Users;
 
 public class UserDto
 {

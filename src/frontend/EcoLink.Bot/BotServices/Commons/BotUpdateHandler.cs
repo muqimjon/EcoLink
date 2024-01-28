@@ -1,12 +1,13 @@
 ﻿using System.Globalization;
 using EcoLink.Bot.Resources;
 using Telegram.Bot.Types.Enums;
-using EcoLink.ApiService.Interfaces;
 using Microsoft.Extensions.Localization;
 using EcoLink.ApiService.Interfaces.Investment;
 using EcoLink.ApiService.Interfaces.Representation;
 using EcoLink.ApiService.Interfaces.Entrepreneurship;
 using EcoLink.ApiService.Interfaces.ProjectManagement;
+using EcoLink.ApiService.Models.Users;
+using EcoLink.ApiService.Interfaces.Users;
 
 namespace EcoLink.Bot.BotServices;
 

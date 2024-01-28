@@ -3,7 +3,7 @@ using EcoLink.ApiService.Interfaces.Entrepreneurship;
 
 namespace EcoLink.ApiService.Services.Entrepreneurship;
 
-public class EntrepreneurshipAppService(HttpClient client) : IEntrepreneurshipAppService
+public class EntrepreneurshipAppService(HttpClient client, ILogger<EntrepreneurshipAppService> logger) : IEntrepreneurshipAppService
 {
     public async Task<EntrepreneurshipAppDto> AddAsync(EntrepreneurshipAppDto dto, CancellationToken cancellationToken)
     {
@@ -12,7 +12,12 @@ public class EntrepreneurshipAppService(HttpClient client) : IEntrepreneurshipAp
         if (!response.IsSuccessStatusCode)
             return default!;
 
-        return (await response.Content.ReadFromJsonAsync<EntrepreneurshipAppDto>(cancellationToken: cancellationToken))!;
+        var result = await response.Content.ReadFromJsonAsync<Response<EntrepreneurshipAppDto>>(cancellationToken: cancellationToken);
+        if (result!.Status == 200)
+            return result.Data;
+
+        logger.LogInformation(message: result.Message);
+        return default!;
     }
 
     public async Task<EntrepreneurshipAppDto> GetAsync(long id, CancellationToken cancellationToken)
@@ -22,6 +27,11 @@ public class EntrepreneurshipAppService(HttpClient client) : IEntrepreneurshipAp
         if (!response.IsSuccessStatusCode || response.StatusCode is System.Net.HttpStatusCode.NoContent)
             return default!;
 
-        return (await response.Content.ReadFromJsonAsync<EntrepreneurshipAppDto>(cancellationToken: cancellationToken))!;
+        var result = await response.Content.ReadFromJsonAsync<Response<EntrepreneurshipAppDto>>(cancellationToken: cancellationToken);
+        if (result!.Status == 200)
+            return result.Data;
+
+        logger.LogInformation(message: result.Message);
+        return default!;
     }
 }

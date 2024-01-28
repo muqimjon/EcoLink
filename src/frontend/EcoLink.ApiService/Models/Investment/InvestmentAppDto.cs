@@ -1,4 +1,6 @@
-﻿namespace EcoLink.ApiService.Models.Investment;
+﻿using EcoLink.ApiService.Models.Users;
+
+namespace EcoLink.ApiService.Models.Investment;
 
 public class InvestmentAppDto
 {

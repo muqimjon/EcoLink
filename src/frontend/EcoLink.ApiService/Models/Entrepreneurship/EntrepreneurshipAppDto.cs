@@ -1,4 +1,6 @@
-﻿namespace EcoLink.ApiService.Models.Entrepreneurship;
+﻿using EcoLink.ApiService.Models.Users;
+
+namespace EcoLink.ApiService.Models.Entrepreneurship;
 
 public class EntrepreneurshipAppDto
 {

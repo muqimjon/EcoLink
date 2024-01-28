@@ -1,10 +1,9 @@
 ﻿using EcoLink.ApiService.Models.Representation;
 using EcoLink.ApiService.Interfaces.Representation;
-using System.Net;
 
 namespace EcoLink.ApiService.Services.Representation;
 
-public class RepresentationAppService(HttpClient client) : IRepresentationAppService
+public class RepresentationAppService(HttpClient client, ILogger<RepresentationAppService> logger) : IRepresentationAppService
 {
     public async Task<RepresentationAppDto> AddAsync(RepresentationAppDto dto, CancellationToken cancellationToken)
     {
@@ -13,7 +12,12 @@ public class RepresentationAppService(HttpClient client) : IRepresentationAppSer
         if (!response.IsSuccessStatusCode)
             return default!;
 
-        return (await response.Content.ReadFromJsonAsync<RepresentationAppDto>(cancellationToken: cancellationToken))!;
+        var result = await response.Content.ReadFromJsonAsync<Response<RepresentationAppDto>>(cancellationToken: cancellationToken);
+        if (result!.Status == 200)
+            return result.Data;
+
+        logger.LogInformation(message: result.Message);
+        return default!;
     }
 
     public async Task<RepresentationAppDto> GetAsync(long id, CancellationToken cancellationToken)
@@ -22,6 +26,11 @@ public class RepresentationAppService(HttpClient client) : IRepresentationAppSer
         if (!response.IsSuccessStatusCode || response.StatusCode is HttpStatusCode.NoContent)
             return default!;
 
-        return (await response.Content.ReadFromJsonAsync<RepresentationAppDto>(cancellationToken: cancellationToken))!;
+        var result = await response.Content.ReadFromJsonAsync<Response<RepresentationAppDto>>(cancellationToken: cancellationToken);
+        if (result!.Status == 200)
+            return result.Data;
+
+        logger.LogInformation(message: result.Message);
+        return default!;
     }
 }

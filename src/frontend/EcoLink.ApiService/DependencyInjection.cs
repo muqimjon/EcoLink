@@ -1,5 +1,6 @@
-﻿using EcoLink.ApiService.Services;
+﻿using EcoLink.ApiService.Services.Users;
 using Microsoft.Extensions.Configuration;
+using EcoLink.ApiService.Interfaces.Users;
 using EcoLink.ApiService.Services.Investment;
 using EcoLink.ApiService.Interfaces.Investment;
 using Microsoft.Extensions.DependencyInjection;

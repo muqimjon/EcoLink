@@ -1,4 +1,6 @@
-﻿namespace EcoLink.ApiService.Interfaces;
+﻿using EcoLink.ApiService.Models.Users;
+
+namespace EcoLink.ApiService.Interfaces.Users;
 
 public interface IUserService
 {

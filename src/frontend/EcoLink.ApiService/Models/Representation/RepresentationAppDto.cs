@@ -1,4 +1,6 @@
-﻿namespace EcoLink.ApiService.Models.Representation;
+﻿using EcoLink.ApiService.Models.Users;
+
+namespace EcoLink.ApiService.Models.Representation;
 
 public class RepresentationAppDto
 {
