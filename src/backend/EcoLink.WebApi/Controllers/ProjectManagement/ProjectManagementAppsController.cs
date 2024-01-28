@@ -8,16 +8,16 @@ public class ProjectManagementAppsController(IMediator mediator) : BaseControlle
 {
     [HttpPost("create")]
     [ProducesResponseType(typeof(ProjectManagementAppResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Create(CreateProjectManagementAppWithReturnCommand command, CancellationToken cancellationToken = default)
-        => Ok(await mediator.Send(new CreateProjectManagementAppWithReturnCommand(command), cancellationToken));
+    public async Task<IActionResult> Create(CreateProjectManagementAppWithReturnCommand command, CancellationToken cancellationToken)
+        => Ok(new Response { Data = await mediator.Send(new CreateProjectManagementAppWithReturnCommand(command), cancellationToken) });
 
     [HttpGet("get/{id:long}")]
     [ProducesResponseType(typeof(ProjectManagementAppResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Get(long id, CancellationToken cancellationToken = default)
-        => Ok(await mediator.Send(new GetProjectManagementAppQuery(id), cancellationToken));
+    public async Task<IActionResult> Get(long id, CancellationToken cancellationToken)
+        => Ok(new Response { Data = await mediator.Send(new GetProjectManagementAppQuery(id), cancellationToken) });
 
     [HttpGet("get-all-by-user-id/{userId:long}")]
     [ProducesResponseType(typeof(IEnumerable<ProjectManagementAppResultDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetAllByUserId(long userId, CancellationToken cancellationToken = default)
-        => Ok(await mediator.Send(new GetAllProjectManagementAppsByUserIdQuery(userId), cancellationToken));
+    public async Task<IActionResult> GetAllByUserId(long userId, CancellationToken cancellationToken)
+        => Ok(new Response { Data = await mediator.Send(new GetAllProjectManagementAppsByUserIdQuery(userId), cancellationToken) });
 }
