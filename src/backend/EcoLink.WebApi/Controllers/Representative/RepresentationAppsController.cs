@@ -1,6 +1,7 @@
 ﻿using EcoLink.Domain.Entities.Representation;
 using EcoLink.Application.RepresentationApps.Queries.GetRepresentationApp;
-using EcoLink.Application.RepresentationApps.Commands.CreateRepresentationApps;
+using EcoLink.Application.RepresentationApps.Commands.CreateRepresentation;
+using EcoLink.Application.RepresentationApps.Commands.UpdateRepresentation;
 
 namespace EcoLink.WebApi.Controllers.Representative;
 
@@ -8,8 +9,13 @@ public class RepresentationAppsController(IMediator mediator) : BaseController
 {
     [HttpPost("create-with-return")]
     [ProducesResponseType(typeof(RepresentationApp), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Create(CreateRepresentationAppWithReturnCommand command, CancellationToken cancellationToken)
-        => Ok(new Response { Data = await mediator.Send(new CreateRepresentationAppWithReturnCommand(command), cancellationToken) });
+    public async Task<IActionResult> Create(CreateRepresentationWithReturnCommand command, CancellationToken cancellationToken)
+        => Ok(new Response { Data = await mediator.Send(new CreateRepresentationWithReturnCommand(command), cancellationToken) });
+
+    [HttpPut("update-status")]
+    [ProducesResponseType(typeof(RepresentationApp), StatusCodes.Status200OK)]
+    public async Task<IActionResult> UpdateStatus(UpdateRepresentationStatusCommand command, CancellationToken cancellationToken)
+        => Ok(new Response { Data = await mediator.Send(new UpdateRepresentationStatusCommand(command), cancellationToken) });
 
     [HttpGet("get/{id:long}")]
     [ProducesResponseType(typeof(RepresentationApp), StatusCodes.Status200OK)]

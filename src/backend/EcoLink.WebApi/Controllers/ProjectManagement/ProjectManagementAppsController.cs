@@ -1,6 +1,7 @@
 ﻿using EcoLink.Application.ProjectManagementApps.DTOs;
 using EcoLink.Application.ProjectManagementApps.Queries.GetProjectManagementApp;
-using EcoLink.Application.ProjectManagementApps.Commands.CreateProjectManagementApps;
+using EcoLink.Application.ProjectManagementApps.Commands.CreateProjectManagement;
+using EcoLink.Application.ProjectManagementApps.Commands.UpdateProjectManagement;
 
 namespace EcoLink.WebApi.Controllers.ProjectManagement;
 
@@ -8,8 +9,13 @@ public class ProjectManagementAppsController(IMediator mediator) : BaseControlle
 {
     [HttpPost("create")]
     [ProducesResponseType(typeof(ProjectManagementAppResultDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Create(CreateProjectManagementAppWithReturnCommand command, CancellationToken cancellationToken)
-        => Ok(new Response { Data = await mediator.Send(new CreateProjectManagementAppWithReturnCommand(command), cancellationToken) });
+    public async Task<IActionResult> Create(CreateProjectManagementWithReturnCommand command, CancellationToken cancellationToken)
+        => Ok(new Response { Data = await mediator.Send(new CreateProjectManagementWithReturnCommand(command), cancellationToken) });
+
+    [HttpPut("update-status")]
+    [ProducesResponseType(typeof(ProjectManagementAppResultDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> UpdateStatus(UpdateProjectManagementStatusCommand command, CancellationToken cancellationToken)
+        => Ok(new Response { Data = await mediator.Send(command, cancellationToken) });
 
     [HttpGet("get/{id:long}")]
     [ProducesResponseType(typeof(ProjectManagementAppResultDto), StatusCodes.Status200OK)]

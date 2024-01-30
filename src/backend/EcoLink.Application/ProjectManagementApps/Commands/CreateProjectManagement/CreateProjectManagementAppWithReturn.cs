@@ -1,8 +1,8 @@
-﻿namespace EcoLink.Application.ProjectManagementApps.Commands.CreateProjectManagementApps;
+﻿namespace EcoLink.Application.ProjectManagementApps.Commands.CreateProjectManagement;
 
-public record CreateProjectManagementAppWithReturnCommand : IRequest<ProjectManagementAppResultDto>
+public record CreateProjectManagementWithReturnCommand : IRequest<ProjectManagementAppResultDto>
 {
-    public CreateProjectManagementAppWithReturnCommand(CreateProjectManagementAppWithReturnCommand command)
+    public CreateProjectManagementWithReturnCommand(CreateProjectManagementWithReturnCommand command)
     {
         Age = command.Age;
         Phone = command.Phone;
@@ -31,16 +31,17 @@ public record CreateProjectManagementAppWithReturnCommand : IRequest<ProjectMana
     public string Purpose { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+    public bool IsOld { get; set; }
     public long UserId { get; set; }
 }
 
 public class CreateProjectManagementAppWithReturnCommandHandler(IMapper mapper,
-    IRepository<ProjectManagementApp> repository, 
-    ISheetsRepository<ProjectManagementAppForSheetsDto> sheetsRepository) : 
-    IRequestHandler<CreateProjectManagementAppWithReturnCommand, ProjectManagementAppResultDto>
+    IRepository<ProjectManagementApp> repository,
+    ISheetsRepository<ProjectManagementAppForSheetsDto> sheetsRepository) :
+    IRequestHandler<CreateProjectManagementWithReturnCommand, ProjectManagementAppResultDto>
 {
     public async Task<ProjectManagementAppResultDto> Handle(
-        CreateProjectManagementAppWithReturnCommand request, CancellationToken cancellationToken)
+        CreateProjectManagementWithReturnCommand request, CancellationToken cancellationToken)
     {
         var entity = mapper.Map<ProjectManagementApp>(request);
         entity.CreatedAt = TimeHelper.GetDateTime();

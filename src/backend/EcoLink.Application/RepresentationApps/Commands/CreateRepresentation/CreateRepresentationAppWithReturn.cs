@@ -1,8 +1,8 @@
-﻿namespace EcoLink.Application.RepresentationApps.Commands.CreateRepresentationApps;
+﻿namespace EcoLink.Application.RepresentationApps.Commands.CreateRepresentation;
 
-public record CreateRepresentationAppWithReturnCommand : IRequest<RepresentationAppResultDto>
+public record CreateRepresentationWithReturnCommand : IRequest<RepresentationAppResultDto>
 {
-    public CreateRepresentationAppWithReturnCommand(CreateRepresentationAppWithReturnCommand command)
+    public CreateRepresentationWithReturnCommand(CreateRepresentationWithReturnCommand command)
     {
         Age = command.Age;
         Area = command.Area;
@@ -31,15 +31,16 @@ public record CreateRepresentationAppWithReturnCommand : IRequest<Representation
     public string Purpose { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+    public bool IsOld { get; set; }
     public long UserId { get; set; }
 }
 
 public class CreateRepresentationAppWithReturnCommandHandler(IMapper mapper,
     IRepository<RepresentationApp> repository,
-    ISheetsRepository<RepresentationAppForSheetsDto> sheetsRepository) : 
-    IRequestHandler<CreateRepresentationAppWithReturnCommand, RepresentationAppResultDto>
+    ISheetsRepository<RepresentationAppForSheetsDto> sheetsRepository) :
+    IRequestHandler<CreateRepresentationWithReturnCommand, RepresentationAppResultDto>
 {
-    public async Task<RepresentationAppResultDto> Handle(CreateRepresentationAppWithReturnCommand request, CancellationToken cancellationToken)
+    public async Task<RepresentationAppResultDto> Handle(CreateRepresentationWithReturnCommand request, CancellationToken cancellationToken)
     {
         var entity = mapper.Map<RepresentationApp>(request);
         entity.CreatedAt = TimeHelper.GetDateTime();

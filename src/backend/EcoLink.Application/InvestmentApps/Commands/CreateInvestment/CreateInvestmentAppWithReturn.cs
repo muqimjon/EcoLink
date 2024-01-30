@@ -1,10 +1,8 @@
-﻿using EcoLink.Application.InvestmentApps.DTOs;
+﻿namespace EcoLink.Application.InvestmentApps.Commands.CreateInvestment;
 
-namespace EcoLink.Application.InvestmentApps.Commands.CreateInvestmentApps;
-
-public record CreateInvestmentAppWithReturnCommand : IRequest<InvestmentAppResultDto>
+public record CreateInvestmentWithReturnCommand : IRequest<InvestmentAppResultDto>
 {
-    public CreateInvestmentAppWithReturnCommand(CreateInvestmentAppWithReturnCommand command)
+    public CreateInvestmentWithReturnCommand(CreateInvestmentWithReturnCommand command)
     {
         Age = command.Age;
         UserId = command.UserId;
@@ -25,15 +23,16 @@ public record CreateInvestmentAppWithReturnCommand : IRequest<InvestmentAppResul
     public string InvestmentAmount { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+    public bool IsOld { get; set; }
     public long UserId { get; set; }
 }
 
 public class CreateInvestmentAppWithReturnCommandHandler(IMapper mapper, 
     IRepository<InvestmentApp> repository,
     ISheetsRepository<InvestmentAppForSheetsDto> sheetsRepository) : 
-    IRequestHandler<CreateInvestmentAppWithReturnCommand, InvestmentAppResultDto>
+    IRequestHandler<CreateInvestmentWithReturnCommand, InvestmentAppResultDto>
 {
-    public async Task<InvestmentAppResultDto> Handle(CreateInvestmentAppWithReturnCommand request, CancellationToken cancellationToken)
+    public async Task<InvestmentAppResultDto> Handle(CreateInvestmentWithReturnCommand request, CancellationToken cancellationToken)
     {
         var entity = mapper.Map<InvestmentApp>(request);
         entity.CreatedAt = TimeHelper.GetDateTime();

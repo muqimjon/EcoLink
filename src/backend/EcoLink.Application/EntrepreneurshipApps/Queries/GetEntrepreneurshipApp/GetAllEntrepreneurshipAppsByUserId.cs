@@ -1,6 +1,4 @@
-﻿using EcoLink.Application.EntrepreneurshipApps.DTOs;
-
-namespace EcoLink.Application.EntrepreneurshipApps.Queries.GetEntrepreneurshipApp;
+﻿namespace EcoLink.Application.EntrepreneurshipApps.Queries.GetEntrepreneurshipApp;
 
 public record GetAllEntrepreneurshipAppsByUserIdQuery : IRequest<IEnumerable<EntrepreneurshipAppResultDto>>
 {

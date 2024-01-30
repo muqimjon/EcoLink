@@ -21,28 +21,36 @@ public static class DependencyInjection
 
 
         // Investment
-        services.AddScoped<IRequestHandler<CreateInvestmentAppWithReturnCommand, InvestmentAppResultDto>, CreateInvestmentAppWithReturnCommandHandler>();
+        services.AddScoped<IRequestHandler<CreateInvestmentWithReturnCommand, InvestmentAppResultDto>, CreateInvestmentAppWithReturnCommandHandler>();
+
+        services.AddScoped<IRequestHandler<UpdateInvestmentStatusCommand, InvestmentAppResultDto>, UpdateInvestmentStatusCommandHandler>();
 
         services.AddScoped<IRequestHandler<GetInvestmentAppQuery, InvestmentAppResultDto>, GetInvestmentAppQueryHandler>();
         services.AddScoped<IRequestHandler<GetAllInvestmentAppsByUserIdQuery, IEnumerable<InvestmentAppResultDto>>, GetAllInvestmentAppsByUserIdQueryHandler>();
 
 
         // Entrepreneurship
-        services.AddScoped<IRequestHandler<CreateEntrepreneurshipAppWithReturnCommand, EntrepreneurshipAppResultDto>, CreateEntrepreneurshipAppWithReturnCommandHandler>();
+        services.AddScoped<IRequestHandler<CreateEntrepreneurshipWithReturnCommand, EntrepreneurshipAppResultDto>, CreateEntrepreneurshipAppWithReturnCommandHandler>();
+
+        services.AddScoped<IRequestHandler<UpdateEntrepreneurshipStatusCommand, EntrepreneurshipAppResultDto>, UpdateEntrepreneurshipStatusCommandHandler>();
 
         services.AddScoped<IRequestHandler<GetEntrepreneurshipAppByIdCommand, EntrepreneurshipAppResultDto>, GetEntrepreneurshipAppByIdCommandHandler>();
         services.AddScoped<IRequestHandler<GetAllEntrepreneurshipAppsByUserIdQuery, IEnumerable<EntrepreneurshipAppResultDto>>, GetAllEntrepreneurshipAppsByUserIdQueryHandler>();
 
 
         // Project Management
-        services.AddScoped<IRequestHandler<CreateProjectManagementAppWithReturnCommand, ProjectManagementAppResultDto>, CreateProjectManagementAppWithReturnCommandHandler>();
+        services.AddScoped<IRequestHandler<CreateProjectManagementWithReturnCommand, ProjectManagementAppResultDto>, CreateProjectManagementAppWithReturnCommandHandler>();
+
+        services.AddScoped<IRequestHandler<UpdateProjectManagementStatusCommand, ProjectManagementAppResultDto>, UpdateProjectManagementStatusCommandHandler>();
 
         services.AddScoped<IRequestHandler<GetProjectManagementAppQuery, ProjectManagementAppResultDto>, GetProjectManagementAppQueryHandler>();
         services.AddScoped<IRequestHandler<GetAllProjectManagementAppsByUserIdQuery, IEnumerable<ProjectManagementAppResultDto>>, GetAllProjectManagementAppsByUserIdQueryHandler>();
 
 
         // Representation
-        services.AddScoped<IRequestHandler<CreateRepresentationAppWithReturnCommand, RepresentationAppResultDto>, CreateRepresentationAppWithReturnCommandHandler>();
+        services.AddScoped<IRequestHandler<CreateRepresentationWithReturnCommand, RepresentationAppResultDto>, CreateRepresentationAppWithReturnCommandHandler>();
+
+        services.AddScoped<IRequestHandler<UpdateRepresentationStatusCommand, RepresentationAppResultDto>, UpdateRepresentationStatusCommandHandler>();
 
         services.AddScoped<IRequestHandler<GetRepresentationAppByIdQuery, RepresentationAppResultDto>, GetRepresentationAppByIdQueryHandler>();
         services.AddScoped<IRequestHandler<GetAllRepresentationAppsByUserIdQuery, IEnumerable<RepresentationAppResultDto>>, GetAllRepresentationAppsByUserIdQueryHandler>();

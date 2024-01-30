@@ -1,8 +1,8 @@
 ﻿namespace EcoLink.Application.Apps.Commands.CreateEntrepreneurs;
 
-public record CreateEntrepreneurshipAppWithReturnCommand : IRequest<EntrepreneurshipAppResultDto>
+public record CreateEntrepreneurshipWithReturnCommand : IRequest<EntrepreneurshipAppResultDto>
 {
-    public CreateEntrepreneurshipAppWithReturnCommand(CreateEntrepreneurshipAppWithReturnCommand command)
+    public CreateEntrepreneurshipWithReturnCommand(CreateEntrepreneurshipWithReturnCommand command)
     {
         Age = command.Age;
         Phone = command.Phone;
@@ -35,9 +35,9 @@ public record CreateEntrepreneurshipAppWithReturnCommand : IRequest<Entrepreneur
 public class CreateEntrepreneurshipAppWithReturnCommandHandler(IMapper mapper,
     IRepository<EntrepreneurshipApp> repository, 
     ISheetsRepository<EntrepreneurshipAppForSheetsDto> sheetsRepository) : 
-    IRequestHandler<CreateEntrepreneurshipAppWithReturnCommand, EntrepreneurshipAppResultDto>
+    IRequestHandler<CreateEntrepreneurshipWithReturnCommand, EntrepreneurshipAppResultDto>
 {
-    public async Task<EntrepreneurshipAppResultDto> Handle(CreateEntrepreneurshipAppWithReturnCommand request, CancellationToken cancellationToken)
+    public async Task<EntrepreneurshipAppResultDto> Handle(CreateEntrepreneurshipWithReturnCommand request, CancellationToken cancellationToken)
     {
         var entity = mapper.Map<EntrepreneurshipApp>(request);
         entity.CreatedAt = TimeHelper.GetDateTime();

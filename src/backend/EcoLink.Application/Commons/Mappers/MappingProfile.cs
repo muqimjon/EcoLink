@@ -1,4 +1,7 @@
-﻿namespace EcoLink.Application.Commons.Mappers;
+﻿using EcoLink.Application.ProjectManagementApps.Commands.CreateProjectManagement;
+using EcoLink.Application.RepresentationApps.Commands.CreateRepresentation;
+
+namespace EcoLink.Application.Commons.Mappers;
 
 public class MappingProfile : Profile
 {
@@ -17,27 +20,35 @@ public class MappingProfile : Profile
         CreateMap<InvestmentApp, InvestmentAppResultDto>();
         CreateMap<InvestmentApp, InvestmentAppForSheetsDto>();
 
-        CreateMap<CreateInvestmentAppWithReturnCommand, InvestmentApp>();
+        CreateMap<UpdateInvestmentStatusCommand, InvestmentApp>();
+
+        CreateMap<CreateInvestmentWithReturnCommand, InvestmentApp>();
 
 
         // Entrepreneurship Application
         CreateMap<EntrepreneurshipApp, EntrepreneurshipAppResultDto>();
         CreateMap<EntrepreneurshipApp, EntrepreneurshipAppForSheetsDto>();
 
-        CreateMap<CreateEntrepreneurshipAppWithReturnCommand, EntrepreneurshipApp>();
+        CreateMap<UpdateEntrepreneurshipStatusCommand, EntrepreneurshipApp>();
+
+        CreateMap<CreateEntrepreneurshipWithReturnCommand, EntrepreneurshipApp>();
 
 
         // Project Management Application
         CreateMap<ProjectManagementApp, ProjectManagementAppResultDto>();
         CreateMap<ProjectManagementApp, ProjectManagementAppForSheetsDto>();
 
-        CreateMap<CreateProjectManagementAppWithReturnCommand, ProjectManagementApp>();
+        CreateMap<UpdateProjectManagementStatusCommand, ProjectManagementApp>();
+
+        CreateMap<CreateProjectManagementWithReturnCommand, ProjectManagementApp>();
 
 
         // Representation Application
         CreateMap<RepresentationApp, RepresentationAppResultDto>();
         CreateMap<RepresentationApp, RepresentationAppForSheetsDto>();
 
-        CreateMap<CreateRepresentationAppWithReturnCommand, RepresentationApp>();
+        CreateMap<UpdateRepresentationStatusCommand, RepresentationApp>();
+
+        CreateMap<CreateRepresentationWithReturnCommand, RepresentationApp>();
     }
 }

@@ -16,6 +16,7 @@ public class EntrepreneurshipAppDto
     public string AssetsInvested { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+    public bool IsOld { get; set; }
 
     public long UserId { get; set; }
     public UserDto User { get; set; } = default!;

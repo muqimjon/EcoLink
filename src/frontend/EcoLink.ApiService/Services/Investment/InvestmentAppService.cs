@@ -20,6 +20,21 @@ public class InvestmentAppService(HttpClient client, ILogger<InvestmentAppServic
         return default!;
     }
 
+    public async Task<InvestmentAppDto> UpdateStatusAsync(long userId, CancellationToken cancellationToken)
+    {
+        using var content = ConvertHelper.ConvertToStringContent(new { UserId = userId });
+        using var response = await client.PostAsync("update-status", content, cancellationToken);
+        if (!response.IsSuccessStatusCode)
+            return default!;
+
+        var result = await response.Content.ReadFromJsonAsync<Response<InvestmentAppDto>>(cancellationToken: cancellationToken);
+        if (result!.Status == 200)
+            return result.Data;
+
+        logger.LogInformation(message: result.Message);
+        return default!;
+    }
+
     public async Task<InvestmentAppDto> GetAsync(long id, CancellationToken cancellationToken)
     {
         using var response = await client.GetAsync($"get/{id}", cancellationToken);
