@@ -22,7 +22,7 @@ public partial class BotUpdateHandler
     {
         var handle = message.Text switch
         {
-            { } text when text == localizer["rbtnResend"] => ClarifyProfessionQueryAsync(botClient, message, cancellationToken),
+            { } text when text == localizer["rbtnResend"] => ResendApplicationAsync(botClient, message, cancellationToken),
             { } text when text == localizer["rbtnBack"] => SendMainMenuAsync(botClient, message, cancellationToken),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
@@ -31,14 +31,29 @@ public partial class BotUpdateHandler
         catch (Exception ex) { logger.LogError(ex, "Error handling message from {from.FirstName}", user.FirstName); }
     }
 
-    private async Task ClarifyProfessionQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task ResendApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    {
+
+        dynamic application = user.Profession switch
+        {
+            UserProfession.Investor => await investmentAppService.UpdateStatusAsync(user.Id, cancellationToken),
+            UserProfession.Entrepreneur => await entrepreneurshipAppService.UpdateStatusAsync(user.Id, cancellationToken),
+            UserProfession.ProjectManager => await projectManagementAppService.UpdateStatusAsync(user.Id, cancellationToken),
+            UserProfession.Representative => await representationAppService.UpdateStatusAsync(user.Id, cancellationToken),
+            _ => default!
+        };
+
+        await ClarifyProfessionQueryAsync(botClient, message, cancellationToken, application);
+    }
+
+    private async Task ClarifyProfessionQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken, dynamic application)
     {
         var handler = user.Profession switch
         {
-            UserProfession.Investor => InvestmentApplicationAsync(botClient, message, cancellationToken),
-            UserProfession.Entrepreneur => EntrepreneurshipApplicationAsync(botClient, message, cancellationToken),
-            UserProfession.ProjectManager => ProjectManagementQueryAsync(botClient, message, cancellationToken),
-            UserProfession.Representative => RepresentationApplicationAsync(botClient, message, cancellationToken),
+            UserProfession.Investor => InvestmentApplicationAsync(botClient, message, cancellationToken, application),
+            UserProfession.Entrepreneur => EntrepreneurshipApplicationAsync(botClient, message, cancellationToken, application),
+            UserProfession.ProjectManager => ProjectManagementQueryAsync(botClient, message, cancellationToken, application),
+            UserProfession.Representative => RepresentationApplicationAsync(botClient, message, cancellationToken, application),
             _ => HandleUnknownMessageAsync(botClient, message, cancellationToken)
         };
         try { await handler; }

@@ -1,4 +1,7 @@
-﻿namespace EcoLink.Bot.BotServices;
+﻿using EcoLink.ApiService.Models.Entrepreneurship;
+using EcoLink.ApiService.Models.Investment;
+
+namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
@@ -18,12 +21,12 @@ public partial class BotUpdateHandler
         user.Profession = UserProfession.Investor;
     }
 
-    private async Task InvestmentApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task InvestmentApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken, InvestmentAppDto dto = default!)
     {
-        var app = await investmentAppService.GetAsync(user.Id, cancellationToken);
+        dto ??= await investmentAppService.GetLastAsync(user.Id, cancellationToken);
 
-        if (app is not null)
-            await SendAlreadyExistApplicationAsync(GetApplicationInForm(app), botClient, message, cancellationToken);
+        if (dto is not null && !dto.IsOld)
+            await SendAlreadyExistApplicationAsync(GetApplicationInForm(dto), botClient, message, cancellationToken);
         else
             await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
     }

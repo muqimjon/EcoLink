@@ -17,10 +17,10 @@ public partial class SheetsRepository<T>(SheetsConfigure config) : ISheetsReposi
 
         var sheet = entity switch
         {
-            InvestmentAppForSheetsDto => "Investment!A:I",
-            EntrepreneurshipAppForSheetsDto => "Entrepreneurship!A:L",
-            RepresentationAppForSheetsDto => "Representation!A:L",
-            ProjectManagementAppForSheetsDto => "ProjectManagement!A:K",
+            InvestmentAppForSheetsDto => config.Sheets.Investment,
+            RepresentationAppForSheetsDto => config.Sheets.Representation,
+            EntrepreneurshipAppForSheetsDto => config.Sheets.Entrepreneurship,
+            ProjectManagementAppForSheetsDto => config.Sheets.ProjectManagement,
             _ => throw new InvalidOperationException($"Unsupported entity type for send Google Sheets: {entity.GetType()}")
         };
 
@@ -30,11 +30,7 @@ public partial class SheetsRepository<T>(SheetsConfigure config) : ISheetsReposi
         foreach (var property in properties)
             oblist.Add(property.GetValue(entity)!);
 
-        var valueRange = new ValueRange
-        {
-            Values = new List<IList<object>> { oblist }
-        };
-
+        var valueRange = new ValueRange { Values = new List<IList<object>> { oblist } };
         var appendRequest = config.Service.Spreadsheets.Values.Append(valueRange, config.SpreadsheetId, sheet);
         appendRequest.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
         await appendRequest.ExecuteAsync();

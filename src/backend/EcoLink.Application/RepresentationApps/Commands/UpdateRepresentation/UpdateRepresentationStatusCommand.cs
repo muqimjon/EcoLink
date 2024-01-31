@@ -5,6 +5,7 @@ public record UpdateRepresentationStatusCommand : IRequest<RepresentationAppResu
     public UpdateRepresentationStatusCommand(UpdateRepresentationStatusCommand command)
     {
         UserId = command.UserId;
+        IsOld = command.IsOld;
     }
 
     public long UserId { get; set; }
@@ -16,7 +17,7 @@ public class UpdateRepresentationStatusCommandHandler(IMapper mapper, IRepositor
 {
     public async Task<RepresentationAppResultDto> Handle(UpdateRepresentationStatusCommand request, CancellationToken cancellationToken)
     {
-        var entity = await repository.SelectAsync(e => e.UserId == request.UserId) ??
+        var entity = repository.SelectAll(e => e.UserId == request.UserId).OrderBy(e => e.Id).LastOrDefault() ??
             throw new NotFoundException($"{nameof(RepresentationApp)} is not found with {nameof(request.UserId)} = {request.UserId}");
 
         mapper.Map(request, entity);

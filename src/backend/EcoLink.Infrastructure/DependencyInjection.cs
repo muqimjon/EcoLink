@@ -20,7 +20,7 @@ public static class DependencyInjection
     {
         // Add database
         services.AddDbContext<AppDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+            options.UseNpgsql(configuration.GetConnectionString(name: "DefaultConnection")));
 
         // Add sheets service
         #region Add Sheets configure
@@ -29,24 +29,25 @@ public static class DependencyInjection
 
         var properties = typeof(GoogleAuthSettings).GetProperties();
         foreach (var property in properties)
-            property.SetValue(googleAuth, configuration[property.Name] ?? string.Empty);
-
-        var googleAuthJson = JsonConvert.SerializeObject(googleAuth);
+            property.SetValue(obj: googleAuth, value: configuration[property.Name] ?? string.Empty);
         #endregion
 
         services.AddSingleton(new SheetsConfigure()
         {
-            SpreadsheetId = configuration.GetConnectionString("SpreadsheetId")!,
+            SpreadsheetId = configuration.GetConnectionString(name: "SpreadsheetId")!,
             Service = new SheetsService(new BaseClientService.Initializer()
             {
-                HttpClientInitializer = GoogleCredential.FromJson(json: googleAuthJson)
+                HttpClientInitializer = GoogleCredential.FromJson(
+                    json: JsonConvert.SerializeObject(googleAuth))
             }),
+            Sheets = JsonConvert.DeserializeObject<Sheets>(
+                value: configuration["Sheets"]!)!
         });
         #endregion
 
         // Add repositories
-        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-        services.AddScoped(typeof(ISheetsRepository<>), typeof(SheetsRepository<>));
+        services.AddScoped(serviceType: typeof(IRepository<>), implementationType: typeof(Repository<>));
+        services.AddScoped(serviceType: typeof(ISheetsRepository<>), implementationType: typeof(SheetsRepository<>));
 
         return services;
     } 

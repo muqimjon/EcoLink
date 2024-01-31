@@ -1,4 +1,6 @@
-﻿namespace EcoLink.Bot.BotServices;
+﻿using EcoLink.ApiService.Models.Entrepreneurship;
+
+namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
@@ -18,11 +20,12 @@ public partial class BotUpdateHandler
         user.Profession = UserProfession.Entrepreneur;
     }
 
-    private async Task EntrepreneurshipApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task EntrepreneurshipApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken, EntrepreneurshipAppDto dto = default!)
     {
-        var apps = await entrepreneurshipAppService.GetAsync(user.Id, cancellationToken);
-        if (apps is not null)
-            await SendAlreadyExistApplicationAsync(GetApplicationInForm(apps), botClient, message, cancellationToken);
+        dto ??= await entrepreneurshipAppService.GetLastAsync(user.Id, cancellationToken);
+
+        if (dto is not null && !dto.IsOld)
+            await SendAlreadyExistApplicationAsync(GetApplicationInForm(dto), botClient, message, cancellationToken);
         else
             await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
     }

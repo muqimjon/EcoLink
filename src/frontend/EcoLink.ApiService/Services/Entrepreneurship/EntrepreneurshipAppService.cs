@@ -22,8 +22,8 @@ public class EntrepreneurshipAppService(HttpClient client, ILogger<Entrepreneurs
 
     public async Task<EntrepreneurshipAppDto> UpdateStatusAsync(long userId, CancellationToken cancellationToken)
     {
-        using var content = ConvertHelper.ConvertToStringContent(new { UserId = userId });
-        using var response = await client.PostAsync("update-status", content, cancellationToken);
+        using var content = ConvertHelper.ConvertToStringContent(new { UserId = userId, IsOld = true });
+        using var response = await client.PutAsync("update-status", content, cancellationToken);
         if (!response.IsSuccessStatusCode)
             return default!;
 
@@ -35,16 +35,16 @@ public class EntrepreneurshipAppService(HttpClient client, ILogger<Entrepreneurs
         return default!;
     }
 
-    public async Task<EntrepreneurshipAppDto> GetAsync(long id, CancellationToken cancellationToken)
+    public async Task<EntrepreneurshipAppDto> GetLastAsync(long id, CancellationToken cancellationToken)
     {
-        using var response = await client.GetAsync($"get/{id}", cancellationToken);
+        using var response = await client.GetAsync($"get-all-by-user-id/{id}", cancellationToken);
         var s = response.StatusCode;
         if (!response.IsSuccessStatusCode || response.StatusCode is System.Net.HttpStatusCode.NoContent)
             return default!;
 
-        var result = await response.Content.ReadFromJsonAsync<Response<EntrepreneurshipAppDto>>(cancellationToken: cancellationToken);
+        var result = await response.Content.ReadFromJsonAsync<Response<IEnumerable<EntrepreneurshipAppDto>>>(cancellationToken: cancellationToken);
         if (result!.Status == 200)
-            return result.Data;
+            return result.Data.LastOrDefault()!;
 
         logger.LogInformation(message: result.Message);
         return default!;

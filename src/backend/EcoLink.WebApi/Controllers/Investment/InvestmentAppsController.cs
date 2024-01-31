@@ -23,7 +23,7 @@ public class InvestmentAppsController(IMediator mediator) : BaseController
     public async Task<IActionResult> Get(long id, CancellationToken cancellationToken)
         => Ok(new Response { Data = await mediator.Send(new GetInvestmentAppQuery(id), cancellationToken) });
 
-    [HttpGet("get-all-by-user-userId/{userId:long}")]
+    [HttpGet("get-all-by-user-user-id/{userId:long}")]
     [ProducesResponseType(typeof(IEnumerable<InvestmentAppResultDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllByUserId(long userId, CancellationToken cancellationToken)
         => Ok(new Response { Data = await mediator.Send(new GetAllInvestmentAppsByUserIdQuery(userId), cancellationToken) });

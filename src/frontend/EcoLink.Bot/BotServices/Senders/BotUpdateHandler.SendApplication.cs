@@ -40,6 +40,8 @@ public partial class BotUpdateHandler
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
+
+        user.State = State.WaitingForResendApplication;
     }
 
     private async Task SendForSubmitApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)

@@ -1,4 +1,6 @@
-﻿namespace EcoLink.Bot.BotServices;
+﻿using EcoLink.ApiService.Models.Representation;
+
+namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
@@ -18,11 +20,12 @@ public partial class BotUpdateHandler
         user.Profession = UserProfession.Representative;
     }
 
-    private async Task RepresentationApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task RepresentationApplicationAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken, RepresentationAppDto dto = default!)
     {
-        var app = await representationAppService.GetAsync(user.Id, cancellationToken);
-        if (app is not null)
-            await SendAlreadyExistApplicationAsync(GetApplicationInForm(app), botClient, message, cancellationToken);
+        dto ??= await representationAppService.GetLastAsync(user.Id, cancellationToken);
+
+        if (dto is not null && !dto.IsOld)
+            await SendAlreadyExistApplicationAsync(GetApplicationInForm(dto), botClient, message, cancellationToken);
         else
             await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
     }

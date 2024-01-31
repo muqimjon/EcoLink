@@ -5,6 +5,7 @@ public record UpdateInvestmentStatusCommand : IRequest<InvestmentAppResultDto>
     public UpdateInvestmentStatusCommand(UpdateInvestmentStatusCommand command)
     {
         UserId = command.UserId;
+        IsOld = command.IsOld;
     }
 
     public long UserId { get; set; }
@@ -16,7 +17,7 @@ public class UpdateInvestmentStatusCommandHandler(IMapper mapper, IRepository<In
 {
     public async Task<InvestmentAppResultDto> Handle(UpdateInvestmentStatusCommand request, CancellationToken cancellationToken)
     {
-        var entity = await repository.SelectAsync(e => e.UserId == request.UserId) ??
+        var entity = repository.SelectAll(e => e.UserId == request.UserId).OrderBy(e => e.Id).LastOrDefault() ??
             throw new NotFoundException($"{nameof(InvestmentApp)} is not found with {nameof(request.UserId)} = {request.UserId}");
 
         mapper.Map(request, entity);

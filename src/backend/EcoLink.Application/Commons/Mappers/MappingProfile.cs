@@ -1,7 +1,4 @@
-﻿using EcoLink.Application.ProjectManagementApps.Commands.CreateProjectManagement;
-using EcoLink.Application.RepresentationApps.Commands.CreateRepresentation;
-
-namespace EcoLink.Application.Commons.Mappers;
+﻿namespace EcoLink.Application.Commons.Mappers;
 
 public class MappingProfile : Profile
 {

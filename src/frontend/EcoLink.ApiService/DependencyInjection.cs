@@ -23,16 +23,16 @@ public static class DependencyInjection
             { client.BaseAddress = new Uri($"{baseLink}api/users/"); });
 
         services.AddHttpClient<IInvestmentAppService, InvestmentAppService>(client =>
-            { client.BaseAddress = new Uri($"{baseLink}api/InvestmentApps/"); });
+            { client.BaseAddress = new Uri($"{baseLink}api/investment-apps/"); });
 
         services.AddHttpClient<IRepresentationAppService, RepresentationAppService>(client =>
-            { client.BaseAddress = new Uri($"{baseLink}api/RepresentationApps/"); });
+            { client.BaseAddress = new Uri($"{baseLink}api/representation-apps/"); });
 
         services.AddHttpClient<IEntrepreneurshipAppService, EntrepreneurshipAppService>(client =>
-            { client.BaseAddress = new Uri($"{baseLink}api/EntrepreneurshipApps/"); });
+            { client.BaseAddress = new Uri($"{baseLink}api/entrepreneurship-apps/"); });
 
         services.AddHttpClient<IProjectManagementAppService, ProjectManagementAppService>(client =>
-            { client.BaseAddress = new Uri($"{baseLink}api/ProjectManagementApps/"); });
+            { client.BaseAddress = new Uri($"{baseLink}api/projectManagement-apps/"); });
 
         return services;
     }

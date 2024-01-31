@@ -1,4 +1,6 @@
-﻿namespace EcoLink.Bot.BotServices;
+﻿using EcoLink.ApiService.Models.ProjectManagement;
+
+namespace EcoLink.Bot.BotServices;
 
 public partial class BotUpdateHandler
 {
@@ -17,12 +19,12 @@ public partial class BotUpdateHandler
         user.Profession = UserProfession.ProjectManager;
     }
 
-    private async Task ProjectManagementQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
+    private async Task ProjectManagementQueryAsync(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken, ProjectManagementAppDto dto = default!)
     {
-        var app = await projectManagementAppService.GetAsync(user.Id, cancellationToken);
+        dto ??= await projectManagementAppService.GetLastAsync(user.Id, cancellationToken);
 
-        if (app is not null)
-            await SendAlreadyExistApplicationAsync(GetApplicationInForm(app), botClient, message, cancellationToken);
+        if (dto is not null && !dto.IsOld)
+            await SendAlreadyExistApplicationAsync(GetApplicationInForm(dto), botClient, message, cancellationToken);
         else
             await SendRequestForFirstNameAsync(botClient, message, cancellationToken);
     }
