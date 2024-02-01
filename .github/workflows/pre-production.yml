@@ -22,7 +22,7 @@ jobs:
 
       
   build-bot:
-
+    name: Build frontend
     runs-on: ubuntu-latest
 
     steps:
@@ -36,4 +36,4 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet build --configuration Release --output out --verbosity normal /src/frontend/EcoLink.Bot

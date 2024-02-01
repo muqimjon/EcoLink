@@ -370,7 +370,8 @@ public partial class BotUpdateHandler
                 user.RequiredFunding,
                 user.AssetsInvested,
                 user.Phone,
-                user.Email],
+                user.Email,
+                user.Profession],
             UserProfession.Investor => localizer["txtApplicationInvestment",
                 user.FirstName,
                 user.LastName,
@@ -379,7 +380,8 @@ public partial class BotUpdateHandler
                 user.Sector,
                 user.InvestmentAmount,
                 user.Phone,
-                user.Email],
+                user.Email,
+                user.Profession],
             UserProfession.Representative => localizer["txtApplicationRepresentation",
                 user.FirstName,
                 user.LastName,
@@ -392,7 +394,8 @@ public partial class BotUpdateHandler
                 user.Expectation,
                 user.Purpose,
                 user.Phone,
-                user.Email],
+                user.Email,
+                user.Profession],
             UserProfession.ProjectManager => localizer["txtApplicationProjectManagement",
                 user.FirstName,
                 user.LastName,
@@ -405,7 +408,8 @@ public partial class BotUpdateHandler
                 user.Expectation,
                 user.Purpose,
                 user.Phone,
-                user.Email],
+                user.Email,
+                user.Profession],
             _ => string.Empty,
         };
     }
@@ -423,7 +427,8 @@ public partial class BotUpdateHandler
                 dto.Expectation,
                 dto.Purpose,
                 dto.Phone,
-                dto.Email];
+                dto.Email,
+                user.Profession];
 
     private string GetApplicationInForm(EntrepreneurshipAppDto dto)
         => localizer["txtApplicationEntrepreneurship",
@@ -437,7 +442,8 @@ public partial class BotUpdateHandler
                 dto.RequiredFunding,
                 dto.AssetsInvested,
                 dto.Phone,
-                dto.Email];
+                dto.Email,
+                user.Profession];
 
     private string GetApplicationInForm(InvestmentAppDto dto)
         => localizer["txtApplicationInvestment",
@@ -448,7 +454,8 @@ public partial class BotUpdateHandler
                 dto.Sector,
                 dto.InvestmentAmount,
                 dto.Phone,
-                dto.Email];
+                dto.Email,
+                user.Profession];
 
     private string GetApplicationInForm(RepresentationAppDto dto)
         => localizer["txtApplicationRepresentation",
@@ -463,5 +470,6 @@ public partial class BotUpdateHandler
                 dto.Expectation,
                 dto.Purpose,
                 dto.Phone,
-                dto.Email];
+                dto.Email,
+                user.Profession];
 }

@@ -292,7 +292,9 @@ Tikiladigan aktiv:
 Telefon raqami: 
 ↳     {9}
 Email: 
-↳     {10}</value>
+↳     {10}
+
+Ariza yo'nalishi: {11}</value>
     <comment>Tayyor Arizani tasdiqlash uchun foydalanuvchiga to'liq holda taqdim qilish uchun tadbirkor ma'lumotlari</comment>
   </data>
   <data name="txtApplicationInvestment" xml:space="preserve">
@@ -311,7 +313,9 @@ Yordam:
 Telefon raqami:
 ↳     {6}
 Email: 
-↳     {7}</value>
+↳     {7}
+
+Ariza yo'nalishi: {8}</value>
     <comment>Tayyor Arizani tasdiqlash uchun foydalanuvchiga to'liq holda taqdim qilish uchun investor ma'lumotlari</comment>
   </data>
   <data name="txtApplicationProjectManagement" xml:space="preserve">
@@ -338,7 +342,9 @@ Vakil bo'lishdan maqsad:
 Telefon raqami: 
 ↳     {10}
 Email: 
-↳     {11}</value>
+↳     {11}
+
+Ariza yo'nalishi: {12}</value>
   </data>
   <data name="txtApplicationRepresentation" xml:space="preserve">
     <value>Ism: 
@@ -364,7 +370,9 @@ Vakil bo'lishdan maqsad:
 Telefon raqami: 
 ↳     {10}
 Email: 
-↳     {11}</value>
+↳     {11}
+
+Ariza yo'nalishi: {12}</value>
   </data>
   <data name="txtAskFeedbackForOrganization" xml:space="preserve">
     <value>O'xbekiston Iqtisodiyot Assambleyasi tashkilotining rivoji uchun yana qanday ishlar qilishimiz mumkinligi haqida o'z fikringizni qoldiring. Bu biz uchun juda muhim!</value>
