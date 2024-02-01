@@ -5,8 +5,8 @@ on:
     branches: [ "unidevs" ]
 
 jobs:
-  build:
-
+  build-api:
+    name: Build backend
     runs-on: ubuntu-latest
 
     steps:
@@ -16,8 +16,22 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ./src/backend/EcoLink.WebApi/
     - name: Build
-      run: dotnet build --no-restore
-    # - name: Test
-    #   run: dotnet test --no-build --verbosity normal
+      run: dotnet build --configuration Release --output out --verbosity normal ./src/backend/EcoLink.WebApi/
+
+      
+  build-bot:
+    name: Build frontend
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore ./src/frontend/EcoLink.Bot/
+    - name: Build
+      run: dotnet build --configuration Release --output out --verbosity normal ./src/frontend/EcoLink.Bot/
