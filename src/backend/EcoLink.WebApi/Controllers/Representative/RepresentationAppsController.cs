@@ -25,5 +25,5 @@ public class RepresentationAppsController(IMediator mediator) : BaseController
     [HttpGet("get-all-by-user-id/{userId:long}")]
     [ProducesResponseType(typeof(IEnumerable<RepresentationApp>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllByUserId(long userId, CancellationToken cancellationToken)
-        => Ok(new Response { Data = await mediator.Send(new GetRepresentationAppByIdQuery(userId), cancellationToken) });
+        => Ok(new Response { Data = await mediator.Send(new GetAllRepresentationAppsByUserIdQuery(userId), cancellationToken) });
 }

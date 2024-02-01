@@ -1,6 +1,4 @@
-﻿using EcoLink.Application.RepresentationApps.DTOs;
-
-namespace EcoLink.Application.RepresentationApps.Queries.GetRepresentationApp;
+﻿namespace EcoLink.Application.RepresentationApps.Queries.GetRepresentationApp;
 
 public record GetAllRepresentationAppsByUserIdQuery : IRequest<IEnumerable<RepresentationAppResultDto>>
 {
