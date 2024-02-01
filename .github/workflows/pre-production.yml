@@ -16,9 +16,9 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ./src/backend/EcoLink.WebApi/
     - name: Build
-      run: dotnet build --configuration Release --output out --verbosity normal /src/backend/EcoLink.WebApi
+      run: dotnet build --configuration Release --output out --verbosity normal ./src/backend/EcoLink.WebApi/
 
       
   build-bot:
@@ -32,8 +32,6 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ./src/frontend/EcoLink.Bot/
     - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet build --configuration Release --output out --verbosity normal /src/frontend/EcoLink.Bot
+      run: dotnet build --configuration Release --output out --verbosity normal ./src/frontend/EcoLink.Bot/
