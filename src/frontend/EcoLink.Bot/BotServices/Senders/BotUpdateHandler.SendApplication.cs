@@ -27,6 +27,7 @@ public partial class BotUpdateHandler
             cancellationToken: cancellationToken
         );
 
+        user.Profession = UserProfession.None;
         user.State = State.WaitingForSelectProfession;
     }
 
